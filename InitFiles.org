@@ -1,0 +1,157 @@
+#+TITLE: Emacs Configuration Generation File
+#+AUTHOR: Peter Prevos
+#+PROPERTY: header-args :tangle yes :tangle ~/.emacs.d/init.el :results silent
+
+* Introduction
+Emacs uses an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Init File]] to store all configurations. This file creates an /Init File/ using literate programming principles to document and define the configuration. 
+** Create the configuration file describe in this document
+To create the configuration file in the =.emacs.d= folder, execute =C-c C-v C-t= (=org-babel-tangle=). This command will read all source code sections and concatenate them into the =.emacs/init.el= file.
+
+If you like to try these settings without creating a new file, then type =C-c C-v C-b= to evaluate all code blocks. You can also evaluate each code block individually with =C-c C-c= or each line separately with =C-x C-e=. Emacs will ask you to confirm that you want to execute code. To stop Emacs asking for confirmation, run =(setq org-confirm-babel-evaluate nil)=.
+** Credits
+The idea to tangle an og mode file to configure Emacs is based on work by [[https://github.com/larstvei/dot-emacs][larstvei/dot-emacs]].
+* Basic Configuration
+** Change configuration file
+Emacs includes a configuration system that will write settings to a file. This code snippet ensures
+
+If you want the customisation to override the 
+
+#+BEGIN_SRC emacs-lisp
+;; keep customize settings in their own file
+(setq custom-file "~/.emacs.d/custom.el")
+(when (file-exists-p custom-file)
+(load custom-file))
+#+END_SRC
+** Visual elements
+This snippet changes the overall look-and-feel of Emacs.
+
+The startup settings inhibit startup messages and screen.
+
+#+BEGIN_SRC emacs-lisp
+;; This init file is generated with an Org-Mode file. 
+;; Any manual changes will be overwritten by the script.
+;; -----------------------------------------------------
+
+;; Startup settings
+(setq
+  inhibit-startup-message t
+  inhibit-startup-screen t
+  display-time-24hr-format t
+)
+
+;; Visual enhancements
+;; Load theme
+(load-theme 'tsdh-dark)
+;; Hide toolbar
+(tool-bar-mode nil)
+;; Hide scroll bars
+(scroll-bar-mode -1)
+#+END_SRC
+   
+** Emacs mechanics
+This section contains basic Emacs mechanics.
+- All backup files saved in the same folder
+- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html][Save desktop]] on exit
+- Emacs uses both Yes/No and Y/N to ask for [[https://www.emacswiki.org/emacs/YesOrNoP][confirmation]]. I find this confusing and change it to single letter responses.
+
+#+BEGIN_SRC emacs-lisp
+;; Save all backup files in one folder.
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+;; Save desktop
+(desktop-save-mode 1)
+
+;; Yes or No
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+*** Packages
+Setting the locatins of all package repositories.
+
+#+BEGIN_SRC emacs-lisp
+(package-initialize)
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")))
+#+END_SRC
+
+** Editing
+This snippet changes the editing settings to my liking.
+- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/CUA-Bindings.html][CUA mode]] (Common User Acess) to enable =C-c= for copy, =C-v= for paste, and so on.
+- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Visual-Line-Mode.html][Visual Line Mode]] wraps long lines near the window edge.
+- [[https://www.emacswiki.org/emacs/FlySpell][FlySpell]] for spell-checking on the fly. The F7 key is mapped to suggesting alternatives for misspelled words.
+
+#+BEGIN_SRC emacs-lisp
+;; Editing configuration
+
+;; Common User Access
+(cua-mode t)
+
+;; Line wrapping
+(global-visual-line-mode t)
+
+;; Spell checking
+(add-hook 'org-mode-hook 'turn-on-flyspell)
+(add-hook 'fountain-mode-hook 'turn-on-flyspell)
+(global-set-key (kbd "<f7>") 'ispell-word)
+#+END_SRC
+
+** Calendar settings
+- First day of the week is Monday
+
+#+BEGIN_SRC emacs-lisp
+;; First day of te week
+(setq calendar-week-start-day 1)
+#+END_SRC
+
+* Developing code
+** Magit
+Magit is almost like magic.
+#+BEGIN_SRC emacs-lisp
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
+#+END_SRC
+* Org-Mode
+** Basic configuration
+
+- [[https://orgmode.org/manual/Workflow-states.html#Workflow-states][Workflow states]]
+
+#+BEGIN_SRC emacs-lisp
+;; Keyboard shortcuts
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+;; Workflow states
+(setq org-todo-keywords
+  '((sequence "TODO(t)" "WAITING(w)" "PROJECT(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)")))
+#+END_SRC
+
+#+RESULTS:
+| sequence | TODO(t) | WAITING(w) | PROJECT(p) | SOMEDAY(s) |   |   | DONE(d) | CANCELLED(c) |
+
+** Visual elements
+#+BEGIN_SRC emacs-lisp
+(setq org-hide-emphasis-markers t
+      org-hide-leading-stars t
+      org-startup-indented t)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; Insert NOTES drawer
+;; by u/alecigne
+(defun ddz-org-insert-drawer-note ()
+  (interactive)
+  (org-insert-drawer nil "NOTES"))
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c C-x n") 'ddz-org-insert-drawer-note))
+#+END_SRC
+
+** Babel
+#+BEGIN_SRC emacs-lisp
+(setq org-confirm-babel-evaluate nil)
+#+END_SRC
+
+#+RESULTS:
+
