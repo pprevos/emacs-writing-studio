@@ -1,0 +1,7 @@
+#+TITLE: Run Your Life with Emacs
+#+AUTHOR: Peter Prevos
+
+This repository contains my configurations and documentation on how I run my life with Emacs.
+
+- =InitFiles.Org=: Creating Init files using literate programming.
+
