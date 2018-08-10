@@ -4,19 +4,20 @@
 
 * Introduction
 Emacs uses an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Init File]] to store all configurations. This file creates an /Init File/ using literate programming principles to document and define the configuration. 
-** Create the configuration file describe in this document
-To create the configuration file in the =.emacs.d= folder, execute =C-c C-v C-t= (=org-babel-tangle=). This command will read all source code sections and concatenate them into the =.emacs/init.el= file.
+
+To write the configuration file, execute =C-c C-v C-t= (=org-babel-tangle=). This command will read all source code sections in this file and concatenate them into the =.emacs/init.el= file.
 
 If you like to try these settings without creating a new file, then type =C-c C-v C-b= to evaluate all code blocks. You can also evaluate each code block individually with =C-c C-c= or each line separately with =C-x C-e=. Emacs will ask you to confirm that you want to execute code. To stop Emacs asking for confirmation, run =(setq org-confirm-babel-evaluate nil)=.
 ** Credits
-The idea to tangle an og mode file to configure Emacs is based on work by [[https://github.com/larstvei/dot-emacs][larstvei/dot-emacs]].
+The idea to tangle an og mode file to configure Emacs is based on work by
+[[https://github.com/freetonik/emacs-dotfiles][freetonik]].
 * Basic Configuration
-** Change configuration file
-Emacs includes a configuration system that will write settings to a file. This code snippet ensures
-
-If you want the customisation to override the 
-
+** Redefine configuration file
+Emacs includes a configuration system that will write settings to the init file. This code snippet redefines the name of this file to ensure the =init.el= file is not overwritten by the configuration system.
 #+BEGIN_SRC emacs-lisp
+;; Emacs init file
+;; https://github.com/pprevos/EmacsLife
+
 ;; keep customize settings in their own file
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
@@ -26,7 +27,11 @@ If you want the customisation to override the
 This snippet changes the overall look-and-feel of Emacs.
 
 The startup settings inhibit startup messages and screen.
-
+*** Visual elements
+- Loads the theme
+- Hides the toolbar (who needs icons anyway?)
+- Hides the scroll bar (using a mouse gives you RSI)
+- Subtly highlight the current line to find your cursor
 #+BEGIN_SRC emacs-lisp
 ;; This init file is generated with an Org-Mode file. 
 ;; Any manual changes will be overwritten by the script.
@@ -46,14 +51,15 @@ The startup settings inhibit startup messages and screen.
 (tool-bar-mode nil)
 ;; Hide scroll bars
 (scroll-bar-mode -1)
-#+END_SRC
-   
+;; Highlight current line
+(global-hl-line-mode 1)
+#+END_SRC   
 ** Emacs mechanics
 This section contains basic Emacs mechanics.
-- All backup files saved in the same folder
+- All backup files saved in the same folder. The =backup-directory-alist= function lets you modify that behaviour. I prefer to store all backup files in one folder to avoid cluttering document folders.
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html][Save desktop]] on exit
-- Emacs uses both Yes/No and Y/N to ask for [[https://www.emacswiki.org/emacs/YesOrNoP][confirmation]]. I find this confusing and change it to single letter responses.
-
+- Emacs uses both Yes/No and Y/N to ask for [[https://www.emacswiki.org/emacs/YesOrNoP][confirmation]]. I find this added security unnecessary and change it to single letter responses.
+- Enable horizontal mouse scroll
 #+BEGIN_SRC emacs-lisp
 ;; Save all backup files in one folder.
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -63,10 +69,16 @@ This section contains basic Emacs mechanics.
 
 ;; Yes or No
 (defalias 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
 
+;; Auto revert file when changed outside of Emacs
+(global-auto-revert-mode 1)
+
+;; Mouse scrolling
+(global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
+(global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
+#+END_SRC
 *** Packages
-Setting the locatins of all package repositories.
+Setting the locations of package repositories.
 
 #+BEGIN_SRC emacs-lisp
 (package-initialize)
@@ -74,7 +86,6 @@ Setting the locatins of all package repositories.
                          ("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")))
 #+END_SRC
-
 ** Editing
 This snippet changes the editing settings to my liking.
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/CUA-Bindings.html][CUA mode]] (Common User Acess) to enable =C-c= for copy, =C-v= for paste, and so on.
@@ -95,16 +106,15 @@ This snippet changes the editing settings to my liking.
 (add-hook 'fountain-mode-hook 'turn-on-flyspell)
 (global-set-key (kbd "<f7>") 'ispell-word)
 #+END_SRC
-
 ** Calendar settings
 - First day of the week is Monday
-
+- Dutch holidays
 #+BEGIN_SRC emacs-lisp
 ;; First day of te week
 (setq calendar-week-start-day 1)
 #+END_SRC
-
 * Developing code
+** TODO ESS
 ** Magit
 Magit is almost like magic.
 #+BEGIN_SRC emacs-lisp
@@ -113,7 +123,6 @@ Magit is almost like magic.
 #+END_SRC
 * Org-Mode
 ** Basic configuration
-
 - [[https://orgmode.org/manual/Workflow-states.html#Workflow-states][Workflow states]]
 
 #+BEGIN_SRC emacs-lisp
@@ -127,15 +136,23 @@ Magit is almost like magic.
 (setq org-todo-keywords
   '((sequence "TODO(t)" "WAITING(w)" "PROJECT(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)")))
 #+END_SRC
-
-#+RESULTS:
-| sequence | TODO(t) | WAITING(w) | PROJECT(p) | SOMEDAY(s) |   |   | DONE(d) | CANCELLED(c) |
-
-** Visual elements
+** Make life easier
+- helm-org-rifle searches through Org files
 #+BEGIN_SRC emacs-lisp
+;; helm org rifle
+(require 'helm-org-rifle)
+(global-set-key (kbd "C-x C-r") 'helm-org-rifle)
+#+END_SRC
+** Visual elements
+- [[https://orgmode.org/manual/Clean-view.html][Clean view]]
+- Set image preview with to 600 pixels
+#+BEGIN_SRC emacs-lisp
+;; Clean outline view
 (setq org-hide-emphasis-markers t
       org-hide-leading-stars t
       org-startup-indented t)
+
+(setq org-image-actual-width 600)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -147,11 +164,18 @@ Magit is almost like magic.
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "C-c C-x n") 'ddz-org-insert-drawer-note))
 #+END_SRC
-
+** Export
+#+BEGIN_SRC emacs-lisp
+;; Smart quotes
+(setq org-export-with-smart-quotes t)
+#+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
+;; Trust all code embedded in Org files
 (setq org-confirm-babel-evaluate nil)
 #+END_SRC
 
-#+RESULTS:
+* TODO Emacs Speaks Statistics (ESS)
+#+BEGIN_SRC emacs-lisp
 
+#+END_SRC
