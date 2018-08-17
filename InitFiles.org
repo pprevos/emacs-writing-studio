@@ -14,6 +14,8 @@ The idea to tangle an og mode file to configure Emacs is based on work by
 * Basic Configuration
 ** Redefine configuration file
 Emacs includes a configuration system that will write settings to the init file. This code snippet redefines the name of this file to ensure the =init.el= file is not overwritten by the configuration system.
+
+The custom configuration file is loaded and so any settings in the init file will append or override the custom settings.
 #+BEGIN_SRC emacs-lisp
 ;; Emacs init file
 ;; https://github.com/pprevos/EmacsLife
@@ -23,11 +25,18 @@ Emacs includes a configuration system that will write settings to the init file.
 (when (file-exists-p custom-file)
 (load custom-file))
 #+END_SRC
-** Visual elements
-This snippet changes the overall look-and-feel of Emacs.
+** Packages
+Setting the locations of package repositories.
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(add-to-list 'package-archives
+    '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives 
+    '("org" . "https://orgmode.org/elpa/") t)
+#+END_SRC
 
-The startup settings inhibit startup messages and screen.
-*** Visual elements
+** Visual elements
+- The startup settings inhibit startup messages and screen.
 - Loads the theme
 - Hides the toolbar (who needs icons anyway?)
 - Hides the scroll bar (using a mouse gives you RSI)
@@ -41,15 +50,12 @@ The startup settings inhibit startup messages and screen.
 (setq
   inhibit-startup-message t
   inhibit-startup-screen t
-  display-time-24hr-format t
 )
-
 ;; Visual enhancements
 ;; Load theme
 (load-theme 'tsdh-dark)
-;; Hide toolbar
+;; Hide toolbar and scroll bars
 (tool-bar-mode nil)
-;; Hide scroll bars
 (scroll-bar-mode -1)
 ;; Highlight current line
 (global-hl-line-mode 1)
@@ -60,6 +66,7 @@ This section contains basic Emacs mechanics.
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html][Save desktop]] on exit
 - Emacs uses both Yes/No and Y/N to ask for [[https://www.emacswiki.org/emacs/YesOrNoP][confirmation]]. I find this added security unnecessary and change it to single letter responses.
 - Enable horizontal mouse scroll
+- [[https://masteringemacs.org/article/introduction-to-ido-mode][IDo Mode]] (Interactively DO things) makes life a bit easier when switching buffers.
 #+BEGIN_SRC emacs-lisp
 ;; Save all backup files in one folder.
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -76,15 +83,13 @@ This section contains basic Emacs mechanics.
 ;; Mouse scrolling
 (global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
 (global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
-#+END_SRC
-*** Packages
-Setting the locations of package repositories.
 
-#+BEGIN_SRC emacs-lisp
-(package-initialize)
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")))
+;; IDo mode
+(require 'ido)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+(setq ido-file-extensions-order '(".org" ".fountain" ".R" ".el"))
 #+END_SRC
 ** Editing
 This snippet changes the editing settings to my liking.
@@ -97,14 +102,14 @@ This snippet changes the editing settings to my liking.
 
 ;; Common User Access
 (cua-mode t)
-
 ;; Line wrapping
 (global-visual-line-mode t)
-
-;; Spell checking
-(add-hook 'org-mode-hook 'turn-on-flyspell)
+;; Spell checking for Org and Fountain modes
+(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 (add-hook 'fountain-mode-hook 'turn-on-flyspell)
 (global-set-key (kbd "<f7>") 'ispell-word)
+;;Dired
+(put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
 ** Calendar settings
 - First day of the week is Monday
@@ -112,11 +117,22 @@ This snippet changes the editing settings to my liking.
 #+BEGIN_SRC emacs-lisp
 ;; First day of te week
 (setq calendar-week-start-day 1)
+
 #+END_SRC
 * Developing code
 ** TODO ESS
+#+BEGIN_SRC emacs-lisp
+;; Emacs Speaks Statistics
+(require 'ess-site)
+;; Or Babel
+(org-babel-do-load-languages
+    'org-babel-load-languages '((R . t)))
+#+END_SRC
 ** Magit
-Magit is almost like magic.
+
+Magit is almost like magic. 
+
+This line of code for your init file creates a shortcut to open the Magit status screen. When you type =C-x g=, the Magit status screen for the folder of your current buffer is shown.
 #+BEGIN_SRC emacs-lisp
 ;; Magit
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -137,11 +153,19 @@ Magit is almost like magic.
   '((sequence "TODO(t)" "WAITING(w)" "PROJECT(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)")))
 #+END_SRC
 ** Make life easier
-- helm-org-rifle searches through Org files
+- [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] searches through your open Org files.
+- [[https://github.com/alphapapa/org-web-tools/tree/58c37ab50e99775cf4ed3d6884aa9c3f45d855de][org-web-tools]] Commands and functions for retrieving web page content and processing it into and displaying it as Org-mode content.
+  - =C-x p l= converts a link in the clipboard to an Org Mode link
+  - =C-x p i= copies the content of the page in the clipboard to an Org Mode entry.
 #+BEGIN_SRC emacs-lisp
 ;; helm org rifle
 (require 'helm-org-rifle)
 (global-set-key (kbd "C-x C-r") 'helm-org-rifle)
+
+;; org web tools
+(require 'org-web-tools)
+(global-set-key (kbd "C-x p l") 'org-web-tools-insert-link-for-url)
+(global-set-key (kbd "C-x p i") 'org-web-tools-insert-web-page-as-entry)
 #+END_SRC
 ** Visual elements
 - [[https://orgmode.org/manual/Clean-view.html][Clean view]]
@@ -164,18 +188,121 @@ Magit is almost like magic.
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "C-c C-x n") 'ddz-org-insert-drawer-note))
 #+END_SRC
+** Org-Capture
+Org-Mode helps you quickly capture ideas that are not related to your current workflow with [[https://orgmode.org/manual/Capture.html][Org Capture]]. Add your idea and keep working without switching applications or files. Org Capture is great for journal entries, adding tasks to your inbox, create a shopping list and whatever else you like to collect as random thoughts. [[https://cestlaz.github.io/posts/using-emacs-23-capture-1/#.W24BAhgRUVs][Mike Zamansky]] has written excellent instructions on using Org Capture.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-capture-templates
+    '(("a" "Appointment" entry (file  "~/Dropbox/orgfiles/gcal.org" "Appointments")
+	 "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
+	("n" "Note" entry (file+headline "~/Dropbox/orgfiles/notes.org" "Notes")
+	 "* Note %?\n%T")
+	("l" "Link" entry (file+headline "~/Dropbox/orgfiles/links.org" "Links")
+	 "* %? %^L %^g \n%T" :prepend t)
+	("b" "Blog idea" entry (file+headline "~/Dropbox/orgfiles/i.org" "Blog Topics:")
+	 "* %?\n%T" :prepend t)
+	("t" "To Do Item" entry (file+headline "~/Dropbox/orgfiles/i.org" "To Do Items")
+	 "* %?\n%T" :prepend t)
+	("j" "Journal" entry (file+datetree "~/Dropbox/journal.org")
+	 "* %?\nEntered on %U\n  %i\n  %a")
+	("s" "Screencast" entry (file "~/Dropbox/orgfiles/screencastnotes.org")
+	 "* %?\n%i\n")))
+#+END_SRC
 ** Export
+These settings define how Org Mode exports files to \LaTeX. The export classes define the various document types.
+
 #+BEGIN_SRC emacs-lisp
 ;; Smart quotes
 (setq org-export-with-smart-quotes t)
+
+;; American Psychological Association papers
+(add-to-list 'org-latex-classes '("apa6"
+"\\documentclass[a4paper, jou, 11pt]{apa6}
+\\usepackage[british]{babel}
+\\usepackage{inputenc}
+\\usepackage{amsmath}
+\\usepackage{graphicx}
+\\usepackage{csquotes}
+\\usepackage[hyphens]{url}
+\\usepackage[T1]{fontenc}
+\\usepackage{lmodern}
+\\usepackage{hyperref}"
+("\\section{%s}" . "\\section*{%s}")
+("\\subsection{%s}" . "\\subsection*{%s}")
+))
+
+;; ebooks using memoir
+(add-to-list 'org-latex-classes '("ebook"
+"\\documentclass[11pt, oneside]{memoir}
+\\setstocksize{9in}{6in}
+\\settrimmedsize{\\stockheight}{\\stockwidth}{*}
+\\setlrmarginsandblock{2cm}{2cm}{*} % Left and right margin
+\\setulmarginsandblock{2cm}{2cm}{*} % Upper and lower margin
+\\checkandfixthelayout
+\\usepackage{times}
+\\usepackage[british]{babel}
+\\usepackage[raggedright]{sidecap}
+\\setsecheadstyle{\\normalfont \\raggedright \\textbf}
+\\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
+\\usepackage[labelformat=empty, font=small]{caption}
+\\usepackage{pdfpages}
+\\usepackage[unicode=true,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,bookmarksopenlevel=1,
+ breaklinks=true,pdfborder={0 0 0},backref=false,colorlinks=false,pdfborderstyle={/S/U/W .5}, allbordercolors={.8 .8 .8}]
+ {hyperref}
+\\pagestyle{myheadings}
+\\setcounter{tocdepth}{0}
+\\usepackage{ccicons}
+\\OnehalfSpacing
+\\usepackage[authoryear]{natbib}
+"
+("\\chapter{%s}" . "\\chapter*{%s}")
+("\\section{%s}" . "\\section*{%s}")
+("\\subsection{%s}" . "\\subsection*{%s}")
+))
+
+;;Two-coumn instruction sheets
+(add-to-list 'org-latex-classes '("magictrick"				  
+"\\documentclass[11pt, a4paper, twocolumn, twoside]{article}
+\\usepackage{ccicons}
+\\usepackage{pdfpages}
+\\usepackage{times}
+\\usepackage{helvet}
+\\usepackage{geometry}
+\\geometry{a4paper, total={170mm,250mm}, left=20mm, top=30mm}
+% header 2008 x 332 px
+\\usepackage{titlesec}
+\\titleformat{\\section}
+  {\\bfseries}{\\thesection}{1em}{}
+\\titleformat{\\subsection}
+  {\\itshape}{\\thesection}{1em}{}
+\\usepackage{fancyhdr}
+\\usepackage[hidelinks]{hyperref}
+\\pagestyle{fancy}
+\\renewcommand{\\headrulewidth}{0pt}
+\\renewcommand{\\footrulewidth}{0pt}
+\\setlength\\headheight{100.0pt}
+\\addtolength{\\textheight}{-100.0pt}
+\\fancyhead[LO]{\\Large{\\textsf{Magic Perspectives Presents}} \\includegraphics[width=\\textwidth]{header}}
+\\fancyhead[LE]{\\includegraphics[width=0.5\\textwidth]{header}}
+\\lfoot{Peter Prevos}
+\\rfoot{\\href{https://magicperspectives.net}{magicperspectives.net}}
+"
+("\\section{%s}" . "\\section*{%s}")
+("\\subsection{%s}" . "\\subsection*{%s}")
+))				  
 #+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
 ;; Trust all code embedded in Org files
 (setq org-confirm-babel-evaluate nil)
+
+;; Fontify source code in source snippets
+(setq org-src-fontify-natively t)
 #+END_SRC
 
-* TODO Emacs Speaks Statistics (ESS)
+* Emacs Speaks Statistics (ESS)
 #+BEGIN_SRC emacs-lisp
 
 #+END_SRC
+
