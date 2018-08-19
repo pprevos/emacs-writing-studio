@@ -15,7 +15,7 @@ The idea to tangle an og mode file to configure Emacs is based on work by
 ** Redefine configuration file
 Emacs includes a configuration system that will write settings to the init file. This code snippet redefines the name of this file to ensure the =init.el= file is not overwritten by the configuration system.
 
-The custom configuration file is loaded and so any settings in the init file will append or override the custom settings.
+The custom configuration file is loaded first, and so any settings in the init file will append or override the custom settings.
 #+BEGIN_SRC emacs-lisp
 ;; Emacs init file
 ;; https://github.com/pprevos/EmacsLife
@@ -34,13 +34,13 @@ Setting the locations of package repositories.
 (add-to-list 'package-archives 
     '("org" . "https://orgmode.org/elpa/") t)
 #+END_SRC
-
 ** Visual elements
 - The startup settings inhibit startup messages and screen.
 - Loads the theme
 - Hides the toolbar (who needs icons anyway?)
-- Hides the scroll bar (using a mouse gives you RSI)
+- Hides the scroll bar (using a mouse too often gives you RSI)
 - Subtly highlight the current line to find your cursor
+- Silence the [[https://www.emacswiki.org/emacs/AlarmBell][Alarm Bell]].https://www.emacswiki.org/emacs/AlarmBell
 #+BEGIN_SRC emacs-lisp
 ;; This init file is generated with an Org-Mode file. 
 ;; Any manual changes will be overwritten by the script.
@@ -59,6 +59,8 @@ Setting the locations of package repositories.
 (scroll-bar-mode -1)
 ;; Highlight current line
 (global-hl-line-mode 1)
+;; Silence the alarm
+(setq ring-bell-function 'ignore)
 #+END_SRC   
 ** Emacs mechanics
 This section contains basic Emacs mechanics.
@@ -67,23 +69,21 @@ This section contains basic Emacs mechanics.
 - Emacs uses both Yes/No and Y/N to ask for [[https://www.emacswiki.org/emacs/YesOrNoP][confirmation]]. I find this added security unnecessary and change it to single letter responses.
 - Enable horizontal mouse scroll
 - [[https://masteringemacs.org/article/introduction-to-ido-mode][IDo Mode]] (Interactively DO things) makes life a bit easier when switching buffers.
+
 #+BEGIN_SRC emacs-lisp
+;; Emacs mechanics 
+
 ;; Save all backup files in one folder.
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-
 ;; Save desktop
 (desktop-save-mode 1)
-
 ;; Yes or No
 (defalias 'yes-or-no-p 'y-or-n-p)
-
 ;; Auto revert file when changed outside of Emacs
 (global-auto-revert-mode 1)
-
 ;; Mouse scrolling
 (global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
 (global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
-
 ;; IDo mode
 (require 'ido)
 (setq ido-enable-flex-matching t)
@@ -91,10 +91,12 @@ This section contains basic Emacs mechanics.
 (ido-mode 1)
 (setq ido-file-extensions-order '(".org" ".fountain" ".R" ".el"))
 #+END_SRC
+
 ** Editing
 This snippet changes the editing settings to my liking.
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/CUA-Bindings.html][CUA mode]] (Common User Acess) to enable =C-c= for copy, =C-v= for paste, and so on.
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Visual-Line-Mode.html][Visual Line Mode]] wraps long lines near the window edge.
+- [[https://fountain.io/][Fountain mode]] for writing scripts.
 - [[https://www.emacswiki.org/emacs/FlySpell][FlySpell]] for spell-checking on the fly. The F7 key is mapped to suggesting alternatives for misspelled words.
 
 #+BEGIN_SRC emacs-lisp
@@ -104,38 +106,28 @@ This snippet changes the editing settings to my liking.
 (cua-mode t)
 ;; Line wrapping
 (global-visual-line-mode t)
+
+;;Enable Fountain mode
+(require 'fountain-mode)
+
 ;; Spell checking for Org and Fountain modes
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 (add-hook 'fountain-mode-hook 'turn-on-flyspell)
 (global-set-key (kbd "<f7>") 'ispell-word)
+
 ;;Dired
 (put 'dired-find-alternate-file 'disabled nil)
+
+;;Auto complete
+(require 'auto-complete)
+(global-auto-complete-mode t)
 #+END_SRC
 ** Calendar settings
 - First day of the week is Monday
-- Dutch holidays
+- Dutch holidays (TODO)
 #+BEGIN_SRC emacs-lisp
 ;; First day of te week
 (setq calendar-week-start-day 1)
-
-#+END_SRC
-* Developing code
-** TODO ESS
-#+BEGIN_SRC emacs-lisp
-;; Emacs Speaks Statistics
-(require 'ess-site)
-;; Or Babel
-(org-babel-do-load-languages
-    'org-babel-load-languages '((R . t)))
-#+END_SRC
-** Magit
-
-Magit is almost like magic. 
-
-This line of code for your init file creates a shortcut to open the Magit status screen. When you type =C-x g=, the Magit status screen for the folder of your current buffer is shown.
-#+BEGIN_SRC emacs-lisp
-;; Magit
-(global-set-key (kbd "C-x g") 'magit-status)
 #+END_SRC
 * Org-Mode
 ** Basic configuration
@@ -151,6 +143,11 @@ This line of code for your init file creates a shortcut to open the Magit status
 ;; Workflow states
 (setq org-todo-keywords
   '((sequence "TODO(t)" "WAITING(w)" "PROJECT(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)")))
+#+END_SRC
+** Agenda settings
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-skip-deadline-if-done t
+      org-agenda-skip-scheduled-if-done t)
 #+END_SRC
 ** Make life easier
 - [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] searches through your open Org files.
@@ -175,7 +172,7 @@ This line of code for your init file creates a shortcut to open the Magit status
 (setq org-hide-emphasis-markers t
       org-hide-leading-stars t
       org-startup-indented t)
-
+;; Image size
 (setq org-image-actual-width 600)
 #+END_SRC
 
@@ -208,11 +205,12 @@ Org-Mode helps you quickly capture ideas that are not related to your current wo
 	("s" "Screencast" entry (file "~/Dropbox/orgfiles/screencastnotes.org")
 	 "* %?\n%i\n")))
 #+END_SRC
-** Export
+** \LaTeX export
 These settings define how Org Mode exports files to \LaTeX. The export classes define the various document types.
 
 #+BEGIN_SRC emacs-lisp
 ;; Smart quotes
+(require 'ox-latex)
 (setq org-export-with-smart-quotes t)
 
 ;; American Psychological Association papers
@@ -299,10 +297,31 @@ These settings define how Org Mode exports files to \LaTeX. The export classes d
 
 ;; Fontify source code in source snippets
 (setq org-src-fontify-natively t)
+
+;; Enable R coding
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)))
 #+END_SRC
+* Data Science
+[[https://ess.r-project.org/][Emacs Speaks Statistics]] (ESS) supports editing of scripts and interaction with various statistical analysis programs such as R. You also need to install the R software. Run an E terminal with =M-x R= and enter the preferred working directory.
 
-* Emacs Speaks Statistics (ESS)
+In ESS, the underscore key is mapped to the =<-= assignment operator in R. If you need an underscore, you need to type it twice. This functionality can be annoying when you are an avid user of ggplot. The [[https://github.com/mattfidler/ess-smart-underscore.el][ess-smart-underscore]] package solves this issue by allowing a single underscore in certain circumstances.
+
 #+BEGIN_SRC emacs-lisp
-
+;; Emacs Speaks Statistics
+(require 'ess-site)
+(require 'ess-smart-underscore)
+;; Use Alt Return to execute one line of code
+(define-key ess-mode-map (kbd "M-RET") 'ess-eval-region-or-line-and-step)
+;; Or Babel
+(org-babel-do-load-languages
+    'org-babel-load-languages '((R . t)))
+#+END_SRC
+** Magit
+Magit implements Git in Emacs and is almost like magic. This line of code creates the  =C-x g= shortcut to open the Magit status screen.
+#+BEGIN_SRC emacs-lisp
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
 #+END_SRC
 
