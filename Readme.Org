@@ -12,4 +12,4 @@ This repository contains my configurations and documentation on how I run my lif
   - Crunch numbers
   - Have fun
 
-
+[[file:emacs-swiss-army-knife.jpg]]
