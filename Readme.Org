@@ -3,5 +3,6 @@
 
 This repository contains my configurations and documentation on how I run my life with Emacs.
 
-- =InitFiles.Org=: Creating Init files using literate programming.
+- =InitFiles.org=: Creating Init files using literate programming.
+- =SwissArmyChainsaw.org=: How to be productive with Emacs.
 
