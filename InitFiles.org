@@ -3,30 +3,49 @@
 #+PROPERTY: header-args :tangle yes :tangle ~/.emacs.d/init.el :results silent
 
 * Introduction
-Emacs uses an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Init File]] to store all configurations. This file creates an /Init File/ using literate programming principles to document and define the configuration. 
+Emacs uses an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Init File]] in the =.emacs= folder or the home folder to store all configurations. The init file is the starting point to personalise your Emacs experience. This file ensures that the computer behaves the way you want it to, instead of the other way around.
 
-To write the configuration file, execute =C-c C-v C-t= (=org-babel-tangle=). This command will read all source code sections in this file and concatenate them into the =.emacs/init.el= file.
+This Org file creates an /Init File/ using literate programming to document and define the configuration. To create the configuration file, execute =C-c C-v C-t= (=org-babel-tangle=). This function reads all source code in this file and concatenates them into the one =.emacs/init.el= file.
 
-If you like to try these settings without creating a new file, then type =C-c C-v C-b= to evaluate all code blocks. You can also evaluate each code block individually with =C-c C-c= or each line separately with =C-x C-e=. Emacs will ask you to confirm that you want to execute code. To stop Emacs asking for confirmation, run =(setq org-confirm-babel-evaluate nil)=.
+If you like to try these settings without creating a new file, then type =C-c C-v C-b= to evaluate all code blocks. You can also evaluate each code block individually with =C-c C-c=, or each line separately with =C-x C-e=. Emacs will ask you to confirm that you want to execute code. To stop Emacs asking for confirmation, run =(setq org-confirm-babel-evaluate nil)=.
 ** Credits
-The idea to tangle an og mode file to configure Emacs is based on work by
+The idea to tangle an Org Mode file to configure Emacs is based on work by
 [[https://github.com/freetonik/emacs-dotfiles][freetonik]].
 * Basic Configuration
-** Redefine configuration file
-Emacs includes a configuration system that will write settings to the init file. This code snippet redefines the name of this file to ensure the =init.el= file is not overwritten by the configuration system.
+This file creates an =init.el= file in the =.emacs= folder. This is one of the three possible ways to create an init file. I prefer storing everything in the =.emacs= folder because it keeps all configurations in one folder, which is easy to backup.
+** Redefine configuration
+Emacs includes a configuration system that writes settings to the init file on the fly. This code snippet redefines the name of this file to ensure the =init.el= file is not modified by the configuration system. If the configuration system uses the =init.el= file, then tangling this file will overwrite any previous configurations.
 
-The custom configuration file is loaded first, and so any settings in the init file will append or override the custom settings.
+The custom configuration file is loaded first. Any settings in the =init.el= file will append or override the configuration.
+
 #+BEGIN_SRC emacs-lisp
 ;; Emacs init file
 ;; https://github.com/pprevos/EmacsLife
 
+;; ***What does this mean?
+(package-initialize)
+
 ;; keep customize settings in their own file
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
-(load custom-file))
+    (load custom-file)
+)
+#+END_SRC
+
+** Movement
+- Enable horizontal mouse scroll
+- Enable shift-select in org Mode. Use the =M--= or =M-+= keys. [[https://www.gnu.org/software/emacs/manual/html_node/org/Conflicts.html][Conflicts - The Org Manual]]
+#+BEGIN_SRC emacs-lisp
+;; Mouse scrolling
+(global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
+(global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
+
+;; Enable shift-select in org mode
+ '(org-replace-disputed-keys t)
 #+END_SRC
 ** Packages
-Setting the locations of package repositories.
+Defining the locations of additional package repositories.
+
 #+BEGIN_SRC emacs-lisp
 (require 'package)
 (add-to-list 'package-archives
@@ -34,13 +53,15 @@ Setting the locations of package repositories.
 (add-to-list 'package-archives 
     '("org" . "https://orgmode.org/elpa/") t)
 #+END_SRC
+
 ** Visual elements
 - The startup settings inhibit startup messages and screen.
-- Loads the theme
-- Hides the toolbar (who needs icons anyway?)
-- Hides the scroll bar (using a mouse too often gives you RSI)
+- Load the theme
+- Hide the toolbar (who needs icons anyway?)
+- Hide the scroll bar (using a mouse too often gives you RSI)
 - Subtly highlight the current line to find your cursor
-- Silence the [[https://www.emacswiki.org/emacs/AlarmBell][Alarm Bell]].https://www.emacswiki.org/emacs/AlarmBell
+- Silence the [[https://www.emacswiki.org/emacs/AlarmBell][Alarm Bell]]
+
 #+BEGIN_SRC emacs-lisp
 ;; This init file is generated with an Org-Mode file. 
 ;; Any manual changes will be overwritten by the script.
@@ -55,24 +76,24 @@ Setting the locations of package repositories.
 ;; Load theme
 (load-theme 'tsdh-dark)
 ;; Hide toolbar and scroll bars
-(tool-bar-mode nil)
+(tool-bar-mode -1)
 (scroll-bar-mode -1)
 ;; Highlight current line
 (global-hl-line-mode 1)
 ;; Silence the alarm
 (setq ring-bell-function 'ignore)
 #+END_SRC   
+
 ** Emacs mechanics
 This section contains basic Emacs mechanics.
 - All backup files saved in the same folder. The =backup-directory-alist= function lets you modify that behaviour. I prefer to store all backup files in one folder to avoid cluttering document folders.
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html][Save desktop]] on exit
 - Emacs uses both Yes/No and Y/N to ask for [[https://www.emacswiki.org/emacs/YesOrNoP][confirmation]]. I find this added security unnecessary and change it to single letter responses.
-- Enable horizontal mouse scroll
+- Auto revert will update open buffers that were modified by another program.
 - [[https://masteringemacs.org/article/introduction-to-ido-mode][IDo Mode]] (Interactively DO things) makes life a bit easier when switching buffers.
 
 #+BEGIN_SRC emacs-lisp
 ;; Emacs mechanics 
-
 ;; Save all backup files in one folder.
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 ;; Save desktop
@@ -81,9 +102,6 @@ This section contains basic Emacs mechanics.
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; Auto revert file when changed outside of Emacs
 (global-auto-revert-mode 1)
-;; Mouse scrolling
-(global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
-(global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
 ;; IDo mode
 (require 'ido)
 (setq ido-enable-flex-matching t)
@@ -93,89 +111,112 @@ This section contains basic Emacs mechanics.
 #+END_SRC
 
 ** Editing
-This snippet changes the editing settings to my liking.
-- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/CUA-Bindings.html][CUA mode]] (Common User Acess) to enable =C-c= for copy, =C-v= for paste, and so on.
+This snippet changes various editing settings to my personal liking.
+- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/CUA-Bindings.html][CUA mode]] (Common User Acess) to enable =C-c= for copy, =C-v= for paste, and so on (possibly frowned-upon by hardcore Emacs users).
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Visual-Line-Mode.html][Visual Line Mode]] wraps long lines near the window edge.
-- [[https://fountain.io/][Fountain mode]] for writing scripts.
 - [[https://www.emacswiki.org/emacs/FlySpell][FlySpell]] for spell-checking on the fly. The F7 key is mapped to suggesting alternatives for misspelled words.
+- [[https://fountain.io/][Fountain mode]] for writing theatre scripts.
+- Olivetti mode for distraction-free writing
 
 #+BEGIN_SRC emacs-lisp
 ;; Editing configuration
+
+;;Enable Fountain mode
+(require 'fountain-mode)
 
 ;; Common User Access
 (cua-mode t)
 ;; Line wrapping
 (global-visual-line-mode t)
 
-;;Enable Fountain mode
-(require 'fountain-mode)
-
 ;; Spell checking for Org and Fountain modes
-(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
+(add-hook 'org-mode-hook 'turn-on-flyspell)
 (add-hook 'fountain-mode-hook 'turn-on-flyspell)
 (global-set-key (kbd "<f7>") 'ispell-word)
 
 ;;Dired
 (put 'dired-find-alternate-file 'disabled nil)
+(require 'dired-x)
 
 ;;Auto complete
 (require 'auto-complete)
 (global-auto-complete-mode t)
+
+;; Olivetti mode
+(require 'olivetti)
+(setq olivetti-body-width 100)
 #+END_SRC
 ** Calendar settings
 - First day of the week is Monday
 - Dutch holidays (TODO)
+
 #+BEGIN_SRC emacs-lisp
+;; Calendar settings
 ;; First day of te week
 (setq calendar-week-start-day 1)
 #+END_SRC
+
 * Org-Mode
-** Basic configuration
+** GTD configuration
+- The first part of the configuration sets the [[https://orgmode.org/manual/Activation.html#Activation][default keyboard shortcuts]] for Org Mode.
 - [[https://orgmode.org/manual/Workflow-states.html#Workflow-states][Workflow states]]
+- Logging [[https://orgmode.org/manual/Repeated-tasks.html][repeated actions]] is disabled
+- Agenda commands
 
 #+BEGIN_SRC emacs-lisp
-;; Keyboard shortcuts
+;; Org Mode settings
+
+;; Org Mode Keyboard shortcuts
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-iswitchb)
 
 ;; Workflow states
-(setq org-todo-keywords
-  '((sequence "TODO(t)" "WAITING(w)" "PROJECT(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)")))
-#+END_SRC
-** Agenda settings
-#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w@)" "PARKED(p)" "|" "DONE(d)" "CANCELLED(c@)")))
+(setq org-log-done 'time)
+;; Agenda settings
 (setq org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t)
 #+END_SRC
-** Make life easier
-- [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] searches through your open Org files.
-- [[https://github.com/alphapapa/org-web-tools/tree/58c37ab50e99775cf4ed3d6884aa9c3f45d855de][org-web-tools]] Commands and functions for retrieving web page content and processing it into and displaying it as Org-mode content.
-  - =C-x p l= converts a link in the clipboard to an Org Mode link
-  - =C-x p i= copies the content of the page in the clipboard to an Org Mode entry.
-#+BEGIN_SRC emacs-lisp
-;; helm org rifle
-(require 'helm-org-rifle)
-(global-set-key (kbd "C-x C-r") 'helm-org-rifle)
 
-;; org web tools
-(require 'org-web-tools)
-(global-set-key (kbd "C-x p l") 'org-web-tools-insert-link-for-url)
-(global-set-key (kbd "C-x p i") 'org-web-tools-insert-web-page-as-entry)
+** Org-Capture
+Org-Mode helps you quickly capture ideas that are not related to your current workflow with [[https://orgmode.org/manual/Capture.html][Org Capture]]. Add your idea and keep working without switching applications or files. Org Capture is great for journal entries, adding tasks to your inbox, create a shopping list and whatever else you like to collect as random thoughts. [[https://cestlaz.github.io/posts/using-emacs-23-capture-1/#.W24BAhgRUVs][Mike Zamansky]] has written excellent instructions on using Org Capture.
+
+This capture setup
+- Add actions to inbox in Getting Things Done file
+- Add notes to journal
+
+#+BEGIN_SRC emacs-lisp
+;; Org capture
+(setq org-capture-templates '(("t" "Todo to inbox" entry
+                               (file+headline "~/Dropbox/GTD/GettingThingsDone.org" "Inbox")
+                               "* TODO %i%?")
+                              ("n" "Note to inbox" entry
+                               (file+headline "~/Dropbox/GTD/GettingThingsDone.org" "Inbox")
+                               "* %i%? \n %U")
+                               ("j" "Journal Entry"
+                               entry (file+datetree "~/Documents/ThirdHemisphere/Journal.org")
+                               "* %?")))
+;; refiling captured entries
+(setq org-reverse-note-order t)
+(setq org-refile-targets '(("~/Dropbox/GTD/GettingThingsDone.org" :maxlevel . 2)
+                           ("~/Documents/HorizonOfReason/HorizonOfReason.org" :level . 1)))
 #+END_SRC
 ** Visual elements
 - [[https://orgmode.org/manual/Clean-view.html][Clean view]]
 - Set image preview with to 600 pixels
+
 #+BEGIN_SRC emacs-lisp
-;; Clean outline view
+;; Org Mode Clean outline view
 (setq org-hide-emphasis-markers t
       org-hide-leading-stars t
       org-startup-indented t)
-;; Image size
+;; Org Mode Image preview size
 (setq org-image-actual-width 600)
 #+END_SRC
 
+** Additional functionality
 #+BEGIN_SRC emacs-lisp
 ;; Insert NOTES drawer
 ;; by u/alecigne
@@ -184,26 +225,6 @@ This snippet changes the editing settings to my liking.
   (org-insert-drawer nil "NOTES"))
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "C-c C-x n") 'ddz-org-insert-drawer-note))
-#+END_SRC
-** Org-Capture
-Org-Mode helps you quickly capture ideas that are not related to your current workflow with [[https://orgmode.org/manual/Capture.html][Org Capture]]. Add your idea and keep working without switching applications or files. Org Capture is great for journal entries, adding tasks to your inbox, create a shopping list and whatever else you like to collect as random thoughts. [[https://cestlaz.github.io/posts/using-emacs-23-capture-1/#.W24BAhgRUVs][Mike Zamansky]] has written excellent instructions on using Org Capture.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-capture-templates
-    '(("a" "Appointment" entry (file  "~/Dropbox/orgfiles/gcal.org" "Appointments")
-	 "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
-	("n" "Note" entry (file+headline "~/Dropbox/orgfiles/notes.org" "Notes")
-	 "* Note %?\n%T")
-	("l" "Link" entry (file+headline "~/Dropbox/orgfiles/links.org" "Links")
-	 "* %? %^L %^g \n%T" :prepend t)
-	("b" "Blog idea" entry (file+headline "~/Dropbox/orgfiles/i.org" "Blog Topics:")
-	 "* %?\n%T" :prepend t)
-	("t" "To Do Item" entry (file+headline "~/Dropbox/orgfiles/i.org" "To Do Items")
-	 "* %?\n%T" :prepend t)
-	("j" "Journal" entry (file+datetree "~/Dropbox/journal.org")
-	 "* %?\nEntered on %U\n  %i\n  %a")
-	("s" "Screencast" entry (file "~/Dropbox/orgfiles/screencastnotes.org")
-	 "* %?\n%i\n")))
 #+END_SRC
 ** \LaTeX export
 These settings define how Org Mode exports files to \LaTeX. The export classes define the various document types.
@@ -290,18 +311,20 @@ These settings define how Org Mode exports files to \LaTeX. The export classes d
 ("\\subsection{%s}" . "\\subsection*{%s}")
 ))				  
 #+END_SRC
-** Babel
+** Make life easier
+- [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] searches through your open Org files.
+- [[https://github.com/alphapapa/org-web-tools/tree/58c37ab50e99775cf4ed3d6884aa9c3f45d855de][org-web-tools]] Commands and functions for retrieving web page content and processing it into and displaying it as Org-mode content.
+  - =C-x p l= converts a link in the clipboard to an Org Mode link
+  - =C-x p i= copies the content of the page in the clipboard to an Org Mode entry.
 #+BEGIN_SRC emacs-lisp
-;; Trust all code embedded in Org files
-(setq org-confirm-babel-evaluate nil)
+;; helm org rifle
+(require 'helm-org-rifle)
+(global-set-key (kbd "C-x C-r") 'helm-org-rifle)
 
-;; Fontify source code in source snippets
-(setq org-src-fontify-natively t)
-
-;; Enable R coding
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((R . t)))
+;; org web tools
+(require 'org-web-tools)
+(global-set-key (kbd "C-x p l") 'org-web-tools-insert-link-for-url)
+(global-set-key (kbd "C-x p i") 'org-web-tools-insert-web-page-as-entry)
 #+END_SRC
 * Data Science
 [[https://ess.r-project.org/][Emacs Speaks Statistics]] (ESS) supports editing of scripts and interaction with various statistical analysis programs such as R. You also need to install the R software. Run an E terminal with =M-x R= and enter the preferred working directory.
@@ -317,11 +340,34 @@ In ESS, the underscore key is mapped to the =<-= assignment operator in R. If yo
 ;; Or Babel
 (org-babel-do-load-languages
     'org-babel-load-languages '((R . t)))
+
+;; Indicate the matching parenthesis
+(show-paren-mode)
 #+END_SRC
+
+** Babel
+
+#+BEGIN_SRC emacs-lisp
+;; Trust all code embedded in Org files
+(setq org-confirm-babel-evaluate nil)
+
+;; Fontify source code in source snippets
+(setq org-src-fontify-natively t)
+
+;; Enable R coding
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)))
+#+END_SRC
+
+
 ** Magit
 Magit implements Git in Emacs and is almost like magic. This line of code creates the  =C-x g= shortcut to open the Magit status screen.
 #+BEGIN_SRC emacs-lisp
 ;; Magit
 (global-set-key (kbd "C-x g") 'magit-status)
 #+END_SRC
-
+** Smartparens
+#+BEGIN_SRC emacs-lisp
+(require 'smartparens)
+#+END_SRC
