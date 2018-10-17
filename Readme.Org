@@ -4,7 +4,7 @@
 This repository contains my configurations and documentation on how I run my life with Emacs.
 
 - =InitFiles.org=: Creating Init files using literate programming.
-- =SwissArmyChainsaw.org=: How to be productive with Emacs. This book will discuss how to use Emacs to:
+- [[https://github.com/pprevos/EmacsLife/blob/master/SwissArmyChainsaw.org][SwissArmyChainsaw.org]]: How to be productive with Emacs. This book will discuss how to use Emacs to:
   - Write prose
   - Produce academic papers
   - Publish books
