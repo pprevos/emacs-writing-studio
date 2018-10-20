@@ -2,7 +2,7 @@
 #+TITLE: More productive with Emacs --- The Ultimate Killer App
 #+PROPERTY: header-args :results silent
 #+BEGIN_EXPORT latex
-%\includepdf[fitpaper=true]{"MoebiusCover"}
+%\includepdf[fitpaper=true]{"EmacsCover"}
 \frontmatter
 \title{\textbf{\Huge{}Emacs, the Ultimate Productivity App}\vspace{2cm}\\
 \textbf{The Swiss-Army Chainsaw of Productivity Software}\vspace{4cm}}
@@ -54,78 +54,83 @@ one.}
 \tableofcontents*
 #+END_EXPORT
 * Preface
-I started my first moves into computing when I bought a second-hand ZX 81 from a friend when I was 14 years old. This tiny computer with its one kilobyte of memory opened a whole new world for me. It did not come with any software and I did not have the money to pay for games, which in those days was sold on cassette tapes. After booting the ZX 81, the screen simply tells you how many bytes are available for you to fill with your own code. This machine propelled me on an amazing journey of learning how to program in Atari BASIC. I later upgraded to an Atari 130XE and spent my teenage years writing software and playing games---while my friends had girlfriends.
+I started my first moves into computing when I bought a second-hand ZX 81 from a friend when I was 14 years old. This tiny computer with its one kilobyte of memory opened a whole new world for me. It did not come with any software and I did not have the money to pay for games. After booting the ZX 81, the screen simply tells you how many bytes are available for you to fill with your own code. This machine propelled me on an amazing journey of learning how to program BASIC. I later upgraded to an Atari 130XE and spent my teenage years writing software and playing games---while my friends had girlfriends.
 
-During this time, my best friend's mother complained about the amount of time we spend in front of a screen. My response was that our time using a computer was not only about passively playing games, but it was also about creativity and I showed her some of the software we developed. Computing in those days was about creativity and learning how to make the computer work for you.
+During this time, my best friend's mother complained about the amount of time we spend in front of a screen. My response was that our time using a computer was not only about passively playing games, it was also about creativity. I showed her some of the software we developed and convinced her that computing and creativity go hand-in-hand. 
 
-I never pursued software development as a career, and studied civil engineering because my father was a builder and I grew up around construction sites. Not following in his footsteps was unthinkable for me at that time. While studying civil engineering, I wrote software in PASCAL to solve mathematical problems. 
+When I started my civil engineering career, I discovered /Lotus 123/ and became a spreadsheet fanatic and forgot about writing code. After a while, I was no longer instructing the computer to do what I wanted it to do, but spent my time finding workarounds within packaged software to meet my needs. The collection of software I used to achieve my goals kept growing and most applications only lasted until the next best thing came along. It took me almost two decades to return to creative computing.
 
-When I started my career, I discovered /Lotus 123/ and became a spreadsheet fanatic and forgot about writing code. After a while, I was no longer instructing the computer to do what I wanted it to do but spent my time finding workarounds within packaged software to meet my needs. The collection of software I used to achieve my goals kept growing and most applications only lasted until the next best thing came along. It took almost two decades to return to creative computing.
+As I was writing my dissertation, I recognised that spreadsheets were unable to meet my needs. Researching solutions, I rediscovered the power of writing code by using the R language and returned to computing the way it was intended. The essence of computing is to instruct a machine what to do to achieve your objectives, rather than adjusting your workflow to the software. I wrote my dissertation in \LaTeX and analysed and visualised data using R. While my fellow PhD candidates were struggling with Microsoft Word, Excel and other packages, I was able to quickly produce a beautifully typeset academic book.
 
-As I was writing my dissertation, I recognised that spreadsheets were unable to meet my needs. Researching solutions, I rediscovered the almost almighty power of writing code in R and returned to computing the way it is intended. Computing is about instructing machine what to do to achieve your objectives rather than adjusting to packaged software. I wrote my dissertation in \LaTeX and analysed and visualised data using R. While my fellow PhD candidates were struggling with Microsoft Word, I was able to quickly produce a beautifully typeset piece of work.
+However, I was still using too many applications to achieve what I wanted. The workflow to create my dissertation was effective but I still relied on a daisy-chain of software. I had heard about Emacs some years ago, but I was never able to recognise its true value. After I graduated I finally had time to experiment and decided to travel the steep Emacs learning curve to see what the fuss was all about. It took me a few days to get the basic principles under my belt and a few months to become proficient enough to write this book about Emacs. I now use Emacs for almost all my offline computing activities, including writing this book, and I don't think I will ever need to learn new software again.
 
-However, my problem was that I was still using too many applications to achieve what I wanted. The workflow to create my dissertation was effective but I still relied on a daisy-chain of software to create my work. I had heard about Emacs some years ago, but I was never able to recognise its value. after I graduated I finally had time to experiment and decided to travel the steep learning curve to see what the fuss was all about. It took me a week or so to get the basic principles under my belt and about a few months to become proficient. I now use Emacs for almost all my computing activities and I don't think I will ever need to learn new software again. 
+When I first opened Emacs, I had the same feeling as when I first booted my ZX81 home computer. Staring at a blank screen I had no idea what to do. Rather than seeing this as a negative, I started reminiscing about the wonderful days of 8-bit computing and decided to take the plunge and learn Emacs. The most powerful lesson I learnt from mastering Emacs is that anything with a steep learning curve is worthwhile learning. 
 \mainmatter
 * Introduction
 ** The Quest for Productivity
-Methods to increase productivity a dime-a-dozen on the internet. In our time poor world, everybody seems to want to cram more stuff into their day. Judging by the abundant literature, you can become so productive that "getting things done" only takes a "four hour work week". We achieve these almost magical powers by learning from the "habits of highly effective people" who seem to "eat frogs" for breakfast. A whole library of books with advice on how to get more from your time are published each year. In the wake of all this great advice, developers release a plethora of software to help you become more productive. From software behemoths such as Microsoft's OneNote to mobile apps such as Todoist, the market is saturated with solutions.
+Methods to increase your productivity a dime-a-dozen on the internet. In our time poor world, everybody seems to want to cram more stuff into their day. Judging by the abundant literature, you can become so productive that "getting things done" only takes a "four hour work week". We achieve these almost magical powers by learning from the "habits of highly effective people" who seem to "eat frogs" for breakfast. A whole library of books with advice on how to get more from your time are published each year. In the wake of all this great advice, developers release a plethora of software to help you become more productive. From software behemoths such as Microsoft's OneNote to mobile apps such as Todoist, the market is saturated with solutions.
 
 In spite of this bonanza of books and apps to increase your productivity, everybody is still looking for the one killer method that will solve all your problems. On social media networks, people often discuss their quest for a more productive life. These discussions revolve around either the perfect method or the perfect applications.
 
-The ongoing quest for the perfect application is a big productivity sink because learning new software and moving your information from one to the another system does not make you productive. Just like many other people, I have wasted a lot of time thinking about productivity and trying various methods and apps, rather than just getting hings done. The biggest secret to getting things done is to simply buckle yourself in and do them. Remember, creative geniuses such as Rembrandt, J.S. Back or Frank Zappa never used productivity hacks or software to manage their time.
+The ongoing quest for the perfect application is a big productivity sink because learning new software and moving your information from one to the another system does not make you productive. Just like many other people, I have wasted a lot of time thinking about productivity and trying various methods and apps, rather than just getting hings done. The biggest secret to getting things done is to simply buckle yourself in and do them. Remember, creative geniuses such as Rembrandt, J.S. Bach or Frank Zappa never used productivity hacks or software to manage their time.
 
 This is a slightly unfair statement because productivity in the twenty-first century is very much related to creating digital products in the form of software, text, music and film. Using software to manage your creative process is therefore an essential part of the contemporary creative process.
 
-The good news is that my search for the killer app is over since I started using Emacs. This book explains how to use this amazing piece of software in the most simple terms. This book is essentially a journal of my journey into the world of Emacs. When I started to learn how to use this software, I documented what I learnt as I progressed, which eventually became the content of this book. This book is an example of what Emacs can do as it is written, designed and typeset in Emacs, using the Org Mode and \laTeX packages.
+The good news is that your search for the killer app is over as soon as you start using Emacs. This book explains how to use this amazing piece of software in the most simple terms. This book is essentially a journal of my journey into the world of Emacs. When I started to learn how to use this software, I documented what I learnt as I progressed, which eventually became the content of this book. This book is an example of what Emacs can do as it is written, designed and typeset in Emacs, using the Org Mode and \laTeX packages.
+
+This book is different to most other Emacs books because it does not focus on functionality but on outcomes. Whenever I read traditional computing books it takes me a while to put what I have learned in practice because these books often are just lists of functions you can perform with the software. Reading this book teaches you enough to start writing articles and books, manage projects and actions and undertake other creative projects.
+
+This book is not a comprehensive manual of Emacs but an opinionated description of how to achieve a series of tasks. The text in this book is opinionated because it describes only one or two ways of achieving an objective. The nature of Emacs is that there are many ways to achieve the same thing. This freedom is both a strength and a weakness of Emacs. This book aim to shorten the learning curve as much as possible so that you can become creative and productive. If after reading this book you like to know more detail, then I highly recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron or /Mastering Emacs/ by Mickey Petersen.
 
 Emacs is one of the most versatile pieces of software imaginable. When you work with Emacs you literally have everything you need at your fingertips. Some users jokingly state that their operating system is merely a means to be able to use Emacs. The multi-functionality of Emacs comes at a price, there is a steep leaning curve and there are no pretty interfaces. Once you conquer these hurdles, a world of productivity and computing bliss awaits. This book aims to make it as easy as possible for you to enter into the Emacs universe and start using your computer the way it was intended.
 
 Before I delve into Emacs, I fist like to share some of my experience with using software and managing my productivity. I share this not because I think that my life is fascinating, but it will place the approach I describe in this book in some context.
 ** Introducing Emacs
-*** History
+*** What is Emacs?
 I only discovered Emacs a few years ago, after almost thirty years of trying many different approaches: paper notebooks, mobile apps, databases and so on. My late introduction to this system is ironic because Emacs itself is more than thirty years old. The first version was released in 1976 when Richard Stallman wrote the first Emacs ("Editor MACroS"), based on the even older TECO editor. 
 
-Emacs is a contradiction in the software world because a general wisdom is that the older the software, the worse it becomes. Emacs has survived this long because ...
-*** What is Emacs?
-Emacs is a text editor, or more precisely, a LISP compiler with an embedded text editor. Emacs is essentially a configurable text editor, Notepads on acid if you like. To say that Emacs is a just text editor is like saying that a Swiss army knife is just a knife. Emacs is the Swiss Army chainsaw of the software world. 
+Emacs is a contradiction in the software world because general wisdom suggests that the older the software, the worse it becomes. Emacs has survived this long because of its versatility and flexibility.
 
-The user can configure almost everything in the system with just a little bit of knowledge of the Emacs LISP language. This knowledge requirement might seem a hurdle but it will actually set you free to enjoy your computer the way it was originally intended. Software needs to adjust to  the user, not the other way around as is the case in most modern packages.
+Emacs is a text editor, or more precisely, a LISP compiler with an embedded text editor. Emacs is essentially a configurable text editor, kinda like Notepad on acid if you like. To say that Emacs is a text editor is like saying that a Swiss army knife is just a knife. Emacs is the Swiss Army chainsaw of the software world.
 
-The wonderful advantage of this approach is that you have complete freedom over how us use this software. You can make it do almost anything you like and configure it to your specific needs. The disadvantage is that it requires a wholly different approach to computing compared to contemporary software. Using Emacs throws you back to the original intent of using a computer, real user power, but with a steep learning curve.
+In line with postmodern philosophy, in Emacs everything is a text. Spreadsheets are just collections of text, numbers and formulas, action lists are texts, internet pages mostly consist of text and so on. Even images and videos are essentially a text, in that they are a string of numbers converted to colours. This principle allows Emacs to undertake a whole range of tasks, from writing a book to developing software, analysing data or play a games.
 
-In line with postmodern philosophy, in Emacs everything is a text. Spreadsheets are just collections of text, numbers and formulas, action lists are texts, internet pages mostly consist of text and so on. Even images and videos are essentially a text, in that they are a string of numbers converted to colours. This principle allows Emacs to undertake a whole range of tasks, from writing a book to developing software, analysing data or even play a game. 
+The user can configure almost everything in the system with just a little bit of knowledge of the Emacs LISP language. This knowledge requirement might seem a hurdle but it will actually set you free to enjoy your computer the way it was originally intended. Software should adjust to the user, not the other way around as is the case in most modern packages.
+
+The wonderful advantage of this approach is that you have complete freedom over how us use this software. You can instruct it to do almost anything you like and configure it to your specific needs. The disadvantage is that it requires a wholly different approach to computing compared to contemporary software. Using Emacs throws you back to the original intent of using a computer, real user power, but not without a steep learning curve. 
 *** Redefining user-friendliness
-The first hurdle for new users is that Emacs doesn't look like a slick twenty-first century application but more like an angry fruit salad. The lack of slick design might discourage new users because they are used to point their mouse or finger at colourful icons. 
+The first hurdle for new users is that Emacs doesn't look like a slick twenty-first century application but more like an angry fruit salad. The lack of slick Apple-esque design might discourage new users because they are used to point their mouse or finger at colourful icons.
 
-Emacs is almost totally based on keyboard shortcuts. Memorising the many shortcuts needed to make Emcas work for you might seem daunting, but your muscle memory will quickly take over from conscious thought. Using the keyboard is a much faster and more versatile way to instruct your computer what you want it to do. Minimising the amount of time you use your mouse is also better for your health.
+Emacs is almost totally based on keyboard shortcuts. Memorising the many shortcuts needed to make Emcas work for you might seem daunting, but your muscle memory will quickly take over from conscious thought. Using the keyboard is a much faster and more versatile way to instruct your computer what you want it to do. Minimising the amount of time you use your mouse is also reduces the risk or Repetitive Strain Injury..
 
-Contemporary software follows the "What You See is What You Get" (WYSYWIG) principle. Graphical interfaces seek to simulate the real world by making things like pieces of paper on a desktop. You point click and drag documents into folders, documents appear as the would on paper.
+Contemporary software follows the "What You See is What You Get" (WYSYWIG) principle. Graphical interfaces simulate the physical world by making things look like pieces of paper on a desktop. You point click and drag documents into folders, documents appear as the would on paper and when you are done they go into the rubbish bin.
 
-Emacs and similar systems use the "What You See is What You Want" (WYSIWYW) principle. As I am writing this book I don't see what it will look like in printed form as you would using Microsoft Word. In Emacs I only see text, images and some small bits of code to instruct the computer to typeset the document. This allows me to focus on writing and producing text instead of worrying about the end product. 
+Emacs and similar text editors use the "What You See is What You Want" (WYSIWYW) principle. As I am writing this book I don't see what it will look like in printed form as you would using Microsoft Word. In Emacs I only see text, images and some small bits of code to instruct the computer how to typeset the document. This allows me to focus on writing and producing text instead of worrying about the end product. 
 
-The What-You-See-Is-Whay-You-Get approach distracts the mind away from the text and lures you into fiddling with formatting. A lot of time is wasted in offices trying to format or typeset documents, time that could be spend producing content. Following the Emacs way will help you become more productive by worrying about the design of the document after you write the text, not during the writing or simply use a template and let the computer do the design.
+The What-You-See-Is-Whay-You-Get approach distracts the mind from the text and lures the user into fiddling with formatting. A lot of office time is wasted trying to format or typeset documents, time that could be spend producing content. Following the Emacs way will help you become more productive by worrying about the design of the document until after you complete the text. As I am writing this book, it only takes a few keystrokes to convert the flat text into a fully formatted pdf ebook, ready for distribution.
+
+True user friendliness only exists when the user has full control over the software. Emacs allows you to do exactly that, which is the way computing was intended.
 *** The learning curve
-The second hurdle is that when you first open Emacs, all you see is a text editor and a splash screen. To make Emacs work for you, you will need to learn the basics principles of using the editor and learn some of the many associated add-on packages. 
+The second hurdle is that when you first open Emacs, all you see is a splash screen. To make Emacs work for you, you will need to learn the basics principles of using the editor and learn some of the many associated add-on packages. 
 
 One of the main strengths of Emacs is that it is almost infinitely extensible. Emacs is not just a text editor, it also has its own programming language. This language allows users to have develop extensions to Emacs that move its functionality far beyond a text editor.
 
-When I first opened Emacs, I had the same feeling as when I first booted my ZX81 home computer. Staring at a blank screen I had no idea what to do. Rather than seeing this as a negative, I started reminiscing about the wonderful days of 8-bit computing and decided to take the plunge and learn Emacs. The most powerful lesson I learnt from mastering Emacs is that anything with a steep learning curve is worthwhile learning. 
+This books helps you navigate this learning curve by only explaining the basic functionality you need to become productive, rather than providing a comprehensive overview of its functionality.
 *** The Swiss-Army Chainsaw
-Emacs is my note taking application, I am writing this book in Emacs, I have spreadsheets in Emacs, develop data science code in R, play music, manage files, and son on. While Emacs is primarily used by software developers, it can be used for a whole lot more. Anyone who works professionally or creatively with text and numbers will find something of value in Emacs.
+Emacs is my note taking application, I am writing this book in Emacs, I have spreadsheets in Emacs, develop data science code in R, play music, read books, manage files, and so on. While Emacs is primarily used by software developers, it can be used for a whole lot more. Anyone who works professionally or creatively with text and numbers will find something of value in Emacs.
 
 There are several major advantages of using Emacs as a replacement for most of your computing needs: 
-
-1. Using one piece of software to manage most of your computing activities makes you more productive because you only need to master one system. Emacs has been around for decades and its open structure allows it to be around for several more.
+1. One piece of software to manage most of your computing activities makes you more productive because you only need to master one system. Emacs has been around for decades and its open structure allows it to be around for several more.
 2. All your information is stored in a simple text file. You will never have any problems with compatibility due to esoteric file formats that render your accessible only by one piece of software.
 3. You can modify everything in the software to make it suit your specific workflow. 
 4. Emacs runs on all the major operating systems: Windows, GNU/Linux and Apple's OS X.
 5. Emacs is open source and supported by a large group of people. Help is always easy to get.
-
-For me personally, Emacs has made computing fun again and has thrown me back to the creative days of 8-bit computing. 
 **** Limitations of Emacs
 After singing the praises of this multi-functional editor you would almost think that Emacs is the omnipotent god of software. 
 
-Being a text editor, opportunities to create graphics in Emacs are limited. You can display images and integrate them with text, but Emacs has limited functionality to modify graphical files. If you need to manage photograph then perhaps you should consider using GIMP (GNU Image Manipulation Program).
+Being a text editor, opportunities to create graphics in Emacs are limited. You can display images and integrate them with text, but Emacs has limited functionality to create or modify graphical files. If you need to manage photograph then perhaps you should consider using GIMP (GNU Image Manipulation Program).
+
+Emacs is also not ready for the age of cloud computing. 
 *** Emacs versions
 ** This book
 This book seeks to introduce a wide range of activities you can do in Emacs. This book is mainly written for people who are still looking for the killer app to manage their productivity. Using Emacs is not for the faint of heart. The learning curve is steep and assumes that have some affinity with computing beyond simply using office software. To really make Emacs sing you need to feel comfortable with writing or manipulating short snippets of code. 
@@ -246,6 +251,7 @@ Just like many other Open Source packages, such as $/LaTeX$ and R, a massive lib
 One of the most often used packages is Org Mode. This Emacs extension helps you to manage your projects and actions and is a great text editor to develop a personal Wiki, write papers and books or websites. Much of the content of this book revolves around Org Mode.
 *** Starter kits
 * Composing Prose
+** Introduction
 Microsoft Word has dominated the writing world for several decades now. When I started my career, everybody used Wordperfect on a simple screen with a blue background. ** limited formatting shown on the screen. When Microsoft released the first version of Word with its What You See is What You Get (WYSIWYG) philosophy, everybody quickly switched over.
 
 Before I started writing in Emacs Org Mode I used a range of word processors and most recently Scrivener. This chapter shows how you can use Emacs and Org Mode to write different types of text with the same, if not better functionality than the more popular alternatives. I use Org Mode to write this book, I also use it to write blog articles, journal articles and research notes.
@@ -429,11 +435,26 @@ If you like to hide the duplicate asterisks and indent the entries, then add the
       org-startup-indented t)
 #+END_SRC
 
-*** 
 * Your Second Brain
-Org Mode is a very versatile mode that I use for almost all my Emacs activities. Most of my org files are pages full of notes about various topics. These files form a personal wiki with links between topics, images, links to external resources and whatever else I want to dump.
+Org Mode is a very versatile major mode that by itself is worth switching to Emacs for. I use Org Mode for almost all Emacs activities. Most of my org files are pages full of notes about various topics. These files form a personal wiki with links between topics, images, external resources and whatever else I want to dump into an organised chaos.
+** Basic setup
+Before you can use org Mode effectively you should set some default keyboard shortcuts that are not defined at startup. The Org Mode manual recommends the following configuration for your init file. I strongly recommend using these defaults because they are often referenced in documentation.
 
+#+BEGIN_SRC emacs-lisp
+;; Default Org Mode Keyboard shortcuts
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cl" 'org-store-link)
+#+END_SRC
+
+The [[Getting Things Done]] chapter discusses the org-agenda function. The org-iswitchb function (=C-c b=) makes switching to another Org Mode buffer easier. Instead of having to choose between all open buffers, you only see the open Org Mode buffers. The org-capture function (=C-c c=) provides powerful options to capture and store information. Lastly, the the org-store-link (=C-c l=) function helps to create new hyperlinks to internal and external sources. The last three functions in this list play an important role in converting Emacs into your private version of Wikipedia.
+** Personal Wiki
+A Wiki is a document that multiple people
+
+A personal Wiki is a 
 ** Hyperlinks
+One of the main characteristics of a Wiki
 Org mode documents can contain a lot of different types of links
 *** Internal links
 *** External links
@@ -444,9 +465,21 @@ The =org-cliplink= package makes this process a little simpler. When you press =
 *** Other links
 When you write about a journal article with a DOI number (Document Object Identifier), simply type the =doi:= followed by the number, e.g. doi:10.21139/wej.2017.008. The link is automatically created and will take you straight to the journal article page.
 
-
-
 ** Searching your knowledge
+
+** Capture ideas
+Imagine you are in a boring meeting you are wading through your emails to make the most of your time. You keep your auditory system focused on what is being said and every now and then something interesting needs to be noted down. 
+
+With Emacs you can do this without loosing your train of thought. You hit =C-c c= and another the org Capture buffer appears. After you store that note with =C-c C-c=, you can continue with responding to your emails.
+
+The Org Capture functionality is without much doubt one of the greatest functionalities that comes shipped with Emacs. You don't need to leave the buffer you are working on and the disruption to take this note is minimal.
+
+The org Capture functionality is extensive and this section only explains a very basic use case. In the [[Getting Things Done]] chapter adds some more use cases.
+
+Before you can get 
+* Researching
+** Reading pdf files
+** Bibliographies
 * Getting Things Done
 :NOTES:
 - [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html][Orgmode for GTD]]
@@ -495,13 +528,11 @@ Keep writing until your mind is empty. If the list only has about a dozen items,
 ** Engage: Take action
 
 
-
 ** Objectives, projects and actions
 You next step is to start sorting the list into a logical structure. You can move Org Mode headings (those starting with asterisks) with the modify key and the arrow up or down (=M-UP=, =M-DOWN=). If you like to add headings, such as 'Chores' or 'Work', then simply add another entry without the todo keyword. 
 
 By adding extra asterisks to the heading, Org Mode will indent it below the previous one. This way, Org Mode builds a tree of entries. A quicker way to create a hierarchy is by pressing =M-<left>= or =M-<right>=. To shift a whole subtree, use =M-S-<left>/<right>=.
 
- 
 ** The Agenda
 When you do your writing in Org Mode, as described in chapter *, you can easily add action items to each of the headings. 
 
@@ -600,8 +631,6 @@ Spreadsheets within org are great for simple applications because it can get unw
 If you need to exchange the information in an Org table with other software, then you can export the table to a CSV file.
 
 
-
-
 ** Data Science in Emacs
 As a data scientist, I write a lot of code. Documenting code is always problematic because the text is separated from the code. This section describes how I integrate code with Org Mode files to combine my text with analysis and embed visualisations. I am assuming you know the basics of R. If you use another language to analyse information, such as Python, 
 
@@ -622,7 +651,6 @@ The
 The underscore key in =ESS= is mapped to 
 
 When you need to actually use an underscore, you have to press the key twice.
-
 
 
 *** Org Babel
