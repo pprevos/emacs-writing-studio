@@ -1,6 +1,9 @@
 #+LaTeX_CLASS: ebook
 #+TITLE: More productive with Emacs --- The Ultimate Killer App
 #+PROPERTY: header-args :results silent
+#+TODO: DRAFT EDITED FINAL
+#+OPTIONS: todo:nil
+
 #+BEGIN_EXPORT latex
 %\includepdf[fitpaper=true]{"EmacsCover"}
 \frontmatter
@@ -53,7 +56,7 @@ one.}
 \newpage{}
 \tableofcontents*
 #+END_EXPORT
-* Preface
+* DRAFT Preface
 I started my first moves into computing when I bought a second-hand ZX 81 from a friend when I was 14 years old. This tiny computer with its one kilobyte of memory opened a whole new world for me. It did not come with any software and I did not have the money to pay for games. After booting the ZX 81, the screen simply tells you how many bytes are available for you to fill with your own code. This machine propelled me on an amazing journey of learning how to program BASIC. I later upgraded to an Atari 130XE and spent my teenage years writing software and playing games---while my friends had girlfriends.
 
 During this time, my best friend's mother complained about the amount of time we spend in front of a screen. My response was that our time using a computer was not only about passively playing games, it was also about creativity. I showed her some of the software we developed and convinced her that computing and creativity go hand-in-hand. 
@@ -66,11 +69,11 @@ However, I was still using too many applications to achieve what I wanted. The w
 
 When I first opened Emacs, I had the same feeling as when I first booted my ZX81 home computer. Staring at a blank screen I had no idea what to do. Rather than seeing this as a negative, I started reminiscing about the wonderful days of 8-bit computing and decided to take the plunge and learn Emacs. The most powerful lesson I learnt from mastering Emacs is that anything with a steep learning curve is worthwhile learning. 
 \mainmatter
-* Introduction
+* DRAFT Introduction
 :NOTES:
-Explain what Emacs is and isn't.
+The purpose of this chapter is to sell Emacs and the book.
 :END:
-** The Quest for Productivity
+** DRAFT The Quest for Productivity
 Methods to increase your productivity a dime-a-dozen on the internet. In our time poor world, everybody seems to want to cram more stuff into their day. Judging by the abundant literature, you can become so productive that "getting things done" only takes a "four hour work week". We achieve these almost magical powers by learning from the "habits of highly effective people" who seem to "eat frogs" for breakfast. A whole library of books with advice on how to get more from your time are published each year. In the wake of all this great advice, developers release a plethora of software to help you become more productive. From software behemoths such as Microsoft's OneNote to mobile apps such as Todoist, the market is saturated with solutions.
 
 In spite of this bonanza of books and apps to increase your productivity, everybody is still looking for the one killer method that will solve all your problems. On social media networks, people often discuss their quest for a more productive life. These discussions revolve around either the perfect method or the perfect applications.
@@ -88,7 +91,7 @@ This book is not a comprehensive manual of Emacs but an opinionated description 
 Emacs is one of the most versatile pieces of software imaginable. When you work with Emacs you literally have everything you need at your fingertips. Some users jokingly state that their operating system is merely a means to be able to use Emacs. The multi-functionality of Emacs comes at a price, there is a steep leaning curve and there are no pretty interfaces. Once you conquer these hurdles, a world of productivity and computing bliss awaits. This book aims to make it as easy as possible for you to enter into the Emacs universe and start using your computer the way it was intended.
 
 Before I delve into Emacs, I fist like to share some of my experience with using software and managing my productivity. I share this not because I think that my life is fascinating, but it will place the approach I describe in this book in some context.
-** This book
+** DRAFT This book
 This book seeks to introduce a wide range of activities you can do in Emacs. This book is mainly written for people who are still looking for the killer app to manage their productivity. Using Emacs is not for the faint of heart. The learning curve is steep and assumes that have some affinity with computing beyond simply using office software. To really make Emacs sing you need to feel comfortable with writing or manipulating short snippets of code. 
 
 Emacs is a universe in itself and I am certainly not an Emacs expert. I started writing this book to document my knowledge and to expand what I know to do even more in Emacs. This book only presents one solution for each problem. Being an infinitely extensible piece of software, Emacs has many solutions to solve the same problem, depending on your preferences. The methods in this book work for me, but you might want to explore other ways to achieve your goals. This is the best thing about Emacs, it makes computing fun again because you are in control of the software, instead of the other way around.
@@ -96,8 +99,8 @@ Emacs is a universe in itself and I am certainly not an Emacs expert. I started 
 This book has a different approach to most Emacs books and websites because it describes how to be productive rather than introducing long lists of functions and keyboard shortcuts. Emacs is introduced in simple steps to simulate the natural learning process.
 
 This book does not provide a complete description of every function you need to run your life in Emacs. There are many fantastic resources available on the World Wide Web. Also the documentation integrated with Emacs provides very detailed information. This books guides you to solutions to computing problems and describes how to get started. The rest is up to you to explore.
-** Introducing Emacs
-*** What is Emacs?
+** DRAFT Introducing Emacs
+*** DRAFT What is Emacs?
 I only discovered Emacs a few years ago, after almost thirty years of trying many different approaches: paper notebooks, mobile apps, databases and so on. My late introduction to this system is ironic because Emacs itself is more than thirty years old. The first version was released in 1976 when Richard Stallman wrote the first Emacs ("Editor MACroS"), based on the even older TECO editor. 
 
 Emacs is a contradiction in the software world because general wisdom suggests that the older the software, the worse it becomes. Emacs has survived this long because of its versatility and flexibility.
@@ -109,7 +112,7 @@ In line with postmodern philosophy, in Emacs everything is a text. Spreadsheets 
 The user can configure almost everything in the system with just a little bit of knowledge of the Emacs LISP language. This knowledge requirement might seem a hurdle but it will actually set you free to enjoy your computer the way it was originally intended. Software should adjust to the user, not the other way around as is the case in most modern packages.
 
 The wonderful advantage of this approach is that you have complete freedom over how us use this software. You can instruct it to do almost anything you like and configure it to your specific needs. The disadvantage is that it requires a wholly different approach to computing compared to contemporary software. Using Emacs throws you back to the original intent of using a computer, real user power, but not without a steep learning curve. 
-*** Redefining user-friendliness
+*** DRAFT Redefining user-friendliness
 The first hurdle for new users is that Emacs doesn't look like a slick twenty-first century application but more like an angry fruit salad. The lack of slick Apple-esque design might discourage new users because they are used to point their mouse or finger at colourful icons.
 
 Emacs is almost totally based on keyboard shortcuts. Memorising the many shortcuts needed to make Emcas work for you might seem daunting, but your muscle memory will quickly take over from conscious thought. Using the keyboard is a much faster and more versatile way to instruct your computer what you want it to do. Minimising the amount of time you use your mouse is also reduces the risk or Repetitive Strain Injury..
@@ -121,13 +124,13 @@ Emacs and similar text editors use the "What You See is What You Want" (WYSIWYW)
 The What-You-See-Is-Whay-You-Get approach distracts the mind from the text and lures the user into fiddling with formatting. A lot of office time is wasted trying to format or typeset documents, time that could be spend producing content. Following the Emacs way will help you become more productive by worrying about the design of the document until after you complete the text. As I am writing this book, it only takes a few keystrokes to convert the flat text into a fully formatted pdf ebook, ready for distribution.
 
 True user friendliness only exists when the user has full control over the software. Emacs allows you to do exactly that, which is the way computing was intended.
-*** The learning curve
+*** DRAFT The learning curve
 The second hurdle is that when you first open Emacs, all you see is a splash screen. To make Emacs work for you, you will need to learn the basics principles of using the editor and learn some of the many associated add-on packages. 
 
 One of the main strengths of Emacs is that it is almost infinitely extensible. Emacs is not just a text editor, it also has its own programming language. This language allows users to have develop extensions to Emacs that move its functionality far beyond a text editor.
 
 This books helps you navigate this learning curve by only explaining the basic functionality you need to become productive, rather than providing a comprehensive overview of its functionality.
-*** The Swiss-Army Chainsaw
+*** DRAFT The Swiss-Army Chainsaw
 Emacs is my note taking application, I am writing this book in Emacs, I have spreadsheets in Emacs, develop data science code in R, play music, read books, manage files, and so on. While Emacs is primarily used by software developers, it can be used for a whole lot more. Anyone who works professionally or creatively with text and numbers will find something of value in Emacs.
 
 There are several major advantages of using Emacs as a replacement for most of your computing needs: 
@@ -136,34 +139,39 @@ There are several major advantages of using Emacs as a replacement for most of y
 3. You can modify everything in the software to make it suit your specific workflow. 
 4. Emacs runs on all the major operating systems: Windows, GNU/Linux and Apple's OS X.
 5. Emacs is open source and supported by a large group of people. Help is always easy to get.
-**** Limitations of Emacs
+**** TODO Limitations of Emacs
 After singing the praises of this multi-functional editor you would almost think that Emacs is the omnipotent god of software. 
 
 Being a text editor, opportunities to create graphics in Emacs are limited. You can display images and integrate them with text, but Emacs has limited functionality to create or modify graphical files. If you need to manage photograph then perhaps you should consider using GIMP (GNU Image Manipulation Program).
 
 Emacs is also not quite ready for the age of cloud computing. 
-* Getting Started
+* DRAFT Getting Started
 :NOTES:
 Introduction to using Emacs and how it is different from standard contemporary software. 
 :END:
-Starting Emacs for the first time felt like the first time I booted my ZX81 computer; an empty screen and a world of opportunity. Before we can start creating new books, software, poetry or whatever else your creative mind wants to produce, we need to understand some of the basic principles of Emacs. This chapter introduces some of the basic terminology and skills you need to know to enjoy the remainder of the book.
+Before we can start creating new books, software, poetry or whatever else your creative mind wants to produce, we need to understand some of the basic principles of Emacs. This chapter introduces the basic terminology and skills you need to know to enjoy the remainder of the book.
 ** Installing Emacs
 Emacs is available for the three most common desktop operating systems, Linux, Windows and OS X. Each of these has some different methods to install the software. The descriptions below get you started with installing Emacs.
 *** Windows
 *** Apple OS X
 David Caldwell maintains the Emcas for OS X version.
-*** GNU/Linux
+*** DRAFT GNU/Linux
 All major Linux distributions contain a version of Emacs which you can install the same way you install all other software. Some distributions also contain compiled versions of Emacs packages. The advantage of using these complied versions over installing them within Emacs is that your operating system will keep your software up to date. The disadvantage of this method is that these compiled packages are often several versions behind the most recent version. In Ubuntu, simply use the Software installer and search for Emacs. Make sure you install the GTK+ version, which works best with the default Gnome window manager. Please consult the relevant documentation for other distributions.
-** First steps
-Let's start Emacs an delve into your new computing environment. When you open Emacs for the first time, you are greeted by a splash screen. This splash screen gives access to the tutorial, a guided tour and the manual.
+** DRAFT First steps
+Let's start Emacs and delve into your new computing environment. When you open Emacs for the first time, you are greeted by a splash screen. This splash screen gives access to a tutorial, a guided tour and the manual. You can follow these links at your leisure.
 
-You can remove the splash screen by pressing =q=, which will take you to the scratch buffer. A buffer is a text in the Emacs memory and the scratch buffer is your personal scratch pad, which is enabled by default. This buffer is not saved and is used for taking temporary notes.
+You can remove the splash screen by pressing =q=, which will take you to the scratch buffer. A buffer is a text in the Emacs memory and the scratch buffer is your personal scratch pad, which is enabled by default. This buffer is not saved and is used for taking temporary notes. The scratch buffer is eased whenever you close Emacs, no questions asked.
 
-If you want to prevent the splash screen from ever appearing again, you need to modify your init file. This file, named =init.el= and located in the =.emacs.d= folder, is the central configuration file that turns Emacs into your bespoke personal digital assistant. Emacs also recognises other files as the init file. Many books and websites use the =.emacs= file in your home folder, which performs the same function. Using the =init.el= file in your =.emacs.d= folder is better because this keeps all your Emacs configuration in one location.
+If you want to prevent the splash screen from appearing again, you'll need to modify your 'init file'. This file, named =init.el= is located in the =.emacs.d= folder and it is the central configuration file that turns Emacs into your bespoke personal digital assistant. This file makes the software work they way you want to, instead of you working the way the software designers intended.
 
-Your init file will steadily grow over time as the ultimate form of computing self-expression. This file makes the software work they way you want to, instead of you working the way the software designers intended. Many Emacs users share their init files to show other users how they make their software work for them. Several authors have published starter kits with prefabricated init files for beginners. While these starter kits sound like a great idea, it is best to create your own step-by-step so you fully understand what is inside it. This book teaches you how to create an init file one step at a time.
+Emacs also recognises other files as the init file. Many books and websites use the =.emacs= file in your home folder. Using the =init.el= file in your =.emacs.d= folder is the preferred method because this keeps all your Emacs configuration in one folder.
 
-To create a new init file, type control X, followed by control F. At the bottom of the screen, the 'mini buffer', you'll now see the words =Find file: ~/=. Now type =.emacs.d/init.el= and hit enter. If this file already exists, then Emacs will open it. If this file does not exist, then Emacs will create an empty buffer.
+Your init file will steadily grow over time as the ultimate form of computing self-expression. Many Emacs users share their init files to show other users how they make their software work for them. Several authors have published starter kits with prefabricated init files for beginners. While these starter kits sound like a great idea, it is best to create your own configuration step-by-step so you fully understand what is inside it. This book teaches you how to create an init file one step at a time.
+
+To create a new init file, type control X, followed by control F. At the bottom of the screen, the 'mini buffer', you'll now see the words =Find file: ~/= (Figure *). Now type =.emacs.d/init.el= and hit enter. If this file already exists, then Emacs will open it. If this file does not exist, then Emacs will create an empty buffer.
+
+#+CAPTION: Finding or creating a new file.
+[[file:Images/find_file.png]]
 
 The init file is written in the Emacs LISP language. You will need some rudimentary skills in this language to optimise the configuration. If you like to never see the splash screen again when you start Emacs, then write the following lines in your newly created file:
 
@@ -172,7 +180,7 @@ The init file is written in the Emacs LISP language. You will need some rudiment
 (setq inhibit-startup-screen t)
 #+END_SRC
 
-The first line starts with two colons which means it is a comment to help the reader understand the content of the file. The second line is Elisp code that means the variable =inhibit-startup-screen= is set to true. This instructs Emacs to inhibit the startup screen when it is first loaded.
+The first line starts with two colons which means it is a comment to help the reader understand the content of the file. The second line is Elisp code that means the variable =inhibit-startup-screen= is set to true. This code instructs Emacs to inhibit the startup screen when the program is loaded.
 
 Save the file with control-S and you are done. The next time you start Emacs the splash screen will no longer appear. You have just taken your first step into developing your personal Emacs configuration file.
 ** Using Emacs
@@ -213,7 +221,6 @@ This cryptic statement basically means that you work in buffers, which are unsav
 In Emacs language, 
 
 When Emacs open a file it is stored in a buffer.
-
 ** Frames and Windows
 When you open Emacs without any configuration, it will display a single window within a frame. This terminology is the reverse of other software and is one of the many vestigial words in the Emacs vocabulary.
 
@@ -353,11 +360,9 @@ Flyspell
 =(add-hook 'org-mode-hook 'turn-on-flyspell)=
 
 ** Note taking
-
 *** Capture templates
 [[http://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/][Learn how to take notes more efficiently in Org Mode –]]
 *** Drawers
-
 Org Mode has a very nifty system called drawers. These are sections of text that can be used for a range of purposes. I mainly use drawers to add notes to a text that I am writing. These are usually notes about the purpose of a section, maximum word count or any other useful information.
 ** Counting Words
 Counting words is a basic activity when writing books or articles. Your teacher, lecturer or publisher might have expectations about the number of words in your work. As a writer I also like to keep track of the number of words in each section of my book to ensure a balance between each of the sections and chapters.
@@ -369,9 +374,7 @@ In Org Mode you can quickly select the subtree you are working with with =C-c @=
 The =org-wc= package provides is a useful add-on to Org Mode. This package  shows the word count per heading line, summed over each of the sub-headings.  This software is developed to be fast, so it doesn't check too carefully what it’s counting.
 
 
-
 The word count is displayed at the end of each heading. As soon as you start typing again, the word count disappears. 
-
 ** Images
 ** Exporting your work
 Org mode has excellent export facilities to covert your files to HTML, PDF (using $\LaTeX$) and OFT files, which can be read in Microsoft Word.
@@ -396,7 +399,7 @@ If you fancy yourself a script writer ready to develop the next blockbuster or c
 
 When you install Fountain mode, any file with the =.fountain= extension will be interpreted as a script. The text can be exported to many formats, such as PDF to share your work with others.
 ** Distraction-Free Writing
-*** Clean interface
+*** DRAFT Clean interface
 Writing takes full concentration to produce creative prose, which applies to fiction, non-fiction and writing code. Code is after all, in the words of the great Donald Knuth, poetry. Distractions are the natural enemy of concentration and while your computer is your most important writing tool, it can also be a source of distractions.
 
 Distraction-free writing means that your computer screen is free of clutter and, just like an old typewriter, only shows the text that you are working on. Emacs is quite distraction-free out of the box but you can fine tune some settings to 
@@ -408,7 +411,7 @@ You activate Olivetti mode with the =M-x olivetti-mode= command. This minor mode
 You can remove further distractions by hiding the icon toolbar, the menu bar and the scroll bar. The code lines below achieve all of this. You can enter these in your init file if you like Emacs to start in this way. If you type =M-x menu-bar-mode <RET>= Emacs will toggle between switching the menu bar on and off. The tool bar and the scroll bars are disabled with =M-x tool-bar= or =M-x scroll-bar-mode=.
 
 The next step to distraction-free writing is to disable any visual or audible notifications from your software. If you like to have some non-distracting background noise you can try some instrumental music from one of the many ambient noise websites. Chapter ** explains how to play music with Emacs.
-*** Managing distractions
+*** DRAFT Managing distractions
 When you are writing an important text it is inevitable that you mind wanders off to a different topic and all of a sudden you remember that you need to order theatre tickets. 
 
 Don't break your workflow but write it down and move on with your more creative work. Some authors keep a distraction notebook handy to write down anything that can be dealt with after your writing session.
@@ -490,7 +493,7 @@ Before you can get
 :NOTES:
 - [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html][Orgmode for GTD]]
 :END:
-** The Productivity Quest
+** DRAFT The Productivity Quest
 The quest to become more productive has become a popular past time by many people. Millions of people around the world struggle with the demands of life in the twenty-first century. Many people constantly look for ways to cram more action into their day. Self-proclaimed productivity gurus have published piles of popular books about methods to get more done in your limited available time.
 
 All these methods boil down to some simple principles: set a goal, define the actions to achieve that goal and undertake the actions. This might sound simplistic, but it is the basic truth. The plethora of published methods discuss the details of how to manage these three steps effectively and efficiently. A central theme of these methods is how to process the enormous amount of information that people are exposed to every day.
@@ -505,7 +508,7 @@ Org Mode is an ideal system to help you getting things done. The Org Mode packag
 4. Reflect: Reflect on your progress
 5. Engage: Take action
 
-** Capture: Empty your mind
+** DRAFT Capture: Empty your mind
 One of the reasons we are often not as productive as we like is because our minds are filled with issues. When our brain is full of thoughts about what we should do, we start to worry about how busy we are instead of doing the thing we need to do. David Allen says that "Our minds are for having ideas, not for holding them".
 
 The first step to getting things done is to empty your mind. This is not a Buddhist quest for enlightenment, but a simple technique to help you focus. A brain only has a limited capacity as we can only have one thought at a time. When your brain is full of thoughts about what you should be doing, then creative and productive thoughts are suppressed. The other problem with keeping ideas in your head is the risk that they will disappear. I am sure you all recognise the experience of having the most wonderful idea when enjoying your morning shower, only to being unable to recall it half an hour later. This section explains how to download your brain into Emacs and how you can convert this information in a powerful project management tool.
@@ -532,21 +535,18 @@ Keep writing until your mind is empty. If the list only has about a dozen items,
 ** Organise Place it where it belongs
 ** Reflect: Reflect on your progress
 ** Engage: Take action
-
-
 ** Objectives, projects and actions
 You next step is to start sorting the list into a logical structure. You can move Org Mode headings (those starting with asterisks) with the modify key and the arrow up or down (=M-UP=, =M-DOWN=). If you like to add headings, such as 'Chores' or 'Work', then simply add another entry without the todo keyword. 
 
 By adding extra asterisks to the heading, Org Mode will indent it below the previous one. This way, Org Mode builds a tree of entries. A quicker way to create a hierarchy is by pressing =M-<left>= or =M-<right>=. To shift a whole subtree, use =M-S-<left>/<right>=.
-
 ** The Agenda
 When you do your writing in Org Mode, as described in chapter *, you can easily add action items to each of the headings. 
 
 When you then add the document you are writing to the list agenda files by pressing =C-[=, all actions related to your writing project that have a deadline or scheduled date will appear in your agenda. This method creates a very organic link between your work and your todo list without having to switch applications. 
 
-*** TODO Does org mode export remove action deadlines etc?
+*** Does org mode export remove action deadlines etc?
 
-*** TODO Todo list for current buffer?
+*** Todo list for current buffer?
 
 *** Keeping times sheets
 I occasionally lecture marketing at the La Trobe University MBA. To get paid, the university requires me to keep a time sheet. Recording a time sheet often involves guesswork because keeping the exact times when you start and stop an activity can be a time-consuming task in itself. Org Mode makes recording the amount of time you spend on a task very easy.
@@ -676,16 +676,18 @@ After all this had work writing prose, building a second brain, getting things d
 ** Games
 Computer games are a generally a distraction from being productive, but not all distraction is useless. Sometimes the mind needs to be allowed to wander to become more creative. When you are in the middle of a game and have a great idea, just hit =C-c c= to capture the idea to your inbox, store it and keep playing.
 *** Tetris
-Everybody who has ever used a computer will most certainly know about Tetris. Since it was released in 1984, 170 million copies of the game have been sold. Russian computer engineer Alexey Pajitnov developed it while he worked for the Academy of Science of the Soviet Union in Moscow.
+Everybody who has ever used a computer will most certainly know about Tetris. Since it was released in 1984, 170 million copies of the game have been sold. Russian computer engineer Alexey Pajitnov developed it while he worked for the Academy of Science of the Soviet Union in Moscow. It was one the few capitalist successes to come from the former communist Soviet Union.
 
-The shapes in tetris are /tetrominoes/, which are geometric shapes composed of four orthogonally-connected squares. Tetris is the arcade version of the mathematical problem of tiling a space with a random set of tetromimoes. The name Tetris is a portmanteau of the words tetrominoes and tennis.
+The shapes in Tetris are /tetrominoes/, which are geometric shapes composed of four orthogonally-connected squares. Tetris is the arcade version of the mathematical problem of tiling a space with a random set of tetromimoes. The name Tetris is a portmanteau of the words tetrominoes and tennis.
 
 The Emacs open source clone of Tetris was developed by Glynn Clements. To start playing Tetris on Emacs, =M-x tetris=. You can manoeuvre the falling blocks with the arrow keys. The space bar drops the block and the =p= key pauses the game. If while playing you remind yourself that this is an unproductive use of your time then hit the =q= button to get back to work.
 
-[[file:tetris.jpg]]
+#+CAPTION: About to smash me personal record in Tetris.
+[[file:tetris.png]]
 
 *** Sokoban
 *** Psychologist
+If macs starts stressing you out than perhaps you like to speak to your own personal therapists. No need to book an expensive expert
 ** Music
 ** Videos
 * The future of Emacs
