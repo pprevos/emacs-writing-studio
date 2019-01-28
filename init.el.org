@@ -8,9 +8,6 @@ Emacs uses an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-F
 This Org file creates an /Init File/ using literate programming to document and define the configuration. To create the configuration file, execute =C-c C-v C-t= (=org-babel-tangle=). This function reads all source code in this file and concatenates them into the one =.emacs/init.el= file.
 
 If you like to try these settings without creating a new file, then type =C-c C-v C-b= to evaluate all code blocks. You can also evaluate each code block individually with =C-c C-c=, or each line separately with =C-x C-e=. Emacs will ask you to confirm that you want to execute code. To stop Emacs asking for confirmation, run =(setq org-confirm-babel-evaluate nil)=.
-** Credits
-The idea to tangle an Org Mode file to configure Emacs is based on work by
-[[https://github.com/freetonik/emacs-dotfiles][freetonik]].
 * Basic Configuration
 This file creates an =init.el= file in the =.emacs= folder. This is one of the three possible ways to create an init file. I prefer storing everything in the =.emacs= folder because it keeps all configurations in one folder, which is easy to backup.
 ** Redefine configuration
@@ -31,7 +28,6 @@ The custom configuration file is loaded first. Any settings in the =init.el= fil
     (load custom-file)
 )
 #+END_SRC
-
 ** Movement
 - Enable horizontal mouse scroll
 - Enable shift-select in org Mode. Use the =M--= or =M-+= keys. [[https://www.gnu.org/software/emacs/manual/html_node/org/Conflicts.html][Conflicts - The Org Manual]]
@@ -39,9 +35,6 @@ The custom configuration file is loaded first. Any settings in the =init.el= fil
 ;; Mouse scrolling
 (global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
 (global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
-
-;; Enable shift-select in org mode
- '(org-replace-disputed-keys t)
 #+END_SRC
 ** Packages
 Defining the locations of additional package repositories.
@@ -53,7 +46,6 @@ Defining the locations of additional package repositories.
 (add-to-list 'package-archives 
     '("org" . "https://orgmode.org/elpa/") t)
 #+END_SRC
-
 ** Visual elements
 - The startup settings inhibit startup messages and screen.
 - Load the theme
@@ -82,8 +74,7 @@ Defining the locations of additional package repositories.
 (global-hl-line-mode 1)
 ;; Silence the alarm
 (setq ring-bell-function 'ignore)
-#+END_SRC   
-
+#+END_SRC
 ** Emacs mechanics
 This section contains basic Emacs mechanics.
 - All backup files saved in the same folder. The =backup-directory-alist= function lets you modify that behaviour. I prefer to store all backup files in one folder to avoid cluttering document folders.
@@ -109,7 +100,6 @@ This section contains basic Emacs mechanics.
 (ido-mode 1)
 (setq ido-file-extensions-order '(".org" ".fountain" ".R" ".el"))
 #+END_SRC
-
 ** Editing
 This snippet changes various editing settings to my personal liking.
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/CUA-Bindings.html][CUA mode]] (Common User Acess) to enable =C-c= for copy, =C-v= for paste, and so on (possibly frowned-upon by hardcore Emacs users).
@@ -155,7 +145,6 @@ This snippet changes various editing settings to my personal liking.
 ;; First day of te week
 (setq calendar-week-start-day 1)
 #+END_SRC
-
 * Org-Mode
 ** GTD configuration
 - The first part of the configuration sets the [[https://orgmode.org/manual/Activation.html#Activation][default keyboard shortcuts]] for Org Mode.
@@ -164,20 +153,33 @@ This snippet changes various editing settings to my personal liking.
 - Agenda commands
 
 #+BEGIN_SRC emacs-lisp
-;; Org Mode settings
+  ;; Org Mode settings
 
-;; Org Mode Keyboard shortcuts
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-iswitchb)
+  ;; Org Mode Keyboard shortcuts
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cc" 'org-capture)
+  (global-set-key "\C-cb" 'org-iswitchb)
 
-;; Workflow states
-(setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w@)" "PARKED(p)" "|" "DONE(d)" "CANCELLED(c@)")))
-(setq org-log-done 'time)
-;; Agenda settings
-(setq org-agenda-skip-deadline-if-done t
-      org-agenda-skip-scheduled-if-done t)
+  ;; Workflow states
+  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w@/!)" "PARKED(p)" "|" "DONE(d!)" "CANCELLED(c@)")))
+
+  ;; Don't log state chages of repeated tasks
+  ;; Log changes in the logbook drawer
+  (setq org-log-repeat nil
+        org-log-into-drawer t
+        org-log-done 'time)
+
+  ;; Agenda settings
+  (setq org-agenda-skip-deadline-if-done t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-include-diary t)
+#+END_SRC
+*** Org Pomodoro
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "\C-cp") 'org-pomodoro)
+
 #+END_SRC
 
 ** Org-Capture
@@ -218,25 +220,68 @@ This capture setup
 
 ** Additional functionality
 #+BEGIN_SRC emacs-lisp
-;; Insert NOTES drawer
-;; by u/alecigne
-(defun ddz-org-insert-drawer-note ()
-  (interactive)
-  (org-insert-drawer nil "NOTES"))
-(with-eval-after-load 'org
-  (define-key org-mode-map (kbd "C-c C-x n") 'ddz-org-insert-drawer-note))
+  ;; Insert NOTES drawer
+  ;; by u/alecigne
+  ;; https://www.reddit.com/r/orgmode/comments/7awar9/how_to_create_a_keyboard_shortcut_to_crease_an/
+  (defun ddz-org-insert-drawer-note ()
+    (interactive)
+    (org-insert-drawer nil "NOTES"))
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "C-c C-x n") 'ddz-org-insert-drawer-note))
+
+  ;; Remove links
+  ;; By Chris
+  ;; https://emacs.stackexchange.com/questions/10707/in-org-mode-how-to-remove-a-link/21945#21945
+  (defun afs/org-replace-link-by-link-description ()
+    "Replace an org link by its description or if empty its address"
+    (interactive)
+    (if (org-in-regexp org-bracket-link-regexp 1)
+        (save-excursion
+          (let ((remove (list (match-beginning 0) (match-end 0)))
+                (description (if (match-end 3) 
+                                 (org-match-string-no-properties 3)
+                               (org-match-string-no-properties 1))))
+            (apply 'delete-region remove)
+            (insert description)))))
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "C-c C-x l") 'afs/org-replace-link-by-link-description))
 #+END_SRC
-** \LaTeX export
-These settings define how Org Mode exports files to \LaTeX. The export classes define the various document types.
+** Export
+These settings define how Org Mode exports files to LaTeX. The export classes define the various document types.
 
 #+BEGIN_SRC emacs-lisp
-;; Smart quotes
 (require 'ox-latex)
 (setq org-export-with-smart-quotes t)
+(setq org-export-latex-listings 'minted)
+(add-to-list 'org-latex-default-packages-alist '("" "minted"))
+(setq org-src-fontify-natively t)
+#+END_SRC
+*** Templates
+#+BEGIN_SRC emacs-lisp
+;; Springer
+(add-to-list 'org-latex-classes '("Springer"
+               "\\documentclass[natbib]{svjour3}
+               \\usepackage{hyperref}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+;; Taylor & Francis (Interacta)
+(add-to-list 'org-latex-classes '("TaylorFrancis"
+               "\\documentclass[largeformat]{interact}
+               \\usepackage{hyperref}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 ;; American Psychological Association papers
 (add-to-list 'org-latex-classes '("apa6"
 "\\documentclass[a4paper, jou, 11pt]{apa6}
+\\usepackage[nodoi]{apacite}
 \\usepackage[british]{babel}
 \\usepackage{inputenc}
 \\usepackage{amsmath}
@@ -310,6 +355,19 @@ These settings define how Org Mode exports files to \LaTeX. The export classes d
 ("\\section{%s}" . "\\section*{%s}")
 ("\\subsection{%s}" . "\\subsection*{%s}")
 ))				  
+#+END_SRC
+*** Referencing
+#+BEGIN_SRC emacs-lisp
+(require 'org-ref)
+(org-ref-define-citation-link "citeA" ?a)
+
+(setq org-latex-pdf-process
+'("pdflatex -interaction nonstopmode -output-directory %o %f"
+  "bibtex %b"
+  "pdflatex -interaction nonstopmode -output-directory %o %f"
+  "pdflatex -interaction nonstopmode -output-directory %o %f"))
+
+(define-key org-ref-cite-keymap (kbd "M-<right>") 'org-ref-next-key)
 #+END_SRC
 ** Make life easier
 - [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] searches through your open Org files.
