@@ -10,7 +10,7 @@ This book is not a comprehensive manual of Emacs but an opinionated description 
 
 This book aim to shorten the Emacs learning curve so that can be creative and productive instead. If you like to know more detail about Emacs, then I highly recommend you read other books such as [[http://shop.oreilly.com/product/9780596006488.do][Learning GNU Emacs]] by Debra Cameron or [[https://masteringemacs.org/book][Mastering Emacs]] by Mickey Petersen.
 
-[[file:3d_emacs_book.jpg]]
+[[file:Images/3d_emacs_book.jpg]]
 
 * My Init file
 =InitFiles.org=, creates my Init file using literate programming in Org Mode.

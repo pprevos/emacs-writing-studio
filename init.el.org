@@ -1,45 +1,40 @@
-#+TITLE: Emacs Configuration Generation File
+#+TITLE: Emacs Configuration Tangle File
 #+AUTHOR: Peter Prevos
 #+PROPERTY: header-args :tangle yes :tangle ~/.emacs.d/init.el :results silent
 
 * Introduction
 Emacs uses an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Init File]] in the =.emacs= folder or the home folder to store all configurations. The init file is the starting point to personalise your Emacs experience. This file ensures that the computer behaves the way you want it to, instead of the other way around.
 
-This Org file creates an /Init File/ using literate programming to document and define the configuration. To create the configuration file, execute =C-c C-v C-t= (=org-babel-tangle=). This function reads all source code in this file and concatenates them into the one =.emacs/init.el= file.
+This file creates an =init.el= file in the =.emacs= folder. This is one of the three possible ways to create an init file. I prefer storing everything in the =.emacs= folder because it keeps all configurations in one folder, which is easy to backup.
+
+This Org file creates an Init File using literate programming to document and define the configuration. To create the configuration file, execute =C-c C-v C-t= (=org-babel-tangle=). This function reads all source code in this file and concatenates them into the one =.emacs/init.el= file.
 
 If you like to try these settings without creating a new file, then type =C-c C-v C-b= to evaluate all code blocks. You can also evaluate each code block individually with =C-c C-c=, or each line separately with =C-x C-e=. Emacs will ask you to confirm that you want to execute code. To stop Emacs asking for confirmation, run =(setq org-confirm-babel-evaluate nil)=.
 * Basic Configuration
-This file creates an =init.el= file in the =.emacs= folder. This is one of the three possible ways to create an init file. I prefer storing everything in the =.emacs= folder because it keeps all configurations in one folder, which is easy to backup.
-** Redefine configuration
-Emacs includes a configuration system that writes settings to the init file on the fly. This code snippet redefines the name of this file to ensure the =init.el= file is not modified by the configuration system. If the configuration system uses the =init.el= file, then tangling this file will overwrite any previous configurations.
+** Redefine customisation file
+Emacs includes a configuration system that [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Customizations.html#Saving-Customizations][writes settings]] to the init file on the fly. This code snippet redefines the name of this file to ensure the =init.el= file is not modified by the configuration system. If the configuration system uses the =init.el= file, then tangling this Org file will overwrite any previous configurations.
 
-The custom configuration file is loaded first. Any settings in the =init.el= file will append or override the configuration.
+The custom configuration file is loaded first. Any settings in the =init.el= file will override the configuration in the customisation file.
 
 #+BEGIN_SRC emacs-lisp
 ;; Emacs init file
 ;; https://github.com/pprevos/EmacsLife
+;; This init file is generated with an Org-Mode file. 
+;; Any manual changes will be periodically overwritten by the script.
+;; ------------------------------------------------------------------
 
-;; ***What does this mean?
-(package-initialize)
-
-;; keep customize settings in their own file
+;; Customize settings in their own file
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
     (load custom-file)
 )
 #+END_SRC
-** Movement
-- Enable horizontal mouse scroll
-- Enable shift-select in org Mode. Use the =M--= or =M-+= keys. [[https://www.gnu.org/software/emacs/manual/html_node/org/Conflicts.html][Conflicts - The Org Manual]]
-#+BEGIN_SRC emacs-lisp
-;; Mouse scrolling
-(global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
-(global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
-#+END_SRC
 ** Packages
 Defining the locations of additional package repositories.
 
 #+BEGIN_SRC emacs-lisp
+;; Packages
+(package-initialize)
 (require 'package)
 (add-to-list 'package-archives
     '("melpa" . "https://melpa.org/packages/"))
@@ -55,23 +50,25 @@ Defining the locations of additional package repositories.
 - Silence the [[https://www.emacswiki.org/emacs/AlarmBell][Alarm Bell]]
 
 #+BEGIN_SRC emacs-lisp
-;; This init file is generated with an Org-Mode file. 
-;; Any manual changes will be overwritten by the script.
-;; -----------------------------------------------------
+;; Visual enhancements
 
 ;; Startup settings
 (setq
   inhibit-startup-message t
   inhibit-startup-screen t
 )
-;; Visual enhancements
+
 ;; Load theme
 (load-theme 'tsdh-dark)
-;; Hide toolbar and scroll bars
+
+;; Hide tool, menu and scroll bars
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 (scroll-bar-mode -1)
+
 ;; Highlight current line
 (global-hl-line-mode 1)
+
 ;; Silence the alarm
 (setq ring-bell-function 'ignore)
 #+END_SRC
@@ -82,84 +79,63 @@ This section contains basic Emacs mechanics.
 - Emacs uses both Yes/No and Y/N to ask for [[https://www.emacswiki.org/emacs/YesOrNoP][confirmation]]. I find this added security unnecessary and change it to single letter responses.
 - Auto revert will update open buffers that were modified by another program.
 - [[https://masteringemacs.org/article/introduction-to-ido-mode][IDo Mode]] (Interactively DO things) makes life a bit easier when switching buffers.
+- Dired
 
 #+BEGIN_SRC emacs-lisp
 ;; Emacs mechanics 
+
 ;; Save all backup files in one folder.
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
 ;; Save desktop
 (desktop-save-mode 1)
+
 ;; Yes or No
 (defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; Auto revert file when changed outside of Emacs
 (global-auto-revert-mode 1)
+
 ;; IDo mode
 (require 'ido)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode 1)
 (setq ido-file-extensions-order '(".org" ".fountain" ".R" ".el"))
-#+END_SRC
-** Editing
-This snippet changes various editing settings to my personal liking.
-- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/CUA-Bindings.html][CUA mode]] (Common User Acess) to enable =C-c= for copy, =C-v= for paste, and so on (possibly frowned-upon by hardcore Emacs users).
-- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Visual-Line-Mode.html][Visual Line Mode]] wraps long lines near the window edge.
-- [[https://www.emacswiki.org/emacs/FlySpell][FlySpell]] for spell-checking on the fly. The F7 key is mapped to suggesting alternatives for misspelled words.
-- [[https://fountain.io/][Fountain mode]] for writing theatre scripts.
-- Olivetti mode for distraction-free writing
-
-#+BEGIN_SRC emacs-lisp
-;; Editing configuration
-
-;;Enable Fountain mode
-(require 'fountain-mode)
-
-;; Common User Access
-(cua-mode t)
-;; Line wrapping
-(global-visual-line-mode t)
-
-;; Spell checking for Org and Fountain modes
-(add-hook 'org-mode-hook 'turn-on-flyspell)
-(add-hook 'fountain-mode-hook 'turn-on-flyspell)
-(global-set-key (kbd "<f7>") 'ispell-word)
 
 ;;Dired
 (put 'dired-find-alternate-file 'disabled nil)
 (require 'dired-x)
-
-;;Auto complete
-(require 'auto-complete)
-(global-auto-complete-mode t)
-
-;; Olivetti mode
-(require 'olivetti)
-(setq olivetti-body-width 100)
 #+END_SRC
-** Calendar settings
-- First day of the week is Monday
-- Dutch holidays (TODO)
-
-#+BEGIN_SRC emacs-lisp
-;; Calendar settings
-;; First day of te week
-(setq calendar-week-start-day 1)
-#+END_SRC
-* Org-Mode
-** GTD configuration
-- The first part of the configuration sets the [[https://orgmode.org/manual/Activation.html#Activation][default keyboard shortcuts]] for Org Mode.
-- [[https://orgmode.org/manual/Workflow-states.html#Workflow-states][Workflow states]]
-- Logging [[https://orgmode.org/manual/Repeated-tasks.html][repeated actions]] is disabled
-- Agenda commands
-
-#+BEGIN_SRC emacs-lisp
-  ;; Org Mode settings
-
+* Org Mode
+The first part of the configuration sets the [[https://orgmode.org/manual/Activation.html#Activation][default keyboard shortcuts]] for Org Mode.
+#+BEGIN_SRC emacs-lips
   ;; Org Mode Keyboard shortcuts
   (global-set-key "\C-cl" 'org-store-link)
   (global-set-key "\C-ca" 'org-agenda)
   (global-set-key "\C-cc" 'org-capture)
   (global-set-key "\C-cb" 'org-iswitchb)
+#+END_SRC
+** Visual elements
+- [[https://orgmode.org/manual/Clean-view.html][Clean view]]
+- Set image preview with to 600 pixels
+
+#+BEGIN_SRC emacs-lisp
+  ;; Org Mode Clean outline view
+  (setq org-hide-emphasis-markers t
+        org-hide-leading-stars t
+        org-startup-indented t)
+
+  ;; Org Mode Image preview size
+  (setq org-image-actual-width 600)
+#+END_SRC
+** Getting Things Done
+- [[https://orgmode.org/manual/Workflow-states.html#Workflow-states][Workflow states]]
+- Logging [[https://orgmode.org/manual/Repeated-tasks.html][repeated actions]] is disabled
+- Agenda commands
+- [[https://github.com/lolownia/org-pomodoro][Org Pomodoro]]
+#+BEGIN_SRC emacs-lisp
+  ;; Getting Things Done
 
   ;; Workflow states
   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w@/!)" "PARKED(p)" "|" "DONE(d!)" "CANCELLED(c@)")))
@@ -174,258 +150,38 @@ This snippet changes various editing settings to my personal liking.
   (setq org-agenda-skip-deadline-if-done t
         org-agenda-skip-scheduled-if-done t
         org-agenda-include-diary t)
-#+END_SRC
-*** Org Pomodoro
 
-#+BEGIN_SRC emacs-lisp
+;;Org Pomodoro
 (global-set-key (kbd "\C-cp") 'org-pomodoro)
-
 #+END_SRC
-
-** Org-Capture
-Org-Mode helps you quickly capture ideas that are not related to your current workflow with [[https://orgmode.org/manual/Capture.html][Org Capture]]. Add your idea and keep working without switching applications or files. Org Capture is great for journal entries, adding tasks to your inbox, create a shopping list and whatever else you like to collect as random thoughts. [[https://cestlaz.github.io/posts/using-emacs-23-capture-1/#.W24BAhgRUVs][Mike Zamansky]] has written excellent instructions on using Org Capture.
-
-This capture setup
-- Add actions to inbox in Getting Things Done file
-- Add notes to journal
+** Making life easier
+#+BEGIN_SRC emacs-lisp
+(defun open-org-files-recursively (dirname)
+  "Search DIRNAME recursively for org files, and open them all."
+  (interactive "D")
+  (mapc #'find-file (directory-files-recursively dirname "\\.org$" nil)))
+#+END_SRC
+* Writing text
+This snippet changes various editing settings to my personal liking.
+- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Visual-Line-Mode.html][Visual Line Mode]] wraps long lines near the window edge.
+- [[https://www.emacswiki.org/emacs/FlySpell][FlySpell]] for spell-checking on the fly. The F7 key is mapped to suggesting alternatives for misspelled words.
+- Auto complete
+- [[https://fountain.io/][Fountain mode]] for writing theatre scripts.
 
 #+BEGIN_SRC emacs-lisp
-;; Org capture
-(setq org-capture-templates '(("t" "Todo to inbox" entry
-                               (file+headline "~/Dropbox/GTD/GettingThingsDone.org" "Inbox")
-                               "* TODO %i%?")
-                              ("n" "Note to inbox" entry
-                               (file+headline "~/Dropbox/GTD/GettingThingsDone.org" "Inbox")
-                               "* %i%? \n %U")
-                               ("j" "Journal Entry"
-                               entry (file+datetree "~/Documents/ThirdHemisphere/Journal.org")
-                               "* %?")))
-;; refiling captured entries
-(setq org-reverse-note-order t)
-(setq org-refile-targets '(("~/Dropbox/GTD/GettingThingsDone.org" :maxlevel . 2)
-                           ("~/Documents/HorizonOfReason/HorizonOfReason.org" :level . 1)))
-#+END_SRC
-** Visual elements
-- [[https://orgmode.org/manual/Clean-view.html][Clean view]]
-- Set image preview with to 600 pixels
+;; Editing configuration
 
-#+BEGIN_SRC emacs-lisp
-;; Org Mode Clean outline view
-(setq org-hide-emphasis-markers t
-      org-hide-leading-stars t
-      org-startup-indented t)
-;; Org Mode Image preview size
-(setq org-image-actual-width 600)
-#+END_SRC
+;; Line wrapping
+(global-visual-line-mode t)
 
-** Additional functionality
-#+BEGIN_SRC emacs-lisp
-  ;; Insert NOTES drawer
-  ;; by u/alecigne
-  ;; https://www.reddit.com/r/orgmode/comments/7awar9/how_to_create_a_keyboard_shortcut_to_crease_an/
-  (defun ddz-org-insert-drawer-note ()
-    (interactive)
-    (org-insert-drawer nil "NOTES"))
-  (with-eval-after-load 'org
-    (define-key org-mode-map (kbd "C-c C-x n") 'ddz-org-insert-drawer-note))
+;;Enable Fountain mode
+(require 'fountain-mode)
 
-  ;; Remove links
-  ;; By Chris
-  ;; https://emacs.stackexchange.com/questions/10707/in-org-mode-how-to-remove-a-link/21945#21945
-  (defun afs/org-replace-link-by-link-description ()
-    "Replace an org link by its description or if empty its address"
-    (interactive)
-    (if (org-in-regexp org-bracket-link-regexp 1)
-        (save-excursion
-          (let ((remove (list (match-beginning 0) (match-end 0)))
-                (description (if (match-end 3) 
-                                 (org-match-string-no-properties 3)
-                               (org-match-string-no-properties 1))))
-            (apply 'delete-region remove)
-            (insert description)))))
-  (with-eval-after-load 'org
-    (define-key org-mode-map (kbd "C-c C-x l") 'afs/org-replace-link-by-link-description))
-#+END_SRC
-** Export
-These settings define how Org Mode exports files to LaTeX. The export classes define the various document types.
+;; Spell checking for Org and Fountain modes
+(add-hook 'org-mode-hook 'turn-on-flyspell)
+(add-hook 'fountain-mode-hook 'turn-on-flyspell)
+(global-set-key (kbd "<f7>") 'ispell-word)
 
-#+BEGIN_SRC emacs-lisp
-(require 'ox-latex)
-(setq org-export-with-smart-quotes t)
-(setq org-export-latex-listings 'minted)
-(add-to-list 'org-latex-default-packages-alist '("" "minted"))
-(setq org-src-fontify-natively t)
-#+END_SRC
-*** Templates
-#+BEGIN_SRC emacs-lisp
-;; Springer
-(add-to-list 'org-latex-classes '("Springer"
-               "\\documentclass[natbib]{svjour3}
-               \\usepackage{hyperref}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-;; Taylor & Francis (Interacta)
-(add-to-list 'org-latex-classes '("TaylorFrancis"
-               "\\documentclass[largeformat]{interact}
-               \\usepackage{hyperref}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-;; American Psychological Association papers
-(add-to-list 'org-latex-classes '("apa6"
-"\\documentclass[a4paper, jou, 11pt]{apa6}
-\\usepackage[nodoi]{apacite}
-\\usepackage[british]{babel}
-\\usepackage{inputenc}
-\\usepackage{amsmath}
-\\usepackage{graphicx}
-\\usepackage{csquotes}
-\\usepackage[hyphens]{url}
-\\usepackage[T1]{fontenc}
-\\usepackage{lmodern}
-\\usepackage{hyperref}"
-("\\section{%s}" . "\\section*{%s}")
-("\\subsection{%s}" . "\\subsection*{%s}")
-))
-
-;; ebooks using memoir
-(add-to-list 'org-latex-classes '("ebook"
-"\\documentclass[11pt, oneside]{memoir}
-\\setstocksize{9in}{6in}
-\\settrimmedsize{\\stockheight}{\\stockwidth}{*}
-\\setlrmarginsandblock{2cm}{2cm}{*} % Left and right margin
-\\setulmarginsandblock{2cm}{2cm}{*} % Upper and lower margin
-\\checkandfixthelayout
-\\usepackage{times}
-\\usepackage[british]{babel}
-\\usepackage[raggedright]{sidecap}
-\\setsecheadstyle{\\normalfont \\raggedright \\textbf}
-\\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
-\\usepackage[labelformat=empty, font=small]{caption}
-\\usepackage{pdfpages}
-\\usepackage[unicode=true,
- bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,bookmarksopenlevel=1,
- breaklinks=true,pdfborder={0 0 0},backref=false,colorlinks=false,pdfborderstyle={/S/U/W .5}, allbordercolors={.8 .8 .8}]
- {hyperref}
-\\pagestyle{myheadings}
-\\setcounter{tocdepth}{0}
-\\usepackage{ccicons}
-\\OnehalfSpacing
-\\usepackage[authoryear]{natbib}
-"
-("\\chapter{%s}" . "\\chapter*{%s}")
-("\\section{%s}" . "\\section*{%s}")
-("\\subsection{%s}" . "\\subsection*{%s}")
-))
-
-;;Two-coumn instruction sheets
-(add-to-list 'org-latex-classes '("magictrick"				  
-"\\documentclass[11pt, a4paper, twocolumn, twoside]{article}
-\\usepackage{ccicons}
-\\usepackage{pdfpages}
-\\usepackage{times}
-\\usepackage{helvet}
-\\usepackage{geometry}
-\\geometry{a4paper, total={170mm,250mm}, left=20mm, top=30mm}
-% header 2008 x 332 px
-\\usepackage{titlesec}
-\\titleformat{\\section}
-  {\\bfseries}{\\thesection}{1em}{}
-\\titleformat{\\subsection}
-  {\\itshape}{\\thesection}{1em}{}
-\\usepackage{fancyhdr}
-\\usepackage[hidelinks]{hyperref}
-\\pagestyle{fancy}
-\\renewcommand{\\headrulewidth}{0pt}
-\\renewcommand{\\footrulewidth}{0pt}
-\\setlength\\headheight{100.0pt}
-\\addtolength{\\textheight}{-100.0pt}
-\\fancyhead[LO]{\\Large{\\textsf{Magic Perspectives Presents}} \\includegraphics[width=\\textwidth]{header}}
-\\fancyhead[LE]{\\includegraphics[width=0.5\\textwidth]{header}}
-\\lfoot{Peter Prevos}
-\\rfoot{\\href{https://magicperspectives.net}{magicperspectives.net}}
-"
-("\\section{%s}" . "\\section*{%s}")
-("\\subsection{%s}" . "\\subsection*{%s}")
-))				  
-#+END_SRC
-*** Referencing
-#+BEGIN_SRC emacs-lisp
-(require 'org-ref)
-(org-ref-define-citation-link "citeA" ?a)
-
-(setq org-latex-pdf-process
-'("pdflatex -interaction nonstopmode -output-directory %o %f"
-  "bibtex %b"
-  "pdflatex -interaction nonstopmode -output-directory %o %f"
-  "pdflatex -interaction nonstopmode -output-directory %o %f"))
-
-(define-key org-ref-cite-keymap (kbd "M-<right>") 'org-ref-next-key)
-#+END_SRC
-** Make life easier
-- [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] searches through your open Org files.
-- [[https://github.com/alphapapa/org-web-tools/tree/58c37ab50e99775cf4ed3d6884aa9c3f45d855de][org-web-tools]] Commands and functions for retrieving web page content and processing it into and displaying it as Org-mode content.
-  - =C-x p l= converts a link in the clipboard to an Org Mode link
-  - =C-x p i= copies the content of the page in the clipboard to an Org Mode entry.
-#+BEGIN_SRC emacs-lisp
-;; helm org rifle
-(require 'helm-org-rifle)
-(global-set-key (kbd "C-x C-r") 'helm-org-rifle)
-
-;; org web tools
-(require 'org-web-tools)
-(global-set-key (kbd "C-x p l") 'org-web-tools-insert-link-for-url)
-(global-set-key (kbd "C-x p i") 'org-web-tools-insert-web-page-as-entry)
 #+END_SRC
 * Data Science
-[[https://ess.r-project.org/][Emacs Speaks Statistics]] (ESS) supports editing of scripts and interaction with various statistical analysis programs such as R. You also need to install the R software. Run an E terminal with =M-x R= and enter the preferred working directory.
-
-In ESS, the underscore key is mapped to the =<-= assignment operator in R. If you need an underscore, you need to type it twice. This functionality can be annoying when you are an avid user of ggplot. The [[https://github.com/mattfidler/ess-smart-underscore.el][ess-smart-underscore]] package solves this issue by allowing a single underscore in certain circumstances.
-
-#+BEGIN_SRC emacs-lisp
-;; Emacs Speaks Statistics
-(require 'ess-site)
-(require 'ess-smart-underscore)
-;; Use Alt Return to execute one line of code
-(define-key ess-mode-map (kbd "M-RET") 'ess-eval-region-or-line-and-step)
-;; Or Babel
-(org-babel-do-load-languages
-    'org-babel-load-languages '((R . t)))
-
-;; Indicate the matching parenthesis
-(show-paren-mode)
-#+END_SRC
-
-** Babel
-
-#+BEGIN_SRC emacs-lisp
-;; Trust all code embedded in Org files
-(setq org-confirm-babel-evaluate nil)
-
-;; Fontify source code in source snippets
-(setq org-src-fontify-natively t)
-
-;; Enable R coding
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((R . t)))
-#+END_SRC
-
-
-** Magit
-Magit implements Git in Emacs and is almost like magic. This line of code creates the  =C-x g= shortcut to open the Magit status screen.
-#+BEGIN_SRC emacs-lisp
-;; Magit
-(global-set-key (kbd "C-x g") 'magit-status)
-#+END_SRC
-** Smartparens
-#+BEGIN_SRC emacs-lisp
-(require 'smartparens)
-#+END_SRC
+** 
