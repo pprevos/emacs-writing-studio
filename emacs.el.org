@@ -1,0 +1,725 @@
+#+TITLE: Emacs configuration
+#+AUTHOR: Peter Prevos
+#+PROPERTY: header-args :tangle yes :tangle ~/.emacs.d/init.el :results silent
+
+* Introduction
+Emacs uses an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Init File]] in =.emacs.d= in your home folder to store all configurations. The init file is the starting point to personalise your Emacs experience. This file ensures that your computer behaves the way you want it to, instead of the other way around.
+
+This file produces an =init.el= file in the =.emacs.d= folder. This is one of the three possible ways to create an init file. I prefer storing everything in the =.emacs.d= folder because it keeps all configurations in one place, which is easier to maintain and backup.
+
+This Org file defines and creates the init file using literate programming to document and define the configuration. To create (tangle) the configuration file, execute =C-c C-v C-t= (=org-babel-tangle=). This function reads all source code in this file and concatenates it into the one init file. This configuration is used the next time you start Emacs.
+
+If you like to try these settings without creating a new file, then type =C-c C-v C-b= to evaluate all code blocks. You can also evaluate each code block individually with =C-c C-c=, or each expression separately with =C-x C-e=. By default, Emacs will ask you to confirm that you want to execute code.
+
+Many people publish their elaborate Emacs init files to share the way they configure their favourite program. Some people even publish specialised packages to pre-configure Emacs for a specific purpose. This init file uses a minimalist approach, staying close to the vanilla Emacs configuration.
+* Basic Configuration
+  This section contains basic Emacs configurations.
+** Customisation file
+Emacs includes a menu-driven configuration system that [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Customizations.html][writes settings]] to the init file on the fly. This code snippet redefines the name of this file to =custom.el= to ensure that the config system does not interfere with =init.el=. If the configuration system uses the =init.el= file, then tangling this Org file will overwrite any previous configurations. The custom configuration file is loaded first. Any settings in the =init.el= file will thus override the configuration in the customisation file.
+
+#+BEGIN_SRC emacs-lisp
+;; Emacs init file
+;; Peter Prevos
+;; https://github.com/pprevos/EmacsLife
+;; This init file is generated with an Org-Mode file. 
+;; Any manual changes will be periodically overwritten by the script.
+;; ------------------------------------------------------------------
+
+;; Customize settings in a separate file
+(setq custom-file "~/.emacs.d/custom.el")
+(when (file-exists-p custom-file)
+    (load custom-file)
+)
+#+END_SRC
+** Executing code
+Emacs distinguishes between "y" or "yes" when asking for confirmation. Emacs uses the longer version when giving the wrong answer is perceived to have serious consequences. I prefer the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Yes-or-No-Prompts.html][Yes or No prompts]] to be all the short version and take the risk.
+
+Org Babel is the package that runs code within an Org file. By default, it will ask for [[https://orgmode.org/manual/eval.html][confirmation]] each time you execute a line. The second config line in this snippet nullifies this behaviour.
+#+begin_src emacs-lisp
+;; Yes or No
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; Trust all code embedded in Org files
+(setq org-confirm-babel-evaluate nil)
+#+end_src
+** Packages
+Emacs can be extended with any of the thousands of available packages. This configuration will use several of these packages. The frist step to be able to use these is to define locations of the relevantrepositories.
+
+- [[https://elpa.gnu.org/][GNU ELPA]]: Emacs Lisp Package Archive (default)
+- [[https://melpa.org/][MELPA]]: Milkypostman’s Emacs Lisp Package Archive
+- [[https://orgmode.org/][Org Mode]]: Always using the latest version of Org Mode.
+
+You can install, remove or refresh [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html#Packages][packages]] with the =list-packages= function.
+
+The =use=package= package provides a tidier method to write init files in Emacs.
+#+BEGIN_SRC emacs-lisp
+;; Package repositories
+(setq package-archives
+      '(("org" . "https://orgmode.org/elpa/")
+      ("gnu" . "https://elpa.gnu.org/packages/")
+      ("melpa" . "https://melpa.org/packages/")))
+(package-initialize)
+;; use-package to simplify the config file
+(unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+(require `use-package)
+#+END_SRC
+** Visual elements
+These configurations change the way Emacs looks and feels:
+- The [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Entering-Emacs.html#Entering-Emacs][startup settings]] inhibit startup messages and screen.
+- Load the preferred [[https://pawelbx.github.io/emacs-theme-gallery/][theme]] with some modifications.
+- Hide the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Tool-Bars.html][toolbar]], [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Menu-Bars.html][menu bar]] and [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Scroll-Bars.html][scroll bar]] (who needs a mouse anyway?)
+- Subtly [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Cursor-Display.html][highlight]] the current line to find your cursor (modify the theme)
+- Silence the Alarm Bell
+- Display the current time in the mode line
+#+BEGIN_SRC emacs-lisp
+  ;; VISUAL ENHANCEMENTS
+
+  ;; Startup settings
+  (setq
+    inhibit-startup-message t
+    inhibit-startup-screen t
+  )
+
+  ;; Themes
+  (load-theme 'dracula t)
+  (set-face-foreground 'font-lock-comment-face "gray45")
+
+  ;; Hide tool, menu and scroll bars
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+
+  ;; Highlight current line
+  (global-hl-line-mode 1)
+  (set-face-attribute 'hl-line nil :foreground nil :background "gray20")
+
+  ;; Silence the alarm
+  (setq ring-bell-function 'ignore)
+
+  ;; Display time in modeline
+  (setq format-time-format "%d %b %Y %H:%M")
+  (display-time-mode 1)
+
+  ;; Display bettery life
+  (display-battery-mode 1)
+
+  ;; Default font
+  (set-face-attribute 'default nil :family "Consolas" :height 130)
+
+  ;; Fancy modeline
+  (use-package doom-modeline
+      :ensure t
+      :config
+      (doom-modeline-mode 1))
+#+END_SRC
+** Cursor Movement
+By default the Emacs [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Scrolling.html][scroll]] commands don't let you go all the way to the first and last line. The first line changes this behaviour.
+
+The buffer navigation section binds modifed arrow keys to the moving backward and forwards in windows.
+#+BEGIN_SRC emacs-lisp
+;; Scroll to the first and last line of the buffer
+(setq scroll-error-top-bottom t)
+
+;; Buffer navigation
+(global-set-key (kbd "s-<end>") 'other-window)
+(global-set-key  (kbd "s-<home>")
+		 (lambda ()
+		   (interactive)
+		   (other-window -1)))
+#+END_SRC
+** Org Mode
+These are the basic settings for org-mode and its standard keyboard shortcuts.
+#+BEGIN_SRC emacs-lisp
+;; ORG MODE
+(use-package org
+  :ensure org-plus-contrib
+  :config
+  (setq org-agenda-files(quote ("~/Dropbox/gtd/gtd.org")))
+  (global-set-key (kbd "C-c l") 'org-store-link)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c c") 'org-capture)
+  ;; Org mode ricing
+  (setq org-startup-indented t
+      org-ellipsis " ↵" ;folding symbol
+      org-hide-emphasis-markers t
+      org-agenda-block-seperator "")
+)
+
+(use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
+)
+
+(setq org-tags-column -60)
+#+END_SRC
+** File Management
+*** Backups and saving
+#+begin_src emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+;; Save desktop and point places
+(desktop-save-mode 1)
+(setq desktop-load-locked-desktop t)
+(add-to-list 'desktop-modes-not-to-save 'dired-mode)
+(save-place-mode 1)
+;; Auto revert file when changed outside of Emacs
+(global-auto-revert-mode 1)
+ #+end_src	
+*** Dired
+#+begin_src emacs-lisp
+;; Dired
+;; Prevent creating multible buffers
+(put 'dired-find-alternate-file 'disabled nil)
+;; Copy etween  instances
+(setq dired-dwim-target t)
+;; Move files to Trash
+(setq delete-by-moving-to-trash t)
+;; Dired icons
+(use-package all-the-icons-dired
+:ensure t
+ :config
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+ #+end_src
+** Helm
+Helm is an Emacs framework for incremental completions and narrowing selections. It helps to rapidly complete file names, buffer names, or any other Emacs interactions requiring selecting an item from a list of possible choices.
+#+begin_src emacs-lisp
+(use-package helm
+ :ensure t
+ :diminish
+ :init (helm-mode t)
+ :bind (("M-x"     . helm-M-x)
+        ("C-x C-f" . helm-find-files)
+        ("C-x b"   . helm-mini)     ;; See buffers & recent files; more useful.
+        ("C-x r b" . helm-filtered-bookmarks)
+        ("C-x C-r" . helm-recentf)  ;; Search for recently edited files
+        ("C-c i"   . helm-imenu)
+        ("C-h a"   . helm-apropos)
+        ;; Look at what was cut recently & paste it in.
+        ("M-y" . helm-show-kill-ring)
+
+        :map helm-map
+        ;; We can list ‘actions’ on the currently selected item by C-z.
+        ("C-z" . helm-select-action)
+        ;; Let's keep tab-completetion anyhow.
+        ("TAB"   . helm-execute-persistent-action)
+        ("<tab>" . helm-execute-persistent-action)))
+#+end_src
+* Writing
+** Basics
+[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Visual-Line-Mode.html][Visual line mode]] is a bit more eacy to work with than the default line trunction. The line spacing is set at 2 points for a more readable screen. Emacs does not [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html][delete text]] when an area is selected. The =delete-selection-mode= changes that behaviour.
+
+#+BEGIN_SRC emacs-lisp
+;; Editing configuration
+;; Visual line mode (screen alignment)
+(global-visual-line-mode)
+;; Line spacing
+(setq-default line-spacing 2)
+;; overwrite selected text
+ (delete-selection-mode t)
+#+end_src
+
+#+begin_src emacs-lisp
+;; Undo Tree Mode
+;; Allow tree-semantics for undo operations.
+(use-package undo-tree
+  :config
+    ;; Always have it on
+    (global-undo-tree-mode 1)
+    ;; Each node in the undo tree should have a timestamp.
+    (setq undo-tree-visualizer-timestamps t)
+    ;; Show a diff window displaying changes between undo nodes.
+    (setq undo-tree-visualizer-diff t))
+ ;; make ctrl-Z redo
+ (defalias 'redo 'undo-tree-redo)
+ (global-set-key (kbd "C-S-/") 'redo)
+ (global-set-key (kbd "C-x C-/") 'undo-tree-visualize)
+ #+END_SRC
+** Spelling and Thesaurus
+[[https://www.emacswiki.org/emacs/FlySpell][FlySpell]] for spell-checking on the fly for my favourite major modes. The F7 key is mappedd to suggesting alternatives for misspelled words.
+
+The [[https://github.com/agzam/mw-thesaurus.el][thesaurus]] uses a free API to the Merriam-Webster Thesaurus. Press F8 to load the synonyms of the word at point. Press =q= to exit the thesaurus buffer.
+#+begin_src emacs-lisp
+;; Spell checking for Org, Markdown and Fountain modes
+;;(require 'flyspell-lazy)
+;;(flyspell-lazy-mode 1)
+(use-package flyspell
+  :ensure t
+  :diminish
+  :config
+ (add-hook 'org-mode-hook 'flyspell-mode)
+ (add-hook 'markdown-mode-hook 'flyspell-mode)
+ (add-hook 'fountain-mode-hook 'flyspell-mode)
+ (global-set-key (kbd "<f7>") 'ispell-word)
+ (setq ispell-silently-savep t))
+
+;; Merriam-Webster Thesaurus
+(use-package mw-thesaurus
+:ensure t
+:config
+(global-set-key (kbd "<f8>") 'mw-thesaurus-lookup-at-point))
+#+end_src
+** Word Count
+** Auto Completion
+** Distraction-free writing
+The biggest problem with writing on a computer is that there are too many distractions. 
+
+[[https://github.com/rnkn/olivetti][Olivetti mode]] is a minor mode that enables writing without distractions. This mode recreaates the old typewriter-feel by centering the text in the buffer at a specified with, which I set to 100 characters.
+
+#+begin_src emacs-lisp
+(use-package olivetti
+:ensure t
+:config
+  (defun distraction-free-set ()
+      "Setup distraction-free writing environment"
+      (interactive)
+      (delete-other-windows)
+      (setq olivetti-body-width '100)
+      (olivetti-mode)
+      (text-scale-adjust 0)
+      (text-scale-increase 1)
+  )
+  (defun distraction-free-reset ()
+      "Reset distraction-free writing environment"
+      (interactive)
+      (olivetti-mode)
+      (text-scale-adjust 0)
+  )
+  (global-set-key (kbd "<f9>") 'distraction-free-set)
+  (global-set-key (kbd "S-<f9>") 'distraction-free-reset))
+#+end_src
+** Writing modes
+I write almost all text in Org Mode. I also use two specialised major modes. [[https://fountain-mode.org/][Fountain Mode]] is a scriptwriting program for GNU Emacs using the Fountain plain text markup format. [[https://jblevins.org/projects/markdown-mode/][Markdown-mode]] is a major mode for editing Markdown-formatted text (mainly used for [[https://leanpub.com/][LeanPub]] books and courses). 
+#+begin_src emacs-lisp
+ ;;Enable Fountain mode
+ (require 'fountain-mode)
+
+ ;; Markdown mode
+ (setq markdown-command "/usr/bin/pandoc")
+#+end_src
+** Org Mode 
+*** Structure templates
+ Org Mode uses structural blocks to insert LaTeX, source code and other such types. 
+ [[info:org#Structure Templates][Structure Templates]] are a convient way to create such a block. Activate with =C-c C-=.
+ #+BEGIN_SRC emacs-lisp
+ ;; Structure templates
+ (require 'org-tempo)
+ (add-to-list 'org-structure-template-alist '("li" . "src emacs-lisp"))
+ (add-to-list 'org-structure-template-alist '("R" . "src R"))
+ #+END_SRC
+*** Referencing
+#+BEGIN_SRC emacs-lisp
+(require 'org-ref)
+(org-ref-define-citation-link "citeA" ?a)
+
+(setq org-latex-pdf-process
+'("pdflatex -interaction nonstopmode -output-directory %o %f"
+  "bibtex %b"
+  "pdflatex -interaction nonstopmode -output-directory %o %f"
+  "pdflatex -interaction nonstopmode -output-directory %o %f"))
+#+END_SRC
+*** Export to LaTeX
+ #+BEGIN_SRC emacs-lisp
+ ;; LaTeX
+ (require 'ox-latex)
+ (setq org-export-with-drawers 'nil)
+ (setq org-export-with-smart-quotes t)
+ (setq org-export-with-todo-keywords 'nil)
+ (setq org-format-latex-options (plist-put org-format-latex-options :scale 2))
+
+;; Edit LaTex in org
+;;(require 'org-edit-latex)
+
+ ;; Clean temporary files afer export
+ (setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "tex" "bcf")))
+
+ ;; ebooks using memoir
+ (add-to-list 'org-latex-classes '("ebook"
+ "\\documentclass[11pt, oneside]{memoir}
+ \\setstocksize{9in}{6in}
+ \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
+ \\setlrmarginsandblock{2cm}{2cm}{*} % Left and right margin
+ \\setulmarginsandblock{2cm}{2cm}{*} % Upper and lower margin
+ \\checkandfixthelayout
+ \\usepackage{times}
+ \\OnehalfSpacing
+ \\usepackage[authoryear]{natbib}
+ \\bibliographystyle{apalike}
+ \\setlength{\\bibsep}{1pt}
+ \\usepackage[raggedright]{sidecap}
+ \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
+ \\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
+ \\usepackage[font={small, it}]{caption}
+ \\usepackage{subcaption}
+ \\usepackage{pdfpages}
+ \\usepackage[unicode=true,
+     bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,
+     bookmarksopenlevel=1, breaklinks=true,pdfborder={0 0 0},backref=false,colorlinks=false,pdfborderstyle={/S/U/W .5}, allbordercolors={.8 .8 .8}]{hyperref}
+ \\pagestyle{myheadings}
+ \\setcounter{tocdepth}{0}
+ \\usepackage{ccicons}
+ \\usepackage{nicefrac}
+ "
+ ("\\chapter{%s}" . "\\chapter*{%s}")
+ ("\\section{%s}" . "\\section*{%s}")
+ ("\\subsection{%s}" . "\\subsection*{%s}")
+ ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+ ))
+
+ ;; 6 by 9 paperback
+ (add-to-list 'org-latex-classes '("trade"
+ "
+ \\documentclass[11pt, twoside]{memoir}
+ \\setstocksize{9in}{6in}
+ \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
+ \\setlrmarginsandblock{2cm}{2cm}{*} % Left and right margin
+ \\setulmarginsandblock{2cm}{2cm}{*} % Upper and lower margin
+ \\checkandfixthelayout
+ \\setcounter{tocdepth}{0}
+ \\OnehalfSpacing
+ \\usepackage{times}
+ \\chapterstyle{bianchi}
+ \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
+ \\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
+ \\setsubsubsecheadstyle{\\normalfont\\centering}
+ \\usepackage[font={small, it}]{caption}
+ \\usepackage{subcaption}
+ \\usepackage{pdfpages}
+ \\pagestyle{myheadings}
+ \\usepackage{ccicons}
+ \\usepackage{nicefrac}
+ \\usepackage[authoryear]{natbib}
+ \\bibliographystyle{apalike}
+ "
+  ("\\chapter{%s}" . "\\chapter*{%s}")
+  ("\\section{%s}" . "\\section*{%s}")
+  ("\\subsection{%s}" . "\\subsection*{%s}")
+  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+  ("\\paragraph{%s}" . "\\paragraph*{%s}")
+  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+ ;; Springer
+ (add-to-list 'org-latex-classes '("Springer"
+		"\\documentclass[natbib]{svjour3}
+		\\usepackage{hyperref}"
+		("\\section{%s}" . "\\section*{%s}")
+		("\\subsection{%s}" . "\\subsection*{%s}")
+		("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		("\\paragraph{%s}" . "\\paragraph*{%s}")
+		("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+ ;; Magic tricks
+ (add-to-list 'org-latex-classes '("magictrick"				  
+ "\\documentclass[11pt, a4paper, twocolumn, twoside]{article}
+ \\usepackage{ccicons}
+ \\usepackage{pdfpages}
+ \\usepackage{times}
+ \\usepackage{helvet}
+ \\usepackage{geometry}
+ \\geometry{a4paper, total={170mm,250mm}, left=20mm, top=30mm}
+ % header 2008 x 332 px
+ \\usepackage{titlesec}
+ \\titleformat{\\section}
+   {\\bfseries}{\\thesection}{1em}{}
+ \\titleformat{\\subsection}
+   {\\itshape}{\\thesection}{1em}{}
+ \\usepackage{fancyhdr}
+ \\usepackage[font={small, it}, labelformat=empty]{caption}
+ \\usepackage[hidelinks]{hyperref}
+ \\pagestyle{fancy}
+ \\renewcommand{\\headrulewidth}{0pt}
+ \\renewcommand{\\footrulewidth}{0pt}
+ \\setlength{\\parskip}{1em}
+ \\renewcommand{\\baselinestretch}{1.1}
+ \\setlength\\headheight{100.0pt}
+ \\addtolength{\\textheight}{-100.0pt}
+ \\fancyhead[LO]{\\Large{\\textsf{Magic Perspectives Presents}} \\includegraphics[width=\\textwidth]{header}}
+ \\fancyhead[LE]{\\includegraphics[width=0.5\\textwidth]{header}}
+ \\lfoot{Peter Prevos}
+ \\rfoot{\\href{https://magicperspectives.net}{magicperspectives.net}}
+ "
+ ("\\section{%s}" . "\\section*{%s}")
+ ("\\subsection{%s}" . "\\subsection*{%s}")
+ ))
+
+ ;; Taylor & Francis (Interacta)
+ (add-to-list 'org-latex-classes '("TaylorFrancis"
+		"\\documentclass[largeformat]{interact}
+		\\usepackage{hyperref}"
+		("\\section{%s}" . "\\section*{%s}")
+		("\\subsection{%s}" . "\\subsection*{%s}")
+		("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		("\\paragraph{%s}" . "\\paragraph*{%s}")
+		("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+ ;; American Psychological Association papers
+ (add-to-list 'org-latex-classes '("apa6"
+ "\\documentclass[a4paper, jou, 11pt]{apa6}
+ \\usepackage[nodoi]{apacite}
+ \\usepackage[british]{babel}
+ \\usepackage{inputenc}
+ \\usepackage{amsmath}
+ \\usepackage{graphicx}
+ \\usepackage{csquotes}
+ \\usepackage[hyphens]{url}
+ \\usepackage[T1]{fontenc}
+ \\usepackage{lmodern}
+ \\usepackage{hyperref}"
+ ("\\section{%s}" . "\\section*{%s}")
+ ("\\subsection{%s}" . "\\subsection*{%s}")
+ ))
+ #+END_SRC
+* Internet
+** Email
+#+begin_src emacs-lisp
+;; Get email, and store in nnml
+(setq gnus-secondary-select-methods
+  '(
+    (nntp "gmane"
+           (nntp-address "news.gmane.org"))
+    (nntp "news.eternal-september.org")
+    (nntp "nntp.aioe.org")
+    (nntp "news.gwene.org")
+    ))
+
+;; Get email, and store in nnml
+(setq gnus-secondary-select-methods
+'(
+  (nnimap "gmail"
+           (nnimap-address
+            "imap.gmail.com")
+           (nnimap-server-port 993)
+           (nnimap-stream ssl))
+  ))
+
+;; Send email via Gmail:
+(setq message-send-mail-function 'smtpmail-send-it
+  smtpmail-default-smtp-server "smtp.gmail.com")
+
+;; Archive outgoing email in Sent folder on imap.gmail.com:
+(setq gnus-message-archive-method '(nnimap "imap.gmail.com")
+    gnus-message-archive-group "[Gmail]/Sent Mail")
+
+;; set return email address based on incoming email address
+(setq gnus-posting-styles
+    '(((header "to" "address@outlook.com")
+       (address "address@outlook.com"))
+  ((header "to" "address@gmail.com")
+     (address "address@gmail.com"))))
+
+;; store email in ~/gmail directory
+(setq nnml-directory "~/gmail")
+(setq message-directory "~/gmail")
+#+end_src
+** Search engines
+The [[https://github.com/hrs/engine-mode/blob/master/README.md][engine-mode]] package helps to search the Internet conveniently within an Emacs buffer.
+
+The generic keyboard shortcut is =C-x /= with a suffix to define the required search engine. By default, the search string is the word at point or the selected block. The following search engines are configured:
+- =d=: DuckDuckGo (results in eww)
+- =w=: Wikipedia (results in eww)
+- =m=: Google maps (results in Firefox)
+#+begin_src emacs-lisp
+(require 'engine-mode)
+(engine-mode t)
+(setq engine/browser-function 'eww-browse-url)
+(defengine duckduckgo
+  "https://duckduckgo.com/?q=%s"
+  :keybinding "d")
+(defengine google-maps
+  "http://maps.google.com/maps?q=%s"
+  :docstring "Mappin' it up."
+  :browser 'browse-url-firefox 
+  :keybinding "m")
+(defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
+  :keybinding "w"
+  :docstring "Searchin' the wikis.")
+#+end_src
+* Productivity
+** Getting Things Done
+[[info:org#Workflow states][Workflow states]] indicate the status of actions. Some actions are logged an others require a comment. Logging for [[https://orgmode.org/manual/Repeated-tasks.html][repeated actions]] is disabled
+#+BEGIN_SRC emacs-lisp
+  ;; Getting Things Done
+
+  ;; Workflow states
+  (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w@/!)" "PROJECT(p)" "|" "DONE(d/!)" "CANCELLED(c@/!)")))
+
+  ;; Don't log state chages of repeated tasks
+  ;; Log changes in the logbook drawer
+  (setq org-log-repeat nil
+        org-log-into-drawer t
+        org-log-done nil)
+#+END_SRC
+** Agenda settings
+#+BEGIN_SRC emacs-lisp
+  ;; Org Agenda settings
+    (setq org-agenda-files '("~/Dropbox/gtd/gtd.org"))
+    (setq org-agenda-skip-deadline-if-done t
+          org-agenda-skip-scheduled-if-done t
+          org-agenda-include-diary t
+          calendar-week-start-day 1
+          org-log-repeat nil
+          
+          )
+
+    (setq org-agenda-custom-commands
+          '(("c" "Chores" tags-todo "chores") 
+            ("e" "Emacs" tags-todo "emacs")
+            ("n" "Netherlands" tags-todo "NL")
+            ("o" "Outsource" tags-todo "outsource|VA")
+            ("p" "Priorities" tags-todo "+PRIORITY=\"A\"")
+            ("h" "Third Hemisphere"
+             ((agenda "" ((org-agenda-span 3)
+                          (org-agenda-start-on-weekday nil)
+                          (org-agenda-files '("~/Dropbox/gtd/gtd.org"))
+                          (org-agenda-sorting-strategy '(priority-up))
+                          )) 
+             (todo "NEXT" ((org-agenda-files '("~/Dropbox/gtd/gtd.org"))))
+              (todo "WAITING" ((org-agenda-files '("~/Dropbox/gtd/gtd.org"))))
+              (stuck "")
+              ))
+            ))
+
+  (setq org-stuck-projects
+        '("/PROJECT" ("NEXT" "WAITING") () ))
+#+END_SRC
+** Org-Capture
+Org-Mode helps you quickly capture ideas that are not related to your current workflow with [[https://orgmode.org/manual/Capture.html][Org Capture]]. Add your idea and keep working without switching applications or files. Org Capture is great for journal entries, adding tasks to your inbox, create a shopping list and whatever else you like to collect as random thoughts. [[https://cestlaz.github.io/posts/using-emacs-23-capture-1/#.W24BAhgRUVs][Mike Zamansky]] has written excellent instructions on using Org Capture.
+
+This capture setup
+- Add actions to inbox in Getting Things Done file
+- Add notes to journal
+
+#+BEGIN_SRC emacs-lisp
+(setq org-catch-invisible-edits 'error)
+;; Org capture
+(setq org-capture-templates '(("t" "Todo to inbox" entry
+                               (file+headline "~/Dropbox/gtd/gtd.org" "Inbox")
+                               "* TODO %i%?")
+                              ("n" "Note to inbox" item
+                               (file+headline "~/Dropbox/gtd/gtd.org" "Inbox")
+                               "- %?")
+                               ("j" "Journal Entry"
+                               entry (file+datetree "~/Documents/Third_Hemisphere/Journal.org")
+                               "* %?")))
+;; refiling captured entries
+(setq org-reverse-note-order t)
+(setq org-refile-targets '(("~/Dropbox/gtd/gtd.org" :maxlevel . 2)))
+#+END_SRC
+** Org Wiki
+These packages convert Org Mode into a useful Wiki:
+- [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] searches through your open Org files.
+- [[https://github.com/alphapapa/org-web-tools/tree/58c37ab50e99775cf4ed3d6884aa9c3f45d855de][org-web-tools]] Commands and functions for retrieving web page content and processing it into and displaying it as Org-mode content.
+  - =C-x p l= converts a link in the clipboard to an Org Mode link
+  - =C-x p i= copies the content of the page in the clipboard to an Org Mode entry.
+#+BEGIN_SRC emacs-lisp
+;; helm org rifle
+(require 'helm-org-rifle)
+(global-set-key (kbd "C-x C-r") 'helm-org-rifle)
+
+;; org web tools
+(require 'org-web-tools)
+(global-set-key (kbd "C-x p l") 'org-web-tools-insert-link-for-url)
+(global-set-key (kbd "C-x p i") 'org-web-tools-insert-web-page-as-entry)
+#+END_SRC
+** Special Functions
+*** Remove links by Chris ([[https://emacs.stackexchange.com/questions/10707/in-org-mode-how-to-remove-a-link/21945#21945][Reddit]])
+#+begin_src emacs-lisp
+  (defun org-link-remove ()
+    "Replace an org link by its description or if empty its address"
+    (interactive)
+    (if (org-in-regexp org-bracket-link-regexp 1)
+        (save-excursion
+          (let ((remove (list (match-beginning 0) (match-end 0)))
+                (description (if (match-end 3) 
+                                 (org-match-string-no-properties 3)
+                               (org-match-string-no-properties 1))))
+            (apply 'delete-region remove)
+            (insert description)))))
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "C-c C-x l") 'org-remove-link))
+#+end_src
+*** Open all Org files in a subtree of folders
+#+BEGIN_SRC emacs-lisp
+(defun org-open-recursively (dirname)
+  "Search DIRNAME recursively for org files, and open them all."
+  (interactive "D")
+  (mapc #'find-file (directory-files-recursively dirname "\\.org$" nil)))
+#+END_SRC
+*** Create notes drawer
+Adding drawers is a useful way to add contextual information to a text. 
+#+begin_src emacs-lisp
+  ;; Insert NOTES drawer
+  ;; by u/alecigne
+  ;; reddit.com/r/orgmode/comments/7awar9/how_to_create_a_keyboard_shortcut_to_crease_an/
+  (defun org-insert-drawer-notes ()
+    (interactive)
+    (org-insert-drawer nil "NOTES"))
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "C-c C-x n") 'org-insert-drawer-notes))
+#+end_src
+*** Kill all Tetris windows
+Yes, I play too much Tetris. It is my distraction after I achieved a task. This function ends the game and kills both buffers to remove any evidence of my digression.
+#+begin_src emacs-lisp
+(defun tetris-kill-game ()
+  "Kill the current game and score buffers."
+  (interactive)
+  (tetris-end-game)
+  (kill-buffer "tetris-scores")
+  (kill-buffer "*Tetris*"))
+(global-set-key (kbd "C-c C-x t") 'tetris-kill-game)
+#+end_src
+* Data Science
+** Calculator
+#+begin_src emacs-lisp
+;; Calculator
+(global-set-key (kbd "<f6>") 'calculator)
+#+end_src
+** ESS
+[[https://ess.r-project.org/][Emacs Speaks Statistics]] (ESS) supports editing of scripts and interaction with various statistical analysis programs such as R. You also need to install the R software. Run an R terminal with =M-x R= and enter the preferred working directory.
+
+In ESS, the underscore key is mapped to the =<-= assignment operator in R. If you need an underscore, you need to type it twice. This functionality can be annoying when you are an avid user of ggplot. The [[https://github.com/mattfidler/ess-smart-underscore.el][ess-smart-underscore]] package solves this issue by allowing a single underscore in certain circumstances.
+
+#+BEGIN_SRC emacs-lisp
+;; Emacs Speaks Statistics (ESS)
+(require 'ess)
+;(setq ess-use-company t)
+#+END_SRC
+** Org Babel
+#+BEGIN_SRC emacs-lisp
+;; Org Babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)   
+   (R . t)
+   (python . t)
+   (latex . t)
+))
+#+END_SRC
+** Magit
+Magit implements Git in Emacs and is almost like magic. This line of code creates the  =C-x g= shortcut to open the Magit status screen.
+#+BEGIN_SRC emacs-lisp
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
+#+END_SRC
+** Code Editing
+The [[https://github.com/Fuco1/smartparens][Smartparens]] package simplifies working with parenthesis.
+
+#+BEGIN_SRC emacs-lisp
+;; Configure Smartparens
+(use-package smartparens-config
+  :ensure smartparens
+  :config (progn (show-smartparens-global-mode t)))
+;; Line numbers
+(add-hook 'ess-mode-hook 'display-line-numbers-mode)
+#+END_SRC
+** Polymode
+#+begin_src emacs-lisp
+(defun rmd-mode ()
+  "ESS Markdown mode for rmd files"
+  (interactive)
+  (require 'poly-R)
+  (require 'poly-markdown)     
+  (poly-markdown+r-mode)
+)
+#+end_src

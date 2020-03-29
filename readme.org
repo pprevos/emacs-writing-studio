@@ -4,7 +4,7 @@
 This repository contains my configurations and documentation on how I run my life with Emacs.
 
 * Emacs: The Swiss Army Chainsaw of Software
-[[https://github.com/pprevos/EmacsLife/blob/master/SwissArmyChainsaw.org][Swiss Army Chainsaw]] is a work in progress. This book different to most other Emacs books because it does not focus on functionality but on outcomes. When I read traditional computing books it takes me a while to put what I have learned in practice because these books often are just lists of functions you can perform with the software. Reading this book teaches you enough to start writing articles and books, manage projects and actions and undertake other creative projects. 
+[[https://github.com/pprevos/EmacsLife/blob/master/Emacs_Book.org][Swiss Army Chainsaw]] is a work in progress. This book different to most other Emacs books because it does not focus on functionality but on outcomes. When I read traditional computing books it takes me a while to put what I have learned in practice because these books often are just lists of functions you can perform with the software. Reading this book teaches you enough to start writing articles and books, manage projects and actions and undertake other creative projects. 
 
 This book is not a comprehensive manual of Emacs but an opinionated description of how to create digital products with Emacs. The text in this book is opinionated because it describes only one or two ways of achieving an objective. The nature of Emacs is that there are many ways to achieve the same thing. 
 
@@ -13,4 +13,4 @@ This book aim to shorten the Emacs learning curve so that can be creative and pr
 [[file:Images/3d_emacs_book.jpg]]
 
 * My Init file
-=InitFiles.org=, creates my Init file using literate programming in Org Mode.
+=init.el.org=, creates my Init file using literate programming in Org Mode.
