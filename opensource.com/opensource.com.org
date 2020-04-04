@@ -1,23 +1,24 @@
-#+TITLE:  Using Emacs and Org-Mode to create LaTeX documents
+#+TITLE:  OpenSource.com Articles
 #+AUTHOR: Peter Prevos
 #+LaTeX_header: \usepackage{times}
 #+OPTIONS: toc:nil
 
-* Introduction
+* Using Emacs and Org-Mode to create LaTeX documents
+** Introduction
 LaTeX is a powerful system to write scientific and technical documents. Writing documents in LaTeX can be confusing because you need to know many commands and your text is littered with backslashes, curly braces and other syntax distractions. Productive writing requires that you focus on the content of the text, instead of how it looks. This article explains how to use the Org mode extension of the [[https://opensource.com/article/20/3/getting-started-emacs][GNU Emacs]] software to write plain text documents and seamlessly export them to LaTex and PDF.
 
 [[https://orgmode.org/][Org mode]] is a built-in Emacs extension that helps you with keeping notes, maintaining todo lists, managing projects, and authoring documents with a fast and effective plain-text system. Emacs also comes with [[https://www.gnu.org/software/auctex/][AUCTex]], which is an extensible package for writing TeX files in Emacs. AUCTex has a preview module so that you see the result of what you type, but I find this distracting as it moves my attention from the content to the design of the document. Writing text in Org mode is my preferred option because the source remains a plain text file with minimal typesetting elements. The text becomes independent of its result as Org mode can export it to multiple formats, including LaTeX and PDF.
 
 Emacs is known for being difficult to use with a steep learning curve. This article proves the opposite as it guides you writing beautiful documents without any complex configuration. Emacs is only difficult when you want to finetune the default settings. This article follows a minimalist approach to provide you with a proof of concept using the vanilla [[https://www.gnu.org/software/emacs/][GNU Emacs]]. The instructions in this text assume that you have Emacs and a fully-function version of LaTeX on your computer.
 
-* First Steps
+** First Steps
 Before we get started, I need to explain some conventions. In Emacs lingo, the abbreviation =C-c= means typing control-C. The abbreviation =M-x= means typing alt-X. The M stands for mod key, which no longer exists on modern systems. The =S= prefix indicates the shift key.
 
 Use the =find-file= function to create a new document, or to open an existing document, which you can start with the =C-x C-f= keystroke combination. This function opens a dialogue in the mini buffer at the bottom of the screen. The mini buffer is where Emacs communicates with the user. You can type your desired file name.
 
 Emacs is sensitive to file extensions, so ensure that the name of your document ends in =.org=. In Emacs speak, opening or creating a file is called [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Visiting.html][visiting a file]]. Visiting a file means reading its contents into an Emacs buffer so it is available for editing. Emacs generates a new buffer for each file that you visit.
 
-* Writing prose with Org mode
+** Writing prose with Org mode
 Now you can start typing your text in the same way you would do in any text or editor or word processor. Some conventions: Start the file with =#+TITLE:= to denote the title of the document and =#+AUTHOR= for your name. These options are used when exporting the file. Org mode recognises a range of [[https://orgmode.org/manual/Export-Settings.html][export settings]] available to configure the output. For example, to suppress the table of contents, enter =#+OPTIONS: toc:nil=.
 
 Org mode has its own markdown-like conventions to format your document. [[https://orgmode.org/manual/Headlines.html#Headlines][Headlines]] start with one or more asterices. Org mode can [[https://orgmode.org/manual/Global-and-local-cycling.html#Global-and-local-cycling][collapse headlines]] to render parts of it invisible with the =TAB= or =S-TAB= keys. You can make words =*bold*=, =/italic/=, =_underlined_= or ==verbatim==. The Org manual describes the many options for [[https://orgmode.org/manual/Markup-for-Rich-Contents.html#Markup-for-Rich-Contents][richt text]].
@@ -43,7 +44,7 @@ Both images and tables are preceded with =#+CAPTION:= to add a [[https://orgmode
 
 Emacs has extensive [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Basic.html#Basic][editing functionality]] to make you more efficient when typing text. Spell checking, thesaurus, auto-completion and an undo tree are just some of the tools that help you to write efficiently.
 
-* Adding LaTeX snippets to Org
+** Adding LaTeX snippets to Org
 Besides the text itself, your Org mode text can include simple LaTeX commands, such as =\newpage=, within the text. Equations in standard LaTeX syntax are placed between dollar signs =$e^{i\pi} + 1 = 0$= The =org-latex-preview= function (=C-c C-x C-l=) shows a [[https://orgmode.org/manual/Previewing-LaTeX-fragments.html][preview]] of any LaTeX equations within the text buffer. Lastly, you can also add complete LaTeX snippets to insert complex content. The code has to be placed in an export block:
 
 #+BEGIN_EXAMPLE
@@ -58,14 +59,14 @@ Besides the text itself, your Org mode text can include simple LaTeX commands, s
 #+END_EXPORT
 #+END_EXAMPLE
 
-* Exporting to LaTeX
+** Exporting to LaTeX
 Org mode includes a powerful export module to convert your files to many formats using the powerful pandoc software. You start the export module with the =org-export-dispatch= function, which you can run with the =C-c C-e= keyboard shortcut. The dispatch will split your screen and provide a range of options. 
 
 At the first level, pandoc converts the Org mode to a LaTeX file. You can choose to open the LaTeX file in a new buffer or save it as a file. Org mode can also directly render a PDF file, which you can view within Emacs or only save to disk.
 
 #+CAPTION: Screenshot of Emacs with Org mode source and PDF preview.
 [[file:org-mode-latex-screenshot.png]]
-* Advanced use
+** Advanced use
 This article has only provided a first taste of writing prose in Org mode and LaTeX. Org mode includes numerous configuration options to finetune your document or to change default settings.
 
 By default, Org mode uses the article style to export documents. You can change this with export settings. These settings can also be used to add commands to the document header:
@@ -80,5 +81,12 @@ By default, Org mode uses the article style to export documents. You can change 
 If you write scientific documents, the [[https://github.com/jkitchin/org-ref][org-ref]] package by John Kitchin provides org-mode modules for citations, cross-references, bibliographies in org-mode and useful bibtex tools to go with it.
 
 The Org mode manual [[https://orgmode.org/manual/LaTeX-Export.html#LaTeX-Export][LaTex export]] section provides a detailed discussion of the available functionality.
-* Conclusion
+** Conclusion
 Org mode is a perfect editor for writing LaTeX. The main advantage is that you lose the clutter of LaTeX syntax and can focus on the text. This advantage comes no cost because you can still add LaTeX code as much as you need. Additionally, you can access to the powerful editing functions of Emacs. Using Org to write books and articles allows you to focus on the text and combine the power of two of the oldest and most powerful open sources pieces of software.
+* Emacs for Analysing Data with R
+** Introduction
+The ESS (Emacs Speaks Statistics) package 
+
+
+** First steps
+** Literate Programming 
