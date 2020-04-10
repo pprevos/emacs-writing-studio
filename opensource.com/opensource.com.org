@@ -4,6 +4,10 @@
 #+OPTIONS: toc:nil
 
 * Using Emacs and Org-Mode to create LaTeX documents
+  :PROPERTIES:
+  :URL:      https://opensource.com/article/20/4/emacs-org-mode
+  :Date:     [2020-04-09 Thu]
+  :END:
 ** Introduction
 LaTeX is a powerful system to write scientific and technical documents. Writing documents in LaTeX can be confusing because you need to know many commands and your text is littered with backslashes, curly braces and other syntax distractions. Productive writing requires that you focus on the content of the text, instead of how it looks. This article explains how to use the Org mode extension of the [[https://opensource.com/article/20/3/getting-started-emacs][GNU Emacs]] software to write plain text documents and seamlessly export them to LaTex and PDF.
 
@@ -85,8 +89,54 @@ The Org mode manual [[https://orgmode.org/manual/LaTeX-Export.html#LaTeX-Export]
 Org mode is a perfect editor for writing LaTeX. The main advantage is that you lose the clutter of LaTeX syntax and can focus on the text. This advantage comes no cost because you can still add LaTeX code as much as you need. Additionally, you can access to the powerful editing functions of Emacs. Using Org to write books and articles allows you to focus on the text and combine the power of two of the oldest and most powerful open sources pieces of software.
 * Emacs for Analysing Data with R
 ** Introduction
+
+
 The ESS (Emacs Speaks Statistics) package 
 
 
+** Getting ready
+Before you can get started you need some minimal changes to the configuration file. 
+
+#+BEGIN_SRC elisp
+;; Elisp file for R coding with Emacs
+
+;; Initialise package manager
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+;; Install use-package in case it does not exist yet
+;; The use-package software will install all packages as required
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; Basic ESS config
+(use-package ess
+  :ensure t
+  :commands R
+  :config
+  (define-key company-active-map (kbd "M-h") 'company-show-doc-buffer))
+
+;; Auto comletion
+(use-package company
+  :ensure t
+  :defer 1
+  :config
+  (setq tab-always-indent 'complete)
+  (global-set-key (kbd "C-M-/") 'company-complete)
+  (global-company-mode))
+#+END_SRC
+
+#+RESULTS:
+
+
 ** First steps
+
+
+The C-c C-z shortcut lets you jump back and forth between the script buffer and the R console. 
+
+
+
 ** Literate Programming 
