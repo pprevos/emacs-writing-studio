@@ -51,14 +51,15 @@ Emacs can be extended with any of the thousands of available packages. This conf
 
 You can install, remove or refresh [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html#Packages][packages]] with the =list-packages= function.
 
-The =use=package= package provides a tidier method to write init files in Emacs.
+The =use-package= package provides a tidy method to write init files in Emacs.
 #+BEGIN_SRC emacs-lisp
 ;; Package repositories
-(setq package-archives
-      '(("org" . "https://orgmode.org/elpa/")
+  (setq package-archives '(
+      ("org" . "https://orgmode.org/elpa/")
       ("gnu" . "https://elpa.gnu.org/packages/")
       ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
+
 ;; use-package to simplify the config file
 (unless (package-installed-p 'use-package)
     (package-refresh-contents)
@@ -136,7 +137,6 @@ These are the basic settings for org-mode and its standard keyboard shortcuts.
 (use-package org
   :ensure org-plus-contrib
   :config
-  (setq org-agenda-files(quote ("~/Dropbox/gtd/gtd.org")))
   (global-set-key (kbd "C-c l") 'org-store-link)
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture)
@@ -350,8 +350,9 @@ I write almost all text in Org Mode. I also use two specialised major modes. [[h
  \\usepackage[raggedright]{sidecap}
  \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
  \\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
+ \\usepackage{subcaption} 
  \\usepackage[font={small, it}]{caption}
- \\usepackage{subcaption}
+ \\captionsetup[subfigure]{justification=centering}
  \\usepackage{pdfpages}
  \\usepackage[unicode=true,
      bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,
@@ -385,12 +386,14 @@ I write almost all text in Org Mode. I also use two specialised major modes. [[h
  \\setsubsubsecheadstyle{\\normalfont\\centering}
  \\usepackage[font={small, it}]{caption}
  \\usepackage{subcaption}
+ \\captionsetup[subfigure]{justification=centering}
  \\usepackage{pdfpages}
  \\pagestyle{myheadings}
  \\usepackage{ccicons}
  \\usepackage{nicefrac}
  \\usepackage[authoryear]{natbib}
  \\bibliographystyle{apalike}
+ \\usepackage{nohyperref}
  "
   ("\\chapter{%s}" . "\\chapter*{%s}")
   ("\\section{%s}" . "\\section*{%s}")
@@ -553,13 +556,12 @@ The generic keyboard shortcut is =C-x /= with a suffix to define the required se
 ** Agenda settings
 #+BEGIN_SRC emacs-lisp
   ;; Org Agenda settings
-    (setq org-agenda-files '("~/Dropbox/gtd/gtd.org"))
+    (setq org-agenda-files '("~/Documents/Third_Hemisphere/gtd/gtd.org"))
     (setq org-agenda-skip-deadline-if-done t
           org-agenda-skip-scheduled-if-done t
           org-agenda-include-diary t
           calendar-week-start-day 1
-          org-log-repeat nil
-          
+          org-log-repeat nil 
           )
 
     (setq org-agenda-custom-commands
@@ -571,11 +573,14 @@ The generic keyboard shortcut is =C-x /= with a suffix to define the required se
             ("h" "Third Hemisphere"
              ((agenda "" ((org-agenda-span 3)
                           (org-agenda-start-on-weekday nil)
-                          (org-agenda-files '("~/Dropbox/gtd/gtd.org"))
+                          (org-agenda-files 
+                          '("~/Documents/Third_Hemisphere/gtd/gtd.org"))
                           (org-agenda-sorting-strategy '(priority-up))
                           )) 
-             (todo "NEXT" ((org-agenda-files '("~/Dropbox/gtd/gtd.org"))))
-              (todo "WAITING" ((org-agenda-files '("~/Dropbox/gtd/gtd.org"))))
+             (todo "NEXT" ((org-agenda-files 
+             '("~/Documents/Third_Hemisphere/gtd/gtd.org"))))
+              (todo "WAITING" ((org-agenda-files 
+              '("~/Documents/Third_Hemisphere/gtd/gtd.org"))))
               (stuck "")
               ))
             ))
@@ -594,17 +599,17 @@ This capture setup
 (setq org-catch-invisible-edits 'error)
 ;; Org capture
 (setq org-capture-templates '(("t" "Todo to inbox" entry
-                               (file+headline "~/Dropbox/gtd/gtd.org" "Inbox")
+                               (file+headline "~/Documents/Third_Hemisphere/gtd/gtd.org" "Inbox")
                                "* TODO %i%?")
                               ("n" "Note to inbox" item
-                               (file+headline "~/Dropbox/gtd/gtd.org" "Inbox")
+                               (file+headline "~/Documents/Third_Hemisphere/gtd/gtd.org" "Inbox")
                                "- %?")
                                ("j" "Journal Entry"
                                entry (file+datetree "~/Documents/Third_Hemisphere/Journal.org")
                                "* %?")))
 ;; refiling captured entries
 (setq org-reverse-note-order t)
-(setq org-refile-targets '(("~/Dropbox/gtd/gtd.org" :maxlevel . 2)))
+(setq org-refile-targets '(("~/Documents/Third_Hemisphere/gtd/gtd.org" :maxlevel . 2)))
 #+END_SRC
 ** Org Wiki
 These packages convert Org Mode into a useful Wiki:

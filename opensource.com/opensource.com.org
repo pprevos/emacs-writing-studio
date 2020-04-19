@@ -1,3 +1,4 @@
+
 #+TITLE:  OpenSource.com Articles
 #+AUTHOR: Peter Prevos
 #+LaTeX_header: \usepackage{times}
@@ -89,54 +90,84 @@ The Org mode manual [[https://orgmode.org/manual/LaTeX-Export.html#LaTeX-Export]
 Org mode is a perfect editor for writing LaTeX. The main advantage is that you lose the clutter of LaTeX syntax and can focus on the text. This advantage comes no cost because you can still add LaTeX code as much as you need. Additionally, you can access to the powerful editing functions of Emacs. Using Org to write books and articles allows you to focus on the text and combine the power of two of the oldest and most powerful open sources pieces of software.
 * Emacs for Analysing Data with R
 ** Introduction
+Some years ago, Harvard Business Review published an article which proclaimed data scientist to be the [[https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century][sexiest job]] of the twenty-first century. Interest in data science has exploded since this article. Many great open source projects, such as Python and the R language for statistical computing, have facilitated the rapid developments in how we analyse data. 
 
+I started my career using pencil and paper and moved to spreadsheets. Now the R language is my weapon of choice when I need to create value from data. Emacs is another one of my favourite tools. This article briefly explains how to use the ESS package to get you started with developing R projects in this venerable editor.
 
-The ESS (Emacs Speaks Statistics) package 
+The vast majority of R developers use the [[https://opensource.com/article/18/2/getting-started-RStudio-IDE][RStudio]] IDE to manage their projects. RStudio is a powerful open-source editor with specialised functionality to develop data science projects. RStudio is a great IDE, but its editing functions are limited.
 
+Using Emacs to write data science code means that you have access to the full power of this extensible editor. I prefer using Emacs for my data science projects because I can do many other tasks within the same application, leveraging the multifunctionality of this venerable editor. If you are just getting started with Emacs, then please first read [[https://opensource.com/article/20/3/getting-started-emacs][Seth Kenlon's article]].
 
 ** Getting ready
-Before you can get started you need some minimal changes to the configuration file. 
+Emacs is an almost infinitely extensible text editor, which unfortunately means that many things don't work the way you want them to out of the box. Before you can write and execute R scripts, you need to install some packages and configure them. The ESS ([[https://ess.r-project.org/][Emacs Speaks Statistics]]) package provides an interface between Emacs and R. Other packages, such as [[https://company-mode.github.io/][Company]] and ** help with completion and balancing parenthesis.
 
-#+BEGIN_SRC elisp
+Emacs uses a version of Lisp for configuration. The lines of [[https://en.wikipedia.org/wiki/Emacs_Lisp][Emacs Lisp]] code below install the required extensions and define a minimal configuration to get you started. These lines were tested for GNU Emacs version 26.3.
+
+Copy these lines and save them in a file named =init.el= in your =.emacs.d= folder. This is the folder that Emacs uses to store configuration, including the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][init file]]. If you already have an init file, then you can append these lines to your config. This minimal configuration is enough to get you started. 
+
+#+BEGIN_SRC elisp :results silent
 ;; Elisp file for R coding with Emacs
 
-;; Initialise package manager
+;; Add MELPA repository and initialise the package manager
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
-;; Install use-package in case it does not exist yet
-;; The use-package software will install all packages as required
+;; Install use-package,in case it does not exist yet
+;; The use-package software will install all other packages as required
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Basic ESS config
+;; ESS configurationEmacs Speaks Statistics
 (use-package ess
   :ensure t
-  :commands R
-  :config
-  (define-key company-active-map (kbd "M-h") 'company-show-doc-buffer))
+)
 
-;; Auto comletion
+;; Auto completion
 (use-package company
   :ensure t
-  :defer 1
   :config
-  (setq tab-always-indent 'complete)
-  (global-set-key (kbd "C-M-/") 'company-complete)
-  (global-company-mode))
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 2)
+  (global-company-mode t)
+)
+
+; Parentheses
+(use-package highlight-parentheses
+  :ensure t
+  :config
+  (progn
+    (highlight-parentheses-mode)
+    (global-highlight-parentheses-mode))
+  )
 #+END_SRC
+** Using the R Console
+To start an R console session, press =M-x R= and hit enter (=M= is the Emacs way to denote the =Alt= or =command= keys). ESS will ask you to nominate a working directory, which defaults to the folder of the current buffer. You can use more than one console in the same Emacs session by repeating the R command.
 
-#+RESULTS:
+Emacs opens a new buffer for your new R console. You can also use the up and down arrow keys to go to previous lines and re-run them. Use the control and arrow up/down keys to recycle old commands.
 
+The [[https://company-mode.github.io/][company package]] (complete anything) manages the autocompletion in both the console and R scripts. When entering a function, the mini buffer at the bottom of the screen shows the relevant parameters. When the autocompletion dropdown menu appears, you can press F1 to view the help file of the chosen option before you select it. 
 
-** First steps
+The [[https://github.com/tsdh/highlight-parentheses.el][highlight-parentheses]] package does what its name suggests. Several other Emacs packages are available to help you balance parentheses and other structural elements in your code.
 
+** Writing R Scripts
+Emacs recognises R mode for any buffer with a =.R= extension (the file extension is case-sensitive). Open or create a new file with the =C-x C-f= shortcut and type the path and file name. You can start writing your code and use all of the powerful editing techniques that Emacs provides.
 
-The C-c C-z shortcut lets you jump back and forth between the script buffer and the R console. 
+Several functions are available to evaluate the code. You can evaluate each line separately with =C-<return>=, while =C-c C-c= will evaluate a contiguous region. Keying =C-c C-b= will evaluate the whole buffer.
 
+When you evaluate some code, Emacs will use any running console or ask you to open a new console to run the code.
 
+The output of any plotting functions appears in a window outside of Emacs. If you prefer to view the output within Emacs, then you need to save the output to disk and open the resulting file in a separate buffer.
 
-** Literate Programming 
+#+CAPTION: Screenshot of literate programming in Org mode, the ESS buffer and graphics output.
+[[file:ess-screenshot.png]]
+** Advanced Use
+This article only provides a brief introduction to using R in Emacs. Many parameters can be fine-tuned to make Emacs behave to your preferences, which would take too much space to cover. The ESS manual describes these in detail. You can also extend functionality with additional packages. 
+
+Org mode can integrate R code, providing a productive platform for literate programming. If you prefer to use RMarkdown, then [[https://github.com/polymode/polymode][polymode]] package has you covered.
+
+Emacs has various packages to make your editing experience more efficient. The best part of using Emacs to write R code is that the program is more than just an IDE, it is a malleable computer system that you can configure to match your favourite work flow.
+** Conclusion
+This article shows the versatility of Emacs and its use as an R IDE. Learning how to configure Emacs can be daunting. The best way to learn quickly is to copy ideas from people who share their configurations. Miles McBain manages a [[https://github.com/MilesMcBain/esscss][list of Emacs configurations]] that could be useful if you like to explore using the R language in Emacs further.
