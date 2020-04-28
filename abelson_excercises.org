@@ -1,0 +1,323 @@
+#+TITLE: ELISP Solutions to excercises in /Structure and Interpretation of Computer Programs/ (SICP) by Abelson, Sussman and Sussman.
+#+OPTIONS: toc:nil
+
+* Introduction
+This file contains solutions to the exercises in /Structure and Interpretation of Computer Programs/ ([[https://mitpress.mit.edu/sites/default/files/sicp/index.html][SICP]]) by Abelson, Sussman and Sussman. The textbook uses the Scheme dialect of Lisp. The solutions in this file are provided in Emacs Lisp.
+
+MIT hosts video lectures to accompany the book: Eric Grimson, Peter Szolovits, and Trevor Darrell. 6.001 /Structure and Interpretation of Computer Programs/. Spring 2005. Massachusetts Institute of Technology: MIT OpenCourseWare. [[https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/][ocw.mit.edu]].
+
+Some of the solutions are derived from the work by [[https://github.com/sarabander/sicp][Andres Raba]].
+** Emacs Lisp
+
+Resources:
+- [[https://www.gnu.org/software/emacs/manual/eintr.html][An Introduction to Programming in Emacs Lisp]]
+- [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]]
+* Chapter 1.1
+- Online book: [[https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-10.html#%_sec_1.1][The Elements of Programming]]
+- Video lecture: [[https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/video-lectures/1a-overview-and-introduction-to-lisp/][Overview and Introduction to Lisp]]
+** Exercise 1.1
+*** Question
+Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
+*** Answer
+#+begin_src elisp :results none
+10 ; => 10
+
+(+ 5 3 4) ; => 12
+
+(- 9 1) ; => 8
+
+(/ 6 2) ; => 3
+
+(+ (* 2 4) (- 4 6)) ; => 10
+
+(setq a 3)
+(setq b (+ a 1))
+
+(+ a b (* a b)) ; => 19
+
+(= a b) ; => nil
+
+(if (and (> b a) (< b (* a b)))
+    b
+  a)
+;; => 4
+
+(cond ((= a 4) 6)
+      ((= b 4) (+ 6 7 a))
+      (t 25))
+;;=> 16
+
+(+ 2 (if (> b a) b a)) ; => 6
+
+(* (cond ((> a b) a)
+         ((< a b) b)
+         (t -1))
+   (+ a 1))
+;; => 16
+#+end_src
+*** Emacs Lisp 
+- [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Setting-Variables.html][Setting Variable Values]]
+- [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Conditionals.html][Conditionals]]
+- [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Combining-Conditions.html][Combining Conditions]]
+** Exercise 1.2
+*** Question
+Translate the following expression into prefix form:
+
+$$\frac{5 + 4 + (2 - (3 - (6 + \frac{5}{4})))}{3(6 - 2)(2 - 7)}$$
+*** Answer
+#+begin_src elisp :results none
+(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4.0 5))))) (* 3 (- 6 2 ) (- 2 7)))
+
+;; Pretty printing
+(/ (+ 5 4
+      (- 2
+	 (- 3
+	    (+ 6
+	       (/ 4.0 5)))))
+   (* 3
+      (- 6 2 )
+      (- 2 7)))
+#+end_src
+*** Emacs Lisp
+Refer to the [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Arithmetic-Operations.html][GNU Emacs Lisp Reference Manual]] for details on arithmetic in Emacs Lisp. Note that for division, the decimal forces Lisp to use floating point.
+** Exercise 1.3
+*** Question
+Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
+*** Answer
+#+begin_src elisp :results none
+(defun sq (a) (* a a))
+
+(defun sos (a b) (+ (sq a) (sq b)))
+
+(defun sos-largest (a b c)
+    (cond ((and (< a b) (< a c)) (sos b c))
+          ((and (< b a) (< b c)) (sos a c))
+          (t (sos a b))))
+
+(sos-largest 2 3 5)
+(sos-largest 3 2 5)
+(sos-largest 5 2 3)
+#+end_src
+*** Emacs Lisp
+- [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Functions.html][Functions]]
+- [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Defining-Functions.html][Defining Functions]] (=defun=)
+** Exercise 1.4
+*** Question
+Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
+#+begin_src elisp :results none
+(defun a-plus-abs-b (a b)
+    (funcall
+        (if (> b 0)
+        '+
+        '-)
+        a b))
+
+#+end_src
+*** Answer
+This function evaluates as follows:
+- If =b= is positive, the function evaluates =(+ a b)=
+- If =b= is negative, the function evaluates =(- a b)=
+
+#+begin_src elisp :results none
+(a-plus-abs-b 5 -10)
+;; => 15
+
+(a-plus-abs-b -7 -12)
+; => 5
+#+end_src
+This approach avoids having to repeat variables for each option:
+#+begin_src elisp :results none
+(defun a-plus-abs-b (a b)
+    (if (> b 0)
+        (+ a b)
+        (- a b)))
+#+end_src
+*** Emacs Lisp
+The original Scheme version does not evaluate in Emacs. Scheme is a Lisp-1 and Emacs Lisp is Lisp-2. In scheme both names and procedures are located in the same namespace, so it is possible to return procedure name from condition and evaluate it. In Lisp-2 procedures have their own namespace, so in order to call procedure from name you have to use [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Calling-Functions.html][funcal]] (Source: [[https://www.reddit.com/r/emacs/comments/g89q2y/learning_elisp_need_some_help/][/u/andreyorst]]).
+** Exercise 1.5
+*** Question
+Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation. He defines the following two procedures:
+#+begin_src elisp :results none 
+(defun p () (p))
+
+(defun test (x y) 
+  (if (= x 0) 
+      0 
+      y))
+#+end_src
+Then he evaluates the expression:
+#+begin_src elisp :results none
+(test 0 (p))
+#+end_src
+What behavior will Ben observe with an interpreter that uses applicative-order evaluation? What behavior will he observe with an interpreter that uses normal-order evaluation? Explain your answer. (Assume that the evaluation rule for the special form if is the same whether the interpreter is using normal or applicative order: The predicate expression is evaluated first, and the result determines whether to evaluate the consequent or the alternative expression.)
+*** Answer
+- Applicative order: The function call results in an infinite loop, as the function =p= calls itself (Emacs' behaviour).
+- Normal order: The function never reaches =p= because it exits with 0 as a result.
+** Exercise 1.6
+*** Question
+Alyssa P. Hacker doesn't see why if needs to be provided as a special form. “Why can’t I just define it as an ordinary procedure in terms of cond?” she asks. Alyssa’s friend Eva Lu Ator claims this can indeed be done, and she defines a new version of if:
+#+begin_src elisp :reults none
+(defun new-if (predicate then-clause else-clause)
+               (cond (predicate then-clause)
+                     (t else-clause)))
+#+end_src
+Eva demonstrates the program for Alyssa:
+#+begin_src elisp :results none
+(new-if (= 2 3) 0 5)
+
+(new-if (= 1 1) 0 5)
+#+end_src 
+Delighted, Alyssa uses new-if to rewrite the square-root program:
+#+begin_src elisp :results none
+(defun sqrt-iter (guess x)
+  (new-if (good-enough? guess x)
+          guess
+          (sqrt-iter (improve guess x) x)))
+#+end_src
+What happens when Alyssa attempts to use this to compute square roots? Explain.
+*** Answer
+#+begin_src elisp :results none
+(defun sqrt (x)
+  (defun good-enough? (guess)
+    (< (abs (- (square guess) x)) 0.001))
+  (defun improve (guess)
+    (average guess (/ x guess)))
+  (defun sqrt-iter (guess)
+    (new-if (good-enough? guess)
+        guess
+        (sqrt-iter (improve guess))))
+  (sqrt-iter 1.0))
+(sqrt 2)
+#+end_src
+This version loop forever and crashes.
+** Exercise 1.7
+*** Question
+The =good-enough?= test used in computing square roots will not be very effective for finding the square roots of very small numbers. Also, in real computers, arithmetic operations are almost always performed with limited precision. This makes our test inadequate for very large numbers. Explain these statements, with examples showing how the test fails for small and large numbers. An alternative strategy for implementing good-enough? is to watch how guess changes from one iteration to the next and to stop when the change is a very small fraction of the guess. Design a square-root procedure that uses this kind of end test. Does this work better for small and large numbers? 
+*** Answer
+The =float= function forces floating point answers. See Elisp manual about [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Numeric-Conversions.html][Numeric Conversions]].
+#+begin_src elisp :results none
+(defun heron (x)
+    (defun avg (x y) (/ (+ (float x) y) 2))
+    (defun abs (x) (if (< x 0) (- x) x ))
+    (defun improve (guess)
+        (avg guess (/ x guess)))
+    (defun good-enough? (guess next-guess)
+        (< (abs (- guess next-guess)) 1e-20))
+    (defun try (guess)
+        (if (good-enough? guess (improve guess))
+            guess
+            (try (improve guess))))
+    (try 1.0)
+)
+(heron 16)
+(* (heron 1e-5) (heron 1e-5))
+#+end_src
+** Exercise 1.8
+Newton’s method for cube roots is based on the fact that if $y$ is an approximation to the cube root of $x$, then a better approximation is given by the value:
+
+$$\frac{x/y^2 +2y}{3}$$
+
+Use this formula to implement a cube-root procedure analogous to the square-root procedure.
+*** Answer
+The =float= function forces floating point answers. See Elisp manual about [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Numeric-Conversions.html][Numeric Conversions]].
+#+begin_src elisp :results none
+(defun newton (x)
+    (defun abs (x) (if (< x 0) (- x) x ))
+    (defun improve (guess)
+        (/ (+ (/ x (* guess guess)) (* 2 guess)) 3.0))
+    (defun good-enough? (guess next-guess)
+        (< (abs (- guess next-guess)) 1e-20))
+    (defun try (guess)
+        (if (good-enough? guess (improve guess))
+            guess
+            (try (improve guess))))
+    (try 1.0)
+)
+
+(newton (* 4 4 4))
+(newton 1e-5)
+#+END_SRC
+* Chapter 1.2
+- Online book: [[https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-11.html#%_sec_1.2][Procedures and the Processes they Generate]]
+- Video lecture: [[https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/video-lectures/1b-procedures-and-processes-substitution-model/][1B: Procedures and Processes; Substitution Model]]
+** Exercise 1.9
+*** Question
+Each of the following two procedures defines a method for adding two positive integers in terms of the procedures inc, which increments its argument by 1, and dec, which decrements its argument by 1.
+#+begin_src elisp :results none
+(defun plus (a b)
+  (if (= a 0)
+      b
+      (1+ (plus (1- a) b))))
+
+(defun plus (a b)
+  (if (= a 0)
+      b
+      (plus (1- a) (1+ b))))
+#+end_src
+Using the substitution model, illustrate the process generated by each procedure in evaluating =(+ 4 5)=. Are these processes iterative or recursive? 
+*** Answer
+#+begin_src elisp :results none
+;; First version
+(plus 4 5)
+(1+ (plus 3 5))
+(1+ (1+ (plus 2 5)))
+(1+ (1+ (1+ (plus 1 5))))
+(1+ (1+ (1+ (1+ (plus 0 5)))))
+(1+ (1+ (1+ (1+ 5))))
+(1+ (1+ (1+ 6)))
+(1+ (1+ 7))
+(1+ 8)
+9
+;; Second version
+(plus 4 5)
+(plus 3 6)
+(plus 2 7)
+(plus 1 8)
+(plus 0 9)
+9
+#+end_src
+1. Recursive
+2. Iterative
+** Exercise 1.10
+The following procedure computes a mathematical function called Ackermann's function.
+#+begin_src elisp :results none
+(defun A (x y)
+  (cond ((= y 0) 0)
+        ((= x 0) (* 2 y))
+        ((= y 1) 2)
+        (t (A (- x 1)
+                 (A x (- y 1))))))
+#+end_src
+What are the values of the following expressions?
+#+begin_src elisp :results none
+(A 1 10) ; => 1024 (2^10)
+(A 2 4)  ; => 65536 (2^16)
+(A 3 3)  ; => 65536
+#+end_src
+Consider the following procedures, where A is the procedure defined above:
+#+begin_src elisp :results none
+(defun f (n) (A 0 n))
+(defun g (n) (A 1 n))
+(defun h (n) (A 2 n))
+(defun k (n) (* 5 n n))
+#+end_src
+Give concise mathematical definitions for the functions computed by the procedures =f=, =g=, and =h= for positive integer values of =n=. For example, =(k n)= computes $5n^2$.
+*** Answer
+#+begin_src elisp :results none
+(f 1) (f 2) (f 3)
+(g 1) (g 2) (g 3) (g 16)
+(h 1) (h 2) (h 3) (h 4)
+#+end_src
+- =(f n)= computes $2n$
+- =(g n)= computes $2^n$
+- =(h n)= computes $\underbrace{2^{2^{\,\cdot^{\,\cdot^{\,\cdot^{\,2}}}}}}_n = 2 {\uparrow\uparrow} n$ (tetration)
+** Exercise 1.11
+*** Question
+A function $f$ is defined by the rule that $f(n) = n$ if $n<3$ and $f(n) = f(n - 1) + 2f(n - 2) + 3f(n - 3)$ if $n>3$. Write a procedure that computes $f$ by means of a recursive process. Write a procedure that computes $f$ by means of an iterative process.
+*** Answer
+#+begin_src elisp :results none
+
+#+end_src
+
+
+
