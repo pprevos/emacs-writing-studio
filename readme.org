@@ -3,17 +3,21 @@
 
 This repository contains my configurations and documentation on how I run my life with Emacs.
 
-* My Init file
-=init.el.org= file that creates the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][init file]], using literate programming in Org Mode.
+* abelson_excercises.org
+Solutions to the exercises in /Structure and Interpretation of Computer Programs/ ([[https://mitpress.mit.edu/sites/default/files/sicp/index.html][SICP]]) by Abelson, Sussman and Sussman.
+* init.el.org
+=init.el.org= creates the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][init file]] using literate programming in Org Mode. Needs a bit more documentation.
+* manuscript
+
 * OpenSource.com
 [[Https://github.com/pprevos/EmacsLife/tree/master/opensource.com][Articles]] about Emacs for the opensource.com website.
-* Emacs: The Swiss Army Chainsaw of Software
-[[https://github.com/pprevos/EmacsLife/blob/master/manuscript][Swiss Army Chainsaw]] is a work in progress. This book different to most Emacs books because it does not focus on functionality but on creating outcomes. 
+* manuscript
+/Be Productive With Emacs --- The Ultimate Killer App/ is a work in progress. This book different to most Emacs books because it does not focus on functionality but on achieving outcomes. 
 
 Traditional computing books take a while to put theory in practice because these books often lists functions you can perform with the software. This Emacs book will teach you to achieve goals by only explaining the functionality you need to write books, manage projects, crunch numbers, send emails and so on.
 
-This book is not a comprehensive manual of Emacs but an opinionated description of how to create digital products with Emacs. The text in this book is opinionated because it describes only one or two ways of achieving an objective. The nature of Emacs is that there are many ways to achieve the same thing. 
+This book is not a comprehensive manual of Emacs but an opinionated description of how to create digital products. The text in this book is opinionated because it describes only one or two ways of achieving an objective. The nature of Emacs is that there are many ways to achieve the same thing. 
 
 This book aims to shorten the Emacs learning curve so that you can be creative and productive instead of learning the system. If you like to know more details about Emacs, then I highly recommend you read [[http://shop.oreilly.com/product/9780596006488.do][Learning GNU Emacs]] by Debra Cameron and others, or [[https://masteringemacs.org/book][Mastering Emacs]] by Mickey Petersen.
 
-[[file:Images/3d_emacs_book.jpg]]
+[[file:manuscript/images/3d_emacs_book.jpg]]

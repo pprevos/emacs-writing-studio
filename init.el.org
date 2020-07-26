@@ -13,7 +13,7 @@ If you like to try these settings without creating a new file, then type =C-c C-
 
 Many people publish their elaborate Emacs init files to share the way they configure their favourite program. Some people even publish specialised packages to pre-configure Emacs for a specific purpose. This init file uses a minimalist approach, staying close to the vanilla Emacs configuration.
 * Basic Configuration
-  This section contains basic Emacs configurations.
+This section contains basic Emacs configurations.
 ** Customisation file
 Emacs includes a menu-driven configuration system that [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Customizations.html][writes settings]] to the init file on the fly. This code snippet redefines the name of this file to =custom.el= to ensure that the config system does not interfere with =init.el=. If the configuration system uses the =init.el= file, then tangling this Org file will overwrite any previous configurations. The custom configuration file is loaded first. Any settings in the =init.el= file will thus override the configuration in the customisation file.
 
@@ -43,15 +43,14 @@ Org Babel is the package that runs code within an Org file. By default, it will 
 (setq org-confirm-babel-evaluate nil)
 #+end_src
 ** Packages
-Emacs can be extended with any of the thousands of available packages. This configuration will use several of these packages. The frist step to be able to use these is to define locations of the relevantrepositories.
-
+Enable the package repositories:
 - [[https://elpa.gnu.org/][GNU ELPA]]: Emacs Lisp Package Archive (default)
 - [[https://melpa.org/][MELPA]]: Milkypostman’s Emacs Lisp Package Archive
 - [[https://orgmode.org/][Org Mode]]: Always using the latest version of Org Mode.
 
 You can install, remove or refresh [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html#Packages][packages]] with the =list-packages= function.
 
-The =use-package= package provides a tidy method to write init files in Emacs.
+The =use-package= package provides a tidy method to write init files in Emacs. The =ensure= option will install the package if it is not yet available.
 #+BEGIN_SRC emacs-lisp
 ;; Package repositories
   (setq package-archives '(
@@ -74,18 +73,19 @@ These configurations change the way Emacs looks and feels:
 - Subtly [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Cursor-Display.html][highlight]] the current line to find your cursor (modify the theme)
 - Silence the Alarm Bell
 - Display the current time in the mode line
+- Theme and fonts
+- Fancy mode line
 #+BEGIN_SRC emacs-lisp
   ;; VISUAL ENHANCEMENTS
 
   ;; Startup settings
   (setq
     inhibit-startup-message t
-    inhibit-startup-screen t
-  )
+    inhibit-startup-screen t)
 
   ;; Themes
-  (load-theme 'dracula t)
-  (set-face-foreground 'font-lock-comment-face "gray45")
+  (use-package hc-zenburn-theme
+      :ensure t)
 
   ;; Hide tool, menu and scroll bars
   (tool-bar-mode -1)
@@ -94,41 +94,56 @@ These configurations change the way Emacs looks and feels:
 
   ;; Highlight current line
   (global-hl-line-mode 1)
-  (set-face-attribute 'hl-line nil :foreground nil :background "gray20")
 
   ;; Silence the alarm
   (setq ring-bell-function 'ignore)
 
   ;; Display time in modeline
-  (setq format-time-format "%d %b %Y %H:%M")
+  (setq format-time-format "%H:%M")
   (display-time-mode 1)
 
   ;; Display bettery life
   (display-battery-mode 1)
 
   ;; Default font
-  (set-face-attribute 'default nil :family "Consolas" :height 130)
+  (set-face-attribute 'default nil :font "Hack-12")
+  (set-face-attribute 'fixed-pitch nil :font "Hack-12")
+  (set-face-attribute 'variable-pitch nil :font "FiraGO-12")
 
   ;; Fancy modeline
   (use-package doom-modeline
       :ensure t
       :config
       (doom-modeline-mode 1))
+  ;; run M-x all-the-icons-install-fonts
 #+END_SRC
 ** Cursor Movement
 By default the Emacs [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Scrolling.html][scroll]] commands don't let you go all the way to the first and last line. The first line changes this behaviour.
 
 The buffer navigation section binds modifed arrow keys to the moving backward and forwards in windows.
+
+Lastly, the mouse is diabled - Emacs is after all a text editor.
+
 #+BEGIN_SRC emacs-lisp
 ;; Scroll to the first and last line of the buffer
 (setq scroll-error-top-bottom t)
 
 ;; Buffer navigation
+(defun other-window-back ()
+    "Select previous window."
+    (interactive)
+    (other-window -1))
 (global-set-key (kbd "s-<end>") 'other-window)
-(global-set-key  (kbd "s-<home>")
-		 (lambda ()
-		   (interactive)
-		   (other-window -1)))
+(global-set-key  (kbd "s-<home>") 'other-window-back)
+
+;; Disable the mouse
+(use-package disable-mouse
+  :ensure t
+  :config
+  (global-disable-mouse-mode))
+
+;; Close Emacs client
+(global-set-key (kbd "C-x x") 'delete-frame) 
 #+END_SRC
 ** Org Mode
 These are the basic settings for org-mode and its standard keyboard shortcuts.
@@ -142,46 +157,55 @@ These are the basic settings for org-mode and its standard keyboard shortcuts.
   (global-set-key (kbd "C-c c") 'org-capture)
   ;; Org mode ricing
   (setq org-startup-indented t
-      org-ellipsis " ↵" ;folding symbol
+      org-ellipsis "↵" ;folding symbol
       org-hide-emphasis-markers t
-      org-agenda-block-seperator "")
+      org-agenda-block-seperator ""
+      org-image-actual-width nil
+      org-tags-column -60)
 )
-
+;; Nice bullets
 (use-package org-bullets
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
 )
-
-(setq org-tags-column -60)
 #+END_SRC
 ** File Management
 *** Backups and saving
 #+begin_src emacs-lisp
+;; Location for backup files
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-;; Save desktop and point places
-(desktop-save-mode 1)
-(setq desktop-load-locked-desktop t)
-(add-to-list 'desktop-modes-not-to-save 'dired-mode)
-(save-place-mode 1)
+
 ;; Auto revert file when changed outside of Emacs
 (global-auto-revert-mode 1)
  #+end_src	
 *** Dired
 #+begin_src emacs-lisp
 ;; Dired
-;; Prevent creating multible buffers
+
+;; Prevent creating multible buffers (use a to open new folder)
 (put 'dired-find-alternate-file 'disabled nil)
-;; Copy etween  instances
+
+;; Copy between instances
 (setq dired-dwim-target t)
+
 ;; Move files to Trash
 (setq delete-by-moving-to-trash t)
+
 ;; Dired icons
 (use-package all-the-icons-dired
-:ensure t
- :config
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
- #+end_src
+    :ensure t
+    :config
+    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+)
+
+;; Copy full path
+;; https://emacs.stackexchange.com/questions/36850/copy-to-kill-ring-selected-file-names-full-path
+(defun dired-copy-path-at-point ()
+    (interactive)
+    (dired-copy-filename-as-kill 0))
+(define-key dired-mode-map (kbd "W") 'dired-copy-path-at-point)
+#+end_src
 ** Helm
 Helm is an Emacs framework for incremental completions and narrowing selections. It helps to rapidly complete file names, buffer names, or any other Emacs interactions requiring selecting an item from a list of possible choices.
 #+begin_src emacs-lisp
@@ -217,51 +241,51 @@ Helm is an Emacs framework for incremental completions and narrowing selections.
 ;; Line spacing
 (setq-default line-spacing 2)
 ;; overwrite selected text
- (delete-selection-mode t)
+(delete-selection-mode t)
 #+end_src
-
-#+begin_src emacs-lisp
-;; Undo Tree Mode
-;; Allow tree-semantics for undo operations.
-(use-package undo-tree
-  :config
-    ;; Always have it on
-    (global-undo-tree-mode 1)
-    ;; Each node in the undo tree should have a timestamp.
-    (setq undo-tree-visualizer-timestamps t)
-    ;; Show a diff window displaying changes between undo nodes.
-    (setq undo-tree-visualizer-diff t))
- ;; make ctrl-Z redo
- (defalias 'redo 'undo-tree-redo)
- (global-set-key (kbd "C-S-/") 'redo)
- (global-set-key (kbd "C-x C-/") 'undo-tree-visualize)
- #+END_SRC
+*** Undo tree
+The undo tree package provides extended functionality for undo and redo.
+ #+begin_src emacs-lisp
+ ;; Undo Tree Mode
+ ;; Allow tree-semantics for undo operations.
+ (use-package undo-tree
+   :ensure t
+   :config
+     ;; Always have it on
+     (global-undo-tree-mode 1)
+     ;; Each node in the undo tree should have a timestamp.
+     (setq undo-tree-visualizer-timestamps t)
+     ;; Show a diff window displaying changes between undo nodes.
+     (setq undo-tree-visualizer-diff t))
+  ;; make ctrl-Z redo
+  (defalias 'redo 'undo-tree-redo)
+  (global-set-key (kbd "C-S-/") 'redo)
+  (global-set-key (kbd "C-x C-/") 'undo-tree-visualize)
+  #+END_SRC
 ** Spelling and Thesaurus
 [[https://www.emacswiki.org/emacs/FlySpell][FlySpell]] for spell-checking on the fly for my favourite major modes. The F7 key is mappedd to suggesting alternatives for misspelled words.
 
 The [[https://github.com/agzam/mw-thesaurus.el][thesaurus]] uses a free API to the Merriam-Webster Thesaurus. Press F8 to load the synonyms of the word at point. Press =q= to exit the thesaurus buffer.
 #+begin_src emacs-lisp
-;; Spell checking for Org, Markdown and Fountain modes
-;;(require 'flyspell-lazy)
-;;(flyspell-lazy-mode 1)
-(use-package flyspell
-  :ensure t
-  :diminish
-  :config
- (add-hook 'org-mode-hook 'flyspell-mode)
- (add-hook 'markdown-mode-hook 'flyspell-mode)
- (add-hook 'fountain-mode-hook 'flyspell-mode)
- (global-set-key (kbd "<f7>") 'ispell-word)
- (setq ispell-silently-savep t))
+  ;; Spell checking for Org, Markdown and Fountain modes
+  (use-package flyspell
+    :ensure t
+    :diminish
+    :config
+    (add-hook 'org-mode-hook 'flyspell-mode)
+    (add-hook 'markdown-mode-hook 'flyspell-mode)
+    (add-hook 'fountain-mode-hook 'flyspell-mode)
+    (global-set-key (kbd "<f7>") 'ispell-word)
+    (setq ispell-program-name "aspell" 
+          ispell-local-dictionary "en_GB" 
+          ispell-silently-savep t))
 
-;; Merriam-Webster Thesaurus
-(use-package mw-thesaurus
-:ensure t
-:config
-(global-set-key (kbd "<f8>") 'mw-thesaurus-lookup-at-point))
+  ;; Merriam-Webster Thesaurus
+  (use-package mw-thesaurus
+    :ensure t
+    :config
+    (global-set-key (kbd "<f8>") 'mw-thesaurus-lookup-at-point))
 #+end_src
-** Word Count
-** Auto Completion
 ** Distraction-free writing
 The biggest problem with writing on a computer is that there are too many distractions. 
 
@@ -290,44 +314,49 @@ The biggest problem with writing on a computer is that there are too many distra
   (global-set-key (kbd "S-<f9>") 'distraction-free-reset))
 #+end_src
 ** Writing modes
-I write almost all text in Org Mode. I also use two specialised major modes. [[https://fountain-mode.org/][Fountain Mode]] is a scriptwriting program for GNU Emacs using the Fountain plain text markup format. [[https://jblevins.org/projects/markdown-mode/][Markdown-mode]] is a major mode for editing Markdown-formatted text (mainly used for [[https://leanpub.com/][LeanPub]] books and courses). 
-#+begin_src emacs-lisp
- ;;Enable Fountain mode
- (require 'fountain-mode)
+I write almost all text in Org Mode. I also use two specialised major modes. [[https://fountain-mode.org/][Fountain Mode]] is a scriptwriting program for GNU Emacs using the Fountain plain text markup format. [[https://jblevins.org/projects/markdown-mode/][Markdown-mode]] is a major mode for editing Markdown-formatted text (mainly used for [[https://leanpub.com/][LeanPub]]).
 
- ;; Markdown mode
+#+begin_src emacs-lisp
+;;Enable Fountain mode
+(use-package fountain-mode
+    :ensure t)
+
+;; Markdown mode
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
  (setq markdown-command "/usr/bin/pandoc")
 #+end_src
 ** Org Mode 
 *** Structure templates
- Org Mode uses structural blocks to insert LaTeX, source code and other such types. 
- [[info:org#Structure Templates][Structure Templates]] are a convient way to create such a block. Activate with =C-c C-=.
+ Org Mode uses structural blocks to insert LaTeX, source code and other such types. [[info:org#Structure Templates][Structure Templates]] are a convient way to create such a block. Activate with =C-c C-=.
  #+BEGIN_SRC emacs-lisp
  ;; Structure templates
- (require 'org-tempo)
- (add-to-list 'org-structure-template-alist '("li" . "src emacs-lisp"))
- (add-to-list 'org-structure-template-alist '("R" . "src R"))
+ ;;(require 'org-tempo)
+ (add-to-list 'org-structure-template-alist '("sl" . "src emacs-lisp"))
+ (add-to-list 'org-structure-template-alist '("sr" . "src R"))
  #+END_SRC
-*** Referencing
-#+BEGIN_SRC emacs-lisp
-(require 'org-ref)
-(org-ref-define-citation-link "citeA" ?a)
-
-(setq org-latex-pdf-process
-'("pdflatex -interaction nonstopmode -output-directory %o %f"
-  "bibtex %b"
-  "pdflatex -interaction nonstopmode -output-directory %o %f"
-  "pdflatex -interaction nonstopmode -output-directory %o %f"))
-#+END_SRC
+*** Edit LaTeX formulas
+#+begin_src emacs-lisp
+(use-package org-fragtog
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'org-fragtog-mode))
+#+end_src
 *** Export to LaTeX
  #+BEGIN_SRC emacs-lisp
  ;; LaTeX
  (require 'ox-latex)
- (setq org-export-with-drawers 'nil)
- (setq org-export-with-smart-quotes t)
- (setq org-export-with-todo-keywords 'nil)
- (setq org-format-latex-options (plist-put org-format-latex-options :scale 2))
-
+ (setq org-export-with-drawers 'nil
+       org-export-with-smart-quotes t
+       org-export-with-todo-keywords 'nil
+       org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
+       org-latex-listings 'minted
+       org-latex-packages-alist '(("" "minted")))
 ;; Edit LaTex in org
 ;;(require 'org-edit-latex)
 
@@ -473,48 +502,30 @@ I write almost all text in Org Mode. I also use two specialised major modes. [[h
  ("\\subsection{%s}" . "\\subsection*{%s}")
  ))
  #+END_SRC
-* Internet
-** Email
+*** Referencing
+#+BEGIN_SRC emacs-lisp
+(use-package org-ref
+    :ensure t
+)
+(org-ref-define-citation-link "citeA" ?a)
+
+(setq org-latex-pdf-process
+'("pdflatex -interaction nonstopmode -output-directory %o %f"
+  "bibtex %b"
+  "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+  "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+#+END_SRC
+** Completion
 #+begin_src emacs-lisp
-;; Get email, and store in nnml
-(setq gnus-secondary-select-methods
-  '(
-    (nntp "gmane"
-           (nntp-address "news.gmane.org"))
-    (nntp "news.eternal-september.org")
-    (nntp "nntp.aioe.org")
-    (nntp "news.gwene.org")
-    ))
-
-;; Get email, and store in nnml
-(setq gnus-secondary-select-methods
-'(
-  (nnimap "gmail"
-           (nnimap-address
-            "imap.gmail.com")
-           (nnimap-server-port 993)
-           (nnimap-stream ssl))
-  ))
-
-;; Send email via Gmail:
-(setq message-send-mail-function 'smtpmail-send-it
-  smtpmail-default-smtp-server "smtp.gmail.com")
-
-;; Archive outgoing email in Sent folder on imap.gmail.com:
-(setq gnus-message-archive-method '(nnimap "imap.gmail.com")
-    gnus-message-archive-group "[Gmail]/Sent Mail")
-
-;; set return email address based on incoming email address
-(setq gnus-posting-styles
-    '(((header "to" "address@outlook.com")
-       (address "address@outlook.com"))
-  ((header "to" "address@gmail.com")
-     (address "address@gmail.com"))))
-
-;; store email in ~/gmail directory
-(setq nnml-directory "~/gmail")
-(setq message-directory "~/gmail")
+(use-package company
+  :ensure t
+  :config
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 3)
+  (global-company-mode t)
+)
 #+end_src
+* Internet
 ** Search engines
 The [[https://github.com/hrs/engine-mode/blob/master/README.md][engine-mode]] package helps to search the Internet conveniently within an Emacs buffer.
 
@@ -523,27 +534,28 @@ The generic keyboard shortcut is =C-x /= with a suffix to define the required se
 - =w=: Wikipedia (results in eww)
 - =m=: Google maps (results in Firefox)
 #+begin_src emacs-lisp
-(require 'engine-mode)
-(engine-mode t)
-(setq engine/browser-function 'eww-browse-url)
-(defengine duckduckgo
-  "https://duckduckgo.com/?q=%s"
-  :keybinding "d")
-(defengine google-maps
-  "http://maps.google.com/maps?q=%s"
-  :docstring "Mappin' it up."
-  :browser 'browse-url-firefox 
-  :keybinding "m")
-(defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
-  :keybinding "w"
-  :docstring "Searchin' the wikis.")
+(use-package engine-mode
+    :ensure t
+    :config
+    (engine-mode t)
+    (setq engine/browser-function 'eww-browse-url)
+    (defengine duckduckgo
+        "https://duckduckgo.com/?q=%s"
+        :keybinding "d")
+    (defengine google-maps
+        "http://maps.google.com/maps?q=%s"
+        :docstring "Mappin' it up."
+        :browser 'browse-url-firefox 
+        :keybinding "m")
+    (defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
+        :keybinding "w"
+        :docstring "Searchin' the wikis."))
 #+end_src
 * Productivity
 ** Getting Things Done
 [[info:org#Workflow states][Workflow states]] indicate the status of actions. Some actions are logged an others require a comment. Logging for [[https://orgmode.org/manual/Repeated-tasks.html][repeated actions]] is disabled
 #+BEGIN_SRC emacs-lisp
   ;; Getting Things Done
-
   ;; Workflow states
   (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w@/!)" "PROJECT(p)" "|" "DONE(d/!)" "CANCELLED(c@/!)")))
 
@@ -556,7 +568,8 @@ The generic keyboard shortcut is =C-x /= with a suffix to define the required se
 ** Agenda settings
 #+BEGIN_SRC emacs-lisp
   ;; Org Agenda settings
-    (setq org-agenda-files '("~/Documents/Third_Hemisphere/gtd/gtd.org"))
+    (setq org-agenda-files '("~/Documents/third-hemisphere/gtd/gtd.org"))
+
     (setq org-agenda-skip-deadline-if-done t
           org-agenda-skip-scheduled-if-done t
           org-agenda-include-diary t
@@ -571,16 +584,16 @@ The generic keyboard shortcut is =C-x /= with a suffix to define the required se
             ("o" "Outsource" tags-todo "outsource|VA")
             ("p" "Priorities" tags-todo "+PRIORITY=\"A\"")
             ("h" "Third Hemisphere"
-             ((agenda "" ((org-agenda-span 3)
+             ((agenda "" ((org-agenda-span 1)
                           (org-agenda-start-on-weekday nil)
                           (org-agenda-files 
-                          '("~/Documents/Third_Hemisphere/gtd/gtd.org"))
+                          '("~/Documents/third-hemisphere/gtd/gtd.org"))
                           (org-agenda-sorting-strategy '(priority-up))
                           )) 
              (todo "NEXT" ((org-agenda-files 
-             '("~/Documents/Third_Hemisphere/gtd/gtd.org"))))
+             '("~/Documents/third-hemisphere/gtd/gtd.org"))))
               (todo "WAITING" ((org-agenda-files 
-              '("~/Documents/Third_Hemisphere/gtd/gtd.org"))))
+              '("~/Documents/third-hemisphere/gtd/gtd.org"))))
               (stuck "")
               ))
             ))
@@ -588,29 +601,66 @@ The generic keyboard shortcut is =C-x /= with a suffix to define the required se
   (setq org-stuck-projects
         '("/PROJECT" ("NEXT" "WAITING") () ))
 #+END_SRC
-** Org-Capture
+** Taking Notes
+*** Org Capture
 Org-Mode helps you quickly capture ideas that are not related to your current workflow with [[https://orgmode.org/manual/Capture.html][Org Capture]]. Add your idea and keep working without switching applications or files. Org Capture is great for journal entries, adding tasks to your inbox, create a shopping list and whatever else you like to collect as random thoughts. [[https://cestlaz.github.io/posts/using-emacs-23-capture-1/#.W24BAhgRUVs][Mike Zamansky]] has written excellent instructions on using Org Capture.
 
 This capture setup
 - Add actions to inbox in Getting Things Done file
 - Add notes to journal
-
 #+BEGIN_SRC emacs-lisp
 (setq org-catch-invisible-edits 'error)
 ;; Org capture
 (setq org-capture-templates '(("t" "Todo to inbox" entry
-                               (file+headline "~/Documents/Third_Hemisphere/gtd/gtd.org" "Inbox")
+                               (file+headline "~/Documents/third-hemisphere/gtd/gtd.org" "Inbox")
                                "* TODO %i%?")
-                              ("n" "Note to inbox" item
-                               (file+headline "~/Documents/Third_Hemisphere/gtd/gtd.org" "Inbox")
+                               ("n" "Note to inbox" item
+                               (file+headline "~/Documents/third-hemisphere/gtd/gtd.org" "Inbox")
                                "- %?")
-                               ("j" "Journal Entry"
-                               entry (file+datetree "~/Documents/Third_Hemisphere/Journal.org")
-                               "* %?")))
+                               ("j" "Journal Entry" entry 
+                               (file+datetree "~/Documents/third-hemisphere/zettelkasten/journal.org")
+                               "* %?")
+                               ("c" "Coliban Water journal note" entry
+                               (file+datetree "~/Documents/lucid-manager/coliban-water.org")
+                               "* %?")
+                               ))
 ;; refiling captured entries
 (setq org-reverse-note-order t)
-(setq org-refile-targets '(("~/Documents/Third_Hemisphere/gtd/gtd.org" :maxlevel . 2)))
+(setq org-refile-targets '(("~/Documents/third-hemisphere/gtd/gtd.org" :maxlevel . 2)))
 #+END_SRC
+*** Org-Roam
+#+begin_src emacs-lisp
+(use-package org-roam
+      :ensure t
+      :hook
+      (after-init . org-roam-mode)
+      :custom
+      (org-roam-directory "~/Documents/third-hemisphere/zettelkasten")
+      :bind (:map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n j" . org-roam-jump-to-index)
+               ("C-c n b" . org-roam-switch-to-buffer)
+               ("C-c n g" . org-roam-graph)
+               ("C-c n c" . org-roam-capture))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert)))
+      :config
+      (setq org-roam-completion-system 'helm
+            org-roam-index-file "index.org"
+            org-roam-capture-templates '(("d" "default" plain 
+            (function org-roam--capture-get-point)
+            "%?"
+            :file-name "${slug}"
+            :head "#+TITLE: ${title}\n#+ROAM_ALIAS:\n- tags :: "
+            :unnarrowed t
+            :immediate-finish t))))
+
+(use-package company-org-roam
+    :ensure t
+    :config
+    (push 'company-org-roam company-backends))
+#+end_src
 ** Org Wiki
 These packages convert Org Mode into a useful Wiki:
 - [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] searches through your open Org files.
@@ -619,37 +669,28 @@ These packages convert Org Mode into a useful Wiki:
   - =C-x p i= copies the content of the page in the clipboard to an Org Mode entry.
 #+BEGIN_SRC emacs-lisp
 ;; helm org rifle
-(require 'helm-org-rifle)
-(global-set-key (kbd "C-x C-r") 'helm-org-rifle)
+(use-package helm-org-rifle
+    :ensure t
+    :config
+    (setq org-directory org-roam-directory)
+    :bind
+    ("C-x C-r" . helm-org-rifle) ;; Search through open org files
+    ("C-x R" . helm-org-rifle-occur-directories)) ;; Search through 
 
 ;; org web tools
-(require 'org-web-tools)
+(use-package org-web-tools
+    :ensure t
+)
 (global-set-key (kbd "C-x p l") 'org-web-tools-insert-link-for-url)
 (global-set-key (kbd "C-x p i") 'org-web-tools-insert-web-page-as-entry)
 #+END_SRC
 ** Special Functions
-*** Remove links by Chris ([[https://emacs.stackexchange.com/questions/10707/in-org-mode-how-to-remove-a-link/21945#21945][Reddit]])
-#+begin_src emacs-lisp
-  (defun org-link-remove ()
-    "Replace an org link by its description or if empty its address"
-    (interactive)
-    (if (org-in-regexp org-bracket-link-regexp 1)
-        (save-excursion
-          (let ((remove (list (match-beginning 0) (match-end 0)))
-                (description (if (match-end 3) 
-                                 (org-match-string-no-properties 3)
-                               (org-match-string-no-properties 1))))
-            (apply 'delete-region remove)
-            (insert description)))))
-  (with-eval-after-load 'org
-    (define-key org-mode-map (kbd "C-c C-x l") 'org-remove-link))
-#+end_src
 *** Open all Org files in a subtree of folders
 #+BEGIN_SRC emacs-lisp
-(defun org-open-recursively (dirname)
-  "Search DIRNAME recursively for org files, and open them all."
-  (interactive "D")
-  (mapc #'find-file (directory-files-recursively dirname "\\.org$" nil)))
+  (defun org-open-recursively (dirname)
+    "Search DIRNAME recursively for org files, and open them all."
+    (interactive "D")
+    (mapc #'find-file (directory-files-recursively dirname "\\.org$" nil)))
 #+END_SRC
 *** Create notes drawer
 Adding drawers is a useful way to add contextual information to a text. 
@@ -658,10 +699,10 @@ Adding drawers is a useful way to add contextual information to a text.
   ;; by u/alecigne
   ;; reddit.com/r/orgmode/comments/7awar9/how_to_create_a_keyboard_shortcut_to_crease_an/
   (defun org-insert-drawer-notes ()
-    (interactive)
-    (org-insert-drawer nil "NOTES"))
-  (with-eval-after-load 'org
-    (define-key org-mode-map (kbd "C-c C-x n") 'org-insert-drawer-notes))
+      (interactive)
+      (org-insert-drawer nil "NOTES"))
+      (with-eval-after-load 'org
+          (define-key org-mode-map (kbd "C-c C-x n") 'org-insert-drawer-notes))
 #+end_src
 *** Kill all Tetris windows
 Yes, I play too much Tetris. It is my distraction after I achieved a task. This function ends the game and kills both buffers to remove any evidence of my digression.
@@ -683,12 +724,12 @@ Yes, I play too much Tetris. It is my distraction after I achieved a task. This 
 ** ESS
 [[https://ess.r-project.org/][Emacs Speaks Statistics]] (ESS) supports editing of scripts and interaction with various statistical analysis programs such as R. You also need to install the R software. Run an R terminal with =M-x R= and enter the preferred working directory.
 
-In ESS, the underscore key is mapped to the =<-= assignment operator in R. If you need an underscore, you need to type it twice. This functionality can be annoying when you are an avid user of ggplot. The [[https://github.com/mattfidler/ess-smart-underscore.el][ess-smart-underscore]] package solves this issue by allowing a single underscore in certain circumstances.
-
 #+BEGIN_SRC emacs-lisp
 ;; Emacs Speaks Statistics (ESS)
-(require 'ess)
-;(setq ess-use-company t)
+(use-package ess
+    :ensure t
+    :config
+    (setq ess-use-company t))
 #+END_SRC
 ** Org Babel
 #+BEGIN_SRC emacs-lisp
@@ -697,7 +738,7 @@ In ESS, the underscore key is mapped to the =<-= assignment operator in R. If yo
  'org-babel-load-languages
  '((emacs-lisp . t)   
    (R . t)
-   (python . t)
+   (shell . t)
    (latex . t)
 ))
 #+END_SRC
@@ -705,7 +746,10 @@ In ESS, the underscore key is mapped to the =<-= assignment operator in R. If yo
 Magit implements Git in Emacs and is almost like magic. This line of code creates the  =C-x g= shortcut to open the Magit status screen.
 #+BEGIN_SRC emacs-lisp
 ;; Magit
-(global-set-key (kbd "C-x g") 'magit-status)
+(use-package magit
+    :ensure t
+    :config
+        (global-set-key (kbd "C-x g") 'magit-status))
 #+END_SRC
 ** Code Editing
 The [[https://github.com/Fuco1/smartparens][Smartparens]] package simplifies working with parenthesis.
@@ -717,6 +761,15 @@ The [[https://github.com/Fuco1/smartparens][Smartparens]] package simplifies wor
   :config (progn (show-smartparens-global-mode t)))
 ;; Line numbers
 (add-hook 'ess-mode-hook 'display-line-numbers-mode)
+
+; Parentheses
+(use-package highlight-parentheses
+  :ensure t
+  :config
+  (progn
+    (highlight-parentheses-mode)
+    (global-highlight-parentheses-mode))
+  )
 #+END_SRC
 ** Polymode
 #+begin_src emacs-lisp
@@ -725,6 +778,7 @@ The [[https://github.com/Fuco1/smartparens][Smartparens]] package simplifies wor
   (interactive)
   (require 'poly-R)
   (require 'poly-markdown)     
-  (poly-markdown+r-mode)
-)
+  (poly-markdown+r-mode))
 #+end_src
+
+

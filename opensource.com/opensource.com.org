@@ -1,4 +1,3 @@
-
 #+TITLE:  OpenSource.com Articles
 #+AUTHOR: Peter Prevos
 #+LaTeX_header: \usepackage{times}
@@ -89,6 +88,10 @@ The Org mode manual [[https://orgmode.org/manual/LaTeX-Export.html#LaTeX-Export]
 ** Conclusion
 Org mode is a perfect editor for writing LaTeX. The main advantage is that you lose the clutter of LaTeX syntax and can focus on the text. This advantage comes no cost because you can still add LaTeX code as much as you need. Additionally, you can access to the powerful editing functions of Emacs. Using Org to write books and articles allows you to focus on the text and combine the power of two of the oldest and most powerful open sources pieces of software.
 * Emacs for Analysing Data with R
+:PROPERTIES:
+:URL:      https://opensource.com/article/20/5/r-emacs-data-science
+:Date:     [2020-04-09 Thu]
+:END:
 ** Introduction
 Some years ago, Harvard Business Review published an article which proclaimed data scientist to be the [[https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century][sexiest job]] of the twenty-first century. Interest in data science has exploded since this article. Many great open source projects, such as Python and the R language for statistical computing, have facilitated the rapid developments in how we analyse data. 
 
@@ -99,7 +102,7 @@ The vast majority of R developers use the [[https://opensource.com/article/18/2/
 Using Emacs to write data science code means that you have access to the full power of this extensible editor. I prefer using Emacs for my data science projects because I can do many other tasks within the same application, leveraging the multifunctionality of this venerable editor. If you are just getting started with Emacs, then please first read [[https://opensource.com/article/20/3/getting-started-emacs][Seth Kenlon's article]].
 
 ** Getting ready
-Emacs is an almost infinitely extensible text editor, which unfortunately means that many things don't work the way you want them to out of the box. Before you can write and execute R scripts, you need to install some packages and configure them. The ESS ([[https://ess.r-project.org/][Emacs Speaks Statistics]]) package provides an interface between Emacs and R. Other packages, such as [[https://company-mode.github.io/][Company]] and ** help with completion and balancing parenthesis.
+Emacs is an almost infinitely extensible text editor, which unfortunately means that many things don't work the way you want them to out of the box. Before you can write and execute R scripts, you need to install some packages and configure them. The ESS ([[https://ess.r-project.org/][Emacs Speaks Statistics]]) package provides an interface between Emacs and R. Other packages, such as [[https://company-mode.github.io/][Company]] and  [[https://github.com/tsdh/highlight-parentheses.el][highlight-parentheses]] help with completion and balancing parenthesis.
 
 Emacs uses a version of Lisp for configuration. The lines of [[https://en.wikipedia.org/wiki/Emacs_Lisp][Emacs Lisp]] code below install the required extensions and define a minimal configuration to get you started. These lines were tested for GNU Emacs version 26.3.
 

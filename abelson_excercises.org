@@ -1,65 +1,53 @@
 #+TITLE: ELISP Solutions to excercises in /Structure and Interpretation of Computer Programs/ (SICP) by Abelson, Sussman and Sussman.
 #+OPTIONS: toc:nil
+#+STARTUP: latexpreview
+#+OPTIONS: toc:nil todo:nil
+#+PROPERTY: header-args :results none
+#+LATEX_HEADER: \usepackage{qtree}
 
 * Introduction
-This file contains solutions to the exercises in /Structure and Interpretation of Computer Programs/ ([[https://mitpress.mit.edu/sites/default/files/sicp/index.html][SICP]]) by Abelson, Sussman and Sussman. The textbook uses the Scheme dialect of Lisp. The solutions in this file are provided in Emacs Lisp.
+This file contains solutions to the exercises in /Structure and Interpretation of Computer Programs/ ([[https://mitpress.mit.edu/sites/default/files/sicp/index.html][SICP]]) by Abelson, Sussman and Sussman. The textbook uses the Scheme dialect of Lisp. The solutions in this file are provided in Emacs Lisp. MIT hosts video lectures to accompany the book: Eric Grimson, Peter Szolovits, and Trevor Darrell. 6.001 /Structure and Interpretation of Computer Programs/. Spring 2005. Massachusetts Institute of Technology: MIT OpenCourseWare. [[https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/][ocw.mit.edu]]. 
 
-MIT hosts video lectures to accompany the book: Eric Grimson, Peter Szolovits, and Trevor Darrell. 6.001 /Structure and Interpretation of Computer Programs/. Spring 2005. Massachusetts Institute of Technology: MIT OpenCourseWare. [[https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/][ocw.mit.edu]].
-
-Some of the solutions are derived from the work by [[https://github.com/sarabander/sicp][Andres Raba]].
-** Emacs Lisp
-
-Resources:
-- [[https://www.gnu.org/software/emacs/manual/eintr.html][An Introduction to Programming in Emacs Lisp]]
-- [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]]
-* Chapter 1.1
-- Online book: [[https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-10.html#%_sec_1.1][The Elements of Programming]]
+The code in the assignment descriptions have been translated to Emacs Lisp. Some of the solutions are derived from the work by [[https://github.com/sarabander/p2pu-sicp][Andres Raba]]. Most of the solutions include links to the of the [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]].
+* DONE Chapter 1.1
+- Textbook: [[https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-10.html#%_sec_1.1][The Elements of Programming]]
 - Video lecture: [[https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/video-lectures/1a-overview-and-introduction-to-lisp/][Overview and Introduction to Lisp]]
-** Exercise 1.1
+** DONE Exercise 1.1
 *** Question
 Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
 *** Answer
-#+begin_src elisp :results none
+#+begin_src elisp
 10 ; => 10
-
 (+ 5 3 4) ; => 12
-
 (- 9 1) ; => 8
-
 (/ 6 2) ; => 3
-
 (+ (* 2 4) (- 4 6)) ; => 10
 
 (setq a 3)
 (setq b (+ a 1))
-
 (+ a b (* a b)) ; => 19
-
 (= a b) ; => nil
 
 (if (and (> b a) (< b (* a b)))
     b
-  a)
-;; => 4
+  a) ;; => 4
 
 (cond ((= a 4) 6)
       ((= b 4) (+ 6 7 a))
-      (t 25))
-;;=> 16
+      (t 25)) ;;=> 16
 
 (+ 2 (if (> b a) b a)) ; => 6
 
 (* (cond ((> a b) a)
          ((< a b) b)
          (t -1))
-   (+ a 1))
-;; => 16
+   (+ a 1)) ;; => 16
 #+end_src
 *** Emacs Lisp 
 - [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Setting-Variables.html][Setting Variable Values]]
 - [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Conditionals.html][Conditionals]]
 - [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Combining-Conditions.html][Combining Conditions]]
-** Exercise 1.2
+** DONE Exercise 1.2
 *** Question
 Translate the following expression into prefix form:
 
@@ -80,7 +68,7 @@ $$\frac{5 + 4 + (2 - (3 - (6 + \frac{5}{4})))}{3(6 - 2)(2 - 7)}$$
 #+end_src
 *** Emacs Lisp
 Refer to the [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Arithmetic-Operations.html][GNU Emacs Lisp Reference Manual]] for details on arithmetic in Emacs Lisp. Note that for division, the decimal forces Lisp to use floating point.
-** Exercise 1.3
+** DONE Exercise 1.3
 *** Question
 Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
 *** Answer
@@ -101,7 +89,7 @@ Define a procedure that takes three numbers as arguments and returns the sum of 
 *** Emacs Lisp
 - [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Functions.html][Functions]]
 - [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Defining-Functions.html][Defining Functions]] (=defun=)
-** Exercise 1.4
+** DONE Exercise 1.4
 *** Question
 Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
 #+begin_src elisp :results none
@@ -134,7 +122,7 @@ This approach avoids having to repeat variables for each option:
 #+end_src
 *** Emacs Lisp
 The original Scheme version does not evaluate in Emacs. Scheme is a Lisp-1 and Emacs Lisp is Lisp-2. In scheme both names and procedures are located in the same namespace, so it is possible to return procedure name from condition and evaluate it. In Lisp-2 procedures have their own namespace, so in order to call procedure from name you have to use [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Calling-Functions.html][funcal]] (Source: [[https://www.reddit.com/r/emacs/comments/g89q2y/learning_elisp_need_some_help/][/u/andreyorst]]).
-** Exercise 1.5
+** DONE Exercise 1.5
 *** Question
 Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation. He defines the following two procedures:
 #+begin_src elisp :results none 
@@ -153,7 +141,7 @@ What behavior will Ben observe with an interpreter that uses applicative-order e
 *** Answer
 - Applicative order: The function call results in an infinite loop, as the function =p= calls itself (Emacs' behaviour).
 - Normal order: The function never reaches =p= because it exits with 0 as a result.
-** Exercise 1.6
+** DONE Exercise 1.6
 *** Question
 Alyssa P. Hacker doesn't see why if needs to be provided as a special form. “Why can’t I just define it as an ordinary procedure in terms of cond?” she asks. Alyssa’s friend Eva Lu Ator claims this can indeed be done, and she defines a new version of if:
 #+begin_src elisp :reults none
@@ -190,7 +178,7 @@ What happens when Alyssa attempts to use this to compute square roots? Explain.
 (sqrt 2)
 #+end_src
 This version loop forever and crashes.
-** Exercise 1.7
+** DONE Exercise 1.7
 *** Question
 The =good-enough?= test used in computing square roots will not be very effective for finding the square roots of very small numbers. Also, in real computers, arithmetic operations are almost always performed with limited precision. This makes our test inadequate for very large numbers. Explain these statements, with examples showing how the test fails for small and large numbers. An alternative strategy for implementing good-enough? is to watch how guess changes from one iteration to the next and to stop when the change is a very small fraction of the guess. Design a square-root procedure that uses this kind of end test. Does this work better for small and large numbers? 
 *** Answer
@@ -212,7 +200,7 @@ The =float= function forces floating point answers. See Elisp manual about [[htt
 (heron 16)
 (* (heron 1e-5) (heron 1e-5))
 #+end_src
-** Exercise 1.8
+** DONE Exercise 1.8
 Newton’s method for cube roots is based on the fact that if $y$ is an approximation to the cube root of $x$, then a better approximation is given by the value:
 
 $$\frac{x/y^2 +2y}{3}$$
@@ -238,11 +226,11 @@ The =float= function forces floating point answers. See Elisp manual about [[htt
 (newton 1e-5)
 #+END_SRC
 * Chapter 1.2
-- Online book: [[https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-11.html#%_sec_1.2][Procedures and the Processes they Generate]]
+- Textbook: [[https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-11.html#%_sec_1.2][Procedures and the Processes they Generate]]
 - Video lecture: [[https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/video-lectures/1b-procedures-and-processes-substitution-model/][1B: Procedures and Processes; Substitution Model]]
-** Exercise 1.9
+** DONE Exercise 1.9
 *** Question
-Each of the following two procedures defines a method for adding two positive integers in terms of the procedures inc, which increments its argument by 1, and dec, which decrements its argument by 1.
+Each of the following two procedures defines a method for adding two positive integers in terms of the procedures 1+, which increments its argument by 1, and 1-, which decrements its argument by 1.
 #+begin_src elisp :results none
 (defun plus (a b)
   (if (= a 0)
@@ -278,7 +266,7 @@ Using the substitution model, illustrate the process generated by each procedure
 #+end_src
 1. Recursive
 2. Iterative
-** Exercise 1.10
+** DONE Exercise 1.10
 The following procedure computes a mathematical function called Ackermann's function.
 #+begin_src elisp :results none
 (defun A (x y)
@@ -311,13 +299,195 @@ Give concise mathematical definitions for the functions computed by the procedur
 - =(f n)= computes $2n$
 - =(g n)= computes $2^n$
 - =(h n)= computes $\underbrace{2^{2^{\,\cdot^{\,\cdot^{\,\cdot^{\,2}}}}}}_n = 2 {\uparrow\uparrow} n$ (tetration)
-** Exercise 1.11
+** DONE Exercise 1.11
 *** Question
-A function $f$ is defined by the rule that $f(n) = n$ if $n<3$ and $f(n) = f(n - 1) + 2f(n - 2) + 3f(n - 3)$ if $n>3$. Write a procedure that computes $f$ by means of a recursive process. Write a procedure that computes $f$ by means of an iterative process.
-*** Answer
-#+begin_src elisp :results none
+A function $f$ is defined by the rule that:
 
+$$f(n) = \begin{cases} n & n<3\\ f(n) = f(n - 1) + 2f(n - 2) + 3f(n - 3) & n \geq 3\end{cases}$$
+
+Write a procedure that computes $f$ by means of a recursive process and one that computes $f$ by means of an iterative process.
+*** Answer
+:PROPERTIES:
+:ORDERED:  t
+:END:
+#+begin_src elisp
+;; Recursive
+(defun r (n)
+    (if (< n 3)
+        n
+        (+ (r (- n 1)) 
+           (* 2(r (- n 2))) 
+           (* 3 (r (- n 3))))))
+(r 30)
 #+end_src
 
+#+RESULTS:
+: 61354575194
+The recursive function starts taking a long time to run for numbers larger than 28.
+#+begin_src elisp
+;; Iterative
+(defun i (n)
+    (defun f (p q r) (+ r (* 2 q) (* 3 p)))
+    (setq a 0 
+          b 1 
+          c 2)
+    (while (> n 2)
+        (setq d (f a b c)
+              a b
+              b c
+              c d
+              n (1- n)))
+    d)
+(i 70)
+#+end_src
 
+#+RESULTS:
+: 1057767771186904648
+*** Emacs Lisp
+The iterate solutions in the book use a recursion, which Elisp does not like to process. Using a [[https://www.gnu.org/software/emacs/manual/html_node/eintr/while.html][while loop]] negates the use of recursion fully.
+** Exercise 1.12
+*** Question
+The following pattern of numbers is called Pascal's triangle.
 
+#+begin_center
+1\newline
+1\quad 1\newline
+1\quad 2\quad1\newline
+1\quad3\quad3\quad1\newline
+1\quad4\quad6\quad4\quad1\newline
+#+end_center
+
+The numbers at the edge of the triangle are all 1, and each number inside the triangle is the sum of the two numbers above it. Write a procedure that computes elements of Pascal's triangle by means of a recursive process. 
+*** Answer
+First, we convert the triangle to a matrix:
+#+begin_export latex
+\begin{equation}
+P_{m,n} = 
+\begin{pmatrix}
+1 &  &  &  \\
+1 & 1 &  &   \\
+1 & 1+1=2 & 1 & \\
+1 & 1+2=3 & 1+2 = 3 & 1 \\
+\vdots  & \vdots  & \ddots & \vdots  \\
+1 & a_{m-1,n-1}+a_{m-1,n} & \cdots & 1 
+\end{pmatrix}
+\end{equation}
+
+#+end_export
+#+begin_src elisp :results none
+(defun pascal (m n)
+    (cond (or (< m 0) (< n 0) (< m n) 0)
+          (or (= n 0) (= m n) 1)
+          (t (+ (pascal (1- m) (1- n))
+                (pascal (1- m) n))))
+
+(setq m 3 n 2)
+#+end_src
+** DONE Exercise 1.13
+*** Question
+Prove that $Fib(n)$ is the closest 
+integer to $\phi^n/\sqrt{5}$, where $\phi = (1 + \sqrt{5})/2$. Hint: Let $\psi = (1 - \sqrt{5})/2$. Use induction and the definition of the Fibonacci numbers (see [[https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-11.html#%_sec_1.2.2][section 1.2.2]]) to prove that $Fib(n) = (\phi^n - \psi^n)/\sqrt{5}$.
+*** Answer
+We can use Binet's formula to create one-step Fibonacci function.
+#+begin_src elisp :results none
+(defun fib (n)
+    (setq phi (/ (+ 1 (sqrt 5)) 2.0)
+          psi (/ (- 1 (sqrt 5)) 2.0))
+    (round (/ (- (expt phi n) (expt psi n)) (sqrt 5))))
+
+(mapcar 'fib (number-sequence 10 20))
+#+end_src
+**** Emacs Lisp
+This function uses the built-in [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Math-Functions.html][arithmetic]] and [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Numeric-Conversions.html][numeric conversions]] in Emacs Lisp. The [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Mapping-Functions.html][mapcar]] function applies a function over a list. The =number-squence= function [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Building-Lists.html#index-number_002dsequence-387][builds a list]] of integers.
+** DONE Exercise 1.14 
+*** Question
+Draw the tree illustrating the process generated by the count-change procedure of [[https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-11.html#%_sec_1.2.2][section 1.2.2]] in making change for 11 cents. What are the orders of growth of the space and number of steps used by this process as the amount to be changed increases? 
+*** Answer
+#+begin_src elisp :results none
+;; Code from section 1.2
+(defun count-change (amount)
+  (cc amount 5))
+
+(defun cc (amount kinds-of-coins)
+  (cond ((= amount 0) 1)
+        ((or (< amount 0) (= kinds-of-coins 0)) 0)
+        (t (+ (cc amount
+                     (- kinds-of-coins 1))
+                 (cc (- amount
+                        (first-denomination kinds-of-coins))
+                     kinds-of-coins)))))
+
+(defun first-denomination (kinds-of-coins)
+  (cond ((= kinds-of-coins 1) 1)
+        ((= kinds-of-coins 2) 5)
+        ((= kinds-of-coins 3) 10)
+        ((= kinds-of-coins 4) 25)
+        ((= kinds-of-coins 5) 50)))
+(count-change 11)
+(mapcar 'count-change (number-sequence 1 100))
+#+end_src
+#+begin_export latex
+\begin{figure}[h]
+\Tree [.11 [.10 [.10 [.5 {1 1 1 1 1} ] [.5 {1 1 1 1 1} ] ] [.5 {1 1 1 1 1} ] ] 1 ]
+\end{figure}
+#+end_export
+** Exercise 1.15
+*** Question
+The sine of an angle (specified in radians) can be computed by making use of the approximation $\sin x \approx x$ if $x$ is sufficiently small, and the trigonometric identity 
+
+$$\sin x = 3 \sin \frac{x}{3} - 4 \sin^3 \frac{x}{3}$$
+
+to reduce the size of the argument of $\sin$. (For purposes of this exercise an angle is considered 'sufficiently small' if its magnitude is not greater than 0.1 radians.) These ideas are incorporated in the following procedures:
+#+begin_src elisp :results none
+(defun cube (x) (* x x x))
+(defun p (x) (- (* 3 x) (* 4 (cube x))))
+(defun sine (angle)
+   (if (not (> (abs angle) 0.1))
+       angle
+       (p (sine (/ angle 3.0)))
+       p
+))
+; (sine .05)
+; (sine 12.15)
+#+end_src
+
+How many times is the procedure =p= applied when =(sine 12.15)= is evaluated?
+
+What is the order of growth in space and number of steps (as a function of =a=) used by the process generated by the sine procedure when =(sine a)= is evaluated?
+*** Answers
+a. 
+*** Emacs Lisp
+** Exercise 1.16 
+Design a procedure that evolves an iterative exponentiation process that uses successive squaring and uses a logarithmic number of steps, as does fast-expt. (Hint: Using the observation that $(b^{n/2})^2 = (b^2)^{n/2}$, keep, along with the exponent $n$ and the base $b$, an additional state variable $a$, and define the state transformation in such a way that the product a $b^n$ is unchanged from state to state. At the beginning of the process $a$ is taken to be 1, and the answer is given by the value of a at the end of the process. In general, the technique of defining an invariant quantity that remains unchanged from state to state is a powerful way to think about the design of iterative algorithms.)
+** Exercise 1.17.  
+The exponentiation algorithms in this section are based on performing exponentiation by means of repeated multiplication. In a similar way, one can perform integer multiplication by means of repeated addition. The following multiplication procedure (in which it is assumed that our language can only add, not multiply) is analogous to the =expt= procedure:
+
+#+begin_src elisp
+(define (* a b)
+  (if (= b 0)
+      0
+      (+ a (* a (- b 1)))))
+#+end_src
+
+This algorithm takes a number of steps that is linear in =b=. Now suppose we include, together with addition, operations double, which doubles an integer, and halve, which divides an (even) integer by 2. Using these, design a multiplication procedure analogous to fast-expt that uses a logarithmic number of steps.
+** Exercise 1.18
+Using the results of exercises 1.16 and 1.17, devise a procedure that generates an iterative process for multiplying two integers in terms of adding, doubling, and halving and uses a logarithmic number of steps.
+** Exercise 1.19
+There is a clever algorithm for computing the Fibonacci numbers in a logarithmic number of steps. Recall the transformation of the state variables $a$ and $b$ in the =fib-iter= process of section 1.2.2: a a + b and b a. Call this transformation T, and observe that applying T over and over again n times, starting with 1 and 0, produces the pair Fib(n + 1) and Fib(n). In other words, the Fibonacci numbers are produced by applying Tn, the nth power of the transformation T, starting with the pair (1,0). Now consider T to be the special case of p = 0 and q = 1 in a family of transformations Tpq, where Tpq transforms the pair (a,b) according to a bq + aq + ap and b bp + aq. Show that if we apply such a transformation Tpq twice, the effect is the same as using a single transformation Tp'q' of the same form, and compute p' and q' in terms of p and q. This gives us an explicit way to square these transformations, and thus we can compute Tn using successive squaring, as in the fast-expt procedure. Put this all together to complete the following procedure, which runs in a logarithmic number of steps:
+#+begin_src elisp
+(define (fib n)
+  (fib-iter 1 0 0 1 n))
+(define (fib-iter a b p q count)
+  (cond ((= count 0) b)
+        ((even? count)
+         (fib-iter a
+                   b
+                   <??>      ; compute p'
+                   <??>      ; compute q'
+                   (/ count 2)))
+        (else (fib-iter (+ (* b q) (* a q) (* a p))
+                        (+ (* b p) (* a q))
+                        p
+                        q
+                        (- count 1)))))
+#+end_src
