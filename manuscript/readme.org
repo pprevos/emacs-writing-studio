@@ -6,4 +6,4 @@ This book is not a comprehensive manual of Emacs but an opinionated description 
 
 This book aims to shorten the Emacs learning curve so that you can be creative and productive instead of learning the system. If you like to know more details about Emacs, then I highly recommend you read [[http://shop.oreilly.com/product/9780596006488.do][Learning GNU Emacs]] by Debra Cameron and others, or [[https://masteringemacs.org/book][Mastering Emacs]] by Mickey Petersen.
 
-[[file:manuscript/images/3d_emacs_book.jpg]]
+[[file:images/3d_emacs_book.jpg]]
