@@ -80,12 +80,27 @@ These configurations change the way Emacs looks and feels:
 
   ;; Startup settings
   (setq
-    inhibit-startup-message t
-    inhibit-startup-screen t)
+   inhibit-startup-message t
+   inhibit-startup-screen t)
 
-  ;; Themes
+  ;; Themes and fonts
   (use-package hc-zenburn-theme
-      :ensure t)
+    :ensure t)
+
+  ;; Mixed-pich font definitions
+  (use-package mixed-pitch
+    :ensure t
+    :hook
+    ;; If you want it in all text modes:
+    (text-mode . mixed-pitch-mode))
+
+    (set-face-attribute 'default nil :font "Hack-13")
+    (set-face-attribute 'fixed-pitch nil :font "Hack-13")
+    (set-face-attribute 'variable-pitch nil :family "Roboto" :weight 'regular)
+
+   ;;cursor
+   (blink-cursor-mode 1)
+   (setq cursor-type "box")
 
   ;; Hide tool, menu and scroll bars
   (tool-bar-mode -1)
@@ -105,16 +120,11 @@ These configurations change the way Emacs looks and feels:
   ;; Display bettery life
   (display-battery-mode 1)
 
-  ;; Default font
-  (set-face-attribute 'default nil :font "Hack-12")
-  (set-face-attribute 'fixed-pitch nil :font "Hack-12")
-  (set-face-attribute 'variable-pitch nil :font "FiraGO-12")
-
   ;; Fancy modeline
   (use-package doom-modeline
-      :ensure t
-      :config
-      (doom-modeline-mode 1))
+    :ensure t
+    :config
+    (doom-modeline-mode 1))
   ;; run M-x all-the-icons-install-fonts
 #+END_SRC
 ** Cursor Movement
@@ -160,7 +170,7 @@ These are the basic settings for org-mode and its standard keyboard shortcuts.
       org-ellipsis "↵" ;folding symbol
       org-hide-emphasis-markers t
       org-agenda-block-seperator ""
-      org-image-actual-width nil
+      org-image-actual-width 400
       org-tags-column -60)
 )
 ;; Nice bullets
@@ -524,6 +534,10 @@ I write almost all text in Org Mode. I also use two specialised major modes. [[h
   (setq company-minimum-prefix-length 3)
   (global-company-mode t)
 )
+
+(use-package company-box
+  :ensure t
+  :hook (company-mode . company-box-mode))
 #+end_src
 * Internet
 ** Search engines
@@ -646,8 +660,10 @@ This capture setup
               :map org-mode-map
               (("C-c n i" . org-roam-insert)))
       :config
+      (set-face-attribute 'org-roam-link nil :slant 'italic)
       (setq org-roam-completion-system 'helm
             org-roam-index-file "index.org"
+            org-roam-buffer-width .2
             org-roam-capture-templates '(("d" "default" plain 
             (function org-roam--capture-get-point)
             "%?"
@@ -780,5 +796,18 @@ The [[https://github.com/Fuco1/smartparens][Smartparens]] package simplifies wor
   (require 'poly-markdown)     
   (poly-markdown+r-mode))
 #+end_src
-
-
+* Entertainment
+** Music player
+#+begin_src emacs-lisp
+;; EMMS Configuration
+(add-to-list 'load-path "~/.emacs.d/lisp/emms/")
+(require 'emms)
+(require 'emms-setup)
+(emms-all)
+(emms-default-players)
+(setq emms-source-file-default-directory "~/Music")
+(require 'emms-info-libtag)
+(setq emms-info-functions '(emms-info-libtag))
+(autoload 'emms-smart-browse "emms-browser.el" "Browse with EMMS" t)
+(global-set-key [(M-f7)] 'emms-smart-browse)
+#+end_src
