@@ -10,7 +10,7 @@ When I was 13, I bought a second-hand one-kilobyte Sinclair ZX81 computer from a
 During this time, my friend's mother complained about the amount of time we spend in front of a screen. It seems that nothing much has changed in more than thirty years. My response was that our time using a computer was not about passively playing games, it was about creativity. I showed some of the software we developed and convinced her that computing and creativity go hand-in-hand.
 
 #+caption: Sinclair ZX81 (source: Wikimedia Commons. Evan-Amos / CC BY-SA.)
-[[file:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Sinclair-ZX81.jpg/512px-Sinclair-ZX81.jpg]]
+[[file:https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Sinclair-ZX81.jpg/512px-Sinclair-ZX81.jpg]]
 
 When I started my civil engineering career, I moved to use Microsoft-based computers. While the software on these early PCs was vastly superior to anything an 8-bit computer can muster, the overall computing experience was missing something. I was no longer instructing the computer to do, but spent my time finding workarounds within packaged software to meet my needs. The collection of software packages I used to achieve my goals kept growing. Most applications only lasted until the next best thing came along. When I started writing my dissertation, this approach was no longer useful and I returned to creative computing.
 
