@@ -7,8 +7,6 @@ This repository contains my configurations and documentation on how I run my lif
 Solutions to the exercises in /Structure and Interpretation of Computer Programs/ ([[https://mitpress.mit.edu/sites/default/files/sicp/index.html][SICP]]) by Abelson, Sussman and Sussman.
 * init.el.org
 =init.el.org= creates the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][init file]] using literate programming in Org Mode. Needs a bit more documentation.
-* manuscript
-
 * OpenSource.com
 [[Https://github.com/pprevos/EmacsLife/tree/master/opensource.com][Articles]] about Emacs for the opensource.com website.
 * manuscript

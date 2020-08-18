@@ -1,4 +1,4 @@
-/Become More Productive With Emacs --- The Ultimate Killer App/ is a work in progress. This book different to most Emacs books because it does not focus on functionality but on achieving outcomes. 
+/Become More Productive With Emacs --- A Beginner's Guide/ is a work in progress. This book different to most Emacs books because it does not focus on functionality but on achieving outcomes. 
 
 Traditional computing books take a while to put theory in practice because these books often lists functions you can perform with the software. This Emacs book will teach you to achieve goals by only explaining the functionality you need to write books, manage projects, crunch numbers, send emails and so on.
 

@@ -1,26 +1,26 @@
-#+TITLE: Be Productive With Emacs --- The Ultimate Killer App
+#+TITLE: Be Productive With Emacs --- A Beginner's Guide
 #+LaTeX_CLASS: ebook
 #+PROPERTY: header-args :results silent
 #+TODO: TODO(t) DRAFT(d) EDITED(e) | FINAL(f)
 #+OPTIONS: todo:nil
 
-* DRAFT Preface
-When I was 13, I bought a second-hand one-kilobyte Sinclair ZX81 computer from a friend. This little plastic box opened a new world for me. It did not come with any software nor did I have the money buy any. After booting the ZX 81, the screen simply told you how many bytes are available for you to fill with code. This machine propelled me on an amazing journey of learning how to program in the BASIC language. I later upgraded to an Atari 130XE and spent my teenage years writing software and playing games---while other boys in my neighbourhood had girlfriends. 
+* EDITED Preface
+When I was 13, I bought a second-hand one-kilobyte Sinclair ZX81 computer from a friend. This little plastic box opened a new world for me. It did not come with any software, nor did I have the money to buy any. After booting the ZX 81, the screen simply told you how many bytes are available for you to fill with code. This machine propelled me on a fantastic journey of learning how to program in the BASIC language. I later upgraded to an Atari 130XE and spent my teenage years writing software and playing games---while other boys in my neighbourhood had girlfriends. 
 
-During this time, my friend's mother complained about the amount of time we spend in front of a screen. It seems that nothing much has changed in more than thirty years. My response was that our time using a computer was not about passively playing games, it was about creativity. I showed some of the software we developed and convinced her that computing and creativity go hand-in-hand.
+During this time, my friend's mother complained about the amount of time we spend in front of the screen. It seems that nothing much has changed in more than thirty years. My response was that our time using a computer was not about passively playing games, it was about creativity. I showed some of the software we developed and convinced her that computing and creativity go hand-in-hand.
 
 #+caption: Sinclair ZX81 (source: Wikimedia Commons. Evan-Amos / CC BY-SA.)
 [[file:https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Sinclair-ZX81.jpg/512px-Sinclair-ZX81.jpg]]
 
-When I started my civil engineering career, I moved to use Microsoft-based computers. While the software on these early PCs was vastly superior to anything an 8-bit computer can muster, the overall computing experience was missing something. I was no longer instructing the computer to do, but spent my time finding workarounds within packaged software to meet my needs. The collection of software packages I used to achieve my goals kept growing. Most applications only lasted until the next best thing came along. When I started writing my dissertation, this approach was no longer useful and I returned to creative computing.
+When I started my civil engineering career, I moved to use Microsoft-based computers. While the software on these early PCs was vastly superior to anything an 8-bit computer can muster, the overall computing experience was missing something. I was no longer instructing the computer to do. Instead, I spent my time finding workarounds within packaged software to meet my needs. The collection of software packages I used to achieve my goals kept growing. Most applications only lasted until the next best thing came along. When I started writing my dissertation, this approach was no longer useful, and I returned to creative computing.
 
-The essence of computing is to instruct a machine what to do to achieve your objectives, rather than adjusting your workflow to the software. With Emacs I found a system that allows you to return to creative computing. There are very few aspects of Emacs that are not configurable. When you use commercial software, you just have to accept using the software the way the developers intended instead of how you like to use it.
+The essence of computing is to instruct a machine to achieve your objectives.  However, in most modern computer systems, the user needs to adjust their workflow to the software. With Emacs, I found a system that allows you to return to creative computing. There are very few aspects of Emacs that are not configurable. When you use commercial software, you just have to accept using the software the way the developers intended instead of how you like to use it.
 
-I wrote my dissertation in Emacs with \LaTeX and analysed data using R. While my fellow PhD candidates struggled with Microsoft Word, Excel and specialised statistics software, I was able to produce a [[http://hdl.handle.net/1959.9/561679][beautifully typeset academic book]] without breaking a sweat. I found that moving away from mouse-driven commercial software made me more productive because I can focus my hands on a single task. The learning curve was steep but it was worth the journey.
+I wrote my dissertation in Emacs with \LaTeX and analysed data using R. While my fellow PhD candidates struggled with Microsoft Word, Excel and specialised statistics software, I was able to produce a [[http://hdl.handle.net/1959.9/561679][beautifully typeset academic book]] without breaking a sweat. I found that moving away from mouse-driven commercial software made me more productive because I can focus my hands on a single task. The learning curve was steep, but it was worth the journey.
 
-When I open Emacs, I have the same feeling as when I first booted my ZX81 home computer. The blinking cursor is an invitation to write a new website article, manage my tasks, read e-mail, play games or whatever I need to do with my computer. This book is my way to share the enthusiasm of using Emacs and introduce it to people who are seeking a better way to use my computer.
+When I open Emacs, I have the same feeling as when I first booted my ZX81 home computer. The blinking cursor is an invitation to write a new website article, manage my tasks, read e-mail or even play games. This book is my way to share the enthusiasm of using Emacs and introduce it to people who are seeking a better way to use my computer.
 
-Are you ready to change the way you use your computer? To paraphrase the often abused scene from the Matrix: You take the blue pill---the story ends and everything stays the same. You take the purple Emacs pull---you stay in Wonderland, and I show you how deep the rabbit hole goes. This book is your guide through the rabbit warren that Emacs can be by guiding you through 
+Are you ready to change the way you use your computer? To paraphrase the often abused scene from the Matrix: You take the blue pill---the story ends, and everything stays the same. You take the purple Emacs pull---you stay in Wonderland, and I show you how deep the rabbit hole goes. This book is your guide through the rabbit warren that Emacs can be by guiding you through. 
 * DRAFT Introduction
 ** What is Emacs?
 When you use a computer you more than likely need to use a lot of different programs. You write a memo in a word processor, then switch to a spreadsheet to create graph, which you then copy and past into your memo. Next you open you e-mail client to send the memo to your colleague. After this hard work you might open Solitaire to have a rest and play a game. When using these pieces of software, you might have to learn different skills for each program. You need to use the software the way the developers intended you to use it.
@@ -33,119 +33,128 @@ I only discovered Emacs a few years ago, after almost thirty years of trying man
 
 Emacs is a contradiction in the software world because general wisdom suggests that the older the software, the worse it becomes. Emacs has survived for more than four decades because of its versatility and flexibility. With every version it gets better because thousands of people volunteer their time to improve the code.
 
-Emacs is essentially a configurable text editor, kinda like Notepad on steroids. However, to say that Emacs is a text editor is like saying that a Swiss army knife is just a knife. Emacs is the Swiss Army chainsaw of the software world. In line with postmodern philosophy, in Emacs everything is a text. Spreadsheets are just collections of text, numbers and formulas, action lists are texts, internet pages mostly consist of text and so on. Even images and videos are essentially a text, in that they are a string of numbers converted to colours. This principle allows Emacs to undertake a broad range of tasks, from writing a book to developing software, analysing data or play a games.
-
-Users can configure almost everything in the system with just a little bit of knowledge of the Emacs LISP language. This knowledge requirement might seem a hurdle but it will set you free to enjoy your computer the way it was originally intended. Software should adjust to the user, not the other way around as is the case in most modern packages.
-
-The wonderful advantage of this approach is that you have complete freedom over how us use this software. You can instruct it to do almost anything you like and configure it to your specific needs. The disadvantage is that it requires a wholly different approach to computing compared to contemporary software. Using Emacs throws you back to the original intent of using a computer, real user friendliness.
-** TODO Redefining user-friendliness
-The first hurdle for new users is that Emacs doesn't look like a slick twenty-first century application but more like an angry fruit salad. The lack of slick Apple-esque design might discourage new users because they are used to point their mouse or finger at colourful icons. Most software developers confuse user-friendliness with slick design. But this is not really very friendly because to achieve this simplicity, the user looses a lot of power.
-
-Contemporary software follows the "What You See is What You Get" (WYSYWIG) principle. Graphical interfaces simulate the physical world by making things look like pieces of paper and folders on a desktop. You point, click and drag documents into folders, documents appear as the would on paper and when you are done they go into the rubbish bin.
-
-Emacs and similar text editors use the "What You See is What You Want" (WYSIWYW) principle. As I am writing this book I don't see what it will look like in printed form as you would using modern word processors. In Emacs I only see text, images and some small bits of code to instruct the computer how to typeset the document. This allows me to focus on writing and producing text instead of worrying about the end product.
-
-The WYSIWYG approach distracts the mind from the text and lures the user into fiddling with style over content. A lot of office time is wasted trying to format or typeset documents, time that could be spend producing content. Following the Emacs way will help you become more productive by worrying about the design of the document until after you complete the text. As I am writing this book, it only takes a few keystrokes to convert the text into a fully formatted pdf ebook or web page, ready for distribution.
-
-True user friendliness only exists when the user has full control over the software. Emacs allows you to do exactly that, which is the way computing was intended.
-** The learning curve
-The second hurdle is that when you first open Emacs, all you see is a splash screen. To make Emacs work for you, you will need to learn the basics principles of using the editor and learn some of the associated add-on packages.
-
-Because Emacs is old software, some of the default settings and terminology is not the same as contemporary graphical editors. Once you embrace these differences, a new world of productivity will open up for you.
-
-One of the main strengths of Emacs is that it is almost infinitely extensible. Emacs is not just a text editor, it also has its own programming language. This language allows users to have develop extensions to Emacs that move its functionality far beyond a text editor. You only need to know some very basic aspects of this language to configure the system. Emacs has a configuration system, but the vast majority of users choose to write code instead of the menus. This book does not refer to any of this functionality because using the editor without these embellishments will help you to better understand how it works.
-
-This books helps you navigate this learning curve by only explaining the basic functionality you need to become productive, rather than providing a comprehensive overview of its functionality. The best way to learn to use a new computer system is by doing things and build your skills gradually.
-** Advantages of using Emacs
-There are several major advantages of using Emacs as a replacement for most of your computing needs:
-1. One piece of software to manage most of your computing activities makes you more productive because you only need to master one system. Emacs has been around for decades and its open structure allows it to be around for several more.
-2. All your information is stored in simple text files. You will never have any problems with compatibility due to esoteric file formats that render your accessible only by one piece of software.
-3. You can modify everything in the software to make it suit your specific workflow.
-4. Emacs runs on all the major operating systems: Windows, GNU/Linux and Apple's OS X.
-5. Emacs is open source and supported by a large group of people. Help is always easy to get.
-** Limitations of Emacs
-After singing the praises of this multi-functional editor you would almost think that Emacs is the omnipotent god of software. As a matter of fact, some people have established the [[http://emacs.nu/][Church of Emacs]] as a mock religion to express their administration for the software.
-
-Being a text editor, opportunities to create graphics in Emacs are limited. You can display images and integrate them with text, but Emacs has limited functionality to create or modify graphical files. If you need to create or edit images, then perhaps you should consider using GIMP (GNU Image Manipulation Program). Video content is totally unsupported and cannot be integrated with the text.
-
-Second disadvantage is that Emacs does not have a fully-operational web browser. There are packages to surf the web within Emacs, but they are quite limited in functionality.
-** This Book
-This book discusses how to use Emacs for everything except writing code. Although historically Emacs is a code editor and is still mainly used for this activity, it has evolved into a complete productivity platform. 
-
-This book aims to be more than merely a manual on how to use Emacs as it also provides some advice on how to do these tasks. The text in this book is most certainly opinionated because it generally only discusses one method to achieve a certain task. Being malleable software there is almost always more than one way to achieve the same outcome.
-
-The structure of this book is different to typical books about software. The chapters in this book describe how to undertake certain tasks, such as writing prose, analyse numbers, publish ebooks and so on. Most books about software simply explain the functionality with example. The approach in this book will get you started faster and will hopefully quell the myth that Emacs is hard to learn.
-
-The approach taken in this book is to use the vanilla GNU Emacs version with minimal modification. This approach helps to fully understand how Emacs works.
-* DRAFT Getting Started
-Before you can start creating new books, software, poetry or whatever else your creative mind wants to produce, you need to understand some of the basic principles of Emacs. This chapter introduces the basic terminology and skills you need to know to enjoy the remainder of the book.
-** Installing Emacs
- Emacs is available for the three most common desktop operating systems, Linux, Windows and OS X. Each of these systems uses different methods to install the software. The descriptions below get you started with installing Emacs.
-*** Windows
-*** Apple OS X
-David Caldwell maintains the Emcas for OS X version.
-*** GNU/Linux
-All major Linux distributions contain a version of Emacs which you can install the same way you install all other software. In Ubuntu, simply use the Software installer and search for Emacs. You can consult the relevant documentation for other distributions.
-*** Chromebook
-The Google Chromebook computers are Linux computers in disguise. The latest version of the Chrome operating system can run Linux applications. Go to settings and activate Linux to start the installation process. You can install Emacs by typing =sudo apt-get install emacs25= in the command prompt.
-*** Emacs versions
-Given it malleability, there is no one version of Emacs. Spacemacs and Doom Emacs are popular versions that provide the user with a pre-configured experience. This book uses the plain vanilla GNU Emacs version 26.3 as a starting point and shows how to configure it to become your main productivity engine.
-** First steps
-Let's start Emacs and delve into your new computing environment with some examples. Open your new Emacs installation and follow along. When you open Emacs for the first time, you are greeted by a splash screen. This splash screen gives access to a tutorial, a guided tour and the manual. You can follow these links at your leisure.
-
-#+caption: The opening window of an un-configured Emacs.
-[[file:https://upload.wikimedia.org/wikipedia/commons/b/b3/GNU_Emacs_26.2_screenshot.png]]
-
-You can remove the splash screen by pressing =q=, which will take you to the scratch buffer. A buffer is a text in the Emacs memory. The scratch buffer is your personal scratch pad, which is enabled by default. This buffer is not automatically saved so only use it for taking temporary notes. The scratch buffer is wiped whenever you close Emacs, no questions asked.
-
-To find our what version you are using, open Emacs type =M-x emacs-version= and the result is visible in the minibuffer. This line is your first LISP command. To run this command press the Alt key and X (in Emacs, the Alt key is called  the Mod key) and then type =emacs-version= and enter. The mini buffer is the bottom line of Emacs.
-
-If the version of your Emacs is lower than 26.3, then I suggest you upgrade your system because some of the functionality in this book might be different to how your system works.
-
-When you enter control-x and then control-f, you can open or create a file. The bottom of the screen is the so-called minibuffer. This buffer will now show the words "Find file: ~/". In Emacs language, opening a file is called finding a file. This sequence of keys, called a key binding, will run the =find-file= function. This function either opens an existing file into a buffer, or it will create a new file and buffer.
-
-A buffer is the location where Emacs displays the text you are working on. An Emacs session can contain many buffers. In my workflow, I almost never close a buffer so all my current and past projects are always available at my fingertips.
-
-Lets assume that you don't like to see the icon ribbon on top of the Emacs frame. To remove this frame, type Alt-X and type =tool-bar-mode= and enter. You don't have to type the whole command as you can enter the TAB key to ask Emacs to complete the phrase. 
-** Configuring Emacs
-There is no user who uses Emacs without changing the basic configuration. The biggest problem with Emacs is that the default settings can be a disincentive to use this powerful software. This section explain the basic principles of configuring Emacs
-
-If you want to prevent the splash screen from appearing next time you start, you'll need to modify your 'init file'. This file, named =init.el= is located in the =.emacs.d= folder and it is the central configuration file that turns Emacs into your bespoke personal digital assistant. Emacs creates this folder when you first start it as a place to store configuration data. 
-
-Emacs also recognises other files as the init file. Many books and websites refer to the =.emacs= file in your home folder. Using the =init.el= file in your =.emacs.d= folder is the preferred method because this keeps all your Emacs configuration in one location.
-
-Your init file will steadily grow over time as the ultimate form of computing self-expression. Many Emacs users share their init files to show other users how they make their software work for them. Several authors have published starter kits with prefabricated init files for beginners. While these starter kits sound like a great idea, it is best to create your own configuration step-by-step so you fully understand what is inside it. This book teaches you how to create an init file one step at a time.
-
-To create a new init file, type control X, followed by control F. You'll see the words =Find file: ~/= in the minibuffer. Now type =.emacs.d/init.el= and hit enter. If this file already exists, then Emacs will open it. If this file does not exist, then Emacs will create an empty buffer. A buffer is Emacs lingo for a text that in most cases is related to a file. 
-
-The init file is written in the Emacs LISP language. You will need some rudimentary skills in this language to optimise the configuration. If you like to never see the splash screen again when you start Emacs, then write the following lines in your newly created file:
-
-#+BEGIN_SRC emacs-lisp
-;; Hide splash screen
-(setq inhibit-startup-screen t)
-#+END_SRC
-
-The first line starts with two colons which means it is a comment to help the reader understand the content of the file. Emacs does not execute comments. The second line is Elisp code that means the variable =inhibit-startup-screen= is set (=setq=) to true (=t=). This code instructs Emacs to inhibit the startup screen the next time the program loads.
-
-Save the file with control-S (=C-s=) and you are done. The next time you start Emacs the splash screen will no longer appear. You have just taken your first step into developing your personal Emacs configuration file.
-** Using Emacs
-A main hurdle for the casual user is that to use Emacs effectively, you need to memorise many keyboard shortcuts and commands. The vast majority of functions are available through a menu structure that can be accessed with a mouse, but most experienced Emacs users prefer to use the keyboard shortcuts. 
-
-For modern computer users it might seem strange to ditch the mouse, but there are some great advantages to use the keyboard over the point-and-click method. If your hands don't have to move away from the keyboard to grab the mouse and find the appropriate icon, you will be a lot more productive. After a while, the complex keyboard shortcuts will become part of your muscle memory, allowing you to very quickly produce and edit text.
-
-Emacs is almost totally based on keyboard shortcuts. Memorising the many shortcuts needed to make Emcas work for you might seem daunting, but your muscle memory will quickly take over from conscious thought. Using the keyboard is a much faster and more versatile way to instruct your computer what you want it to do. Minimising the amount of time you use your mouse is also reduces the risk or Repetitive Strain Injury. Emacs can, by the way, be controlled with a mouse as it does have drop-down menus by default. This book will, however, encourage purely keyboard-driven operations.
-
 Emacs is the oldest piece of software still under development. The gradual evolution of this system means that it has several vestigial functions. Just like human beings still have traces of gills from our evolutionary ancestors, so does Emacs use terminology that is different to contemporary standard computing vocabulary.
 
 For example, to open a file is called 'visiting a file'. Pasting a text is called yanking and cutting a text is the same as killing it. Perhaps the old Emacs terminology is a bit more poetic than the standard words used these days.
 
-Emacs is so old that it was used in a time when keyboards did not have arrow keys. Also functionality, such as copying, cutting, pasting and undo work different to what the average computer user is used to. As most users are accustomed to using arrow keys to move around and select text, use control Z to undo, control C to copy and so on. While you can instruct Emacs to mimic this behaviour by enabling CUA-mode, it is best to learn to edit text the Emacs way because it provides additional benefits.
+Emacs is essentially a configurable text editor, kinda like Notepad on steroids. However, to say that Emacs is a text editor is like saying that a Swiss army knife is just a knife. Emacs is the Swiss Army chainsaw of the software world. In line with postmodern philosophy, in Emacs everything is a text. Spreadsheets are just collections of text, numbers and formulas, action lists are texts, internet pages mostly consist of text and so on. Even images and videos are essentially a text, in that they are a string of numbers converted to colours. This principle allows Emacs to undertake a broad range of tasks, from writing a book to developing software, analysing data or play a games.
 
-Another important key is the meta key. On Apple computers this is the command key and on most other computers the left Alt key. In Emacs documentation this is noted as =M= (meta) and =M-x= means you press the meta key and then the 'x' key. The remainder of the book uses this notation to indicate pressing the alt key. Some examples of keyboard shortcuts:
+Users can configure almost everything in the system with just a little bit of knowledge of the Emacs LISP language. This knowledge requirement might seem a hurdle but learning how to use it will set you free to enjoy your computer the way it was originally intended. Software should adjust to the user, not the other way around as is the case in most modern packages.
 
-The =M-x= keys execute a command. When you enter this, Emacs expects input in the mini buffer.  Now for some fun and practice. Type =M-x tetris <return>= and start playing the legendary game of Tetris. yes, Emacs can also play games!
+The wonderful advantage of this approach is that you have complete freedom in how you use this software. You can instruct it to do almost anything you like and configure it to your specific needs. The disadvantage is that it requires a wholly different approach to computing compared to contemporary software. Using Emacs throws you back to the original intent of using a computer, real user friendliness.
+** TODO Redefining user-friendliness
+The first hurdle for new users is that Emacs doesn't look like a slick twenty-first century application but more like an angry fruit salad. The lack of slick Apple-esque design might discourage new users because they are used to point their mouse or finger at colourful icons. Most software developers confuse user-friendliness with slick design and using a mouse. This approach is not very friendly because to achieve this perceived simplicity, the user looses a lot of power. Graphically-driven software is a golden cage. It might be pleasant, but it is a cage nevertheless.
 
-If you are ever stuck, you can press the =ESC= key three times or use =C-g= (control g) to escape from a wrong command.
+Contemporary software follows the "What You See is What You Get" (WYSYWIG) principle. Graphical interfaces simulate the physical world by making objects on the screen look like pieces of paper and folders on a desk. You point, click and drag documents into folders, documents appear as the would on paper and when you are done they go into the rubbish bin.
+
+Emacs and other text editors use the "What You See is What You Mean" (WYSIWYM) principle. As I am writing this book I don't see what it will look like in printed form as you would using modern word processors. In Emacs, I only see text, images and some small bits of code to instruct the computer what the final product should look like. This allows me to focus on writing and producing text instead of worrying about the end product.
+
+The WYSIWYG approach distracts the mind from the content and lures the user into fiddling with style instead of writing text. A lot of time is wasted in offices around the word trying to format or typeset documents, time that could be spend producing content. Following the Emacs way will help you become more productive by worrying about the design of the document until after you complete the text. As I am writing this book, it only takes a few keystrokes to convert the text into a fully formatted pdf ebook or web page, ready for distribution.
+
+True user friendliness only exists when the user has full control over the software. Emacs allows you to do exactly that, which is the way computing was intended.
+** The learning curve
+The second hurdle is that when you first open Emacs, all you see is a splash screen. To make Emacs work for you, you will need to learn the basics principles of using this editor and learn some of the associated add-on packages. Because Emacs is old software, some of the default settings and terminology is not the same as contemporary graphical editors. Once you embrace these differences, a new world of productivity will open up for you.
+
+One of the main strengths of Emacs is that it is almost infinitely extensible. Emacs is not just a text editor, it also has its own programming language. This language allows users to have develop extensions to Emacs that move its functionality far beyond a text editor. You only need to know some very basic aspects of this language to configure the system. Emacs has a mouse-driven configuration system, but the vast majority of users chooses to write code instead of using the menus. This book does not refer to any of this functionality because using the editor without these embellishments will help you to better understand how it works.
+
+This books helps you navigate this learning curve by only explaining the basic functionality you need to become productive, rather than providing a comprehensive overview of its functionality. The best way to learn to use a new computer system is by doing things and build your skills gradually.
+** Advantages of using Emacs
+There are several major advantages of using Emacs as a replacement for most of your computing needs:
+1. One piece of software to undertake most of your computing activities makes you more productive because you only need to master one system.
+2. All your information is stored in simple text files. You will never have any problems with compatibility due to esoteric file formats.
+3. You can modify almost everything in the software to make it suit your specific workflow.
+4. Emacs runs on all major operating systems: Windows, GNU/Linux and Apple's OS X.
+5. Emacs is open source and supported by a large group of people. Help is always easy to find.
+** Limitations of Emacs
+After singing the praises of this multi-functional editor you would almost think that Emacs is the omnipotent god of software. As a matter of fact, some people have established the [[http://emacs.nu/][Church of Emacs]] as a mock religion to express their administration for the software.
+
+Being a text editor, opportunities to create graphics in Emacs are limited. You can display images and integrate them with text, but Emacs has limited functionality to create or modify graphical files. If you need to create or edit images, then perhaps you should consider using GIMP (GNU Image Manipulation Program). Video content is unsupported and cannot be easily integrated with the text, other than hyperlinks to a file or web page.
+
+Second disadvantage is that Emacs does not have a fully-operational web browser. There are packages to surf the web within Emacs, but they are quite limited in functionality.
+** This Book
+This book discusses how to use Emacs for almost everything except writing code. Although historically Emacs is a code editor and is still mainly used for this activity, it has evolved into a complete productivity platform. 
+
+This book aims to be more than merely a manual on how to use Emacs as it also provides some advice on how to do these tasks. The text in this book is most certainly opinionated because it generally only discusses one method to achieve a certain task. Being malleable software there is almost always more than one way to achieve the same outcome.
+
+The structure of this book is different to typical books about software. The chapters in this book describe how to undertake various tasks, such as writing prose, analyse numbers, publish ebooks and so on. Most books about software simply explain the functionality with some examples. The approach in this book will get you started faster and will hopefully quell the myth that Emacs is hard to learn.
+
+The approach taken in this book is to use the vanilla GNU Emacs version with minimal modification. This approach helps to fully understand how Emacs works.
+* DRAFT Getting Started
+Before you can start create your new website, books, software, poetry or whatever else your creative mind wants to achieve, you need to understand some of the basic principles. This chapter introduces some basic terminology and skills you need to know to enjoy the remainder of the book.
+** Installing Emacs
+Emacs is available for the three most common desktop operating systems, Linux, Windows and OS X. Each of these systems uses different methods to install the software. The descriptions below get you started with installing Emacs.
+*** Windows
+*** Apple OS X
+David Caldwell maintains the Emcas for OS X version.
+*** GNU/Linux
+All major Linux distributions contain a version of Emacs which you can install the same way you install all other software. In most Linux distributions, simply use the provided software installer and search for Emacs. 
+*** Chromebook
+The Google Chromebook computers are Linux computers in disguise. The latest version of the Chrome operating system can run Linux applications. Go to settings and activate Linux to start the installation process. You can install Emacs by typing =sudo apt-get install emacs25= in the command prompt.
+*** Emacs versions
+Given it malleability, there is no one version of Emacs. Spacemacs and Doom Emacs are popular versions that provide the user with a pre-configured experience. This book uses the plain vanilla GNU Emacs version 26.3 as a starting point.
+** First steps
+Let's start Emacs and delve into your new computing environment with some examples. Open your new Emacs installation and follow along. When Emacs opens for the first time, you are greeted by a splash screen. This screen gives access to a tutorial, a guided tour and the manual. You can follow these links at your leisure.
+
+#+caption: The opening window of an un-configured Emacs.
+[[file:https://upload.wikimedia.org/wikipedia/commons/b/b3/GNU_Emacs_26.2_screenshot.png]]
+
+You can remove the splash screen by pressing =q=, which will take you to the scratch buffer. A buffer is a text that resides in the computer's memory. The scratch buffer is your personal scratch pad, which is enabled by default. This buffer is not automatically saved so only use it for taking temporary notes. The scratch buffer is wiped whenever you close Emacs, no questions asked. Emacs creates this buffer by default and it is always available as you cannot have no open buffer.
+
+To find our what version you are using, open Emacs type =M-x emacs-version= and the result is visible in the minibuffer. This line is your first LISP command. To run this command press the Alt and x keys (command key on Apple), then type =emacs-version= and hit enter. The mini buffer at the bottom of the Emacs frame will show the result. The mini-buffer is the place where Emacs provides you feedback. If the version of your Emacs is lower than 26.3, then I suggest you upgrade your system because some of the functionality in this book might be different to how your system works.
+
+The Alt key is called the meta key because when Emacs was first developed, keyboards were different. On Emacs documentation this is noted as =M= (meta) and =M-x= means you press the meta key and then the 'x' key. The remainder of the book uses this notation to indicate pressing the alt key. 
+
+When you enter control x and then control f, you can open or create a file. In Emacs lingo this command is written as =C-x C-f= The mini buffer will now show the words =Find file: ~/= . In Emacs language, opening or creating a file is called 'finding' a file. This sequence of keys, called a key binding, will run the =find-file= function. This function either opens an existing file into a buffer, or it will create a new file and associated empty buffer. You can also type =M-x= and enter =find-file= to achieve the same result.
+
+A buffer is the location where Emacs displays the text you are working on. An Emacs session can contain many buffers. In my workflow, I almost never close a buffer, so all my current projects are always available at my fingertips.
+
+These are the two basic ways to ask Emacs to do something. You either execute a function with =M-x= and type the name of the function, or you can use a keyboard shortcut, such as =C-x C-f=. Later in the book you will learn how to create and change keyboard shortcuts.
+** Configuring Emacs
+There is no user who uses Emacs without changing the configuration. The biggest problem with Emacs is that some of the default settings can be a disincentive to use this powerful software. This section explains the basic principles of configuring Emacs. Throughout this book, you will learn new ways to configure this system so you can build your personal setup step by step.
+
+Let assume you want to prevent the splash screen from appearing next time you start. To achieve this , you need to modify the 'init file'. This file, named =init.el= is located in the =.emacs.d= folder and it is the central configuration file that turns Emacs into your bespoke personal digital assistant. Emacs creates this folder when you first start it as a place to store configuration data. 
+
+Emacs also recognises other files as the init file. Many books and websites refer to the =.emacs= file in your home folder. Using the =init.el= file in your =.emacs.d= folder is the preferred method because it keeps all your Emacs configuration in one location.
+
+To create a new init file, type =C-x C-f= and enter =.emacs.d/init.el= in the mini buffer at the bottom of the screen and hit enter. If this file already exists, then Emacs will open it. If this file does not exist, then Emacs will create an empty buffer.
+
+The init file is written in the Emacs LISP language. You will need some rudimentary skills in this language to optimise the configuration, which you will learn as you read this book. If you like to never see the splash screen again when you start Emacs, then write the following lines in your newly created file:
+
+#+BEGIN_SRC emacs-lisp
+;; Emacs configuration file
+
+;; Hide splash screen
+(setq inhibit-startup-screen t)
+#+END_SRC
+
+The first two lines start with two colons which means that these lines are comments to help the reader understand what comes next. Emacs does not execute lines. The second line is Elisp code to inhibit the startup screen from showing. This code sets (=setq=) the variable =inhibit-startup-screen= to true (=t=). If you do want show this screen then set the variable to =nil=. This is one of the quirky aspects of Emacs LISP as you might expect the opposite of true to be false. 
+
+Save the file with the =save-buffer= function (=C-x C-s=) and you are done. To exit Emacs you run the =exit-emacs=  function with the =C-x C-c= shortcut. The next time you start Emacs the splash screen will no longer appear. You have just taken your first step into developing your personal Emacs configuration file.
+
+Your init file will steadily grow as the ultimate form of computing self-expression. Many Emacs users share their init files on the Internet to show other users how they make their software work for them. Copying and pasting snippets from these shared resources is a productive way to quickly learn to use Emacs.
+
+Several authors have published starter kits with complex prefabricated init files for beginners. While these starter kits sound like a great idea, it is best to create your own configuration step-by-step so you fully understand what is inside it. This book teaches you how to create an init file one step at a time.
+** Play Emacs like an instrument
+A main hurdle for the casual user is that to use Emacs effectively, you need to memorise the many keyboard shortcuts and commands. The vast majority of functions are available through a menu structure that can be accessed with a mouse, but most experienced Emacs users prefer to use the keyboard shortcuts. 
+
+Using the keyboard is a much faster and more versatile way to instruct your computer what you want it to do. Minimising the amount of time you use your mouse is also reduces the risk or Repetitive Strain Injury. Emacs can, by the way, be controlled with a mouse as it does have drop-down menus by default. This book will, however, encourage purely keyboard-driven operations.
+
+For modern computer users it might seem strange to ditch the mouse, but there are some great advantages to use the keyboard over the point-and-click method. If your hands don't have to move away from the keyboard to grab the mouse and find the appropriate icon, you will be a lot more productive. After only a short while, the complex keyboard shortcuts will become part of your muscle memory, allowing you to very quickly produce your creative content.
+
+Emacs is so old that it was used in a time when keyboards did not have arrow keys. Also functionality, such as copying, cutting, pasting and undo work different to what the average computer user is used to. As most users are accustomed to using arrow keys to move around and select text, use control Z to undo, control C to copy and so on. Most software uses these keyboard shortcuts as it is a standard set by IBM in 1987. Emacs existed before the Common User Access (CUA), so it has its own conventions.
+
+If you like to enable CUA-mode, then add the following line to your init file. You can run all lines in the init file with =M-x eval-buffer=, so you don't have to restart Emacs. 
+
+#+begin_src emacs-lisp
+;; CUA mode
+(cua-mode t)
+#+end_src
+
+While you can instruct Emacs to enable CUA-mode, it is best to learn to write text the Emacs way because it provides additional functionality. When I first started using Emacs, it was the first option I enabled. It will, however, conflict with some other Emacs functions. I also found that taking the effort to learning the original Emacs copy, cut, paste and undo functions will provide you with greater powers. More about this in the next chapter.
+
+Probably the most important keyboard shortcut to learn is =C-g=, which quits whatever you are doing. You can also hit the =ESC= key three times to escape from a wrong command.
+
+The message of this section is to embrace the keyboard way of doing things. It will make you  more productive and gives you perfect control over your system. In the words of Swiss Buddhist monk Alain M. Lafon, working with Emacs is like playing an instrument. Learning about keyboard shortcuts is like learning chords. It will sound a bit clunky at start, but after some practice you will become a virtuoso.
 ** Buffers and files
 All texts that you create with Emacs are stored in buffers, which you can store as a file. Emacs buffers and files are related but yet they are separate entities. A buffer can become a file and a file can become a buffer.
 
@@ -167,11 +176,6 @@ When, for example executing these three commands in succession, the frame will h
 To move between windows, use the =C-x o= key binding. This will move the cursor in clockwise fashion around the windows. This can be a bit clumsy if you use a lot of open windows.
 
 This functionality is further discussed in the later chapters to show how you can configure your screen top optimise productivity.
-** Line Wrapping
-To enable visual line wrapping
-
-=(global-visual-line-mode 1)=
-
 ** Package Repositories
 The real power from using Emacs comes from the thousands of packages that are available to extend its functionality.
 *** ELPA
@@ -194,244 +198,6 @@ Just like many other Open Source packages, such as $/LaTeX$ and R, a massive lib
 One of the most often used packages is Org Mode. This Emacs extension helps you to manage your projects and actions and is a great text editor to develop a personal Wiki, write papers and books or websites. Much of the content of this book revolves around Org Mode.
 
 Now that you have completed this dry chapter, you can reward yourself with a game of Tetris. Type =M-x tetris= to have some fun and see how Emacs can also become a productivity drain.
-* DRAFT Writing Prose
-:NOTES:
-How to write text in Emacs, focusing on Org Mode, introducing other modes.
-:END:
-** Introduction
-Microsoft Word has dominated the writing world for several decades now. When I started my career, everybody used Wordperfect on a simple text screen with a blue background. ** limited formatting shown on the screen. When Microsoft released the first version of Word with its What You See is What You Get (WYSIWYG) philosophy, everybody quickly switched over.
-
-Before I started writing in Emacs Org Mode I used a range of word processors and most recently Scrivener. This chapter shows how you can use Emacs and Org Mode to write different types of text with the same, if not better functionality than the more popular alternatives. I use Org Mode to write this book, I also use it to write blog articles, journal articles and research notes.
-** Writing text
-Being a text editor, writing text is obviously the core activity for Emacs. Not all texts are the same and this chapter
-
-To start a new text simply type =C-x C-f=.
-
-After you give this command, Emacs will ask you to type in a name in the mini buffer. Fow now, use
-
-You now start typing whatever it is you like to type.
-** Writing Modes
-One of the principles in postmodern thinking is that everything is a text. The core principle of these words is that there are no certainties, only interpretations. Interestingly, a guiding principle of Unix-based operating systems is that everything is a text file.
-
-This deep philosophical principle applies to Emacs because very text file needs is interpreted. Emacs can interpret different text files in different ways by using major and minor modes.
-
-A major mode controls how a buffer behaves. A text file could be a movie script, a to-do list, the next great novel, computer code or whichever way you express your creativity. In commercial software, each of these files could be a different file type that you can only read in the software it was created in. In Emacs, everything is a text file and everything is interpretation. Fountain mode helps you write movie or theatre scripts, Org Mode excels at managing your to-do lists and creative writing and there are various major modes for writing code.
-
-Each major mode has different specialised functions and
-
-You don't have to
-
-Each buffer can only have one major mode operating at a time, but it can have several minor modes. A minor mode provides optional extras, such as flyspell for on-the-fly spell checking and *.
-
-Org Mode is arguably the most versatile major mode in Emacs and a large portion of this book describes how to use this software. Org Mode is so powerful that some people, like myself, started using Emacs just to be able to use Org Mode.
-*** Getting Started with Org Mode
-This software was originally developed by Carsten Dominik, professor of astronomy at the University of Amsterdam, in 2003. Since then, many others have developed the software and it is currently maintained by Bastien Guerry.
-
-
-
-To start an Org file simply create a file with a =.org= extension and start writing, for example =C-x C-F test.org <Enter>=.
-**** Outlining
-Almost all texts are hierarchical. Books have chapters, sections and paragraphs, articles have headings, poems have verses and so on. Org Mode is essentially an outlining tool. To start a new heading, simply write an asterisk as the first character, followed by a space. To create any deeper levels, simply add more stars.
-
-#+BEGIN_TEXT
-** Focusing
-Pressing =S-TAB= will collapse the whole document, showing only the level one headings. Pressing =S-TAB= once again will show the headings, and repeating it for a second time reveals the whole document.
-** Improving the look
-*** Declutter your screen
-If you don't like the look of so many stars in your buffer, you can hide them using the indent minor mode. This minor mode replaces all leading stars with spaces when viewing the org file in Emacs.
-
-=* Top level headline             |    * Top level headline=
-=** Second level                  |      * Second level=
-=*** 3rd level                    |        * 3rd level=
-=some text                        |          some text=
-=*** 3rd level                    |        * 3rd level=
-=more text                        |          more text=
-=* Another top level headline     |    * Another top level headline=
-
-*** Using Org mode to write prose
-If you like to hide the duplicate asterisks and indent the entries, then add the following lines to your init file:
-
-#+BEGIN_SRC emacs-lisp
-(setq org-hide-leading-stars t
-      org-startup-indented t)
-#+END_SRC
-*** Using bullets instead of the asterisk
-You can also replace the start with a set of icons to your own liking. The =org-bullets= package in MELPA replaces the asterisks with UTF-8 characters, such as squares, diamonds and bullets. The list of characters is cycled when the level is deeper that what you specified.
-*** Line spacing and wrapping
-Changing the line spacing in a buffer is not straightforward in naked Emacs.
-
-=M-x eval-expression=
-
-=(setq line-spacing 3)=
-
-
-(add-hook 'org-mode-hook 'turn-on-visual-line-mode)
-
-*** Font
-Add =(setq org-hide-emphasis-markers t)= to your .emacs file to hide the markup symbols so that for example =/this text/= will be shown as /this text/ on your screen.
-
-** Navigating your document
-*** Focus
-It is easy to get lost in a sea of words on yo screen and some simple keystrokes can help you focus your eyes. Keying =C-l= will move the line hat your cursor is on to the centre of the screen. If you quickly repeat these keystrokes then the cursor will move to the top of the screen. If you do this three times in a row, the cursor moves to the bottom of the screen.
-
-Including the meta key by pressing =C-M-l= will heuristically recenter the screen to ensure that the paragraph you are writing is still on the screen, if possible. I use this command quite regularly to find my way back to where I was or when working close to the bottom of the screen.
-
-:NOTES:
-scroll-lock-mode
-centered-cursor mode
-:END:
-** Spell check
-Without the blessing of automated spell checkers, my writing would be absolutely awful. Perhaps I can use the fact that English is my second language as an excuse, but i am simply a lazy speller.
-
-Emacs does have spell checking facilities but you need to configure
-
-Flyspell
-
-=(add-hook 'org-mode-hook 'turn-on-flyspell)=
-
-As soon as you see something spelled incorrectly, hit =C-;= and Flyspell will replace the unrecognised word with the closest alternative. If this is the wrong word, keep hitting =C-;= until you get the correct one.
-
-** Note taking
-*** Capture templates
-[[http://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/][Learn how to take notes more efficiently in Org Mode –]]
-*** Drawers
-Org Mode has a very nifty system called drawers. These are sections of text that can be used for a range of purposes. I mainly use drawers to add notes to a text that I am writing. These are usually notes about the purpose of a section, maximum word count or any other useful information.
-** Counting Words
-Counting words is a basic activity when writing books or articles. Your teacher, lecturer or publisher might have expectations about the number of words in your work. As a writer I also like to keep track of the number of words in each section of my book to ensure a balance between each of the sections and chapters.
-
-Emacs can count words out of the box. The =count-words= function counts the number of lines, words and characters in a buffer. You can also count words more precisely with the =count-words-region= (=M-===). If you use this command without selecting a region the result will be the number of words before the point up to the start of the paragraph.
-
-In Org Mode you can quickly select the subtree you are working with with =C-c @= and then count the words.
-
-The =org-wc= package provides is a useful add-on to Org Mode. This package  shows the word count per heading line, summed over each of the sub-headings.  This software is developed to be fast, so it doesn't check too carefully what it’s counting.
-
-
-The word count is displayed at the end of each heading. As soon as you start typing again, the word count disappears.
-** Images
-** Exporting your work
-Org mode has excellent export facilities to covert your files to HTML, PDF (using $\LaTeX$) and OFT files, which can be read in Microsoft Word.
-*** Typography
-
-=(setq org-export-with-smart-quotes t)=
-
-*** $\LaTeX$
-Documents in html or standard flat text are not suitable to be used as a book. When I write books that need to be printed or ebooks in PDF I use $\LaTeX$, a document typesetting system that produces beautifully formatted publications. Not that it is pronounced Lateks because the last letter is a Greek chi so it should sound like 'Latech'. This technology was developed in the 1980s when computer scientist Donald Knuth wanted to write books on his computer.
-
-Org Mode can export your work in PDF by using the $\LateX$ system. By default, the org file is exported using the book template but you can also write your own
-
-Using Org Mode to write $\LaTeX$$ is much easier than using a native editor because you don't have to include complex mark-up commands and use the
-
-If you want to insert $\LaTeX$
-** Other Writing Types
-*** Journaling
-Org Mode is also good at helping you managing a journal or diary.
-*** Blogging
-*** Theatre and Film Scripts
-If you fancy yourself a script writer ready to develop the next blockbuster or critically acclaimed film, then you need Fountain mode. Scripts for theatre, television and film has a very specific format, based on the old typewriter look. There are many pieces of expensive software on the market to help writers confirm with this format
-
-When you install Fountain mode, any file with the =.fountain= extension will be interpreted as a script. The text can be exported to many formats, such as PDF to share your work with others.
-** Distraction-Free Writing
-*** Clean interface
-Writing takes full concentration to produce creative prose, which applies to fiction, non-fiction and writing code. Code is after all, in the words of the great Donald Knuth, poetry. Distractions are the natural enemy of concentration and while your computer is your most important writing tool, it can also be a source of distractions.
-
-Distraction-free writing means that your computer screen is free of clutter and, just like an old typewriter, only shows the text that you are working on. Emacs is quite distraction-free out of the box but you can fine tune some settings to
-
-[[https://github.com/rnkn/olivetti][Olivetti]] is a simple Emacs minor mode that facilities distraction-free writing. The name Olivetti derives from the famous typewriter brand.
-
-You activate Olivetti mode with the =M-x olivetti-mode= command. This minor mode reduces to width of the text to seventy characters and centres the text in the middle of the window. The width of the text is changeable with the =M-x olivetti-set-with= command or =C-c \=.
-
-You can remove further distractions by hiding the icon toolbar, the menu bar and the scroll bar. The code lines below achieve all of this. You can enter these in your init file if you like Emacs to start in this way. If you type =M-x menu-bar-mode <RET>= Emacs will toggle between switching the menu bar on and off. The tool bar and the scroll bars are disabled with =M-x tool-bar= or =M-x scroll-bar-mode=.
-
-The next step to distraction-free writing is to disable any visual or audible notifications. There is no need to be reminded of every email that arrives in your inbox, so best to disable any notifications your computer or phone throws at you. If you like to have some non-distracting background noise you can try some instrumental music from one of the many ambient noise websites. Chapter ** explains how to play music with Emacs.
-*** Managing distractions
-When you are writing an important text, it is almost inevitable that you mind wanders off to a different topic and all of a sudden you remember that you need to order theatre tickets.
-
-Don't break your workflow, write it down and move on with your more creative work. Some authors keep a distraction notebook handy to record anything that can be dealt with after your writing session.
-
-Org Mode provides a built-in distraction notebook with capture templates. To enable this functionality, add the following to your init file:
-
-#+BEGIN_SRC emacs-lisp
-;; Capture distractions
-(global-set-key "\C-c c" 'org-capture)
-(setq org-capture-templates
-	'(("d" "Distraction" entry (file+headline "~distractions.org" "Notes")
-	 "* %?\n%T"))
-)
-#+END_SRC
-
-The capture functionality has no default keybinding and Org Mode recommends using =C-c c=. The next line defines a minimal setup that simply adds all your distractions to the =distractions.org= file in your home folder plus a timestamp. Org Mode has extensive functionality for capture templates, which is described in more detail in the chapter about taking notes.
-
-When you are in a productive flow-state and your suddenly remember that you soon need to rubbish bins out, simply press =C-c c= and =d= to enter your distraction. When done, use =C-c C-c= to save the entry and continue with your train of thought.
-
-This functionality is further explained in the Getting Things Done chapter.
-*** Integrating TODO items
-Org Mode is in first instance a system to manage your activities and it has extensive functionality for managing projects.
-
-When writing a piece of text it is not uncommon that you realise that you forgot to research a topic. Don't let this omission break your flow but either add a distractions, as described in the previous paragraph, or turn a heading into a to-do item by pressing =S-right=. You will now see the words TODO next to the heading.
-
-=* TODO Introduction*=
-
-The chapter about Getting Things Done explains how to list all these items into an agenda to manage your writing projects.
-
-** TODO Publishing
-:NOTES:
-Using Org Mode to publish books, articles and blogs
-:END:
-*** Create books
-*** Reading pdf files
-*** Bibliographies
-* TODO Using Org Mode as your brain's Third Hemisphere
-Org Mode is a very versatile major mode that by itself is worth the effort of switching to Emacs. I use Org Mode for almost all Emacs activities. Most of my org files are pages full of notes about various topics. These files form a personal wiki with links between topics, images, external resources and whatever else I want to dump into an organised chaos.
-
-This chapter explains the basics of using Org Mode as a tool to organise your mind. The Getting Stuff Done chapter explains how Org Mode can also be used to manage projects and actions.
-** Minimal setup
-Before you can use org Mode effectively you should set some default keyboard shortcuts that are not defined at startup. The Org Mode manual recommends the following configuration for your init file. I strongly recommend using these defaults because they are often referenced in documentation.
-
-#+BEGIN_SRC emacs-lisp
-;; Default Org Mode Keyboard shortcuts
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cl" 'org-store-link)
-#+END_SRC
-
-The Getting Stuff Done chapter discusses the org-agenda function. The =org-iswitchb= function (=C-c b=) makes switching to another Org Mode buffer easier by hiding any other type of buffer in the choice menu. The org-capture function (=C-c c=) provides powerful options to capture and store information. Lastly, the the org-store-link (=C-c l=) function helps to create new hyperlinks to internal and external sources. The last three functions in this list play an important role in converting Emacs into your private version of Wikipedia.
-** Basic Principles
-Org Mode uses a hierarchical structure to organise your text. This structure is composed of headings of increasing depth. Each heading starts with one or more asterisks. In Org Mode, a subtree is a heading plus all its subordinate text and subheadings. When you write a book, the first level could be a chapter, the second a section and so on. You should view the system of hierarchical headings as a mind map. Every level can branch out into one or more lower levels. Using these headings, Org Mode is a flexible way to organise your mind.
-*** Organise your text
-You can change the depth of the heading and associated text by adding or removing asterisks, but much easier is to use =M-left= or =M-right=. Moving a heading is easily done with the =M-up= and =M-down=.
-
-The arrow keys only allow you to move a heading around within the boundaries of its current top level heading. If you like to move a heading to another headline, then you can use the refile command with =C-c C-w=. You will see a menu in the minibuffer where you can select the new heading the subtree will move to. The refile function can also move subtrees to another file, which will require some configuration.
-
-Another method of moving a subtree is to cut and paste the text. Use =C-@= to mark the whole subtree you are currently in. You can now copy or cut and paste the text to another location.
-
-Social media about Org Mode often discusses the various ways you can spread your information across different files. When you are starting with Org Mode, I suggest you just use on file and build it until it becomes too large. Many people worry to much about developing classifications for their knowledge and end up with a lot of empty bits.
-*** Focus
-Org Mode files can quickly become quite large and you can focus your view with the tab button. When You stand on a heading and press tab, the text under the heading collapses and you see an ellipse (=...=) at the end of the heading. The three dots indicate that the content of the heading is hidden. Pressing the tab button once hides all text under the heading, pressing it again shows only the headings and pressing a third time reveals all text. Using =S-TAB= changes the visibility of text for the whole document.
-
-[special function]
-*** Lists                                                           :lists:
-
-** Personal Wiki
-A Wiki is a document that multiple people
-
-A personal Wiki is a
-** Hyperlinks
-One of the main characteristics of a Wiki
-Org mode documents can contain a lot of different types of links
-*** Internal links
-*** External links
-*** Internet links
-If you need to write notes about something you read, heard or saw on the internet, you can copy and paste the URL of the page as a link. Type =C-c C-l=, paste the link into the mini buffer, hit Enter and type the name of the link and close with Enter.
-
-The =org-cliplink= package makes this process a little simpler. When you press =C-x p i= (the standard key binding),  Emacs retrieves the name of the web page and creates a link with that name. If you like to change the name of the link, then go there and press =C-c C-l= to edit the details.
-*** Other links
-When you write about a journal article with a DOI number (Document Object Identifier), simply type the =doi:= followed by the number, e.g. doi:10.21139/wej.2017.008. The link is automatically created and will take you straight to the journal article page.
-
-** Searching your knowledge
-** Capture ideas
-
-** Moving stuff around
 * TODO Getting Things Done
 :NOTES:
 - [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html][Orgmode for GTD]]
@@ -453,7 +219,7 @@ The majority of Emacs users are software developers and a lot of literature abou
 
 This book also is different to other Emacs books because it does not focus on functionality but on outcomes. Whenever I read traditional computing books it takes me a while to put what I have learned in practice because these books often just provide lists of functions you can perform with the software. This chapters in this book start with goal and then explain how to achieve this with Emacs. Reading this book teaches you enough to start writing articles and books, manage projects and actions and undertake other creative projects.
 
-This book is not a comprehensive manual of Emacs but an opinionated description of how to achieve a series of tasks. The text in this book is opinionated because it describes only one or two ways of achieving each objective. The flexible nature of Emacs provides many ways to achieve the same thing. This freedom is both a strength and a weakness. This book aims to shorten the learning curve as much as possible so that you can become creative and productive. If after reading this book you like to know more detail, then I highly recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual.
+This balisook is not a comprehensive manual of Emacs but an opinionated description of how to achieve a series of tasks. The text in this book is opinionated because it describes only one or two ways of achieving each objective. The flexible nature of Emacs provides many ways to achieve the same thing. This freedom is both a strength and a weakness. This book aims to shorten the learning curve as much as possible so that you can become creative and productive. If after reading this book you like to know more detail, then I highly recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual.
 
 Emacs is one of the most versatile pieces of software imaginable. When you work with Emacs you literally have everything you need at your fingertips. Some users jokingly state that their operating system is merely a means to be able to use Emacs. The multi-functional design of Emacs comes at a price. The learning curve is steep and there are limited graphical interfaces. Once you conquer these hurdles, a world of productivity and computing bliss awaits. This book aims to make it as easy as possible for you to enter into the Emacs universe and start using your computer the way it was intended.
 
@@ -485,12 +251,12 @@ Start the process by creating a new Org file (=C-x f=) and give it a recognisabl
 As you write your list, include everything you can think about. From the simplest task to your life's most ambitious goal. Don't worry about structure or order, you will organise this list into a usable form later. The main point is to get this information out of our head and into Org Mode. The first part of your list might look something like this:
 
 #+begin_src org
-* Pay phone bill
-* Write a book about Emacs
-* Book summer holiday
-* Pay gass bill
-* Learn Latin
-* And so on ...
+\* Pay phone bill
+\* Write a book about Emacs
+\* Book summer holiday
+\* Pay gass bill
+\* Learn Latin
+\* And so on ...
 #+end_src
 
 For the next twenty-five minutes, focus only on this task and write down everything that is in your head. Don't multitask and give this activity your undivided attention. Multitasking is the enemy of productivity because our brains can only focus on one intellectual activity at a time. The fact that magicians can so easily fool people illustrates why multitasking is a fool's errand. Perhaps listen to some instrumental music to keep you focused.
@@ -602,7 +368,6 @@ When you then add the document you are writing to the list agenda files by press
 
 
 
-
 *** Todo list for current buffer?
 
 ** Engage: Take action
@@ -705,11 +470,264 @@ Before we can decide that we are productive, we first need to know what that mea
 
 Emacs can help you taking the
 #+end_example
-* TODO Surfing the Web
+* TODO Researching
+Org Mode is a very versatile major mode that by itself is worth the effort of switching to Emacs. I use Org Mode for almost all Emacs activities. Most of my org files are pages full of notes about various topics. These files form a personal wiki with links between topics, images, external resources and whatever else I want to dump into an organised chaos.
+
+This chapter explains the basics of using Org Mode as a tool to organise your mind. The Getting Stuff Done chapter explains how Org Mode can also be used to manage projects and actions.
+** Minimal setup
+Before you can use org Mode effectively you should set some default keyboard shortcuts that are not defined at startup. The Org Mode manual recommends the following configuration for your init file. I strongly recommend using these defaults because they are often referenced in documentation.
+
+#+BEGIN_SRC emacs-lisp
+;; Default Org Mode Keyboard shortcuts
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cl" 'org-store-link)
+#+END_SRC
+
+The Getting Stuff Done chapter discusses the org-agenda function. The =org-iswitchb= function (=C-c b=) makes switching to another Org Mode buffer easier by hiding any other type of buffer in the choice menu. The org-capture function (=C-c c=) provides powerful options to capture and store information. Lastly, the the org-store-link (=C-c l=) function helps to create new hyperlinks to internal and external sources. The last three functions in this list play an important role in converting Emacs into your private version of Wikipedia.
+** Basic Principles
+Org Mode uses a hierarchical structure to organise your text. This structure is composed of headings of increasing depth. Each heading starts with one or more asterisks. In Org Mode, a subtree is a heading plus all its subordinate text and subheadings. When you write a book, the first level could be a chapter, the second a section and so on. You should view the system of hierarchical headings as a mind map. Every level can branch out into one or more lower levels. Using these headings, Org Mode is a flexible way to organise your mind.
+*** Organise your text
+You can change the depth of the heading and associated text by adding or removing asterisks, but much easier is to use =M-left= or =M-right=. Moving a heading is easily done with the =M-up= and =M-down=.
+
+The arrow keys only allow you to move a heading around within the boundaries of its current top level heading. If you like to move a heading to another headline, then you can use the refile command with =C-c C-w=. You will see a menu in the minibuffer where you can select the new heading the subtree will move to. The refile function can also move subtrees to another file, which will require some configuration.
+
+Another method of moving a subtree is to cut and paste the text. Use =C-@= to mark the whole subtree you are currently in. You can now copy or cut and paste the text to another location.
+
+Social media about Org Mode often discusses the various ways you can spread your information across different files. When you are starting with Org Mode, I suggest you just use on file and build it until it becomes too large. Many people worry to much about developing classifications for their knowledge and end up with a lot of empty bits.
+*** Focus
+Org Mode files can quickly become quite large and you can focus your view with the tab button. When You stand on a heading and press tab, the text under the heading collapses and you see an ellipse (=...=) at the end of the heading. The three dots indicate that the content of the heading is hidden. Pressing the tab button once hides all text under the heading, pressing it again shows only the headings and pressing a third time reveals all text. Using =S-TAB= changes the visibility of text for the whole document.
+
+[special function]
+*** Lists                                                           :lists:
+
+** Personal Wiki
+A Wiki is a document that multiple people
+
+A personal Wiki is a
+** Hyperlinks
+One of the main characteristics of a Wiki
+Org mode documents can contain a lot of different types of links
+*** Internal links
+*** External links
+*** Internet links
+If you need to write notes about something you read, heard or saw on the internet, you can copy and paste the URL of the page as a link. Type =C-c C-l=, paste the link into the mini buffer, hit Enter and type the name of the link and close with Enter.
+
+The =org-cliplink= package makes this process a little simpler. When you press =C-x p i= (the standard key binding),  Emacs retrieves the name of the web page and creates a link with that name. If you like to change the name of the link, then go there and press =C-c C-l= to edit the details.
+*** Other links
+When you write about a journal article with a DOI number (Document Object Identifier), simply type the =doi:= followed by the number, e.g. doi:10.21139/wej.2017.008. The link is automatically created and will take you straight to the journal article page.
+
+** Searching your knowledge
+** Capture ideas
+
+** Moving stuff around
+** TODO Surfing the Web
 Emacs also comes shipped with a simple web browser. 
 
 To start browing use =M-x eww enter= and add a web address or search term.
 
+* DRAFT Writing Prose
+We have covered a great deal of Emacs functionality. Now it is time to start creating products to share with the world as the result of our planning and research. This chapter discusses how to write long-form text with Emacs. The next chapter describes how to share your text with the outside word as a website, book, article or presentation.
+** TODO What You See is What You Mean
+Before we had computers, almost all text was produced with typewriters that had one font, pictures had to be drawn or literally cut and pasted from another source. In the old approach, producing the content and formatting the final result were separate activities. The writer would type the text and the designer would arrange the typesetting. Although mechanical typewriters have limited capabilities, they do have the advantage of keeping you focused on the text. 
+
+#+caption: Olivetti typewrite (Photo: LuigiB2302).
+[[file:images/olivetti.jpg]
+
+Modern word processors use a What You See is What You Get (WYSIWYG) approach. This means that whatever you see on the screen is what your final printed or electronic product will look like to the reader. This is certainly a technological step forward that seems a better way. The problem with the WYSIWYG approach is two very different tasks are merged into one. People who use modern word processes can wast vast amounts of time formatting documents, which distracts them from producing content.
+
+Emacs is a plain text editor. This means that what you see on the screen is not the way the end product will look. Text editors use a What You See is What You Mean approach. As I am typing this text in Emacs, I see the image of the typewriter and the text. But the image on my screen is not the same as what you are seeing now. 
+
+Text editors use markup languages to write text. This means that the words on the page are mixed with small bits of code to instruct the computer how to format a text. The most famous markup language is HTML, which drives the World Wide Web. \LaTeX is another popular system to write and typeset books and articles. It is popular with scientists and many journals accept it as a submission format. Markdown is a simplified markup language that minimises the amount of code in your text. Emacs has major modes for each of these systems, but you only really need to learn one
+
+Org Mode is a universal markdown language
+
+** Line Wrapping
+To enable visual line wrapping
+
+=(global-visual-line-mode 1)=
+
+:NOTES:
+How to write text in Emacs, focusing on Org Mode, introducing other modes.
+:END:
+** Introduction
+Microsoft Word has dominated the writing world for several decades now. When I started my career, everybody used Wordperfect on a simple text screen with a blue background. ** limited formatting shown on the screen. When Microsoft released the first version of Word with its What You See is What You Get (WYSIWYG) philosophy, everybody quickly switched over.
+
+Before I started writing in Emacs Org Mode I used a range of word processors and most recently Scrivener. This chapter shows how you can use Emacs and Org Mode to write different types of text with the same, if not better functionality than the more popular alternatives. I use Org Mode to write this book, I also use it to write blog articles, journal articles and research notes.
+** Writing text
+Being a text editor, writing text is obviously the core activity for Emacs. Not all texts are the same and this chapter
+
+To start a new text simply type =C-x C-f=.
+
+After you give this command, Emacs will ask you to type in a name in the mini buffer. Fow now, use
+
+You now start typing whatever it is you like to type.
+** Writing Modes
+One of the principles in postmodern thinking is that everything is a text. The core principle of these words is that there are no certainties, only interpretations. Interestingly, a guiding principle of Unix-based operating systems is that everything is a text file.
+
+This deep philosophical principle applies to Emacs because very text file needs is interpreted. Emacs can interpret different text files in different ways by using major and minor modes.
+
+A major mode controls how a buffer behaves. A text file could be a movie script, a to-do list, the next great novel, computer code or whichever way you express your creativity. In commercial software, each of these files could be a different file type that you can only read in the software it was created in. In Emacs, everything is a text file and everything is interpretation. Fountain mode helps you write movie or theatre scripts, Org Mode excels at managing your to-do lists and creative writing and there are various major modes for writing code.
+
+Each major mode has different specialised functions and
+
+You don't have to
+
+Each buffer can only have one major mode operating at a time, but it can have several minor modes. A minor mode provides optional extras, such as flyspell for on-the-fly spell checking and *.
+
+Org Mode is arguably the most versatile major mode in Emacs and a large portion of this book describes how to use this software. Org Mode is so powerful that some people, like myself, started using Emacs just to be able to use Org Mode.
+*** Getting Started with Org Mode
+This software was originally developed by Carsten Dominik, professor of astronomy at the University of Amsterdam, in 2003. Since then, many others have developed the software and it is currently maintained by Bastien Guerry.
+
+
+
+To start an Org file simply create a file with a =.org= extension and start writing, for example =C-x C-F test.org <Enter>=.
+**** Outlining
+Almost all texts are hierarchical. Books have chapters, sections and paragraphs, articles have headings, poems have verses and so on. Org Mode is essentially an outlining tool. To start a new heading, simply write an asterisk as the first character, followed by a space. To create any deeper levels, simply add more stars.
+
+#+BEGIN_TEXT
+** Focusing
+Pressing =S-TAB= will collapse the whole document, showing only the level one headings. Pressing =S-TAB= once again will show the headings, and repeating it for a second time reveals the whole document.
+** Improving the look
+*** Declutter your screen
+If you don't like the look of so many stars in your buffer, you can hide them using the indent minor mode. This minor mode replaces all leading stars with spaces when viewing the org file in Emacs.
+
+=* Top level headline             |    * Top level headline=
+=** Second level                  |      * Second level=
+=*** 3rd level                    |        * 3rd level=
+=some text                        |          some text=
+=*** 3rd level                    |        * 3rd level=
+=more text                        |          more text=
+=* Another top level headline     |    * Another top level headline=
+
+If you like to hide the duplicate asterisks and indent the entries, then add the following lines to your init file:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-hide-leading-stars t
+      org-startup-indented t)
+#+END_SRC
+*** Using bullets instead of the asterisk
+You can also replace the start with a set of icons to your own liking. The =org-bullets= package in MELPA replaces the asterisks with UTF-8 characters, such as squares, diamonds and bullets. The list of characters is cycled when the level is deeper that what you specified.
+*** Line spacing and wrapping
+Changing the line spacing in a buffer is not straightforward in naked Emacs.
+
+The shortcut =M-:= (alt-colon) starts the =eval-expression= function, which lets you run Emacs Lisp expressions. Now type =(setq line-spacing 3)=, the same as you would in your init file. When you set the line spacing this way, it only applies to the current buffer.
+
+
+*** Font
+Add =(setq org-hide-emphasis-markers t)= to your .emacs file to hide the markup symbols so that for example =/this text/= will be shown as /this text/ on your screen.
+
+** Navigating your document
+*** Finding Focus
+It is easy to get lost in a sea of words on yo screen and some simple keystrokes can help you focus your eyes. Keying =C-l= (=recenter-top-bottom=) will move the line hat your cursor is on to the centre of the screen. If you repeat this keystroke, then the cursor will move to the top of the screen. If you do this three times in a row, the cursor moves to the bottom of the screen.line moves back to its original position. Including the meta key by pressing =C-M-l= will heuristically recenter the screen to ensure that the paragraph you are writing is still on the screen, if possible. This function is very useful to prevent you from having to focus on the bottom of the screen too often, which is not good for your neck vertebrae.
+
+The 
+
+:NOTES:
+scroll-lock-mode
+centered-cursor mode
+:END:
+** Spell check
+Without the blessing of automated spell checkers, my writing would be absolutely awful. Perhaps I can use the fact that English is my second language as an excuse, but i am simply a lazy speller.
+
+Emacs does have spell checking facilities but you need to configure
+
+Flyspell
+
+=(add-hook 'org-mode-hook 'turn-on-flyspell)=
+
+As soon as you see something spelled incorrectly, hit =C-;= and Flyspell will replace the unrecognised word with the closest alternative. If this is the wrong word, keep hitting =C-;= until you get the correct one.
+
+** Note taking
+*** Capture templates
+[[http://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/][Learn how to take notes more efficiently in Org Mode –]]
+*** Drawers
+Org Mode has a very nifty system called drawers. These are sections of text that can be used for a range of purposes. I mainly use drawers to add notes to a text that I am writing. These are usually notes about the purpose of a section, maximum word count or any other useful information.
+** Counting Words
+Counting words is a basic activity when writing books or articles. Your teacher, lecturer or publisher might have expectations about the number of words in your work. As a writer I also like to keep track of the number of words in each section of my book to ensure a balance between each of the sections and chapters.
+
+Emacs can count words out of the box. The =count-words= function counts the number of lines, words and characters in a buffer. You can also count words more precisely with the =count-words-region= (=M-===). If you use this command without selecting a region the result will be the number of words before the point up to the start of the paragraph.
+
+In Org Mode you can quickly select the subtree you are working with with =C-c @= and then count the words.
+
+The =org-wc= package provides is a useful add-on to Org Mode. This package  shows the word count per heading line, summed over each of the sub-headings.  This software is developed to be fast, so it doesn't check too carefully what it’s counting.
+
+
+The word count is displayed at the end of each heading. As soon as you start typing again, the word count disappears.
+** Images
+** Other Writing Types
+*** Journaling
+Org Mode is also good at helping you managing a journal or diary.
+*** Blogging
+*** Theatre and Film Scripts
+If you fancy yourself a script writer ready to develop the next blockbuster or critically acclaimed film, then you need Fountain mode. Scripts for theatre, television and film has a very specific format, based on the old typewriter look. There are many pieces of expensive software on the market to help writers confirm with this format
+
+When you install Fountain mode, any file with the =.fountain= extension will be interpreted as a script. The text can be exported to many formats, such as PDF to share your work with others.
+** Distraction-Free Writing
+*** Clean interface
+Writing takes full concentration to produce creative prose, which applies to fiction, non-fiction and writing code. Code is after all, in the words of the great Donald Knuth, poetry. Distractions are the natural enemy of concentration and while your computer is your most important writing tool, it can also be a source of distractions.
+
+Distraction-free writing means that your computer screen is free of clutter and, just like an old typewriter, only shows the text that you are working on. Emacs is quite distraction-free out of the box but you can fine tune some settings to
+
+[[https://github.com/rnkn/olivetti][Olivetti]] is a simple Emacs minor mode that facilities distraction-free writing. The name Olivetti derives from the famous typewriter brand.
+
+You activate Olivetti mode with the =M-x olivetti-mode= command. This minor mode reduces to width of the text to seventy characters and centres the text in the middle of the window. The width of the text is changeable with the =M-x olivetti-set-with= command or =C-c \=.
+
+You can remove further distractions by hiding the icon toolbar, the menu bar and the scroll bar. The code lines below achieve all of this. You can enter these in your init file if you like Emacs to start in this way. If you type =M-x menu-bar-mode <RET>= Emacs will toggle between switching the menu bar on and off. The tool bar and the scroll bars are disabled with =M-x tool-bar= or =M-x scroll-bar-mode=.
+
+The next step to distraction-free writing is to disable any visual or audible notifications. There is no need to be reminded of every email that arrives in your inbox, so best to disable any notifications your computer or phone throws at you. If you like to have some non-distracting background noise you can try some instrumental music from one of the many ambient noise websites. Chapter ** explains how to play music with Emacs.
+*** Managing distractions
+When you are writing an important text, it is almost inevitable that you mind wanders off to a different topic and all of a sudden you remember that you need to order theatre tickets.
+
+Don't break your workflow, write it down and move on with your more creative work. Some authors keep a distraction notebook handy to record anything that can be dealt with after your writing session.
+
+Org Mode provides a built-in distraction notebook with capture templates. To enable this functionality, add the following to your init file:
+
+#+BEGIN_SRC emacs-lisp
+;; Capture distractions
+(global-set-key "\C-c c" 'org-capture)
+(setq org-capture-templates
+	'(("d" "Distraction" entry (file+headline "~distractions.org" "Notes")
+	 "* %?\n%T"))
+)
+#+END_SRC
+
+The capture functionality has no default keybinding and Org Mode recommends using =C-c c=. The next line defines a minimal setup that simply adds all your distractions to the =distractions.org= file in your home folder plus a timestamp. Org Mode has extensive functionality for capture templates, which is described in more detail in the chapter about taking notes.
+
+When you are in a productive flow-state and your suddenly remember that you soon need to rubbish bins out, simply press =C-c c= and =d= to enter your distraction. When done, use =C-c C-c= to save the entry and continue with your train of thought.
+
+This functionality is further explained in the Getting Things Done chapter.
+*** Integrating TODO items
+Org Mode is in first instance a system to manage your activities and it has extensive functionality for managing projects.
+
+When writing a piece of text it is not uncommon that you realise that you forgot to research a topic. Don't let this omission break your flow but either add a distractions, as described in the previous paragraph, or turn a heading into a to-do item by pressing =S-right=. You will now see the words TODO next to the heading.
+
+=* TODO Introduction*=
+
+The chapter about Getting Things Done explains how to list all these items into an agenda to manage your writing projects.
+
+* Publishing
+** Website
+*** Hugo
+*** 
+** Book
+** Articles
+** Presentations
+** Exporting your work
+Org mode has excellent export facilities to covert your files to HTML, PDF (using $\LaTeX$) and OFT files, which can be read in Microsoft Word.
+*** Typography
+
+=(setq org-export-with-smart-quotes t)=
+
+*** $\LaTeX$
+Documents in html or standard flat text are not suitable to be used as a book. When I write books that need to be printed or ebooks in PDF I use $\LaTeX$, a document typesetting system that produces beautifully formatted publications. Not that it is pronounced Lateks because the last letter is a Greek chi so it should sound like 'Latech'. This technology was developed in the 1980s when computer scientist Donald Knuth wanted to write books on his computer.
+
+Org Mode can export your work in PDF by using the $\LateX$ system. By default, the org file is exported using the book template but you can also write your own
+
+Using Org Mode to write $\LaTeX$$ is much easier than using a native editor because you don't have to include complex mark-up commands and use the
+
+If you want to insert $\LaTeX$
 * TODO Crunching Numbers
 ** Calc
 ** Org Mode Spreadsheet
@@ -784,9 +802,9 @@ The blocks in Tetris are /tetrominoes/, which are geometric shapes composed of f
 
 Glynn Clements developed the Emacs open source clone of Tetris. To start plying press =M-x tetris=. You can manoeuvre the falling blocks with the arrow keys. The space bar drops the block and =p= key pauses the game. When you suddenly remind yourself that this is an unproductive use of your time, then hit the =q= button to get back to work.
 
-Tetris is not just a fun way to waste your time. [[https://doi.org/10.1016/j.addbeh.2015.07.020][Jessica Skorka-Brown]] and her colleagues suggested in 2015 that Tetris can block cravings. [[ https://doi.org/10.1371/journal.pone.0013706][Emily Holmes]] and her colleagues found that playing Tetris can reduce flashbacks to traumatic events.
+Tetris is not just a fun way to waste your time. [[https://doi.org/10.1016/j.addbeh.2015.07.020][Jessica Skorka-Brown]] and her colleagues suggested in 2015 that Tetris can block cravings. [[https://doi.org/10.1371/journal.pone.0013706][Emily Holmes]] and her colleagues found that playing Tetris can reduce flashbacks to traumatic events.
 
-#+CAPTION: About to smash me personal record in Tetris.
+#+CAPTION: About to smash my personal record in Tetris.
 [[file:tetris.png]]
 *** Sokoban
 *** Psychologist
@@ -794,4 +812,3 @@ If macs starts stressing you out than perhaps you like to speak to your own pers
 ** Music
 [[https://emacs.stackexchange.com/questions/3667/what-are-the-options-to-play-music-from-within-emacs][bongo - What are the options to play music from within Emacs? - Emacs Stack Exchange]]
 ** Videos
-* TODO The future of Emacs
