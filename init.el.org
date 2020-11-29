@@ -1,11 +1,11 @@
 #+TITLE: Emacs configuration
 #+AUTHOR: Peter Prevos
-#+PROPERTY: header-args :tangle yes :tangle ~/.emacs.d/init.el :results silent
+#+PROPERTY: header-args :tangle yes :tangle ~/.config/emacs/init.el :results silent
 
 * Introduction
-Emacs uses an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Init File]] in =.emacs.d= in your home folder to store all configurations. The init file is the starting point to personalise your Emacs experience. This file ensures that your computer behaves the way you want it to, instead of the other way around.
+Emacs uses an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Init File]] in =.config/emacs= in your home folder to store all configurations. The init file is the starting point to personalise your Emacs experience. This file ensures that your computer behaves the way you want it to, instead of the other way around.
 
-This file produces an =init.el= file in the =.emacs.d= folder. This is one of the three possible ways to create an init file. I prefer storing everything in the =.emacs.d= folder because it keeps all configurations in one place, which is easier to maintain and backup.
+This file produces an =init.el= file in the =.conf/emacs= folder. This is one of the three possible ways to create an init file. I prefer storing everything in the =.config/emacs= folder because it keeps all configurations in one place, which is easier to maintain and backup.
 
 This Org file defines and creates the init file using literate programming to document and define the configuration. To create (tangle) the configuration file, execute =C-c C-v C-t= (=org-babel-tangle=). This function reads all source code in this file and concatenates it into the one init file. This configuration is used the next time you start Emacs.
 
@@ -25,7 +25,7 @@ Emacs includes a menu-driven configuration system that [[https://www.gnu.org/sof
 ;; ------------------------------------------------------------------
 
 ;; Customize settings in a separate file
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file "~/.config/emacs/custom.el")
 (when (file-exists-p custom-file)
     (load custom-file))
 #+END_SRC
@@ -80,7 +80,7 @@ These configurations change the way Emacs looks and feels:
   (setq
    inhibit-startup-message t
    inhibit-startup-screen t)
-  (add-to-list 'default-frame-alist '(fullscreen . fullboth)) 
+  ;; (add-to-list 'default-frame-alist '(fullscreen . fullboth)) 
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
@@ -98,13 +98,13 @@ These configurations change the way Emacs looks and feels:
     ;; All text modes:
     (text-mode . mixed-pitch-mode))
 
-    (set-face-attribute 'default nil :font "Hack" :height 105)
-    (set-face-attribute 'fixed-pitch nil :font "Hack" :height 105)
-    (set-face-attribute 'variable-pitch nil :family "Roboto" :weight 'regular :height 110)
+  (set-face-attribute 'default nil :font "Hack" :height 105)
+  (set-face-attribute 'fixed-pitch nil :font "Hack" :height 105)
+  (set-face-attribute 'variable-pitch nil :family "Roboto" :weight 'regular :height 110)
 
-   ;;cursor
-   (blink-cursor-mode 1)
-   (setq cursor-type "box")
+  ;;cursor
+  (blink-cursor-mode 1)
+  (setq cursor-type "box")
 
   ;; Highlight current line
   (global-hl-line-mode 1)
@@ -165,61 +165,75 @@ Lastly, the mouse is diabled - Emacs is after all a text editor.
 ** Org Mode
 These are the basic settings for org-mode and its standard keyboard shortcuts.
 #+begin_src emacs-lisp
-;; ORG MODE
-(use-package org
-  :ensure org-plus-contrib
-  :config
-  (global-set-key (kbd "C-c l") 'org-store-link)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c c") 'org-capture)
-  ;; Org mode ricing
-  (setq org-startup-indented t
-      org-ellipsis "↵" ;folding symbol
-      org-hide-emphasis-markers t
-      org-agenda-block-seperator ""
-      org-image-actual-width (truncate (* (window-pixel-width) 0.8))
-      org-tags-column -60))
-;; Nice bullets
-;;(use-package org-superstar
-;;    :ensure t
-;;    :config
-;;    (setq org-superstar-special-todo-items t)
-;;    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+    ;; ORG MODE
+    (use-package org
+      :ensure org-plus-contrib
+      :config
+      (global-set-key (kbd "C-c l") 'org-store-link)
+      (global-set-key (kbd "C-c a") 'org-agenda)
+      (global-set-key (kbd "C-c c") 'org-capture)
+      ;; Org mode ricing
+      (setq org-startup-indented t
+            org-ellipsis "↵" ;folding symbol
+            org-hide-emphasis-markers t
+            org-agenda-block-seperator ""
+            org-image-actual-width 400
+            org-tags-column -60))
+    ;; Nice bullets
+    (use-package org-superstar
+      :ensure t
+      :config
+      (setq org-superstar-special-todo-items t)
+      (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+    ;; Open links
+    (setq org-file-apps '((auto-mode . emacs)
+                         (directory . emacs)
+                         ("\\.mm\\'" . default)
+                         ("\\.x?html?\\'" . default)
+                         ("\\.pdf\\'" . emacs)
+                         ("\\.mp4\\'" . "vlc \"%s\"")))
 #+end_src
 ** File Management
 *** Backups and saving
 #+begin_src emacs-lisp
 ;; Location for backup files
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq backup-directory-alist '(("." . "~/.config/emacs/backups")))
 
 ;; Auto revert file when changed outside of Emacs
 (global-auto-revert-mode 1)
  #+end_src	
 *** Dired
+Managing files with Emacs.
 #+begin_src emacs-lisp
-  ;; Dired
+      ;; Dired
+      ;; Prevent creating multible buffers (use a to open new folder)
+      (put 'dired-find-alternate-file 'disabled nil)
 
-  ;; Prevent creating multible buffers (use a to open new folder)
-  (put 'dired-find-alternate-file 'disabled nil)
+       ;; Copy between instances
+        (setq dired-dwim-target t)
 
-  ;; Copy between instances
-  (setq dired-dwim-target t)
+        ;; Move files to Trash
+        (setq delete-by-moving-to-trash t)
 
-  ;; Move files to Trash
-  (setq delete-by-moving-to-trash t)
+        ;; Dired icons
+        (use-package all-the-icons-dired
+          :ensure t
+          :config
+          (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 
-  ;; Dired icons
-  (use-package all-the-icons-dired
+        ;; Copy full path
+        ;; https://emacs.stackexchange.com/questions/36850/copy-to-kill-ring-selected-file-names-full-path
+        (defun dired-copy-path-at-point ()
+          (interactive)
+          (dired-copy-filename-as-kill 0))
+        (define-key dired-mode-map (kbd "M-w") 'dired-copy-path-at-point)
+
+    (setq dired-listing-switches "-agho --group-directories-first")
+
+  (use-package dired-hide-dotfiles
     :ensure t
-    :config
-    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
-
-  ;; Copy full path
-  ;; https://emacs.stackexchange.com/questions/36850/copy-to-kill-ring-selected-file-names-full-path
-  (defun dired-copy-path-at-point ()
-    (interactive)
-    (dired-copy-filename-as-kill 0))
-  (define-key dired-mode-map (kbd "M-w") 'dired-copy-path-at-point)
+    :hook (dired-mode . dired-hide-dotfiles-mode)
+    :bind (:map dired-mode-map ("." . dired-hide-dotfiles-mode)))
 #+end_src
 ** Helm
 Helm is an Emacs framework for incremental completions and narrowing selections. It helps to rapidly complete file names, buffer names, or any other Emacs interactions requiring selecting an item from a list of possible choices.
@@ -260,17 +274,6 @@ Adding drawers is a useful way to add contextual information to a text.
       (with-eval-after-load 'org
           (define-key org-mode-map (kbd "C-c C-x n") 'org-insert-drawer-notes))
 #+end_src
-*** Kill all Tetris windows
-Yes, I play too much Tetris. It is my distraction after I achieved a task. This function ends the game and kills both buffers to remove any evidence of my digression.
-#+begin_src emacs-lisp
-(defun tetris-kill-game ()
-  "Kill the current game and score buffers."
-  (interactive)
-  (tetris-end-game)
-  (kill-buffer "tetris-scores")
-  (kill-buffer "*Tetris*"))
-(global-set-key (kbd "C-c C-x t") 'tetris-kill-game)
-#+end_src
 * Productivity
 ** Getting Things Done
 [[info:org#Workflow states][Workflow states]] indicate the status of actions. Some actions are logged an others require a comment. Logging for [[https://orgmode.org/manual/Repeated-tasks.html][repeated actions]] is disabled
@@ -288,35 +291,46 @@ Yes, I play too much Tetris. It is my distraction after I achieved a task. This 
 ** Agenda settings
 #+begin_src emacs-lisp
   ;; Org Agenda settings
-    (setq org-agenda-files '("~/Documents/gtd/gtd.org"))
+  (setq org-agenda-files '("~/Documents/gtd/gtd.org"))
 
-    (setq org-agenda-skip-deadline-if-done t
-          org-agenda-skip-scheduled-if-done t
-          org-agenda-include-diary t
-          calendar-week-start-day 1
-          org-log-repeat nil 
-          )
+  (setq org-agenda-skip-deadline-if-done t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-include-diary t
+        calendar-week-start-day 1
+        org-log-repeat nil 
+        )
 
-    (setq org-agenda-custom-commands
-          '(("c" "Chores" tags-todo "chores") 
-            ("e" "Emacs" tags-todo "emacs")
-            ("n" "Netherlands" tags-todo "NL")
-            ("o" "Outsource" tags-todo "outsource|VA")
-            ("p" "Priorities" tags-todo "+PRIORITY=\"A\"")
-            ("h" "Third Hemisphere"
-             ((agenda "" ((org-agenda-span 1)
-                          (org-agenda-start-on-weekday nil)
-                          (org-agenda-files 
-                          '("~/Documents/gtd/gtd.org"))
-                          (org-agenda-sorting-strategy '(priority-up))
-                          )) 
-             (todo "NEXT" ((org-agenda-files 
-             '("~/Documents/gtd/gtd.org"))))
-              (todo "WAITING" ((org-agenda-files 
-              '("~/Documents/gtd/gtd.org"))))
-              (stuck "")
-              ))
+  (setq org-agenda-custom-commands
+        '(("d" "Drakenmolen" tags-todo "chores") 
+          ("e" "Emacs" tags-todo "emacs")
+          ("n" "Netherlands" tags-todo "NL")
+          ("o" "Outsource" tags-todo "outsource|VA")
+          ("p" "Priorities" tags-todo "+PRIORITY=\"A\"")
+          ("h" "Third Hemisphere"
+           ((agenda "" ((org-agenda-span 1)
+                        (org-agenda-start-on-weekday nil)
+                        (org-agenda-files 
+                         '("~/Documents/gtd/gtd.org"))
+                        (org-agenda-sorting-strategy '(priority-up))
+                        )) 
+            (todo "NEXT" ((org-agenda-files 
+                           '("~/Documents/gtd/gtd.org"))))
+            (todo "WAITING" ((org-agenda-files 
+                              '("~/Documents/gtd/gtd.org"))))
+            (stuck "")
             ))
+          ("c" "Coliban Water"
+           ((agenda "" ((org-agenda-span 5)
+                        (org-agenda-start-on-weekday t)
+                        (org-agenda-files 
+                         '("~/Documents/coliban-water/coliban-water.org"))
+                        (org-agenda-sorting-strategy '(priority-up)))) 
+            (todo "NEXT" ((org-agenda-files 
+                           '("~/Documents/coliban-water/coliban-water.org"))))
+            (todo "WAITING" ((org-agenda-files 
+                              '("~/Documents/coliban-water/coliban-water.org"))))
+            (stuck "")))
+          ))
 
   (setq org-stuck-projects
         '("/PROJECT" ("NEXT" "WAITING") () ))
@@ -331,44 +345,6 @@ Yes, I play too much Tetris. It is my distraction after I achieved a task. This 
          deft-directory org_notes
          org-default-notes-file (concat org_notes "inbox.org"))
  #+end_src
-*** Org Noter and pdf tools
-#+begin_src emacs-lisp
-  ;; pdf-tools
-  ;; Install via pamac: https://aur.archlinux.org/packages/emacs-pdf-tools-git/
-  (use-package pdf-tools
-    :config
-    (pdf-tools-install)
-    ;; open pdfs scaled to fit width
-    (setq-default pdf-view-display-size 'fit-width)
-    ;; use normal isearch
-    (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
-    :custom
-    (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
-
-  (use-package org-pdftools
-    :ensure t
-    :hook (org-load . org-pdftools-setup-link))
-
-  (use-package org-noter
-    :ensure t
-    :config
-    (setq
-     ;; The WM can handle splits
-     org-noter-notes-window-location 'other-frame
-     ;; Please stop opening frames
-     org-noter-always-create-frame nil
-     ;; I want to see the whole file
-     org-noter-hide-other nil
-     ;; Everything is relative to the main notes file
-     org-noter-notes-search-path (list org_notes)))
-
-  (use-package org-noter-pdftools
-    :ensure t
-    :after org-noter
-    :config
-    (with-eval-after-load 'pdf-annot
-      (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
-#+end_src
 *** Org Capture
 Org-Mode helps you quickly capture ideas that are not related to your current workflow with [[https://orgmode.org/manual/Capture.html][Org Capture]]. Add your idea and keep working without switching applications or files. Org Capture is great for journal entries, adding tasks to your inbox, create a shopping list and whatever else you like to collect as random thoughts. [[https://cestlaz.github.io/posts/using-emacs-23-capture-1/#.W24BAhgRUVs][Mike Zamansky]] has written excellent instructions on using Org Capture.
 
@@ -376,24 +352,24 @@ This capture setup
 - Add actions to inbox in Getting Things Done file
 - Add notes to journal
 #+BEGIN_SRC emacs-lisp
-(setq org-catch-invisible-edits 'error)
-;; Org capture
-(setq org-capture-templates '(("t" "Todo to inbox" entry
-			       (file+headline "~/Documents/gtd/gtd.org" "Inbox")
-			       "* TODO %i%?")
-			       ("n" "Note to inbox" item
-			       (file+headline "~/Documents/gtd/gtd.org" "Inbox")
-			       "- %?")
-			       ("j" "Journal Entry" entry 
-			       (file+olp+datetree "~/Documents/zettelkasten/journal.org")
-			       "* %?")
-			       ("c" "Coliban Water journal note" entry
-			       (file+olp+datetree "~/Documents/lucid-manager/coliban-water.org")
-			       "* %?")
-			       ))
-;; refiling captured entries
-(setq org-reverse-note-order t)
-(setq org-refile-targets '(("~/Documents/gtd/gtd.org" :maxlevel . 2)))
+  (setq org-catch-invisible-edits 'error)
+  ;; Org capture
+  (setq org-capture-templates '(("t" "Third Hemisphere task" entry
+                                 (file+headline "~/Documents/gtd/gtd.org" "Inbox")
+                                 "* TODO %i%?")
+                                ("n" "Third Hemisphere note" item
+                                 (file+headline "~/Documents/gtd/gtd.org" "Inbox")
+                                 "- %?")
+                                ("c" "Coliban Water note" entry
+                                 (file+headline "~/Documents/coliban-water/coliban-water.org" "Inbox")
+                                 "- %?")
+                                ("j" "Coliban Water task" entry
+                                 (file+headline "~/Documents/coliban-water/coliban-water.org" "Inbox")
+                                 "* TODO %?")
+                                ))
+  ;; refiling captured entries
+  (setq org-reverse-note-order t)
+  (setq org-refile-targets '(("~/Documents/gtd/gtd.org" :maxlevel . 2)))
 #+END_SRC
 *** Org-Roam
 #+begin_src emacs-lisp
@@ -421,7 +397,7 @@ This capture setup
                                         (function org-roam--capture-get-point)
                                         "%?"
                                         :file-name "${slug}"
-                                        :head "#+title: ${title}\n#+roam_alias:\n#+roam_key: NA\n#+roam_tags:\nbacklinks: \n\n"
+                                        :head "#+title: ${title}\n#+roam_alias:\n#+roam_tags:\nbacklinks: \n\n"
                                         :unnarrowed t
                                         :immediate-finish t))))
 
@@ -454,7 +430,13 @@ This capture setup
  )
  (global-set-key (kbd "C-x p l") 'org-web-tools-insert-link-for-url)
  (global-set-key (kbd "C-x p i") 'org-web-tools-insert-web-page-as-entry)
+
+(use-package helm-rg
+:ensure t)
+
 #+end_src
+
+
 *** Capture weblinks
 - [[https://github.com/alphapapa/org-web-tools/tree/58c37ab50e99775cf4ed3d6884aa9c3f45d855de][org-web-tools]] Commands and functions for retrieving web page content and processing it into and displaying it as Org-mode content.
   - =C-x p l= converts a link in the clipboard to an Org Mode link
@@ -522,22 +504,26 @@ This capture setup
 - [[https://www.emacswiki.org/emacs/FlySpell][FlySpell]] for spell-checking on the fly for my favourite major modes. The F7 key is mappedd to suggesting alternatives for misspelled words.
 - The [[https://github.com/agzam/mw-thesaurus.el][thesaurus]] uses a free API to the Merriam-Webster Thesaurus. Press F8 to load the synonyms of the word at point. Press =q= to exit the thesaurus buffer.
 #+begin_src emacs-lisp
-;; Spell checking for Org, Markdown and Fountain modes
-(use-package flyspell
-  :ensure t
-  :diminish
-  :config
- (add-hook 'org-mode-hook 'flyspell-mode)
- (add-hook 'markdown-mode-hook 'flyspell-mode)
- (add-hook 'fountain-mode-hook 'flyspell-mode)
- (global-set-key (kbd "<f7>") 'ispell-word)
- (setq ispell-silently-savep t))
+  ;; Spell checking for Org, Markdown and Fountain modes
+  (use-package flyspell
+    :ensure t
+    :diminish
+    :config
+   (add-hook 'org-mode-hook 'flyspell-mode)
+   (add-hook 'markdown-mode-hook 'flyspell-mode)
+   (add-hook 'fountain-mode-hook 'flyspell-mode)
+   (global-set-key (kbd "<f7>") 'ispell-word)
+   (setq ispell-silently-savep t
+         flyspell-case-fold-duplications nil))
 
-;; Merriam-Webster Thesaurus
-(use-package mw-thesaurus
-:ensure t
-:config
-(global-set-key (kbd "<f8>") 'mw-thesaurus-lookup-at-point))
+  ;; Merriam-Webster Thesaurus
+  (use-package mw-thesaurus
+  :ensure t
+  :config
+  (global-set-key (kbd "<f8>") 'mw-thesaurus-lookup-at-point))
+#+end_src
+*** Typography
+#+begin_src emacs-lisp
 #+end_src
 ** Distraction-Free Writing
 [[https://github.com/rnkn/olivetti][Olivetti mode]] is a minor mode that enables writing without distractions. This mode recreaates the old typewriter-feel by centering the text in the buffer at a specified with, which I set to 100 characters.
@@ -545,13 +531,13 @@ This capture setup
   (use-package olivetti
     :ensure t
     :config
-    (setq olivetti-body-width 100)
     (defun distraction-free ()
       "Distraction-free writing environment"
       (interactive)
       (if (equal olivetti-mode nil) (progn 
                                       (delete-other-windows)
-                                      (olivetti-mode t))
+                                      (olivetti-mode t)
+                                      (setq olivetti-body-width 100))
         (olivetti-mode 0)))
     (global-set-key (kbd "<f9>") 'distraction-free))
 #+end_src
@@ -747,6 +733,11 @@ I write almost all text in Org Mode. I also use two specialised major modes. [[h
  ("\\subsection{%s}" . "\\subsection*{%s}")
  ))
  #+end_src
+*** Export to MS Word
+Setting the =org-odt-preferred-output-format= variable lets you export an org file directly to Word. This only works when you have LibreOffice installed.
+#+begin_src emacs-lisp
+(setq org-odt-preferred-output-format "doc")
+#+end_src
 ** Referencing
 *** Helm BibTeX
 #+begin_src emacs-lisp
@@ -813,6 +804,28 @@ I write almost all text in Org Mode. I also use two specialised major modes. [[h
              :head "#+title: ${title}\n#+roam_alias: \n#+roam_key: ${ref}\n#+roam_tags: ${keywords}\n* ${title}\n  :properties:\n  :custom_id: ${=key=}\n :author: ${author-or-editor}\n :noter_document: %(orb-process-file-field \"${=key=}\")\n  :noter_page: \n  :end:\n\n"
      :unnarrowed t))))
 #+end_src
+* Communication
+** Email
+#+begin_src emacs-lisp
+    (require 'mu4e)
+    (setq mail-user-agent 'mu4e-user-agent)
+    (setq mu4e-sent-folder   "/sent")
+    (setq mu4e-drafts-folder "/drafts")
+    (setq mu4e-trash-folder  "/trash")
+  (setq
+     message-send-mail-function   'smtpmail-send-it
+     smtpmail-default-smtp-server "smtp.example.com"
+     smtpmail-smtp-server         "smtp.example.com"
+     smtpmail-local-domain        "example.com")
+(setq
+  mu4e-get-mail-command "offlineimap"   ;; or fetchmail, or ...
+  mu4e-update-interval 3000) 
+#+end_src
+** Write letters
+#+begin_src R
+(require 'ox-koma-letter)
+(setq org-koma-letter-closing "Regards,")
+#+end_src
 * Data Science
 ** Org Babel
 #+BEGIN_SRC emacs-lisp
@@ -827,14 +840,13 @@ I write almost all text in Org Mode. I also use two specialised major modes. [[h
 #+END_SRC
 ** ESS
 [[https://ess.r-project.org/][Emacs Speaks Statistics]] (ESS) supports editing of scripts and interaction with various statistical analysis programs such as R. You also need to install the R software. Run an R terminal with =M-x R= and enter the preferred working directory.
-
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; Emacs Speaks Statistics (ESS)
 (use-package ess
     :ensure t
     :config
     (setq ess-use-company t))
-#+END_SRC
+#+end_src
 ** Magit
 Magit implements Git in Emacs and is almost like magic. This line of code creates the  =C-x g= shortcut to open the Magit status screen.
 #+BEGIN_SRC emacs-lisp
@@ -846,24 +858,26 @@ Magit implements Git in Emacs and is almost like magic. This line of code create
 #+END_SRC
 ** Code Editing
 The [[https://github.com/Fuco1/smartparens][Smartparens]] package simplifies working with parenthesis.
+#+begin_src emacs-lisp
+      ;; Configure Smartparens
+      (use-package smartparens
+        :ensure t
+        :config (progn (show-smartparens-global-mode t)))
+      ;; Line numbers
+      (add-hook 'ess-mode-hook 'display-line-numbers-mode)
 
-#+BEGIN_SRC emacs-lisp
-;; Configure Smartparens
-(use-package smartparens-config
-  :ensure smartparens
-  :config (progn (show-smartparens-global-mode t)))
-;; Line numbers
-(add-hook 'ess-mode-hook 'display-line-numbers-mode)
+      ; Parentheses
+      (use-package highlight-parentheses
+        :ensure t
+        :config
+        (progn
+          (highlight-parentheses-mode)
+          (global-highlight-parentheses-mode)))
 
-; Parentheses
-(use-package highlight-parentheses
-  :ensure t
-  :config
-  (progn
-    (highlight-parentheses-mode)
-    (global-highlight-parentheses-mode))
-  )
-#+END_SRC
+    ; i3wm config file
+  (use-package i3wm-config-mode
+  :ensure t)
+#+end_src
 ** Polymode
 #+begin_src emacs-lisp
 (defun rmd-mode ()
@@ -876,3 +890,11 @@ The [[https://github.com/Fuco1/smartparens][Smartparens]] package simplifies wor
 
 * Fun
 ** Music Player
+#+begin_src emacs-lisp
+      (require 'emms-setup)
+      (emms-all)
+      (emms-default-players)
+      (setq emms-source-file-default-directory "~/Music/"
+            emms-info-functions '(emms-info-tinytag)
+            emms-browser-covers 'emms-browser-cache-thumbnail-async)
+#+end_src
