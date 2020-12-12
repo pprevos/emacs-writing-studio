@@ -9,18 +9,18 @@ This file produces an =init.el= file in the =.conf/emacs= folder. This is one of
 
 This Org file defines and creates the init file using literate programming to document and define the configuration. To create (tangle) the configuration file, execute =C-c C-v C-t= (=org-babel-tangle=). This function reads all source code in this file and concatenates it into the one init file. This configuration is used the next time you start Emacs.
 
-If you like to try these settings without creating a new file, then type =C-c C-v C-b= to evaluate all code blocks. You can also evaluate each code block individually with =C-c C-c=, or each expression separately with =C-x C-e=. By default, Emacs will ask you to confirm that you want to execute code.
+If you like to try these settings without creating a new file, then type =C-c C-v C-b= to evaluate all code blocks. You can also evaluate each code block individually with =C-c C-c=, or each expression separately with =C-x C-e=. By default, Emacs will ask you to confirm that you want to execute code. 
 
 Many people publish their elaborate Emacs init files to share the way they configure their favourite program. Some people even publish specialised packages to pre-configure Emacs for a specific purpose. This init file uses a minimalist approach, staying close to the vanilla Emacs configuration.
 * Basic Configuration
 This section contains basic Emacs configurations.
 ** Customisation file
 Emacs includes a menu-driven configuration system that [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Customizations.html][writes settings]] to the init file on the fly. This code snippet redefines the name of this file to =custom.el= to ensure that the config system does not interfere with =init.el=. If the configuration system uses the =init.el= file, then tangling this Org file will overwrite any previous configurations. The custom configuration file is loaded first. Any settings in the =init.el= file will thus override the configuration in the customisation file.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; Emacs init file
 ;; Peter Prevos
 ;; https://github.com/pprevos/EmacsLife
-;; This init file is generated with an Org-Mode file. 
+;; This init file is generated with by the init.el.org Org-Mode file. 
 ;; Any manual changes will be periodically overwritten by the script.
 ;; ------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ Emacs includes a menu-driven configuration system that [[https://www.gnu.org/sof
 (setq custom-file "~/.config/emacs/custom.el")
 (when (file-exists-p custom-file)
     (load custom-file))
-#+END_SRC
+#+end_src
 ** Executing code
 Emacs distinguishes between "y" or "yes" when asking for confirmation. Emacs uses the longer version when giving the wrong answer is perceived to have serious consequences. I prefer the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Yes-or-No-Prompts.html][Yes or No prompts]] to be all the short version and take the risk.
 
@@ -49,7 +49,7 @@ Enable the package repositories:
 You can install, remove or refresh [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html#Packages][packages]] with the =list-packages= function.
 
 The =use-package= package provides a tidy method to write init files in Emacs. The =ensure= option will install the package if it is not yet available.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   ;; Package repositories
   (setq package-archives '(
 			   ("org" . "https://orgmode.org/elpa/")
@@ -100,7 +100,7 @@ These configurations change the way Emacs looks and feels:
 
   (set-face-attribute 'default nil :font "Hack" :height 105)
   (set-face-attribute 'fixed-pitch nil :font "Hack" :height 105)
-  (set-face-attribute 'variable-pitch nil :family "Roboto" :weight 'regular :height 110)
+  (set-face-attribute 'variable-pitch nil :family "Sans Serif")
 
   ;;cursor
   (blink-cursor-mode 1)
@@ -134,33 +134,32 @@ The buffer navigation section binds modifed arrow keys to the moving backward an
 Lastly, the mouse is diabled - Emacs is after all a text editor.
 
 #+BEGIN_SRC emacs-lisp
-;; Scroll to the first and last line of the buffer
-(setq scroll-error-top-bottom t)
+  ;; Scroll to the first and last line of the buffer
+  (setq scroll-error-top-bottom t)
 
-;; Buffer navigation
-(defun other-window-back ()
-    "Select previous window."
-    (interactive)
-    (other-window -1))
-(global-set-key (kbd "s-<end>") 'other-window)
-(global-set-key  (kbd "s-<home>") 'other-window-back)
+  ;; Buffer navigation
+  ;; Fn-Super and arrow keys
+  (global-set-key (kbd "s-<home>") 'windmove-left)
+  (global-set-key (kbd "s-<end>") 'windmove-right)
+  (global-set-key (kbd "s-<prior>") 'windmove-up)
+  (global-set-key (kbd "s-<next>") 'windmove-down)
 
-;; Beacon
-(use-package beacon
-  :ensure t
-  :config
-    (beacon-mode 1)
-    (setq beacon-color "#ECBC9C")
-    (setq beacon-blink-when-point-moves t))
+  ;; Beacon to indicate the active window
+  (use-package beacon
+    :ensure t
+    :config
+      (beacon-mode 1)
+      (setq beacon-color "#ECBC9C")
+      (setq beacon-blink-when-point-moves t))
 
-;; Disable the mouse
-(use-package disable-mouse
-  :ensure t
-  :config
-  (global-disable-mouse-mode))
+  ;; Disable the mouse
+  (use-package disable-mouse
+    :ensure t
+    :config
+    (global-disable-mouse-mode))
 
-;; Close Emacs client
-(global-set-key (kbd "C-x x") 'delete-frame) 
+  ;; Close Emacs client
+  (global-set-key (kbd "C-x x") 'delete-frame) 
 #+END_SRC
 ** Org Mode
 These are the basic settings for org-mode and its standard keyboard shortcuts.
@@ -205,30 +204,30 @@ These are the basic settings for org-mode and its standard keyboard shortcuts.
 *** Dired
 Managing files with Emacs.
 #+begin_src emacs-lisp
-      ;; Dired
-      ;; Prevent creating multible buffers (use a to open new folder)
-      (put 'dired-find-alternate-file 'disabled nil)
+  ;; Dired
+  ;; Prevent creating multible buffers (use a to open new folder)
+  (put 'dired-find-alternate-file 'disabled nil)
 
-       ;; Copy between instances
-        (setq dired-dwim-target t)
+  ;; Copy between instances
+  (setq dired-dwim-target t)
 
-        ;; Move files to Trash
-        (setq delete-by-moving-to-trash t)
+  ;; Move files to Trash
+  (setq delete-by-moving-to-trash t)
 
-        ;; Dired icons
-        (use-package all-the-icons-dired
-          :ensure t
-          :config
-          (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+  ;; Dired icons
+  (use-package all-the-icons-dired
+    :ensure t
+    :config
+    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 
-        ;; Copy full path
-        ;; https://emacs.stackexchange.com/questions/36850/copy-to-kill-ring-selected-file-names-full-path
-        (defun dired-copy-path-at-point ()
-          (interactive)
-          (dired-copy-filename-as-kill 0))
-        (define-key dired-mode-map (kbd "M-w") 'dired-copy-path-at-point)
+  ;; Copy full path
+  ;; https://emacs.stackexchange.com/questions/36850/copy-to-kill-ring-selected-file-names-full-path
+  (defun dired-copy-path-at-point ()
+    (interactive)
+    (dired-copy-filename-as-kill 0))
+  (define-key dired-mode-map (kbd "M-w") 'dired-copy-path-at-point)
 
-    (setq dired-listing-switches "-agho --group-directories-first")
+  (setq dired-listing-switches "-agho --group-directories-first")
 
   (use-package dired-hide-dotfiles
     :ensure t
@@ -250,7 +249,7 @@ Helm is an Emacs framework for incremental completions and narrowing selections.
         ("C-x r b" . helm-filtered-bookmarks)
         ("C-x C-r" . helm-recentf)
         ("C-c i"   . helm-imenu)
-        ("C-h a"   . helm-apropaos)
+        ("C-h a"   . helm-apropos)
         ("M-y"     . helm-show-kill-ring)
         :map helm-map
         ("C-z" . helm-select-action)
@@ -278,15 +277,28 @@ Adding drawers is a useful way to add contextual information to a text.
 ** Getting Things Done
 [[info:org#Workflow states][Workflow states]] indicate the status of actions. Some actions are logged an others require a comment. Logging for [[https://orgmode.org/manual/Repeated-tasks.html][repeated actions]] is disabled
 #+BEGIN_SRC emacs-lisp
-  ;; Getting Things Done
-  ;; Workflow states
-  (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w@/!)" "PROJECT(p)" "|" "DONE(d/!)" "CANCELLED(c@/!)")))
+        ;; Getting Things Done
+        ;; Workflow states
+        (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w@/!)" "PROJECT(p)" "|" "DONE(d/!)" "CANCELLED(c@/!)")))
 
-  ;; Don't log state chages of repeated tasks
-  ;; Log changes in the logbook drawer
-  (setq org-log-repeat nil
-        org-log-into-drawer t
-        org-log-done nil)
+        ;; Don't log state chages of repeated tasks
+        ;; Log changes in the logbook drawer
+        (setq org-log-repeat nil
+              org-log-into-drawer t
+              org-log-done nil)
+
+      ;; Convert a line into a checkbox
+  ;; https://emacs.stackexchange.com/questions/5613/how-to-convert-lines-to-an-org-mode-checklist
+    (defun org-convert-lines-to-checklist (beg end)
+      "Convert all plain lines in region to a plain list with checkboxes."
+      (interactive "r")
+      (save-excursion
+        (goto-char beg)
+        (dotimes (_ (- (line-number-at-pos end) (line-number-at-pos beg)))
+          (insert "- [ ] ")
+          (indent-according-to-mode)
+          (forward-line 1))))
+(define-key org-mode-map (kbd "C-c ]") 'org-convert-lines-to-checklist)
 #+END_SRC
 ** Agenda settings
 #+begin_src emacs-lisp
@@ -393,6 +405,7 @@ This capture setup
           org-roam-completion-system 'helm
           org-roam-index-file "index.org"
           org-roam-buffer-width .2
+          org-roam-completion-everywhere t
           org-roam-capture-templates '(("d" "default" plain 
                                         (function org-roam--capture-get-point)
                                         "%?"
@@ -400,11 +413,21 @@ This capture setup
                                         :head "#+title: ${title}\n#+roam_alias:\n#+roam_tags:\nbacklinks: \n\n"
                                         :unnarrowed t
                                         :immediate-finish t))))
-
-  (use-package company-org-roam
+#+end_src
+*** Completion
+#+begin_src emacs-lisp
+  (use-package company
     :ensure t
     :config
-    (push 'company-org-roam company-backends))
+    (setq company-idle-delay 0.25
+          company-minimum-prefix-length 3
+          company-backends '(company-capf)
+          completion-ignore-case t)
+    (global-company-mode t))
+
+  (use-package company-box
+    :ensure t
+    :hook (company-mode . company-box-mode))
 #+end_src
 *** Search Notes
  [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] searches through your open Org files. 
@@ -433,10 +456,7 @@ This capture setup
 
 (use-package helm-rg
 :ensure t)
-
 #+end_src
-
-
 *** Capture weblinks
 - [[https://github.com/alphapapa/org-web-tools/tree/58c37ab50e99775cf4ed3d6884aa9c3f45d855de][org-web-tools]] Commands and functions for retrieving web page content and processing it into and displaying it as Org-mode content.
   - =C-x p l= converts a link in the clipboard to an Org Mode link
@@ -461,16 +481,16 @@ This capture setup
 * Writing
 ** Basics
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Visual-Line-Mode.html][Visual line mode]] is a bit more eacy to work with than the default line trunction.
-- The line spacing is set at 2 points for a more readable screen. Emacs does not [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html][delete text]] when an area is selected. 
-- The =delete-selection-mode= changes that behaviour.
+- The line spacing is set at 2 points for a more readable screen.
+- Emacs does not [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html][delete text]] when an area is selected. The =delete-selection-mode= changes that behaviour.
 #+begin_src emacs-lisp
-;; Editing configuration
-;; Visual line mode (screen alignment)
-(global-visual-line-mode)
-;; Line spacing
-(setq-default line-spacing 2)
-;; overwrite selected text
-(delete-selection-mode t)
+  ;; Editing configuration
+  ;; Visual line mode for textm odes (screen alignment)
+  (add-hook 'text-mode-hook 'visual-line-mode)
+  ;; Line spacing
+  (setq-default line-spacing 2)
+  ;; overwrite selected text
+  (delete-selection-mode t)
 #+end_src
 ** Editing
 *** Undo and redo
@@ -490,15 +510,6 @@ This capture setup
   (defalias 'redo 'undo-tree-redo)
   (global-set-key (kbd "C-S-/") 'redo)
   (global-set-key (kbd "C-x C-/") 'undo-tree-visualize)
-#+end_src
-*** Completion
-#+begin_src emacs-lisp
-(use-package company
-  :ensure t
-  :config
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 3)
-  (global-company-mode t))
 #+end_src
 *** Spelling and Thesaurus
 - [[https://www.emacswiki.org/emacs/FlySpell][FlySpell]] for spell-checking on the fly for my favourite major modes. The F7 key is mappedd to suggesting alternatives for misspelled words.
@@ -524,9 +535,14 @@ This capture setup
 #+end_src
 *** Typography
 #+begin_src emacs-lisp
+  ;; Pretty quotes in Org Mode
+  (add-hook 'org-mode-hook 'electric-quote-mode)
+  (setq electric-quote-replace-double t)
 #+end_src
-** Distraction-Free Writing
+*** Distraction-Free Writing
 [[https://github.com/rnkn/olivetti][Olivetti mode]] is a minor mode that enables writing without distractions. This mode recreaates the old typewriter-feel by centering the text in the buffer at a specified with, which I set to 100 characters.
+
+
 #+begin_src emacs-lisp
   (use-package olivetti
     :ensure t
@@ -541,7 +557,7 @@ This capture setup
         (olivetti-mode 0)))
     (global-set-key (kbd "<f9>") 'distraction-free))
 #+end_src
-** Writing modes
+*** Writing modes
 I write almost all text in Org Mode. I also use two specialised major modes. [[https://fountain-mode.org/][Fountain Mode]] is a scriptwriting program for GNU Emacs using the Fountain plain text markup format. [[https://jblevins.org/projects/markdown-mode/][Markdown-mode]] is a major mode for editing Markdown-formatted text (mainly used for [[https://leanpub.com/][LeanPub]] books and courses). 
 
 #+begin_src emacs-lisp
@@ -805,22 +821,6 @@ Setting the =org-odt-preferred-output-format= variable lets you export an org fi
      :unnarrowed t))))
 #+end_src
 * Communication
-** Email
-#+begin_src emacs-lisp
-    (require 'mu4e)
-    (setq mail-user-agent 'mu4e-user-agent)
-    (setq mu4e-sent-folder   "/sent")
-    (setq mu4e-drafts-folder "/drafts")
-    (setq mu4e-trash-folder  "/trash")
-  (setq
-     message-send-mail-function   'smtpmail-send-it
-     smtpmail-default-smtp-server "smtp.example.com"
-     smtpmail-smtp-server         "smtp.example.com"
-     smtpmail-local-domain        "example.com")
-(setq
-  mu4e-get-mail-command "offlineimap"   ;; or fetchmail, or ...
-  mu4e-update-interval 3000) 
-#+end_src
 ** Write letters
 #+begin_src R
 (require 'ox-koma-letter)
@@ -887,14 +887,27 @@ The [[https://github.com/Fuco1/smartparens][Smartparens]] package simplifies wor
   (require 'poly-markdown)     
   (poly-markdown+r-mode))
 #+end_src
-
 * Fun
 ** Music Player
 #+begin_src emacs-lisp
-      (require 'emms-setup)
-      (emms-all)
-      (emms-default-players)
-      (setq emms-source-file-default-directory "~/Music/"
-            emms-info-functions '(emms-info-tinytag)
-            emms-browser-covers 'emms-browser-cache-thumbnail-async)
+  ;; Play music with Emacs
+  ;; Requires Tinytag to be available (install Python and run pip tiytag)
+  (use-package emms
+    :ensure t
+    :config
+    (require 'emms-setup)
+    (require 'emms-history)
+    (emms-all)
+    (emms-default-players)
+    (setq emms-source-file-default-directory "~/Music/"
+          emms-info-functions '(emms-info-tinytag)
+          emms-browser-covers 'emms-browser-cache-thumbnail-async
+          emms-playlist-buffer-name "*Music*")
+    :bind
+    (("<f5>" . emms-browser)
+     ("<M-f5>" . emms)
+     ("<XF86AudioPrev>" . emms-previous)
+     ("<XF86AudioNext>" . emms-next)
+     ("<XF86AudioPlay>" . emms-pause)))
 #+end_src
+
