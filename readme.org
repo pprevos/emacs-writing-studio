@@ -1,8 +1,8 @@
-#+TITLE: Run Your Life with Emacs
+#+TITLE: More Productive With Emacs
 #+AUTHOR: Peter Prevos
 
-This repository contains my Emacs configuration. =init.el.org= creates the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][init file]] using literate programming in Org Mode.
+More Productive with Emacs is a [[https://lucidmanager.org/productivity/more-productive-with-emacs/][series]] of articles on this topic.
 
-If you are interested in how to use Emacs to become more productive, then read my [[https://lucidmanager.org/tags/emacs/][blog series]] on this topic.
+The =init.el= file contains the configuration code described in these articles.
 
 [[file:banner.jpg]]
