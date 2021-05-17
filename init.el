@@ -22,7 +22,6 @@
 (setq use-package-always-ensure 't)
 
 ;; Keyboard-centric users interface
-(setq inhibit-startup-message t)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -32,8 +31,10 @@
   :init (load-theme 'dracula t))
 
 ;; Scratch buffer
-(setq initial-scratch-message "#+title: Scratch Buffer\n\n"
+(setq inhibit-startup-message t
+      initial-scratch-message "#+title: More Productive With Emacs\n\nThis configuration is explained in the [[https://lucidmanager.org/productivity/more-productive-with-emacs/][More Productive with Emacs]] series of articles.\n"
       initial-major-mode 'org-mode)
+
 
 ;; EMACS FOR DISTRACTION-FREE WRITING
 ;; https://lucidmanager.org/productivity/emacs-for-distraction-free-writing/
@@ -81,6 +82,7 @@
         (text-scale-decrease 2))))
   (global-set-key (kbd "<f9>") 'distraction-free))
 
+
 ;; GETTING THINGS DONE WITH ORG-MODE
 ;; https://lucidmanager.org/productivity/getting-things-done-with-emacs/
 
@@ -89,76 +91,104 @@
       '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
 ;; Set Agenda
-;; Change to suit your agenda file(s)
-(setq org-agenda-files '("~/todo.org" "~/other-file.org"))
+;; Change filename to suit your agenda file(s)
+(setq org-agenda-files '("~/Documents/gtd/gtd.org"))
 
 ;; Capture distractions
 (global-set-key "\C-c c" 'org-capture)
 (setq org-capture-templates
-	'(("d" "Distraction" entry (file+headline "~/distractions.org" "Notes")
+      '(("d" "Distraction" entry (file+headline "~/distractions.org" "Notes")
 	 "* %?\n%T")))
+
 
 ;; TAKING NOTES WITH EMACS ORG-MODE AND ORG-ROAM
 ;; https://lucidmanager.org/productivity/taking-notes-with-emacs-org-mode-and-org-roam/
+
+;; helm completion system
+(use-package helm
+  :config
+  (require 'helm-config)   
+  :init
+  (helm-mode 1)
+  :bind
+  (("M-x"     . helm-M-x)
+   ("C-x C-f" . helm-find-files)
+   ("C-x b"   . helm-mini)
+   ("C-x C-r" . helm-recentf)
+   ("C-c i"   . helm-imenu)
+   ("M-y"     . helm-show-kill-ring)
+   :map helm-map
+   ("C-z" . helm-select-action)
+   ("<tab>" . helm-execute-persistent-action)))
+
+;; Setup Org-Roam
 (use-package org-roam
-  :hook (after-init . org-roam-mode)
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory (concat (getenv "HOME") "/Documents/zettelkasten/"))
   :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)
-               ("C-c n j" . org-roam-jump-to-index)
                ("C-c n g" . org-roam-graph))
               :map org-mode-map
-              ("C-c n i" . org-roam-insert))
-  :config (setq org-roam-directory (concat (getenv "HOME") "/notes")
-                org-roam-capture-templates '(("d" "default" plain 
+              (("C-c n i" . org-roam-insert)))
+  :config (setq org-roam-capture-templates '(("d" "default" plain 
                                               (function org-roam--capture-get-point)
                                               "%?"
                                               :file-name "${slug}"
                                               :head "#+title: ${title}\n#+date: %U\n#+roam_alias: \n#+roam_tags: \n\n"
                                               :unnarrowed t))))
 
+
 ;; CREATE WEBSITES WITH EMACS: BLOGGING WITH ORG MODE AND HUGO
 ;; https://lucidmanager.org/productivity/create-websites-with-org-mode-and-hugo/
 
-  ;; Update files with last modifed date
-  (setq time-stamp-active t
-        time-stamp-start "#\\+lastmod:[ \t]*"
-        time-stamp-end "$"
-        time-stamp-format "%04Y-%02m-%02d")
-  (add-hook 'before-save-hook 'time-stamp nil)
-
+;; Update files with last modifed date
+(setq time-stamp-active t
+      time-stamp-start "#\\+lastmod:[ \t]*"
+      time-stamp-end "$"
+      time-stamp-format "%04Y-%02m-%02d")
+(add-hook 'before-save-hook 'time-stamp nil)
+ 
 ;; New link type for Org-Hugo internal links
-  (org-link-set-parameters "hugo"
-                           :complete (lambda ()
-                                       (concat "{{% ref "
-                                               (file-relative-name (read-file-name "File: "))
-                                               " %}}")))
+(org-link-set-parameters "hugo"
+                         :complete (lambda ()
+                                     (concat "{{% ref "
+                                             (file-relative-name (read-file-name "File: "))
+                                             " %}}")))
+
 
 ;; PUBLISHING ARTICLES AND BOOKS WITH ORG MODE EXPORT
-;; https://lucidmaager.org/productivity/publishing-with-org-mode-export/
+;; https://lucidmanager.org/productivity/publishing-with-org-mode-export/
 
 ;; Export to MS-Word
 ;; Need to have LibreOffice on your computer
 (setq org-odt-preferred-output-format "doc")
 
+
 ;; MANAGE YOUR LITERATURE WITH EMACS BIBTEX MODE
+;; https://lucidmanager.org/productivity/emacs-bibtex-mode/
 
 ;; Spell checking (requires the ispell software)
 (add-hook 'bibtex-mode-hook 'flyspell-mode)
 
 ;; Change fields and format
-(setq bibtex-user-optional-fields '(("keywords" "Keywords to describe the entry" "")
+(setq bibtex-dialect "BibTeX" ;; Optionally change to "biblatex"
+      bibtex-user-optional-fields '(("keywords" "Keywords to describe the entry" "")
                                     ("file" "Link to document file." ":"))
       bibtex-include-OPTkey nil
       bibtex-align-at-equal-sign t)
+
 (setq-default fill-column 160)
 
 ;; File locations
 ;; Change to suite your preferences
+;; Make sure these folders exist
 (setq bib-files-directory (directory-files
-                           (concat (getenv "HOME") "/references") t ".bib$")
-      pdf-files-directory (concat (getenv "HOME") "/pdf")
-      bib-notes-directory (concat (getenv "HOME") "/notes"))
+                           (concat (getenv "HOME") "/Documents/zettelkasten/bibliography") t ".bib$")
+      pdf-files-directory (concat (getenv "HOME") "/Library/pdf")
+      bib-notes-directory (concat (getenv "HOME") "/Documents/zettelkasten"))
 
 ;; Helm-BiBTeX
 (use-package helm-bibtex
@@ -182,8 +212,8 @@
 	org-ref-default-bibliography bib-files-directory
 	org-ref-notes-directory bib-notes-directory))
 
-;; MANAGE FILES WITH EMACS: ORGANISE YOUR DRIVE WITH DIRED
-;; https://lucidmanager.org/productivity/manage-files-with-emacs/
+;; ;; MANAGE FILES WITH EMACS: ORGANISE YOUR DRIVE WITH DIRED
+;; ;; https://lucidmanager.org/productivity/manage-files-with-emacs/
 
 ;; Open folders in same buffer
 (put 'dired-find-alternate-file 'disabled nil)
@@ -202,10 +232,13 @@
 ;; VIEWING IMAGES WITH EMACS AND THE IMAGE-DIRED PACKAGE
 ;; https://lucidmanager.org/productivity/using-emacs-image-dired/
 
+;; Set External viewer
+(setq image-dired-external-viewer "/usr/bin/gimp")
+
 ;; Remap the keys to open the external image viewer with C-enter and lets you activate image-dired with C-t -C-d
 (with-eval-after-load 'dired
-    (define-key dired-mode-map (kbd "C-t C-d") 'image-dired)
-    (define-key dired-mode-map (kbd "C-<return>") 'image-dired-dired-display-external))
+  (define-key dired-mode-map (kbd "C-t C-d") 'image-dired)
+  (define-key dired-mode-map (kbd "C-<return>") 'image-dired-dired-display-external))
 
 
 ;; READ RSS FEEDS WITH EMACS AND ELFEED
