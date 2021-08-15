@@ -1,8 +1,10 @@
 #+TITLE: More Productive With Emacs
 #+AUTHOR: Peter Prevos
 
-More Productive with Emacs is a [[https://lucidmanager.org/productivity/more-productive-with-emacs/][series]] of articles on this topic.
+More Productive with Emacs is a [[https://lucidmanager.org/tags/emacs/][series]] of articles on this topic.
 
 The =init.el= file contains the configuration code described in these articles.
+
+Download this file and place it in your 
 
 [[file:banner.jpg]]

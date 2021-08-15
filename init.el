@@ -1,8 +1,5 @@
-;; Init file for More Productive with Emacs
-;; https://lucidmanager.org/tags/emacs/
-
-;; CONFIGURE EMACS: FROM VANILLA EMACS TO PRODUCTIVITY
-;; https:///lucidmanager.org/productivity/configure-emacs/
+;; This configurtaion is described in detail on the lucidmanager.org website
+;; https://lucidmanager.org/productivity/more-productive-with-emacs/
 
 ;; Define the init file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -21,42 +18,133 @@
 (require 'use-package)
 (setq use-package-always-ensure 't)
 
-;; Keyboard-centric users interface
+;; Keyboard-centric user interface
+(setq inhibit-startup-message t)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
 ;; Theme
-(use-package dracula-theme
-  :init (load-theme 'dracula t))
+(use-package spacegray-theme
+  :init (load-theme 'spacegray t))
 
-;; Scratch buffer
-(setq inhibit-startup-message t
-      initial-scratch-message "#+title: More Productive With Emacs\n\nThis configuration is explained in the [[https://lucidmanager.org/productivity/more-productive-with-emacs/][More Productive with Emacs]] series of articles.\n"
-      initial-major-mode 'org-mode)
+;; Open dired in same buffer
+(put 'dired-find-alternate-file 'disabled nil)
 
+;; Copy and move files netween dired buffers
+(setq dired-dwim-target t)
 
-;; EMACS FOR DISTRACTION-FREE WRITING
-;; https://lucidmanager.org/productivity/emacs-for-distraction-free-writing/
+;; Only y/n answers 
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; Move deleted files to trash
+(setq delete-by-moving-to-trash t)
+
+;; Define external image viewer/editor
+(setq image-dired-external-viewer "/usr/bin/gimp")
+
+;; Image-dired Keyboard shortcuts
+(with-eval-after-load 'dired
+    (define-key dired-mode-map (kbd "C-t C-d") 'image-dired)
+    (define-key dired-mode-map (kbd "C-<return>") 'image-dired-dired-display-external))
+
+;; Helm configuration
+  (use-package helm
+    :config
+    (require 'helm-config)
+    :init
+    (helm-mode 1)
+    :bind
+    (("M-x"     . helm-M-x) ;; Evaluate functions
+     ("C-x C-f" . helm-find-files) ;; Open or create files
+     ("C-x b"   . helm-mini) ;; Select buffers
+     ("C-x C-r" . helm-recentf) ;; Select recently saved files
+     ("C-c i"   . helm-imenu) ;; Select document heading
+     ("M-y"     . helm-show-kill-ring) ;; Show the kill ring
+     :map helm-map
+     ("C-z" . helm-select-action)
+     ("<tab>" . helm-execute-persistent-action)))
+
+;; Auto completion
+(use-package company
+  :config
+  (setq company-idle-delay 0
+        company-minimum-prefix-length 3
+        company-selection-wrap-around t))
+(global-company-mode)
+
+(use-package which-key
+  :config
+  (which-key-mode)
+  (setq which-key-idle 0.5
+	which-key-idle-dely 50)
+  (which-key-setup-minibuffer))
+
+;; Set default, fixed and variabel pitch fonts
+;; Use M-x menu-set-font to view available fonts
+(use-package mixed-pitch
+  :hook
+  (text-mode . mixed-pitch-mode)
+  :config
+  (set-face-attribute 'default nil :font "Mono" :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "Mono" :height 120)
+  (set-face-attribute 'variable-pitch nil :family "Sans Serif" :height 120))
+
+;; Improve org mode looks
+(setq org-startup-indented t
+      org-pretty-entities t
+      org-hide-emphasis-markers t
+      org-startup-with-inline-images t
+      org-image-actual-width '(300))
+
+;; Show hidden emphasis markers
+(use-package org-appear
+  :hook (org-mode . org-appear-mode))
+
+;; Nice bullets
+(use-package org-superstar
+    :config
+    (setq org-superstar-special-todo-items t)
+    (add-hook 'org-mode-hook (lambda ()
+                               (org-superstar-mode 1))))
+
+;; Increase line spacing
+(setq-default line-spacing 6)
+
+;; Distraction-free screen
+(use-package olivetti
+  :init
+  (setq olivetti-body-width .67)
+  :config
+  (defun distraction-free ()
+    "Distraction-free writing environment"
+    (interactive)
+    (if (equal olivetti-mode nil)
+        (progn
+          (window-configuration-to-register 1)
+          (delete-other-windows)
+          (text-scale-increase 2)
+          (olivetti-mode t))
+      (progn
+        (jump-to-register 1)
+        (olivetti-mode 0)
+        (text-scale-decrease 2))))
+  :bind
+  (("<f9>" . distraction-free)))
 
 ;; Sensible line breaking
 (add-hook 'text-mode-hook 'visual-line-mode)
-
-;; Configure Org-Mode basics
-(use-package org
-  :config
-  (global-set-key (kbd "C-c l") 'org-store-link)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c c") 'org-capture)
-  ;; Org mode ricing
-  (setq org-hide-leading-stars t
-	org-startup-indented t
-        org-hide-emphasis-markers t
-	org-image-actual-width 600
-	org-startup-with-inline-images t))
-
 ;; Overwrite selected text
 (delete-selection-mode t)
+;; Scroll to the first and last line of the buffer
+(setq scroll-error-top-bottom t)
+
+;; Org-Mode initial setup
+(use-package org
+  :bind
+  (("C-c l" . org-store-link)
+   ("C-c a" . org-agenda)
+   ("C-c c" . org-capture)))
 
 ;; Spell checking
 ;; Requires Hunspell
@@ -65,110 +153,34 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (setq ispell-program-name "hunspell"))
 
-;; Distraction-free screen
-(use-package olivetti
-  :config
-  (defun distraction-free ()
-    "Distraction-free writing environment"
-    (interactive)
-    (if (equal olivetti-mode nil)
-        (progn 
-          (delete-other-windows)
-          (text-scale-increase 2)
-          (setq olivetti-body-width 100)
-          (olivetti-mode t))
-      (progn
-        (olivetti-mode 0)
-        (text-scale-decrease 2))))
-  (global-set-key (kbd "<f9>") 'distraction-free))
+;; Org-Roam basic configuration
+(setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
 
-
-;; GETTING THINGS DONE WITH ORG-MODE
-;; https://lucidmanager.org/productivity/getting-things-done-with-emacs/
-
-;; Set todo-item keywords
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-
-;; Set Agenda
-;; Change filename to suit your agenda file(s)
-(setq org-agenda-files '("~/Documents/gtd/gtd.org"))
-
-;; Capture distractions
-(global-set-key "\C-c c" 'org-capture)
-(setq org-capture-templates
-      '(("d" "Distraction" entry (file+headline "~/distractions.org" "Notes")
-	 "* %?\n%T")))
-
-
-;; TAKING NOTES WITH EMACS ORG-MODE AND ORG-ROAM
-;; https://lucidmanager.org/productivity/taking-notes-with-emacs-org-mode-and-org-roam/
-
-;; helm completion system
-(use-package helm
-  :config
-  (require 'helm-config)   
-  :init
-  (helm-mode 1)
-  :bind
-  (("M-x"     . helm-M-x)
-   ("C-x C-f" . helm-find-files)
-   ("C-x b"   . helm-mini)
-   ("C-x C-r" . helm-recentf)
-   ("C-c i"   . helm-imenu)
-   ("M-y"     . helm-show-kill-ring)
-   :map helm-map
-   ("C-z" . helm-select-action)
-   ("<tab>" . helm-execute-persistent-action)))
-
-;; Setup Org-Roam
 (use-package org-roam
-  :hook
-  (after-init . org-roam-mode)
+  :after org
+  :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
   :custom
-  (org-roam-directory (concat (getenv "HOME") "/Documents/zettelkasten/"))
-  :bind (:map org-roam-mode-map
-              (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
-               ("C-c n g" . org-roam-graph))
-              :map org-mode-map
-              (("C-c n i" . org-roam-insert)))
-  :config (setq org-roam-capture-templates '(("d" "default" plain 
-                                              (function org-roam--capture-get-point)
-                                              "%?"
-                                              :file-name "${slug}"
-                                              :head "#+title: ${title}\n#+date: %U\n#+roam_alias: \n#+roam_tags: \n\n"
-                                              :unnarrowed t))))
+  (org-roam-directory (file-truename org-directory))
+  :config
+  (org-roam-setup)
+  :bind (("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n r" . org-roam-node-random)		    
+         (:map org-mode-map
+               (("C-c n i" . org-roam-node-insert)
+                ("C-c n o" . org-id-get-create)
+                ("C-c n t" . org-roam-tag-add)
+                ("C-c n a" . org-roam-alias-add)
+                ("C-c n l" . org-roam-buffer-toggle)))))
 
-
-;; CREATE WEBSITES WITH EMACS: BLOGGING WITH ORG MODE AND HUGO
-;; https://lucidmanager.org/productivity/create-websites-with-org-mode-and-hugo/
-
-;; Update files with last modifed date
-(setq time-stamp-active t
-      time-stamp-start "#\\+lastmod:[ \t]*"
-      time-stamp-end "$"
-      time-stamp-format "%04Y-%02m-%02d")
-(add-hook 'before-save-hook 'time-stamp nil)
- 
-;; New link type for Org-Hugo internal links
-(org-link-set-parameters "hugo"
-                         :complete (lambda ()
-                                     (concat "{{% ref "
-                                             (file-relative-name (read-file-name "File: "))
-                                             " %}}")))
-
-
-;; PUBLISHING ARTICLES AND BOOKS WITH ORG MODE EXPORT
-;; https://lucidmanager.org/productivity/publishing-with-org-mode-export/
-
-;; Export to MS-Word
-;; Need to have LibreOffice on your computer
-(setq org-odt-preferred-output-format "doc")
-
-
-;; MANAGE YOUR LITERATURE WITH EMACS BIBTEX MODE
-;; https://lucidmanager.org/productivity/emacs-bibtex-mode/
+(use-package deft
+  :config
+  (setq deft-directory org-directory
+        deft-recursive t
+        deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
+        deft-use-filename-as-title t)
+  :bind
+  ("C-c n d" . deft))
 
 ;; Spell checking (requires the ispell software)
 (add-hook 'bibtex-mode-hook 'flyspell-mode)
@@ -177,83 +189,60 @@
 (setq bibtex-dialect "BibTeX" ;; Optionally change to "biblatex"
       bibtex-user-optional-fields '(("keywords" "Keywords to describe the entry" "")
                                     ("file" "Link to document file." ":"))
-      bibtex-include-OPTkey nil
       bibtex-align-at-equal-sign t)
 
-(setq-default fill-column 160)
-
-;; File locations
-;; Change to suite your preferences
-;; Make sure these folders exist
 (setq bib-files-directory (directory-files
-                           (concat (getenv "HOME") "/Documents/zettelkasten/bibliography") t ".bib$")
-      pdf-files-directory (concat (getenv "HOME") "/Library/pdf")
-      bib-notes-directory (concat (getenv "HOME") "/Documents/zettelkasten"))
+                           (concat (getenv "HOME") "/Documents/org-roam/bibliography") t
+                           "^[A-Z|a-z].+.bib$")
+      pdf-files-directory (concat (getenv "HOME") "/Library/pdf"))
 
-;; Helm-BiBTeX
+;; BibLaTeX settings
+;; bibtex-mode
+(setq bibtex-dialect 'biblatex)
+
 (use-package helm-bibtex
   :config
   (require 'helm-config)
   (setq bibtex-completion-bibliography bib-files-directory
         bibtex-completion-library-path pdf-files-directory
         bibtex-completion-pdf-field "File"
-        bibtex-completion-notes-path bib-notes-directory)
+        bibtex-completion-notes-path org-directory)
   :bind
   (("<menu>" . helm-command-prefix)
    :map helm-command-map
    ("b" . helm-bibtex)
    ("<menu>" . helm-resume)))
 
-;; Org Ref
 (use-package org-ref
   :config
   (setq org-ref-completion-library 'org-ref-helm-cite
-	org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-	org-ref-default-bibliography bib-files-directory
-	org-ref-notes-directory bib-notes-directory))
+        org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
+        org-ref-default-bibliography bib-files-directory
+        org-ref-notes-directory org-directory
+        org-ref-notes-function 'orb-edit-notes))
 
-;; ;; MANAGE FILES WITH EMACS: ORGANISE YOUR DRIVE WITH DIRED
-;; ;; https://lucidmanager.org/productivity/manage-files-with-emacs/
-
-;; Open folders in same buffer
-(put 'dired-find-alternate-file 'disabled nil)
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "<return>") 'dired-find-alternate-file))
-
-;; Copy and move between buffers
-(setq dired-dwim-target t)
-
-;; Use only Y or N as confirmation
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; Move deleted files to trash
-(setq delete-by-moving-to-trash t)
-
-;; VIEWING IMAGES WITH EMACS AND THE IMAGE-DIRED PACKAGE
-;; https://lucidmanager.org/productivity/using-emacs-image-dired/
-
-;; Set External viewer
-(setq image-dired-external-viewer "/usr/bin/gimp")
-
-;; Remap the keys to open the external image viewer with C-enter and lets you activate image-dired with C-t -C-d
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "C-t C-d") 'image-dired)
-  (define-key dired-mode-map (kbd "C-<return>") 'image-dired-dired-display-external))
-
-
-;; READ RSS FEEDS WITH EMACS AND ELFEED
-;; https://lucidmanager.org/productivity/read-rss-feeds-with-emacs-and-elfeed/
-
-(use-package elfeed
-  :ensure t
+(use-package org-roam-bibtex
+  :after (org-roam helm-bibtex)
+  :bind (:map org-mode-map ("C-c n b" . orb-note-actions))
   :config
-  (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory)
-        elfeed-show-entry-switch 'display-buffer)
-  :bind
-  ("C-x w" . elfeed ))
+  (require 'org-ref))
+  (org-roam-bibtex-mode)
 
-(use-package elfeed-org
-  :ensure t
-  :config
-  (setq elfeed-show-entry-switch 'display-buffer)
-  (setq rmh-elfeed-org-files (list "elfeed.org")))
+(add-to-list 'org-latex-classes '("taylorfrancis"
+                                  "\\documentclass[largeformat]{interact}"
+                                  ("\\section{%s}" . "\\section*{%s}")
+                                  ("\\subsection{%s}" . "\\subsection*{%s}")))
+
+;; Export to MS-Word
+;; Need to have LibreOffice on your computer
+(setq org-odt-preferred-output-format "doc")
+
+;; Scratch buffer
+(setq inhibit-startup-message t
+      initial-scratch-message "#+title: Scratch Buffer\n\nWelcome to Emacs for content creators.\n\nPlease change the folder locations and fonts in the configuration file to match your preferences.\n\nGo to the [[https://lucidmanager.org/productivity/configure-emacs/][Lucid Manager]] website for full documentation of this configuration file.\n"
+      initial-major-mode 'org-mode)
+
+;; Scratch buffer
+(setq inhibit-startup-message t
+      initial-scratch-message "#+title: Scratch Buffer\n\nWelcome to Emacs for content creators.\n\nPlease change the folder locations and fonts in the configuration file to match your preferences.\n\nGo to [[https://lucidmanager.org/productivity/configure-emacs/][Lucid Manager]] website for full documentation of this configuration file.\n"
+      initial-major-mode 'org-mode)
