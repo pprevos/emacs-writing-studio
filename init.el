@@ -31,6 +31,9 @@
 ;; Open dired in same buffer
 (put 'dired-find-alternate-file 'disabled nil)
 
+;; Sort Dired buffers
+(setq dired-listing-switches "-agho --group-directories-first")
+
 ;; Copy and move files netween dired buffers
 (setq dired-dwim-target t)
 
@@ -39,6 +42,10 @@
 
 ;; Move deleted files to trash
 (setq delete-by-moving-to-trash t)
+
+;; Keep folders clean (create new directory when not yet existing)
+(make-directory (expand-file-name "backups/" user-emacs-directory) t)
+(setq backup-directory-alist `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
 
 ;; Define external image viewer/editor
 (setq image-dired-external-viewer "/usr/bin/gimp")
@@ -90,6 +97,11 @@
   (set-face-attribute 'fixed-pitch nil :font "Mono" :height 120)
   (set-face-attribute 'variable-pitch nil :family "Sans Serif" :height 120))
 
+;; Required for proportional font
+(use-package company-posframe
+  :config
+  (company-posframe-mode 1))
+
 ;; Improve org mode looks
 (setq org-startup-indented t
       org-pretty-entities t
@@ -131,6 +143,9 @@
         (text-scale-decrease 2))))
   :bind
   (("<f9>" . distraction-free)))
+
+;; Increase size of LaTeX fragment previews
+(plist-put org-format-latex-options :scale 2)
 
 ;; Sensible line breaking
 (add-hook 'text-mode-hook 'visual-line-mode)
@@ -186,8 +201,7 @@
 (add-hook 'bibtex-mode-hook 'flyspell-mode)
 
 ;; Change fields and format
-(setq bibtex-dialect "BibTeX" ;; Optionally change to "biblatex"
-      bibtex-user-optional-fields '(("keywords" "Keywords to describe the entry" "")
+(setq bibtex-user-optional-fields '(("keywords" "Keywords to describe the entry" "")
                                     ("file" "Link to document file." ":"))
       bibtex-align-at-equal-sign t)
 
@@ -195,10 +209,6 @@
                            (concat (getenv "HOME") "/Documents/org-roam/bibliography") t
                            "^[A-Z|a-z].+.bib$")
       pdf-files-directory (concat (getenv "HOME") "/Library/pdf"))
-
-;; BibLaTeX settings
-;; bibtex-mode
-(setq bibtex-dialect 'biblatex)
 
 (use-package helm-bibtex
   :config
@@ -228,21 +238,7 @@
   (require 'org-ref))
   (org-roam-bibtex-mode)
 
-(add-to-list 'org-latex-classes '("taylorfrancis"
-                                  "\\documentclass[largeformat]{interact}"
-                                  ("\\section{%s}" . "\\section*{%s}")
-                                  ("\\subsection{%s}" . "\\subsection*{%s}")))
-
-;; Export to MS-Word
-;; Need to have LibreOffice on your computer
-(setq org-odt-preferred-output-format "doc")
-
 ;; Scratch buffer
 (setq inhibit-startup-message t
       initial-scratch-message "#+title: Scratch Buffer\n\nWelcome to Emacs for content creators.\n\nPlease change the folder locations and fonts in the configuration file to match your preferences.\n\nGo to the [[https://lucidmanager.org/productivity/configure-emacs/][Lucid Manager]] website for full documentation of this configuration file.\n"
-      initial-major-mode 'org-mode)
-
-;; Scratch buffer
-(setq inhibit-startup-message t
-      initial-scratch-message "#+title: Scratch Buffer\n\nWelcome to Emacs for content creators.\n\nPlease change the folder locations and fonts in the configuration file to match your preferences.\n\nGo to [[https://lucidmanager.org/productivity/configure-emacs/][Lucid Manager]] website for full documentation of this configuration file.\n"
       initial-major-mode 'org-mode)
