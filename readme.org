@@ -5,6 +5,6 @@ More Productive with Emacs is a [[https://lucidmanager.org/tags/emacs/][series]]
 
 The =init.el= file contains the configuration code described in these articles.
 
-Download this file and place it in your 
+Download this file and place it in your configuration folder.
 
 [[file:banner.jpg]]
