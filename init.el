@@ -1,4 +1,4 @@
-;; This configurtaion is described in detail on the lucidmanager.org website
+;; This configuration is described in detail on the lucidmanager.org website
 ;; https://lucidmanager.org/productivity/more-productive-with-emacs/
 
 ;; Define the init file
@@ -8,7 +8,7 @@
 
 ;; Define and initialise package repositories
 (require 'package)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 ;; use-package to simplify the config file
