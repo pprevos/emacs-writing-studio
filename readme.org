@@ -32,4 +32,4 @@ This init file defines directories:
 You can change these settings in the init file.
 
 ** Select Fonts
-The init file defines two fonts. You will need to adjust the font names to those available on your system. The default setting uses [[https://sourcefoundry.org/hack/][Hack for mono-spaced font]] and 
+The init file defines two fonts. You will need to adjust the font names to those available on your system. The default setting uses Dejavus Sans.
