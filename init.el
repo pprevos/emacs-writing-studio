@@ -87,15 +87,40 @@
 	which-key-idle-dely 50)
   (which-key-setup-minibuffer))
 
+;; Sensible line breaking
+(add-hook 'text-mode-hook 'visual-line-mode)
+;; Overwrite selected text
+(delete-selection-mode t)
+;; Scroll to the first and last line of the buffer
+(setq scroll-error-top-bottom t)
+
+;; Org-Mode initial setup
+(use-package org
+  :bind
+  (("C-c l" . org-store-link)
+   ("C-c a" . org-agenda)
+   ("C-c c" . org-capture)))
+
+;; Spell checking
+;; Requires Hunspell
+(use-package flyspell
+  :config
+  (setq ispell-program-name "hunspell"
+        ispell-default-dictionary "en_AU")
+  :hook (text mode . flyspell-mode):
+  :bind (("M-<f7>" . flyspell-buffer)
+         ("<f7>" . flyspell-word)
+         ("C-;" . flyspell-auto-correct-previous-word)))
+
 ;; Set default, fixed and variabel pitch fonts
 ;; Use M-x menu-set-font to view available fonts
 (use-package mixed-pitch
   :hook
   (text-mode . mixed-pitch-mode)
   :config
-  (set-face-attribute 'default nil :font "Mono" :height 120)
-  (set-face-attribute 'fixed-pitch nil :font "Mono" :height 120)
-  (set-face-attribute 'variable-pitch nil :family "Sans Serif" :height 120))
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono")
+  (set-face-attribute 'variable-pitch nil :family "DejaVu Sans"))
 
 ;; Required for proportional font
 (use-package company-posframe
@@ -147,26 +172,7 @@
 ;; Increase size of LaTeX fragment previews
 (plist-put org-format-latex-options :scale 2)
 
-;; Sensible line breaking
-(add-hook 'text-mode-hook 'visual-line-mode)
-;; Overwrite selected text
-(delete-selection-mode t)
-;; Scroll to the first and last line of the buffer
-(setq scroll-error-top-bottom t)
-
-;; Org-Mode initial setup
-(use-package org
-  :bind
-  (("C-c l" . org-store-link)
-   ("C-c a" . org-agenda)
-   ("C-c c" . org-capture)))
-
-;; Spell checking
-;; Requires Hunspell
-(use-package flyspell
-  :config
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (setq ispell-program-name "hunspell"))
+choco install mingw
 
 ;; Org-Roam basic configuration
 (setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
@@ -206,9 +212,9 @@
       bibtex-align-at-equal-sign t)
 
 (setq bib-files-directory (directory-files
-                           (concat (getenv "HOME") "/Documents/org-roam/bibliography") t
+                           (concat (getenv "HOME") "/Documents/bibliography") t
                            "^[A-Z|a-z].+.bib$")
-      pdf-files-directory (concat (getenv "HOME") "/Library/pdf"))
+      pdf-files-directory (concat (getenv "HOME") "/Documents/pdf"))
 
 (use-package helm-bibtex
   :config
