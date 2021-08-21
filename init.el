@@ -107,7 +107,7 @@
   :config
   (setq ispell-program-name "hunspell"
         ispell-default-dictionary "en_AU")
-  :hook (text mode . flyspell-mode):
+  :hook (text-mode . flyspell-mode)
   :bind (("M-<f7>" . flyspell-buffer)
          ("<f7>" . flyspell-word)
          ("C-;" . flyspell-auto-correct-previous-word)))
@@ -172,8 +172,6 @@
 ;; Increase size of LaTeX fragment previews
 (plist-put org-format-latex-options :scale 2)
 
-choco install mingw
-
 ;; Org-Roam basic configuration
 (setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
 
@@ -222,12 +220,7 @@ choco install mingw
   (setq bibtex-completion-bibliography bib-files-directory
         bibtex-completion-library-path pdf-files-directory
         bibtex-completion-pdf-field "File"
-        bibtex-completion-notes-path org-directory)
-  :bind
-  (("<menu>" . helm-command-prefix)
-   :map helm-command-map
-   ("b" . helm-bibtex)
-   ("<menu>" . helm-resume)))
+        bibtex-completion-notes-path org-directory))
 
 (use-package org-ref
   :config
