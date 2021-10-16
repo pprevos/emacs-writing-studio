@@ -26,7 +26,7 @@
 
 ;; Theme
 (use-package spacegray-theme
-  :init (load-theme 'spacegray t))
+  :config (load-theme 'spacegray t))
 
 ;; Open dired in same buffer
 (put 'dired-find-alternate-file 'disabled nil)
