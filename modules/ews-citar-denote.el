@@ -1,9 +1,3 @@
-#+title:      Marcuse: An Essay on Liberation
-#+date:       [2022-11-12 Sat 19:23]
-#+filetags:   :bib:culture:marketing:philosophy:
-#+identifier: 20221112T192310
-#+reference:  marcuse_1969_essay
-
 (use-package citar-denote
   :config
   (citar-denote-mode)

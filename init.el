@@ -176,7 +176,7 @@
 
 ;; Configure Elfeed with org mode
 (use-package elfeed-org
-  :ensure t
+  :after denote
   :config
   (elfeed-org)
   :custom
@@ -187,7 +187,7 @@
 (use-package emms
   :init
   (require 'emms-setup)
-  (require 'emms-empris)
+  (require 'emms-mpris)
   (emms-all)
   (emms-default-players)
   (emms-mpris-enable)
@@ -200,19 +200,12 @@
    ("<XF86AudioNext>" . emms-next)
    ("<XF86AudioPlay>" . emms-pause)))
 
-python -m tinytag ~/Music/Frank_Zappa_1969_Hot_Rats/02_Willie_the_Pimp.mp3
-
 ;; Choose one of these
 (setq emms-info-functions '(emms-info-tinytag))  ;; When using Tinytag
 ;;(setq emms-info-functions '(emms-info-exiftool)) When using Exiftool
 
 ;; Load cover images
 (setq emms-browser-covers 'emms-browser-cache-thumbnail-async)
-
-;; Helm EMMS
-(use-package helm-emms
-  :bind
-  (("<C-f5>" . helm-emms)))
 
 ;; NOTE-TAKING
 
@@ -253,18 +246,6 @@ python -m tinytag ~/Music/Frank_Zappa_1969_Hot_Rats/02_Willie_the_Pimp.mp3
      ("t" "New task" entry
       (file+headline org-default-notes-file "Tasks")
       "* TODO %i%?"))))
-
-#+BEGIN: denote-links :regexp "_daimonion" :missing-only t
-- Plato: Apology
-- Socrates and Plato
-- Plato: Crito
-#+END:
-
-#+title:      Marcuse: An Essay on Liberation
-#+date:       [2022-11-12 Sat 19:23]
-#+filetags:   :bib:culture:marketing:philosophy:
-#+identifier: 20221112T192310
-#+reference:  marcuse_1969_essay
 
 (use-package citar-denote
   :config
@@ -315,13 +296,12 @@ python -m tinytag ~/Music/Frank_Zappa_1969_Hot_Rats/02_Willie_the_Pimp.mp3
   :hook (org-mode . org-appear-mode))
 
 ;; Modernise Org mode interface
-(use-package org-modern
+  (use-package org-modern
   :hook
   (org-mode . global-org-modern-mode)
   :custom
   (org-modern-keyword nil)
   (org-modern-checkbox nil)
-  (org-modern-block-name nil)
   (org-modern-table nil))
 
 ;; LaTeX previews

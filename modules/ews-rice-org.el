@@ -12,13 +12,12 @@
   :hook (org-mode . org-appear-mode))
 
 ;; Modernise Org mode interface
-(use-package org-modern
+  (use-package org-modern
   :hook
   (org-mode . global-org-modern-mode)
   :custom
   (org-modern-keyword nil)
   (org-modern-checkbox nil)
-  (org-modern-block-name nil)
   (org-modern-table nil))
 
 ;; LaTeX previews

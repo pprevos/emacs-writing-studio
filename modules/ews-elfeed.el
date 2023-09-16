@@ -9,7 +9,7 @@
 
 ;; Configure Elfeed with org mode
 (use-package elfeed-org
-  :ensure t
+  :after denote
   :config
   (elfeed-org)
   :custom

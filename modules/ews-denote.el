@@ -37,9 +37,3 @@
      ("t" "New task" entry
       (file+headline org-default-notes-file "Tasks")
       "* TODO %i%?"))))
-
-#+BEGIN: denote-links :regexp "_daimonion" :missing-only t
-- Plato: Apology
-- Socrates and Plato
-- Plato: Crito
-#+END:
