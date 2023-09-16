@@ -1,35 +1,13 @@
-#+TITLE: More Productive With Emacs
+#+TITLE: Emacs Writing Studio
 #+AUTHOR: Peter Prevos
 
-/More Productive with Emacs/ is a [[https://lucidmanager.org/tags/emacs/][series]] of articles on how content creators can use Emacs to research, write and publish articles, websites and books.
+/Emacs Writing Studio/ is a [[https://lucidmanager.org/tags/emacs/][series of articles]] on how authors can use Emacs to publish articles, books, scripts and websites.
 
-The =init.el= file contains the configuration code described in these articles.
+[[file:images/emacs-writing-studio.png]]
 
-[[file:banner.jpg]]
+This Emacs configuration stays as close as humanly bearable to Vanilla Emacs.
+- Relies on Emacs 29.1
+- Standard keyboard shortcuts
+- No configuration for developing software
+- Centred around Org mode
 
-* Instructions
-** Install Emacs and Decencies
-This Emacs configuration requires two other software packages to function properly. For spellchecking you will need the Hunspell package and to use the Org-Roam note taking software you need the GCC compiler.
-
-- Linux: install Emacs and supporting software with your favourite package manager.
-- [[https://lucidmanager.org/productivity/emacs-chromebook/][Chromebook]]
-- [[https://lucidmanager.org/productivity/emacs-windows/][Windows]]
-
-** Download init file
-Download the [[https://raw.githubusercontent.com/pprevos/EmacsLife/master/init.el][init.el]] file and place it in your configuration folder.
-
-You can find out where your configuration folder lives by starting Emacs and typing =C-h v= for help on variables (Control =h=, followed by =v=), followed by =user-emacs-directory= and =ENTER=.
-
-The help buffer that now appears provides the correct folder name. You can close this buffer by pressing =q=.
-
-** Update folder configuration
-This init file defines directories:
-
-- =~/Documents/org-roam=: Notes taken with [[https://lucidmanager.org/productivity/taking-notes-with-emacs-org-mode-and-org-roam/][Org-Roam]]
-- =~/Documents/bibliography=: BibTeX files with your [[https://lucidmanager.org/productivity/emacs-bibtex-mode/][BibTeX bibliographies]]
-- =~/Documents/pdf=: Bibliography attachments
-
-You can change these settings in the init file.
-
-** Select Fonts
-The init file defines two fonts. You will need to adjust the font names to those available on your system. The default setting uses Dejavus Sans.
