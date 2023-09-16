@@ -11,3 +11,4 @@ This Emacs configuration stays as close as humanly bearable to Vanilla Emacs.
 - No configuration for developing software
 - Centred around Org mode
 
+This website will eventually be published in an (e)book with an extended version of the website. The website and the book are written and published with the /Emacs Writing Studio/ Configuration.
