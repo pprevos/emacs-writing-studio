@@ -14,6 +14,6 @@ This Emacs configuration stays as close as humanly bearable to Vanilla Emacs.
 
 To try the /Emacs Writing Studio/, download the ~init.el~ file and run Emacs with the ~--init-directory~ option:
 
-~emacs --init-directory init.el~
+~emacs --init-directory emacs-writing-studio/init.el~
 
 This website will eventually be published in an (e)book with an extended version of the website. The website and the book are written and published with the /Emacs Writing Studio/ Configuration.
