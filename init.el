@@ -271,11 +271,12 @@
 
 ;; Auto completion
 (use-package company
-  :config
-  (setq company-idle-delay 0
-        company-minimum-prefix-length 4
-        company-selection-wrap-around t))
-(global-company-mode)
+  :custom
+  (company-idle-delay 0)
+  (company-minimum-prefix-length 4)
+  (company-selection-wrap-around t)
+  :init
+  (global-company-mode))
 
 ;; Required for proportional font
 (use-package company-posframe
