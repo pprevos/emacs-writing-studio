@@ -148,6 +148,9 @@
      ("file" "Link to document file." ":")))
   (bibtex-align-at-equal-sign t))
 
+;; Biblio package for adding BibTeX records and download publications
+(use-package biblio)
+
 ;; Citar to access bibliographies
 (use-package citar
   :custom
