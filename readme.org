@@ -1,19 +1,19 @@
-#+TITLE: Emacs Writing Studio
-#+AUTHOR: Peter Prevos
+#+title: Emacs Writing Studio
+#+author: Peter Prevos
 
-/Emacs Writing Studio/ is a [[https://lucidmanager.org/tags/emacs/][series of articles]] on how authors can use Emacs to publish articles, books, scripts and websites.
+/Emacs Writing Studio/ is configuration and a [[https://lucidmanager.org/tags/emacs/][series of articles]] on how authors can use Emacs to publish articles, books, scripts and websites.
 
 [[file:images/emacs-writing-studio.png]]
  
 This Emacs configuration stays as close as humanly bearable to Vanilla Emacs.
 
-- Relies on Emacs 29.1
+- Leverages functionality in Emacs 29.1
 - Standard keyboard shortcuts
 - No configuration for developing software
 - Centred around Org mode
 
-To try the /Emacs Writing Studio/, download the ~init.el~ file and run Emacs with the ~--init-directory~ option:
+To try the /Emacs Writing Studio/, download the ~init.el~ file and run Emacs with the ~--init-directory~ option followed by the folder where =init.el= is located:
 
-~emacs --init-directory emacs-writing-studio/init.el~
+~emacs --init-directory emacs-writing-studio~
 
-This website will eventually be published in an (e)book with an extended version of the website. The website and the book are written and published with the /Emacs Writing Studio/ Configuration.
+The accompanying website will eventually be published in an (e)book. The website and the book are written and published with the /Emacs Writing Studio/ Configuration.
