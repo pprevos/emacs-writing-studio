@@ -34,6 +34,9 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
+;; Do not display the warning buffer unless it's an error
+(setq warning-minimum-level :error)
+
 ;; Set package archives
 (use-package package
   :init
