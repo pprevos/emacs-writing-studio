@@ -3,6 +3,8 @@
 
 /Emacs Writing Studio/ is configuration and a [[https://lucidmanager.org/tags/emacs/][series of articles]] on how authors can use Emacs to publish articles, books, scripts and websites.
 
+#+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
+#+attr_org: :width 400
 [[file:images/emacs-writing-studio.png]]
  
 This Emacs configuration stays as close as humanly bearable to Vanilla Emacs.
@@ -16,6 +18,6 @@ To try the /Emacs Writing Studio/, download the ~init.el~ file and run Emacs wit
 
 ~emacs --init-directory path/to/emacs-writing-studio~
 
-The accompanying website will eventually be published in an (e)book. The website and the book are written and published with the /Emacs Writing Studio/ Configuration.
+The [[https://lucidmanager.org/tags/emacs/][accompanying website]] will eventually be published in an (e)book. The website and the book are written and published with the /Emacs Writing Studio/ Configuration.
 
 Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to see additional packages useful to authors.
