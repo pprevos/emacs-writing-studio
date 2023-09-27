@@ -39,7 +39,7 @@
 
 ;; Set package archives
 (use-package package
-  :init
+  :config
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/"))
   (package-initialize))
