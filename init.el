@@ -34,12 +34,9 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; Do not display the warning buffer unless it's an error
-(setq warning-minimum-level :error)
-
 ;; Set package archives
 (use-package package
-  :init
+  :config
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/"))
   (package-initialize))
@@ -49,8 +46,10 @@
   :custom
   ;; Always load packages when not yet installed
   (use-package-always-ensure t)
-  ;; Native compile packges
-  (package-native-compile t))
+  ;; Native compile packages
+  (package-native-compile t)
+  ;; Do not display the warning buffer unless it's an error
+  (warning-minimum-level :error))
 
 ;; LOOK AND FEEL
 
