@@ -1,0 +1,17 @@
+#+title: Org mode example
+
+* Heading 1
+Lorem ipsum /dolor sit amet/, consectetur *adipiscing elit*, sed eiusmod tempor incididunt ut labore et dolore _magna aliqua_.
+
+#+caption: Test image.
+#+attr_org: :width 500
+[[file:images/test-image.jpg]]
+
+** Heading 2
+- e = mc^{2}
+- "I am the \alpha and \omega"
+
+Ramanujan: $$\frac{1}{\pi} = \frac{\sqrt{8}}{9801} \sum_{n=0}^\infty {\frac{(4n)!}{(n!)^4} \times \frac{26390n + 1103}{396^{4n}}$$
+** Heading 2
+*** Heading 3
+**** Heading 4
