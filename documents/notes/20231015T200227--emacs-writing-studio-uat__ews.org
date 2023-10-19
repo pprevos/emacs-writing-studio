@@ -1,0 +1,89 @@
+#+title:      emacs-writing-studio-uat
+#+date:       [2023-10-15 Sun 20:02]
+#+filetags:   :ews:
+#+identifier: 20231015T200227
+
+#+title: Emacs Writing Studio User Acceptance Testing
+#+author: Peter Prevos
+
+This file provides a testing plan for the /Emacs Writing Studio/. This test plan only lists customisations to vanilla Emacs and packages. Leave comments of unsuccessful tests below the checklists.
+
+* Prerequisites
+- [ ] Clone EWS repository
+- [ ] Run Emacs with =emacs --init-directory <ews-folder> --debug-init=
+- [ ] Run Emacs with EWS init file
+- [ ] No error message regarding Emacs version (29.1 minimum)
+- [ ] No error messages in =*Messages Buffer*= regarding missing external software.
+
+* Customisation
+- [ ] Configure directory structure to match example documents (~customize-group~) and save settings
+  - [ ] ~ews-documents-directory~ (=documents=)
+  - [ ] ~ews-bibliography-directory~ (=documents/library=)
+  - [ ] ~ews-notes-directory~ (=documents/notes=)
+  - [ ] ~ews-music-directory~ (Not included in examples)
+
+** Fonts
+- [ ] Customise fonts (~customize-face~) and save settings
+  - [ ] =default=
+  - [ ] =fixed-pich=
+  - [ ] =variable-pitch=
+
+** Test customisation
+- [ ] Restart Emacs
+- [ ] Open test =org-mode-example.org= file and verify the user interface and fonts
+
+** Modus Themes
+- [ ] Toggle between light and dark with =C-c w m=
+- [ ] Select a theme with =C-c w M=
+
+** Minibuffer completion
+- [ ] Verify that Vertico and Orderless are working
+
+* Ingestion
+** Reading
+Open files in the EWS documents folder and open the example files
+- [ ] PDF
+- [ ] ePub
+- [ ] Microsoft Word
+- [ ] PowerPoint
+- [ ] LibreOffice Writer
+- [ ] LibreOfffice Impress
+- [ ] DjVu
+
+** Bibliographies
+- [ ]Use ~citar-open~ (=C-c w c c=) to explore the bibliography
+  - [ ] Open an attachment
+- [ ] Add a publication to the bibliography with ~ews-biblio-lookup-citar~ (=C-c w c b=)
+
+** RSS Feeds
+- [ ] Run =elfeed-update= to load feeds
+- [ ] Open elfeed browser (=C-c w e=)
+- [ ] Open =elfeed.org= configuration file
+- [ ] Add new feed with ~org-web-tools~ (=C-c w w=)
+
+** Music
+- [ ] Configure ~ews-music-directory~ variable
+- [ ] Run ~emms-add-directory-tree~ and wait till database is complete
+- [ ] Open ~emms-browser~ and play music
+
+* Ideation
+** Fleeting Notes
+- [ ] Check configuration of ~ews-inbox-file~
+- [ ] Write notes in scratch buffer (=C-c w x=), exit Emacs and restart to check persistence
+- [ ] Create note and task with Org capture (=C-c c=)
+
+** Denote
+- [ ] Test some standard Denote functions
+- [ ] Open note with ~consult-notes~ (=C-c w f=)
+- [ ] Search in notes (=C-c w s=)
+
+** Bibliographic notes
+- [ ] Create bibliographic note
+
+* Production
+** Distraction-Free Writing
+- [ ] Use ~ews-org-insert-notes-drawer~ to add notes (=C-c C-x n=)
+- [ ] Open =org-mode-example.org= and check typography
+- [ ] Evaluate ~ews-distraction-fee~ (=F9=) with multiple windows open
+
+* Publication
