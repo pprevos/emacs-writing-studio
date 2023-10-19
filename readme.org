@@ -24,7 +24,7 @@ To run the /Emacs Writing Studio/ configuration, download the ~init.el~ file and
 
 The Documents folder contains some sample documents and a testing script.
 
-EWS checks for the presence of required external software and will generate a warning if one or more programs are missing.
+Emacs requires external software to assist with reading and manipulating non-text files, such as ebooks, images and sound files. EWS checks for the presence of required external software and will generate a warning in the =*Messages*= buffer if one or more programs are missing. If this is the case, some functionality might not be available, but Emacs will work fine otherwise.
 
 * Using EWS
 /Emacs Writing Studio/ uses the standard Emacs key bindings. For commands without defualt keybinding, it uses the =C-c w= prefix keys (=w= for writing).

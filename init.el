@@ -107,7 +107,7 @@ Sublists indicate that one of the entries is required."
 
 (ews-missing-executables
  '("soffice" "zip" "pdftotext" "ddjvu"
-   ("convert" "gm") "exiftool" "latex" "curl"
+   ("convert" "gm") "latex" "curl"
    "hunspell" ;; Spellcheck
    ("grep" "ripgrep") ;; Search files
    ("gs" "mutool") ;; PDF
@@ -464,14 +464,13 @@ Sublists indicate that one of the entries is required."
 ;; Spell checking
 ;; Requires Hunspell
 (use-package flyspell
-  :config
-  (setq ispell-program-name "hunspell"
-        ispell-default-dictionary "en_AU")
+  :custom
+  (ispell-program-name "hunspell")
+  (ispell-default-dictionary "en_AU")
   :hook (text-mode . flyspell-mode)
-  :bind (("M-<f7>" . flyspell-buffer)
-         ("<f7>" . flyspell-word)))
+  :bind (("M-<f7>" . flyspell-buffer)))
 
-  (use-package flyspell-correct
+(use-package flyspell-correct
   :after (flyspell)
   :bind (("C-;" . flyspell-auto-correct-previous-word)
          ("<f7>" . flyspell-correct-wrapper)))
