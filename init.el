@@ -1,14 +1,16 @@
-;;; init.el --- Emacs Writing Studio: configuration for authors
+;; init.el --- Emacs Writing Studio: configuration for authors
 
 ;; Copyright (C) 2023 Peter Prevos
-
+;;
 ;; Author: Peter Prevos <peter@prevos.net>
 ;; Maintainer: Peter Prevos <peter@prevos.net>
 ;; Homepage: https://github.com/pprevos/emacs-writing-studio
-;; Version: 0.1
+;; Version: 0.12
+;; Version numbers follow the expansion of Champernowne constant
+;; Package-Requires ((emacs "29.1"))
 
 ;; This file is NOT part of GNU Emacs.
-
+;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -16,23 +18,102 @@
 ;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ;; GNU General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+;; along with this program. If not, see <https://www.gnu.org/licenses/>.
 ;;
 ;;; Commentary:
-
+;;
+;; Emacs Writing Studio website: https://lucidmanager.org/tags/emacs
+;;
 ;;; Code:
 
-;; CONFIGURATION AND PACKAGES
+;; Emacs 29?
+(unless (>= emacs-major-version 29)
+  (error "Emacs Writing Studio requires Emacs version 29 or later"))
+
+;; Emacs Writing Studio Customisation
+(defgroup ews ()
+  "Emacs Writing Studio."
+  :group 'files
+  :link '(url-link :tag "Homepage" "https://lucidmanager.org/tags/emacs/"))
+
+(defcustom ews-documents-directory
+  (concat (file-name-as-directory (getenv "HOME")) "Documents")
+  "Location of documents."
+  :group 'ews
+  :type 'directory)
+
+(defcustom ews-bibliography-directory
+  (concat (file-name-as-directory ews-documents-directory) "library")
+  "Location of BibTeX bibliographies and attachments."
+  :group 'ews
+  :type 'directory)
+
+(defcustom ews-notes-directory
+  (concat (file-name-as-directory ews-documents-directory) "notes")
+  "Location of notes."
+  :group 'ews
+  :type 'directory)
+
+(defcustom ews-music-directory
+  (concat (file-name-as-directory (getenv "HOME")) "Music")
+  "Location of notes."
+  :group 'ews
+  :type 'directory)
+
+(defcustom ews-inbox-file
+  (concat (file-name-as-directory ews-documents-directory) "inbox.org")
+  "Location of notes."
+  :group 'ews
+  :type 'file)
+
+(defcustom ews-elfeed-config-file
+      (concat (file-name-as-directory ews-documents-directory) "elfeed.org")
+  "Location of notes."
+  :group 'ews
+  :type 'file)
+
+(defcustom ews-todo-file
+      (concat (file-name-as-directory ews-documents-directory) "todo.org")
+  "Location of notes."
+  :group 'ews
+  :type 'file)
 
 ;; Custom settings in a separate file and load the custom settings
 (setq-default custom-file
               (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
+
+;; Check for missing executables
+(defun ews-missing-executables (prog-list)
+  "Identified missing executables in PROG-LIST.
+
+Sublists indicate that one of the entries is required."
+  (require 'cl-lib)
+  (let ((missing '()))
+    (dolist (exec prog-list)
+      (if (listp exec)
+          (unless (cl-some #'executable-find exec)
+            (push (format "(%s)" (mapconcat 'identity exec " or ")) missing))
+        (unless (executable-find exec)
+          (push exec missing))))
+    (if missing
+        (user-error "Missing executable files(s): %s"
+                    (mapconcat 'identity missing ", ")))))
+
+(ews-missing-executables
+ '("soffice" "zip" "pdftotext" "ddjvu"
+   ("convert" "gm") "exiftool" "latex" "curl"
+   "hunspell" ;; Spellcheck
+   ("grep" "ripgrep") ;; Search files
+   ("gs" "mutool") ;; PDF
+   ("mpg321" "ogg123" "mplayer" "mpv" "vlc"))) ;; Play music
+
+;; CONFIGURATION AND PACKAGES
 
 ;; Set package archives
 (use-package package
@@ -44,11 +125,8 @@
 ;; Package Management
 (use-package use-package
   :custom
-  ;; Always load packages when not yet installed
   (use-package-always-ensure t)
-  ;; Native compile packages
   (package-native-compile t)
-  ;; Do not display the warning buffer unless it's an error
   (warning-minimum-level :error))
 
 ;; LOOK AND FEEL
@@ -72,13 +150,12 @@
   (modus-themes-to-toggle
    '(modus-operandi-tinted modus-vivendi-tinted))
   :bind
-  (("<f12>"   . modus-themes-toggle)
-   ("C-<f12>" . modus-themes-select))
+  (("C-c w m" . modus-themes-toggle)
+   ("C-c w M" . modus-themes-select))
   :init
   (load-theme 'modus-operandi-tinted :no-confirm))
 
 ;; Set default, fixed and variable pitch fonts
-;; Use M-x menu-set-font to view available fonts
 (use-package mixed-pitch
   :hook
   (text-mode . mixed-pitch-mode))
@@ -94,13 +171,68 @@
 ;; Scroll to the first and last line of the buffer
 (setq-default scroll-error-top-bottom t)
 
-(setq-default initial-major-mode 'org-mode
-              initial-scratch-message "#+title: Scratch Buffer\n\n")
+;; RICING ORG MODE
 
-(use-package persistent-scratch
-  :ensure t
-  :commands persistent-scratch-setup-default
-  :hook (after-init . persistent-scratch-setup-default))
+;; Improve org mode looks
+(setq-default org-startup-indented t
+              org-pretty-entities t
+              org-use-sub-superscripts "{}"
+              org-hide-emphasis-markers t
+              org-startup-with-inline-images t
+              org-image-actual-width '(300))
+
+;; Show hidden emphasis markers
+
+(use-package org-appear
+  :hook
+  (org-mode . org-appear-mode))
+
+;; Modernise Org mode interface
+
+(use-package org-modern
+  :hook
+  (org-mode . global-org-modern-mode)
+  :custom
+  (org-modern-keyword nil)
+  (org-modern-checkbox nil)
+  (org-modern-table nil))
+
+;; LaTeX previews
+(use-package org-fragtog
+  :after org
+  :custom
+  (org-startup-with-latex-preview t)
+  :hook
+  (org-mode . org-fragtog-mode)
+  :custom
+  (org-format-latex-options
+   (plist-put org-format-latex-options :scale 2)
+   (plist-put org-format-latex-options :foreground 'auto)
+   (plist-put org-format-latex-options :background 'auto)))
+
+;; Increase line spacing
+(setq-default line-spacing 2)
+
+;; Distraction-free writing
+(defun ews-distraction-free ()
+  "Distraction-free writing environment using Olivetti package."
+  (interactive)
+  (if (equal olivetti-mode nil)
+      (progn
+        (window-configuration-to-register 1)
+        (delete-other-windows)
+        (text-scale-set 2)
+        (olivetti-mode t))
+    (progn
+      (if (eq (length (window-list)) 1)
+          (jump-to-register 1))
+      (olivetti-mode 0)
+      (text-scale-set 0))))
+
+(use-package olivetti
+  :demand t
+  :bind
+  (("<f9>" . ews-distraction-free)))
 
 ;; MINIBUFFER COMPLETION
 
@@ -125,8 +257,6 @@
 
 ;; Enable richer annotations using the Marginalia package
 (use-package marginalia
-  :bind (:map minibuffer-local-map
-	 ("M-A". marginalia-cycle))
   :init
   (marginalia-mode))
 
@@ -135,40 +265,74 @@
   :config
   (which-key-mode))
 
-;; READING EBOOKS WITH EMACS
+;; READ EBOOKS
 
 ;; Read ePub files
 (use-package nov
   :init
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
 
+;; Doc-View
+(use-package doc-view
+  :custom
+  (doc-view-resolution 300)
+  (doc-view-mupdf-use-svg t)
+  (large-file-warning-threshold (* 50 (expt 2 20))))
+
+;; Biblio package for adding BibTeX records and download publications
+(use-package biblio)
+
+;; Managing Bibliographies
 (use-package bibtex
   :custom
   (bibtex-dialect 'BibTeX)
   (bibtex-user-optional-fields
    '(("keywords" "Keywords to describe the entry" "")
-     ("file" "Link to document file." ":")))
+     ("file" "Link to a document file." "" )))
   (bibtex-align-at-equal-sign t))
-
-;; Biblio package for adding BibTeX records and download publications
-(use-package biblio)
 
 ;; Citar to access bibliographies
 (use-package citar
   :custom
   (org-cite-global-bibliography
-   (directory-files
-    (concat (getenv "HOME") "/Documents/library/") t
+   (directory-files ews-bibliography-directory t
     "^[A-Z|a-z|0-9].+.bib$"))
   (citar-bibliography org-cite-global-bibliography)
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
   :bind
-  (("C-c d o" . citar-open)
+  (("C-c w c o" . citar-open)
    (:map org-mode-map
          :package org
-         ("C-c b" . #'org-cite-insert))))
+         ("C-c w C". #'org-cite-insert))))
+
+;; Integrating Biblio and Citar
+(defun ews-biblio-lookup ()
+  "Combines biblio-lookup and biblio-doi-insert-bibtex."
+  (let* ((dbs (biblio--named-backends))
+         (db-list (append dbs '(("DOI" . biblio-doi-backend))))
+         (db-selected (biblio-completing-read-alist
+                       "Database:"
+                       db-list)))
+    (if (eq db-selected 'biblio-doi-backend)
+        (let ((doi (read-string "DOI: ")))
+          (biblio-doi-insert-bibtex doi))
+      (biblio-lookup db-selected))))
+
+(defun ews-biblio-lookup-citar ()
+  "Select a BibTeX file and perform a lookup with Biblio."
+  (interactive)
+  (require 'citar)
+  (let ((bibfile (completing-read
+                  "BibTeX file:"
+                  (citar--bibliography-files))))
+    (find-file bibfile)
+    (goto-char (point-max))
+    (ews-biblio-lookup)
+    (save-buffer)))
+
+(global-set-key (kbd "C-c w c b") 'ews-biblio-lookup-citar)
 
 ;; Configure Elfeed
 (use-package elfeed
@@ -177,18 +341,21 @@
    (expand-file-name "elfeed" user-emacs-directory))
    (elfeed-show-entry-switch 'display-buffer)
   :bind
-  ("C-c w" . elfeed ))
+  ("C-c w e" . elfeed ))
 
 ;; Configure Elfeed with org mode
 (use-package elfeed-org
-  :after denote
   :config
   (elfeed-org)
   :custom
-  (rmh-elfeed-org-files
-   (denote-directory-files-matching-regexp "elfeed")))
+  (rmh-elfeed-org-files (list ews-elfeed-config-file)))
 
-;; Emacs Multimedia System configuration
+;; Easy insertion of weblinks
+(use-package org-web-tools
+  :bind
+  (("C-c w w" . org-web-tools-insert-link-for-url)))
+
+;; Emacs Multimedia System
 (use-package emms
   :init
   (require 'emms-setup)
@@ -197,52 +364,75 @@
   (emms-default-players)
   (emms-mpris-enable)
   :custom
-  (emms-source-file-default-directory "~/Music/")
+  (emms-source-file-default-directory ews-music-directory)
+  (emms-browser-covers #'emms-browser-cache-thumbnail-async)
   :bind
-  (("<f5>" . emms-browser)
-   ("<M-f5>" . emms)
+  (("<f5>"   . emms-browser)
+   ("M-<f5>" . emms)
    ("<XF86AudioPrev>" . emms-previous)
    ("<XF86AudioNext>" . emms-next)
    ("<XF86AudioPlay>" . emms-pause)))
 
-;; Choose one of these
-(setq emms-info-functions '(emms-info-tinytag))  ;; When using Tinytag
-;;(setq emms-info-functions '(emms-info-exiftool)) When using Exiftool
+;; IDEATION: NOTE-TAKING
 
-;; Load cover images
-(setq emms-browser-covers 'emms-browser-cache-thumbnail-async)
+;; Fleeting notes in Scratch Buffer
+(setq initial-major-mode 'org-mode
+      initial-scratch-message
+      "#+title: Scratch Buffer\n\nFor random thoughts.\n\n")
 
-;; NOTE-TAKING
+(use-package persistent-scratch
+  :hook
+  (after-init . persistent-scratch-setup-default)
+  :init
+  (persistent-scratch-setup-default)
+  (persistent-scratch-autosave-mode)
+  :bind
+  (("C-c w x" . scratch-buffer)))
 
 ;; Denote
 (use-package denote
   :init
   (require 'denote-org-dblock)
+  (denote-rename-buffer-mode t)
   :custom
-  (denote-directory "~/Documents/notes/")
+  (denote-directory ews-notes-directory)
   :hook
   (dired-mode . denote-dired-mode)
   :custom-face
   (denote-faces-link ((t (:slant italic))))
   :bind
-  (("C-c n n" . denote)
-   ("C-c n d" . denote-date)
-   ("C-c n i" . denote-link-or-create)
-   ("C-c n l" . denote-link-find-file)
-   ("C-c n b" . denote-link-find-backlink)
-   ("C-c n D" . denote-org-dblock-insert-links)
-   ("C-c n s" . denote-rename-file-using-front-matter)
-   ("C-c n k" . denote-keywords-add)
-   ("C-c n K" . denote-keywords-remove)))
+  (("C-c w n" . denote-create-note)
+   ("C-c w j" . denote-date)
+   ("C-c w i" . denote-link-or-create)
+   ("C-c w l" . denote-find-link)
+   ("C-c w b" . denote-find-backlink)
+   ("C-c w D" . denote-org-dblock-insert-links)
+   ("C-c w r" . denote-rename-file-using-front-matter)
+   ("C-c w R" . denote-rename-file)
+   ("C-c w k" . denote-keywords-add)
+   ("C-c w K" . denote-keywords-remove)))
 
+;; Denote extensions
+(use-package consult-notes
+  :commands (consult-notes
+             consult-notes-search-in-all-notes)
+  :custom
+  (consult-notes-file-dir-sources
+   `(("Denote" ?d ,ews-notes-directory)))
+  :bind
+  (("C-c w f" . consult-notes)
+   ("C-c w s" . consult-notes-search-in-all-notes)))
+
+;; Fleeting notes
 (use-package org
+  :after
+  denote
   :bind
   (("C-c c" . org-capture)
    ("C-c l" . org-store-link))
   :custom
-  ;; Set default file for fleeting notes
-  (org-default-notes-file
-   (car (denote-directory-files-matching-regexp "inbox")))
+  (org-default-notes-file ews-inbox-file)
+  (org-capture-bookmark nil)
   ;; Capture templates
   (org-capture-templates
    '(("f" "Fleeting note" item
@@ -257,11 +447,19 @@
   (citar-denote-mode)
   :custom
   (citar-open-always-create-notes t)
-  :bind (("C-c n c c" . citar-create-note)
-         ("C-c n c o" . citar-denote-open-note)
-         ("C-c n c d" . citar-denote-dwim)
-         ("C-c n c a" . citar-denote-add-citekey)
-         ("C-c n c x" . citar-denote-remove-citekey)))
+  :bind (("C-c w c c" . citar-create-note)
+         ("C-c w c n" . citar-denote-open-note)
+         ("C-c w c d" . citar-denote-dwim)
+         ("C-c w c e" . citar-denote-open-reference-entry)
+         ("C-c w c a" . citar-denote-add-citekey)
+         ("C-c w c k" . citar-denote-remove-citekey)
+         ("C-c w c r" . citar-denote-find-reference)
+         ("C-c w c f" . citar-denote-find-citation)
+         ("C-c w c l" . citar-denote-link-reference)))
+
+(use-package org
+  :custom
+  (org-list-allow-alphabetical t))
 
 ;; Spell checking
 ;; Requires Hunspell
@@ -271,8 +469,12 @@
         ispell-default-dictionary "en_AU")
   :hook (text-mode . flyspell-mode)
   :bind (("M-<f7>" . flyspell-buffer)
-         ("<f7>" . flyspell-word)
-         ("C-;" . flyspell-auto-correct-previous-word)))
+         ("<f7>" . flyspell-word)))
+
+  (use-package flyspell-correct
+  :after (flyspell)
+  :bind (("C-;" . flyspell-auto-correct-previous-word)
+         ("<f7>" . flyspell-correct-wrapper)))
 
 ;; Notes drawers
 (defun ews-org-insert-notes-drawer ()
@@ -302,64 +504,10 @@
   :init
   (global-company-mode))
 
-;; Required for proportional font
+;; Required for variable pitch
 (use-package company-posframe
   :config
   (company-posframe-mode 1))
-
-;; RICING ORG MODE
-
-;; Improve org mode looks
-(setq org-startup-indented t
-      org-pretty-entities t
-      org-hide-emphasis-markers t
-      org-startup-with-inline-images t
-      org-image-actual-width '(300))
-
-;; Show hidden emphasis markers
-(use-package org-appear
-  :hook (org-mode . org-appear-mode))
-
-;; Modernise Org mode interface
-  (use-package org-modern
-  :hook
-  (org-mode . global-org-modern-mode)
-  :custom
-  (org-modern-keyword nil)
-  (org-modern-checkbox nil)
-  (org-modern-table nil))
-
-;; LaTeX previews
-(use-package org-fragtog
-  :after org
-  :hook
-  (add-hook 'org-mode-hook 'org-fragtog-mode)
-  :custom
-  (org-format-latex-options
-   (plist-put org-format-latex-options :scale 2)))
-
-;; Increase line spacing
-(setq-default line-spacing 2)
-
-;; Distraction-free writing
-(use-package olivetti
-  :config
-  (defun distraction-free ()
-    "Distraction-free writing environment using Olivetti package."
-    (interactive)
-    (if (equal olivetti-mode nil)
-        (progn
-          (window-configuration-to-register 1)
-          (delete-other-windows)
-          (text-scale-set 2)
-          (olivetti-mode t))
-      (progn
-        (if (eq (length (window-list)) 1)
-            (jump-to-register 1))
-        (olivetti-mode 0)
-        (text-scale-set 0))))
-  :bind
-  (("<f9>" . distraction-free)))
 
 ;; PUBLISHING DOCUMENTS
 
@@ -369,7 +517,22 @@
   (org-export-with-drawers nil)
   (org-export-with-todo-keywords nil)
   (org-export-with-broken-links t)
-  (org-export-with-toc nil))
+  (org-export-with-toc nil)
+  (org-export-with-smart-quotes t))
+
+;; Export to MS-Word
+(setq-default org-odt-preferred-output-format "docx")
+
+(with-eval-after-load 'ox-latex
+  (add-to-list 'org-latex-classes
+               '("apa6"
+                 "\\documentclass[a4paper, jou, 11pt]{apa6}
+                  \\usepackage[nodoi]{apacite}
+                  \\usepackage{graphicx}
+                  \\usepackage[T1]{fontenc}
+                  \\usepackage{times}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}"))))
 
 ;; LaTeX PDF Export settings
 (use-package ox-latex
@@ -401,14 +564,18 @@
 (add-hook 'before-save-hook 'time-stamp nil)
 
 ;; Create Hugo links
+(defun ews-get-hugo-directory ()
+  "Lists the directory of the current Hugo website or nil."
+  (if (string-match "\\(.*\\)content" default-directory)
+      (match-string 1 default-directory)
+    nil))
+
 (defun ews-hugo-list-content ()
   "List the content of the Hugo website of the current buffer.
 When not in an apparent Hugo directory then return error."
-  (if-let* ((dir (if (string-match "\\(.*\\)content" default-directory)
-                     (match-string 1 default-directory)
-                   nil))
-            (hugo-p (not (null (directory-files dir nil "^config\\..*"))))
-            (content-dir (concat dir "content/")))
+  (if-let* ((hugodir (ews-get-hugo-directory))
+            (hugo-p (not (null (directory-files hugodir nil "^config\\..*"))))
+            (content-dir (concat hugodir "content/")))
       (let ((org-files (directory-files-recursively content-dir "\\.org\\'"))
             (md-files (directory-files-recursively content-dir "\\.md\\'")))
         (append org-files md-files))
@@ -419,7 +586,8 @@ When not in an apparent Hugo directory then return error."
   (let* ((posts (ews-hugo-list-content))
          (titles (mapcar (lambda (post)
                            (string-remove-prefix
-                            (concat hugodir "content/") post)) posts))
+                            (concat (ews-get-hugo-directory)
+                                    "content/") post)) posts))
          (selection (completing-read "Choose page:" titles))
          (target (concat "/"
                          (replace-regexp-in-string
@@ -432,14 +600,17 @@ When not in an apparent Hugo directory then return error."
  "hugo"
  :complete #'ews-hugo-link-complete)
 
+;; GETTING THINGS DONE
+
+(use-package org
+  :custom
+  (org-agenda-files ews-todo-file)
+  (org-todo-keywords
+   '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  :bind
+  (("C-c a" . org-agenda)))
+
 ;; FILE MANAGEMENT
-
-;; Open dired folders in same buffer
-(put 'dired-find-alternate-file 'disabled nil)
-
-(setq dired-guess-shell-alist-user `(("\\.png\\'" "gimp")
-                                     ("\\.jpe?g\\'" "gimp")
-                                     ("\\.mp4\\'" "vlc")))
 
 (use-package dired
   :ensure
@@ -450,7 +621,9 @@ When not in an apparent Hugo directory then return error."
   (dired-listing-switches
    "-goah --group-directories-first --time-style=long-iso")
   (dired-dwim-target t)
-  (delete-by-moving-to-trash t))
+  (delete-by-moving-to-trash t)
+  :init  ;; Open dired folders in same buffer
+  (put 'dired-find-alternate-file 'disabled nil))
 
 ;; Hide hidden files
 (use-package dired-hide-dotfiles
@@ -459,11 +632,19 @@ When not in an apparent Hugo directory then return error."
   :bind
   (:map dired-mode-map ("." . dired-hide-dotfiles-mode)))
 
-;; Keep folders clean (create new directory when not yet existing)
-;;(make-directory (expand-file-name "backups/" user-emacs-directory) t)
+;; Backup files
 (setq-default backup-directory-alist
               `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
               create-lockfiles nil)  ; No lock files
 
+;; Image viewer
+(use-package emacs
+  :bind
+  ((:map image-mode-map
+              ("k" . image-kill-buffer)
+              ("<right>" . image-next-file)
+              ("<left>"  . image-previous-file))
+   (:map dired-mode-map
+    ("C-<return>" . image-dired-dired-display-external))))
 
 ;;; init.el ends here

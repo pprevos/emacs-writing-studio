@@ -5,7 +5,7 @@
 
 #+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
 #+attr_org: :width 400
-[[file:images/emacs-writing-studio.png]]
+[[file:documents/images/emacs-writing-studio.png]]
  
 This configuration follows the following principles:
 - Leverage functionality in Emacs 29.1
@@ -34,4 +34,4 @@ EWS checks for the presence of required external software and will generate a wa
 
 - ~ews-biblio-lookup~: Combines functionality from the [[https://github.com/cpitclaudel/biblio.el][biblio]] and [[https://github.com/emacs-citar/citar][Citar]] packages.
 - ~ews-distraction-free~: Activate [[https://github.com/rnkn/olivetti][Olivetti mode]].
-- ~ews-org-insert-notes-drawer~: Inserts a notes drawer under the current Org heading.
+- ~ews-org-insert-notes-drawer~: Inserts an notes [[https://orgmode.org/manual/Drawers.html][drawer]] under the current Org heading.
