@@ -5,9 +5,8 @@
 ;; Author: Peter Prevos <peter@prevos.net>
 ;; Maintainer: Peter Prevos <peter@prevos.net>
 ;; URL: https://github.com/pprevos/emacs-writing-studio
-;; Version: 0.1234
-;; Version numbers follow the expansion of Champernowne constant
-;; Package-Requires ((emacs "29.1"))
+;; Version: 1.0
+;; Package-Requires ((olivetti "2.0.5") (biblio "0.3") (citar "1.4.0") (org "9.6.6") (emacs "29.1"))
 
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -36,7 +35,6 @@
 (require 'biblio)
 (require 'citar)
 (require 'org)
-
 
 ;; Emacs Writing Studio Customisation
 (defgroup ews ()

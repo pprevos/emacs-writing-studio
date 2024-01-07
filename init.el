@@ -1,12 +1,11 @@
 ;; init.el --- Emacs Writing Studio: configuration for authors
 
-;; Copyright (C) 2023 Peter Prevos
+;; Copyright (C) 2023-2024 Peter Prevos
 ;;
 ;; Author: Peter Prevos <peter@prevos.net>
 ;; Maintainer: Peter Prevos <peter@prevos.net>
 ;; Homepage: https://github.com/pprevos/emacs-writing-studio
-;; Version: 0.12
-;; Version numbers follow the expansion of Champernowne constant
+;; Version: 1.0
 ;; Package-Requires ((emacs "29.1"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -30,90 +29,18 @@
 ;;
 ;;; Code:
 
+;; CONFIGURATION AND PACKAGES
+
 ;; Emacs 29?
 (unless (>= emacs-major-version 29)
   (error "Emacs Writing Studio requires Emacs version 29 or later"))
 
-;; Emacs Writing Studio Customisation
-(defgroup ews ()
-  "Emacs Writing Studio."
-  :group 'files
-  :link '(url-link :tag "Homepage" "https://lucidmanager.org/tags/emacs/"))
-
-(defcustom ews-documents-directory
-  (concat (file-name-as-directory (getenv "HOME")) "Documents")
-  "Location of documents."
-  :group 'ews
-  :type 'directory)
-
-(defcustom ews-bibliography-directory
-  (concat (file-name-as-directory ews-documents-directory) "library")
-  "Location of BibTeX bibliographies and attachments."
-  :group 'ews
-  :type 'directory)
-
-(defcustom ews-notes-directory
-  (concat (file-name-as-directory ews-documents-directory) "notes")
-  "Location of notes."
-  :group 'ews
-  :type 'directory)
-
-(defcustom ews-music-directory
-  (concat (file-name-as-directory (getenv "HOME")) "Music")
-  "Location of notes."
-  :group 'ews
-  :type 'directory)
-
-(defcustom ews-inbox-file
-  (concat (file-name-as-directory ews-documents-directory) "inbox.org")
-  "Location of notes."
-  :group 'ews
-  :type 'file)
-
-(defcustom ews-elfeed-config-file
-      (concat (file-name-as-directory ews-documents-directory) "elfeed.org")
-  "Location of notes."
-  :group 'ews
-  :type 'file)
-
-(defcustom ews-todo-file
-      (concat (file-name-as-directory ews-documents-directory) "todo.org")
-  "Location of notes."
-  :group 'ews
-  :type 'file)
-
 ;; Custom settings in a separate file and load the custom settings
 (setq-default custom-file
               (expand-file-name "custom.el" user-emacs-directory))
+
 (when (file-exists-p custom-file)
   (load custom-file))
-
-;; Check for missing executables
-(defun ews-missing-executables (prog-list)
-  "Identified missing executables in PROG-LIST.
-
-Sublists indicate that one of the entries is required."
-  (require 'cl-lib)
-  (let ((missing '()))
-    (dolist (exec prog-list)
-      (if (listp exec)
-          (unless (cl-some #'executable-find exec)
-            (push (format "(%s)" (mapconcat 'identity exec " or ")) missing))
-        (unless (executable-find exec)
-          (push exec missing))))
-    (if missing
-        (user-error "Missing executable files(s): %s"
-                    (mapconcat 'identity missing ", ")))))
-
-(ews-missing-executables
- '("soffice" "zip" "pdftotext" "ddjvu"
-   ("convert" "gm") "latex" "curl"
-   "hunspell" ;; Spellcheck
-   ("grep" "ripgrep") ;; Search files
-   ("gs" "mutool") ;; PDF
-   ("mpg321" "ogg123" "mplayer" "mpv" "vlc"))) ;; Play music
-
-;; CONFIGURATION AND PACKAGES
 
 ;; Set package archives
 (use-package package
@@ -128,6 +55,24 @@ Sublists indicate that one of the entries is required."
   (use-package-always-ensure t)
   (package-native-compile t)
   (warning-minimum-level :error))
+
+;; Install ews package to define variables and provide convenience functions
+(unless (package-installed-p 'ews)
+  (package-vc-install
+   '(ews
+     :url "https://github.com/pprevos/emacs-writing-studio/"
+     :main-file "ews.el")))
+
+;; Check for missing external software
+(ews-missing-executables
+ '("soffice" "zip" "pdftotext" "ddjvu" ;; read ebooks
+   "curl" ;; Read RSS feeds
+   ("convert" "gm") ;; Modify images
+   "latex";; Export to PDF
+   "hunspell" ;; Spellcheck
+   ("grep" "ripgrep") ;; Search files
+   ("gs" "mutool") ;; PDF
+   ("mpg321" "ogg123" "mplayer" "mpv" "vlc"))) ;; Play music
 
 ;; LOOK AND FEEL
 
@@ -160,17 +105,6 @@ Sublists indicate that one of the entries is required."
   :hook
   (text-mode . mixed-pitch-mode))
 
-;; Configure Text Modes and Org Mode
-
-;; Sensible line-breaking
-(add-hook 'text-mode-hook 'visual-line-mode)
-
-;; Overwrite selected text
-(delete-selection-mode t)
-
-;; Scroll to the first and last line of the buffer
-(setq-default scroll-error-top-bottom t)
-
 ;; RICING ORG MODE
 
 ;; Improve org mode looks
@@ -188,7 +122,6 @@ Sublists indicate that one of the entries is required."
   (org-mode . org-appear-mode))
 
 ;; Modernise Org mode interface
-
 (use-package org-modern
   :hook
   (org-mode . global-org-modern-mode)
@@ -214,21 +147,6 @@ Sublists indicate that one of the entries is required."
 (setq-default line-spacing 2)
 
 ;; Distraction-free writing
-(defun ews-distraction-free ()
-  "Distraction-free writing environment using Olivetti package."
-  (interactive)
-  (if (equal olivetti-mode nil)
-      (progn
-        (window-configuration-to-register 1)
-        (delete-other-windows)
-        (text-scale-set 2)
-        (olivetti-mode t))
-    (progn
-      (if (eq (length (window-list)) 1)
-          (jump-to-register 1))
-      (olivetti-mode 0)
-      (text-scale-set 0))))
-
 (use-package olivetti
   :demand t
   :bind
@@ -263,7 +181,8 @@ Sublists indicate that one of the entries is required."
 ;; Improve keyboard shortcut discoverability
 (use-package which-key
   :config
-  (which-key-mode))
+  (which-key-mode)
+  (which-key-setup-side-window-right))
 
 ;; READ EBOOKS
 
@@ -279,8 +198,12 @@ Sublists indicate that one of the entries is required."
   (doc-view-mupdf-use-svg t)
   (large-file-warning-threshold (* 50 (expt 2 20))))
 
-;; Biblio package for adding BibTeX records and download publications
-(use-package biblio)
+;; Reading LibreOffice files
+;; Fixing bug in Org mode 9.6.6
+(use-package ox-odt
+  :ensure nil
+  :config
+  (add-to-list 'auto-mode-alist '("\\.\\(?:OD[CFIGPST]\\|od[cfigpst]\\)\\'" . doc-view-mode-maybe)))
 
 ;; Managing Bibliographies
 (use-package bibtex
@@ -290,6 +213,9 @@ Sublists indicate that one of the entries is required."
    '(("keywords" "Keywords to describe the entry" "")
      ("file" "Link to a document file." "" )))
   (bibtex-align-at-equal-sign t))
+
+;; Biblio package for adding BibTeX records and download publications
+(use-package biblio)
 
 ;; Citar to access bibliographies
 (use-package citar
@@ -302,37 +228,13 @@ Sublists indicate that one of the entries is required."
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
   :bind
-  (("C-c w c o" . citar-open)
+  (("C-c w c c" . citar-open)
    (:map org-mode-map
          :package org
          ("C-c w C". #'org-cite-insert))))
 
 ;; Integrating Biblio and Citar
-(defun ews-biblio-lookup ()
-  "Combines biblio-lookup and biblio-doi-insert-bibtex."
-  (let* ((dbs (biblio--named-backends))
-         (db-list (append dbs '(("DOI" . biblio-doi-backend))))
-         (db-selected (biblio-completing-read-alist
-                       "Database:"
-                       db-list)))
-    (if (eq db-selected 'biblio-doi-backend)
-        (let ((doi (read-string "DOI: ")))
-          (biblio-doi-insert-bibtex doi))
-      (biblio-lookup db-selected))))
-
-(defun ews-biblio-lookup-citar ()
-  "Select a BibTeX file and perform a lookup with Biblio."
-  (interactive)
-  (require 'citar)
-  (let ((bibfile (completing-read
-                  "BibTeX file:"
-                  (citar--bibliography-files))))
-    (find-file bibfile)
-    (goto-char (point-max))
-    (ews-biblio-lookup)
-    (save-buffer)))
-
-(global-set-key (kbd "C-c w c b") 'ews-biblio-lookup-citar)
+(global-set-key (kbd "C-c w c b") 'ews-biblio-bibtex-lookup)
 
 ;; Configure Elfeed
 (use-package elfeed
@@ -341,7 +243,7 @@ Sublists indicate that one of the entries is required."
    (expand-file-name "elfeed" user-emacs-directory))
    (elfeed-show-entry-switch 'display-buffer)
   :bind
-  ("C-c w e" . elfeed ))
+  ("C-c w e" . elfeed))
 
 ;; Configure Elfeed with org mode
 (use-package elfeed-org
@@ -401,16 +303,16 @@ Sublists indicate that one of the entries is required."
   :custom-face
   (denote-faces-link ((t (:slant italic))))
   :bind
-  (("C-c w n" . denote-create-note)
-   ("C-c w j" . denote-date)
-   ("C-c w i" . denote-link-or-create)
-   ("C-c w l" . denote-find-link)
-   ("C-c w b" . denote-find-backlink)
-   ("C-c w D" . denote-org-dblock-insert-links)
-   ("C-c w r" . denote-rename-file-using-front-matter)
-   ("C-c w R" . denote-rename-file)
-   ("C-c w k" . denote-keywords-add)
-   ("C-c w K" . denote-keywords-remove)))
+  (("C-c n n" . denote-create-note)
+   ("C-c n d" . denote-date)
+   ("C-c n i" . denote-link-or-create)
+   ("C-c n l" . denote-find-link)
+   ("C-c n b" . denote-find-backlink)
+   ("C-c n d" . denote-org-dblock-insert-links)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n R" . denote-rename-file-using-front-matter)
+   ("C-c n k" . denote-keywords-add)
+   ("C-c n K" . denote-keywords-remove)))
 
 ;; Denote extensions
 (use-package consult-notes
@@ -420,8 +322,8 @@ Sublists indicate that one of the entries is required."
   (consult-notes-file-dir-sources
    `(("Denote" ?d ,ews-notes-directory)))
   :bind
-  (("C-c w f" . consult-notes)
-   ("C-c w s" . consult-notes-search-in-all-notes)))
+  (("C-c n f" . consult-notes)
+   ("C-c n s" . consult-notes-search-in-all-notes)))
 
 ;; Fleeting notes
 (use-package org
@@ -438,6 +340,13 @@ Sublists indicate that one of the entries is required."
    '(("f" "Fleeting note" item
       (file+headline org-default-notes-file "Notes")
       "- %?")
+     ("p" "Permanent note" plain
+      (file denote-last-path)
+      #'denote-org-capture
+      :no-save t
+      :immediate-finish nil
+      :kill-buffer t
+      :jump-to-captured t)
      ("t" "New task" entry
       (file+headline org-default-notes-file "Tasks")
       "* TODO %i%?"))))
@@ -447,66 +356,26 @@ Sublists indicate that one of the entries is required."
   (citar-denote-mode)
   :custom
   (citar-open-always-create-notes t)
-  :bind (("C-c w c c" . citar-create-note)
-         ("C-c w c n" . citar-denote-open-note)
+  :bind (("C-c w c n" . citar-create-note)
+         ("C-c w c o" . citar-denote-open-note)
+         ("C-c w c f" . citar-denote-find-citation)
          ("C-c w c d" . citar-denote-dwim)
          ("C-c w c e" . citar-denote-open-reference-entry)
          ("C-c w c a" . citar-denote-add-citekey)
          ("C-c w c k" . citar-denote-remove-citekey)
          ("C-c w c r" . citar-denote-find-reference)
-         ("C-c w c f" . citar-denote-find-citation)
-         ("C-c w c l" . citar-denote-link-reference)))
+         ("C-c w c l" . citar-denote-link-reference)
+         ("C-c w c x" . citar-denote-nocite)
+         ("C-c w c y" . citar-denote-cite-nocite)))
 
 (use-package org
   :custom
   (org-list-allow-alphabetical t))
 
-;; Spell checking
-;; Requires Hunspell
-(use-package flyspell
-  :custom
-  (ispell-program-name "hunspell")
-  (ispell-default-dictionary "en_AU")
-  :hook (text-mode . flyspell-mode)
-  :bind (("M-<f7>" . flyspell-buffer)))
-
-(use-package flyspell-correct
-  :after (flyspell)
-  :bind (("C-;" . flyspell-auto-correct-previous-word)
-         ("<f7>" . flyspell-correct-wrapper)))
-
 ;; Notes drawers
-(defun ews-org-insert-notes-drawer ()
-  "Generate a NOTES drawer under the heading of the current or jump to an existing one."
-  (interactive)
-  (push-mark)
-  (org-previous-visible-heading 1)
-  (next-line 1)
-  (if (looking-at-p "^[ \t]*:NOTES:")
-      (progn
-        (re-search-forward "^[ \t]*:END:" nil t)
-        (previous-line)
-        (end-of-line)
-        (org-return))
-    (org-insert-drawer nil "NOTES"))
-  (message "Press C-u C-SPACE to return to previous position."))
-
 (with-eval-after-load "org"
-  (define-key org-mode-map (kbd "C-c C-x n") #'ews-org-insert-notes-drawer))
-
-;; Auto completion
-(use-package company
-  :custom
-  (company-idle-delay 0)
-  (company-minimum-prefix-length 4)
-  (company-selection-wrap-around t)
-  :init
-  (global-company-mode))
-
-;; Required for variable pitch
-(use-package company-posframe
-  :config
-  (company-posframe-mode 1))
+  (define-key org-mode-map (kbd "C-c C-x n") #'ews-org-insert-notes-drawer)
+  (define-key org-mode-map (kbd "C-c w c") #'ews-org-insert-notes-drawer))
 
 ;; PUBLISHING DOCUMENTS
 
@@ -517,10 +386,8 @@ Sublists indicate that one of the entries is required."
   (org-export-with-todo-keywords nil)
   (org-export-with-broken-links t)
   (org-export-with-toc nil)
-  (org-export-with-smart-quotes t))
-
-;; Export to MS-Word
-(setq-default org-odt-preferred-output-format "docx")
+  (org-export-with-smart-quotes t)
+  (org-export-date-timestamp-format "%d %B %Y"))
 
 (with-eval-after-load 'ox-latex
   (add-to-list 'org-latex-classes
@@ -540,16 +407,16 @@ Sublists indicate that one of the entries is required."
   :custom
   ;; Multiple LaTeX passes for bibliographies
   (org-latex-pdf-process
-   '(“pdflatex -interaction nonstopmode -output-directory %o %f”
+   '("pdflatex -interaction nonstopmode -output-directory %o %f"
      "bibtex %b"
-     “pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f”
-     “pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f”))
+     "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+     "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
   ;; Clean temporary files after export
   (org-latex-logfiles-extensions
-   (quote (“lof” “lot” “tex~” “aux” “idx” “log” “out”
+   (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out"
            "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk"
            "blg" "brf" "fls" "entoc" "ps" "spl" "bbl"
-           “tex” “bcf” ))))
+           "tex" "bcf"))))
 
 ;; epub export
 (use-package ox-epub
@@ -562,45 +429,7 @@ Sublists indicate that one of the entries is required."
       time-stamp-format "[%04Y-%02m-%02d %a]")
 (add-hook 'before-save-hook 'time-stamp nil)
 
-;; Create Hugo links
-(defun ews-get-hugo-directory ()
-  "Lists the directory of the current Hugo website or nil."
-  (if (string-match "\\(.*\\)content" default-directory)
-      (match-string 1 default-directory)
-    nil))
-
-(defun ews-hugo-list-content ()
-  "List the content of the Hugo website of the current buffer.
-When not in an apparent Hugo directory then return error."
-  (if-let* ((hugodir (ews-get-hugo-directory))
-            (hugo-p (not (null (directory-files hugodir nil "^config\\..*"))))
-            (content-dir (concat hugodir "content/")))
-      (let ((org-files (directory-files-recursively content-dir "\\.org\\'"))
-            (md-files (directory-files-recursively content-dir "\\.md\\'")))
-        (append org-files md-files))
-    (user-error "Not in a Hugo buffer")))
-
-(defun ews-hugo-link-complete ()
-  "Complete a Hugo weblink through the `org-insert-link' and hugo: hyperlink type."
-  (let* ((posts (ews-hugo-list-content))
-         (titles (mapcar (lambda (post)
-                           (string-remove-prefix
-                            (concat (ews-get-hugo-directory)
-                                    "content/") post)) posts))
-         (selection (completing-read "Choose page:" titles))
-         (target (concat "/"
-                         (replace-regexp-in-string
-                          "_index.*" "" selection))))
-    (when titles
-      (concat "{{< ref \"" target "\" >}}"))))
-
-;; New link type for Org-Hugo internal links
-(org-link-set-parameters
- "hugo"
- :complete #'ews-hugo-link-complete)
-
 ;; GETTING THINGS DONE
-
 (use-package org
   :custom
   (org-agenda-files ews-todo-file)
@@ -610,7 +439,6 @@ When not in an apparent Hugo directory then return error."
   (("C-c a" . org-agenda)))
 
 ;; FILE MANAGEMENT
-
 (use-package dired
   :ensure
   nil
@@ -635,6 +463,21 @@ When not in an apparent Hugo directory then return error."
 (setq-default backup-directory-alist
               `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
               create-lockfiles nil)  ; No lock files
+
+;; Recent files
+(use-package recentf
+  :config
+  (recentf-mode t)
+  (run-at-time nil (* 5 60) 'recentf-save-list)
+  :custom
+  (recentf-max-saved-items 50))
+
+;; Bookmarks
+(use-package bookmark
+  :custom
+  (bookmark-save-flag 1)
+  :bind
+  ("C-x r D" . bookmark-delete))
 
 ;; Image viewer
 (use-package emacs

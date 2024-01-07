@@ -5,7 +5,7 @@
 
 #+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
 #+attr_org: :width 400
-[[file:documents/images/emacs-writing-studio.png]]
+[[file:emacs-writing-studio.png]]
  
 This configuration follows the following principles:
 - Leverage functionality in Emacs 29.1
@@ -13,25 +13,25 @@ This configuration follows the following principles:
 - No configuration for writing code
 - Centred around Org mode
 
-The [[https://lucidmanager.org/tags/emacs/][accompanying website]] will eventually be published as an (e)book with additional content. The website and the book are written and published with the /Emacs Writing Studio/ Configuration.
-
 Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to see additional packages useful to authors.
 
 * Install EWS
-To run the /Emacs Writing Studio/ configuration, download the ~init.el~ file and run Emacs with the ~--init-directory~ option followed by the folder where =init.el= is located:
+To try /Emacs Writing Studio/ configuration, download the =init.el= file and run Emacs with the =--init-directory= option followed by the init directory.
 
 ~emacs --init-directory <path/to/emacs-writing-studio>~
-
-The Documents folder contains some sample documents and a testing script.
 
 Emacs requires external software to assist with reading and manipulating non-text files, such as ebooks, images and sound files. EWS checks for the presence of required external software and will generate a warning in the =*Messages*= buffer if one or more programs are missing. If this is the case, some functionality might not be available, but Emacs will work fine otherwise.
 
 * Using EWS
-/Emacs Writing Studio/ uses the standard Emacs key bindings. For commands without defualt keybinding, it uses the =C-c w= prefix keys (=w= for writing).
+/Emacs Writing Studio/ uses default Emacs key bindings. For commands without default keybinding, it uses the =C-c w= prefix keys (=w= for Writing Studio).
+
+Read the [[https://lucidmanager.org/tags/emacs/][accompanying website]] for a detailed description of its functionality.
 
 ** EWS Functions
 /Emacs Writing Studio/ includes bespoke convenience commands:
 
-- ~ews-biblio-lookup~: Combines functionality from the [[https://github.com/cpitclaudel/biblio.el][biblio]] and [[https://github.com/emacs-citar/citar][Citar]] packages.
-- ~ews-distraction-free~: Activate [[https://github.com/rnkn/olivetti][Olivetti mode]].
+- ~ews-biblio-bibtex-lookup~: Combines functionality from the [[https://github.com/cpitclaudel/biblio.el][biblio]] and [[https://github.com/emacs-citar/citar][Citar]] packages.
+- ~ews-distraction-free~: Activate [[https://github.com/rnkn/olivetti][Olivetti mode]] and reset old values when deactivated.
 - ~ews-org-insert-notes-drawer~: Inserts an notes [[https://orgmode.org/manual/Drawers.html][drawer]] under the current Org heading.
+- ~ews-org-count-words~: Count words in each Org mode heading and add the result in a property drawer.
+- Custom org mode link type for Hugo website development.
