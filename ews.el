@@ -31,6 +31,13 @@
 ;;
 ;;; Code:
 
+(require 'cl-lib)
+(require 'olivetti)
+(require 'biblio)
+(require 'citar)
+(require 'org)
+
+
 ;; Emacs Writing Studio Customisation
 (defgroup ews ()
   "Emacs Writing Studio."
@@ -79,13 +86,12 @@
   :group 'ews
   :type 'file)
 
-;; Check for missing executables
+;; Check for missing external software
 ;;;###autoload
 (defun ews-missing-executables (prog-list)
   "Identified missing executables in PROG-LIST.
 
 Sublists indicate that one of the entries is required."
-  (require 'cl-lib)
   (let ((missing '()))
     (dolist (exec prog-list)
       (if (listp exec)
@@ -114,11 +120,10 @@ Sublists indicate that one of the entries is required."
       (olivetti-mode 0)
       (text-scale-set 0))))
 
-;; Integrating Biblio and Citar
 ;;;###autoload
 (defun ews-biblio-lookup ()
   "Combines biblio-lookup and biblio-doi-insert-bibtex."
-  (interactive)x
+  (interactive)
   (let* ((dbs (biblio--named-backends))
          (db-list (append dbs '(("DOI" . biblio-doi-backend))))
          (db-selected (biblio-completing-read-alist
@@ -129,8 +134,9 @@ Sublists indicate that one of the entries is required."
           (biblio-doi-insert-bibtex doi))
       (biblio-lookup db-selected))))
 
+;;;###autoload
 (defun ews-biblio-bibtex-lookup ()
-  "Select BibTeX file, perform a lookup with Biblio and insert entry."
+  "Select a BibTeX file, perform a lookup with Biblio and insert entry."
   (interactive)
   (let ((bibfile (completing-read
                   "BibTeX file:"
@@ -140,7 +146,6 @@ Sublists indicate that one of the entries is required."
     (ews-biblio-lookup)
     (save-buffer)))
 
-;; Notes drawers
 ;;;###autoload
 (defun ews-org-insert-notes-drawer ()
   "Generate or open a NOTES drawer under the current heading."
@@ -204,9 +209,10 @@ When not in an apparent Hugo directory then return error."
     (when titles
       (concat "{{< ref \"" target "\" >}}"))))
 
- ;; New link type for Org-Hugo internal links
-(org-link-set-parameters
- "hugo"
- :complete #'ews-hugo-link-complete)
+;; New link type for Org-Hugo internal links
+(with-eval-after-load "org"
+  (org-link-set-parameters
+   "hugo"
+   :complete #'ews--hugo-link-complete))
 
 ;;; ews.el ends here
