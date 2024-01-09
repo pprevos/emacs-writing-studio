@@ -84,6 +84,10 @@
   :group 'ews
   :type 'file)
 
+(defvar ews--load-directory
+  (file-name-directory load-file-name)
+  "Path of the ews package.")
+
 ;; Check for missing external software
 ;;;###autoload
 (defun ews-missing-executables (prog-list)

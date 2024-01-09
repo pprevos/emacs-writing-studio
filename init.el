@@ -260,8 +260,6 @@
 ;; Emacs Multimedia System
 (use-package emms
   :init
-  (require 'emms-setup)
-  (require 'emms-mpris)
   (emms-all)
   (emms-default-players)
   (emms-mpris-enable)
@@ -280,7 +278,7 @@
 ;; Fleeting notes in Scratch Buffer
 (setq initial-major-mode 'org-mode
       initial-scratch-message
-      "#+title: Scratch Buffer\n\nFor random thoughts.\n\n")
+      "#+title: Scratch Buffer\n\nWelcome to Emacs Writing Studio.\n\n")
 
 (use-package persistent-scratch
   :hook
@@ -324,6 +322,35 @@
   :bind
   (("C-c n f" . consult-notes)
    ("C-c n s" . consult-notes-search-in-all-notes)))
+
+(package-vc-install '(denote-explore
+                        :url "https://github.com/pprevos/denote-explore/"))
+
+  (use-package denote-explore
+    :after
+    dashboard
+    :load-path
+    "~/Documents/projects/denote-explore/"
+    :init
+    ;; Add a widget to the dashboard
+    (require 'denote-explore-dashboard)
+    (denote-explore-dashboard-activate)
+    :bind
+    (;; Statistics
+     ("C-c n e c" . denote-explore-count-notes)
+     ("C-c n e C" . denote-explore-count-keywords)
+     ;; Janitor
+     ("C-c n e S" . denote-explore-single-keywords)
+     ("C-c n e K" . denote-explore-rename-keyword)
+     ;; Random walks
+     ("C-c n e r" . denote-explore-random-note)
+     ("C-c n e l" . denote-explore-random-link)
+     ("C-c n e k" . denote-explore-random-keyword)
+     ;; Visualise
+     ("C-c n e w" . denote-explore-keywords-barchart)
+     ("C-c n e x" . denote-explore-extensions-barchart)
+     ("C-c n e n" . denote-explore-network-r)))
+
 
 ;; Fleeting notes
 (use-package org
