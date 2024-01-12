@@ -179,6 +179,21 @@ Sublists indicate that one of the entries is required."
        (unless (org-entry-get nil "target")
          (org-set-property "target" "0"))))))
 
+
+;;;###autoload
+(defun ews-org-screenshot ()
+  "Take a screenshot with ImageMagick import function and insert an Org mode link.
+
+User selects directory and enters filename.  Extension is forced to PNG."
+  (interactive)
+  (let ((filename (read-file-name "Enter filename for screenshot: " default-directory)))
+    (unless (string-equal "png" (file-name-extension filename))
+      (setq filename (concat (file-name-sans-extension filename) ".png")))
+    (call-process-shell-command (format "import %s" filename))
+    (insert (format "#+caption: %s\n" (read-from-minibuffer "Caption: ")))
+    (insert (format "[[file:%s]]" filename))
+    (org-redisplay-inline-images)))
+
 ;; Create Hugo links
 (defun ews--get-hugo-directory ()
   "Lists the directory of the current Hugo website or nil."
