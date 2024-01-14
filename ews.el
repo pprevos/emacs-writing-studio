@@ -1,4 +1,4 @@
-;; ews.el --- Emacs Writing Studio: configuration for authors -*- lexical-binding: t -*-
+;;; ews.el --- Emacs Writing Studio: configuration for authors  -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2023-2024 Peter Prevos
 ;;
@@ -182,9 +182,7 @@ Sublists indicate that one of the entries is required."
 
 ;;;###autoload
 (defun ews-org-screenshot ()
-  "Take a screenshot with ImageMagick import function and insert an Org mode link.
-
-User selects directory and enters filename.  Extension is forced to PNG."
+  "Take a screenshot with ImageMagick and insert as an Org mode link."
   (interactive)
   (let ((filename (read-file-name "Enter filename for screenshot: " default-directory)))
     (unless (string-equal "png" (file-name-extension filename))
