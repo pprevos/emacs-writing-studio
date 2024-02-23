@@ -1,11 +1,14 @@
-;;; ews.el --- Emacs Writing Studio: configuration for authors  -*- lexical-binding:t -*-
+;;; ews.el --- Emacs Writing Studio: configuration for authors  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023-2024 Peter Prevos
-;;
+;; Copyright (C) 2024 Peter Prevos
+
 ;; Author: Peter Prevos <peter@prevos.net>
 ;; Maintainer: Peter Prevos <peter@prevos.net>
+;; Created: 1 January 2024
+;; Version: 1.1
+;; Keywords: convenience
+;; Homepage: https://lucidmanager.org/tags/emacs/
 ;; URL: https://github.com/pprevos/emacs-writing-studio
-;; Version: 1.0
 ;; Package-Requires ((olivetti "2.0.5") (biblio "0.3") (citar "1.4.0") (org "9.6.6") (emacs "29.1"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -123,7 +126,7 @@ Sublists indicate that one of the entries is required."
       (text-scale-set 0))))
 
 ;;;###autoload
-(defun ews-biblio-lookup ()
+(defun ews--biblio-lookup ()
   "Combines biblio-lookup and biblio-doi-insert-bibtex."
   (interactive)
   (let* ((dbs (biblio--named-backends))
@@ -138,14 +141,18 @@ Sublists indicate that one of the entries is required."
 
 ;;;###autoload
 (defun ews-biblio-bibtex-lookup ()
-  "Select a BibTeX file, perform a lookup with Biblio and insert entry."
+  "Use curent buffer or Select BibTeX file, lookup with Biblio and insert entry."
   (interactive)
-  (let ((bibfile (completing-read
-                  "BibTeX file:"
-                  (citar--bibliography-files))))
+  (let ((current-mode major-mode)
+	(bibfile (if (equal major-mode 'bibtex-mode)
+		     (buffer-file-name)
+		   (completing-read
+                    "BibTeX file:"
+                    (citar--bibliography-files))
+		   )))
     (find-file bibfile)
     (goto-char (point-max))
-    (ews-biblio-lookup)
+    (ews--biblio-lookup)
     (save-buffer)))
 
 ;;;###autoload
@@ -154,13 +161,12 @@ Sublists indicate that one of the entries is required."
   (interactive)
   (push-mark)
   (org-previous-visible-heading 1)
-  (next-line)
-  (org-beginning-of-line)
+  (forward-line)
   (if (looking-at-p "^[ \t]*:NOTES:")
       (progn
         (org-fold-hide-drawer-toggle 'off)
         (re-search-forward "^[ \t]*:END:" nil t)
-        (previous-line)
+        (forward-line -1)
         (org-end-of-line)
         (org-return))
     (org-insert-drawer nil "NOTES"))
@@ -178,7 +184,6 @@ Sublists indicate that one of the entries is required."
        (org-set-property "wordcount" (number-to-string word-count))
        (unless (org-entry-get nil "target")
          (org-set-property "target" "0"))))))
-
 
 ;;;###autoload
 (defun ews-org-screenshot ()
