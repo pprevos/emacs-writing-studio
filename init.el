@@ -5,7 +5,7 @@
 ;; Author: Peter Prevos <peter@prevos.net>
 ;; Maintainer: Peter Prevos <peter@prevos.net>
 ;; Homepage: https://github.com/pprevos/emacs-writing-studio
-;; Version: 1.0
+;; Version: 1.1
 ;; Package-Requires ((emacs "29.1"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -60,8 +60,7 @@
 (unless (package-installed-p 'ews)
   (package-vc-install
    '(ews
-     :url "https://github.com/pprevos/emacs-writing-studio/"
-     :main-file "ews.el")))
+     :url "https://github.com/pprevos/emacs-writing-studio/")))
 
 ;; Check for missing external software
 (ews-missing-executables
@@ -94,9 +93,6 @@
                            (t . (1.1))))
   (modus-themes-to-toggle
    '(modus-operandi-tinted modus-vivendi-tinted))
-  :bind
-  (("C-c w m" . modus-themes-toggle)
-   ("C-c w M" . modus-themes-select))
   :init
   (load-theme 'modus-operandi-tinted :no-confirm))
 
@@ -104,6 +100,20 @@
 (use-package mixed-pitch
   :hook
   (text-mode . mixed-pitch-mode))
+
+;; CONFIGURE TEXT MODES
+
+;; Sensible line-breaking
+(add-hook 'text-mode-hook 'visual-line-mode)
+
+;; Overwrite selected text
+(delete-selection-mode t)
+
+;; Scroll to the first and last line of the buffer
+(setq-default scroll-error-top-bottom t)
+
+;; Copy the system clipboard to the kill ring
+(setq save-interprogram-paste-before-kill t)
 
 ;; RICING ORG MODE
 
@@ -116,7 +126,6 @@
               org-image-actual-width '(300))
 
 ;; Show hidden emphasis markers
-
 (use-package org-appear
   :hook
   (org-mode . org-appear-mode))
@@ -144,13 +153,18 @@
    (plist-put org-format-latex-options :background 'auto)))
 
 ;; Increase line spacing
-(setq-default line-spacing 2)
+(setq-default line-spacing 3)
 
 ;; Distraction-free writing
-(use-package olivetti
-  :demand t
-  :bind
-  (("<f9>" . ews-distraction-free)))
+(use-package olivetti)
+
+;; Undo tree
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode)
+  ;; Prevent undo tree from saving hidden undo files 
+  :custom
+  (undo-tree-auto-save-history nil))
 
 ;; MINIBUFFER COMPLETION
 
@@ -182,7 +196,8 @@
 (use-package which-key
   :config
   (which-key-mode)
-  (which-key-setup-side-window-right))
+  :custom
+  (which-key-popup-type 'minibuffer))
 
 ;; READ EBOOKS
 
@@ -222,28 +237,18 @@
   :custom
   (org-cite-global-bibliography
    (directory-files ews-bibliography-directory t
-    "^[A-Z|a-z|0-9].+.bib$"))
+		    "^[A-Z|a-z|0-9].+.bib$"))
   (citar-bibliography org-cite-global-bibliography)
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
-  :bind
-  (("C-c w c c" . citar-open)
-   (:map org-mode-map
-         :package org
-         ("C-c w C". #'org-cite-insert))))
-
-;; Integrating Biblio and Citar
-(global-set-key (kbd "C-c w c b") 'ews-biblio-bibtex-lookup)
+  (org-cite-activate-processor 'citar))
 
 ;; Configure Elfeed
 (use-package elfeed
   :custom
   (elfeed-db-directory
    (expand-file-name "elfeed" user-emacs-directory))
-   (elfeed-show-entry-switch 'display-buffer)
-  :bind
-  ("C-c w e" . elfeed))
+  (elfeed-show-entry-switch 'display-buffer))
 
 ;; Configure Elfeed with org mode
 (use-package elfeed-org
@@ -253,9 +258,7 @@
   (rmh-elfeed-org-files (list ews-elfeed-config-file)))
 
 ;; Easy insertion of weblinks
-(use-package org-web-tools
-  :bind
-  (("C-c w w" . org-web-tools-insert-link-for-url)))
+(use-package org-web-tools)
 
 ;; Emacs Multimedia System
 (use-package emms
@@ -267,9 +270,7 @@
   (emms-source-file-default-directory ews-music-directory)
   (emms-browser-covers #'emms-browser-cache-thumbnail-async)
   :bind
-  (("<f5>"   . emms-browser)
-   ("M-<f5>" . emms)
-   ("<XF86AudioPrev>" . emms-previous)
+  (("<XF86AudioPrev>" . emms-previous)
    ("<XF86AudioNext>" . emms-next)
    ("<XF86AudioPlay>" . emms-pause)))
 
@@ -285,9 +286,7 @@
   (after-init . persistent-scratch-setup-default)
   :init
   (persistent-scratch-setup-default)
-  (persistent-scratch-autosave-mode)
-  :bind
-  (("C-c w x" . scratch-buffer)))
+  (persistent-scratch-autosave-mode))
 
 ;; Denote
 (use-package denote
@@ -299,18 +298,7 @@
   :hook
   (dired-mode . denote-dired-mode)
   :custom-face
-  (denote-faces-link ((t (:slant italic))))
-  :bind
-  (("C-c n n" . denote-create-note)
-   ("C-c n d" . denote-date)
-   ("C-c n i" . denote-link-or-create)
-   ("C-c n l" . denote-find-link)
-   ("C-c n b" . denote-find-backlink)
-   ("C-c n d" . denote-org-dblock-insert-links)
-   ("C-c n r" . denote-rename-file)
-   ("C-c n R" . denote-rename-file-using-front-matter)
-   ("C-c n k" . denote-keywords-add)
-   ("C-c n K" . denote-keywords-remove)))
+  (denote-faces-link ((t (:slant italic)))))
 
 ;; Denote extensions
 (use-package consult-notes
@@ -318,39 +306,14 @@
              consult-notes-search-in-all-notes)
   :custom
   (consult-notes-file-dir-sources
-   `(("Denote" ?d ,ews-notes-directory)))
-  :bind
-  (("C-c n f" . consult-notes)
-   ("C-c n s" . consult-notes-search-in-all-notes)))
+   `(("Denote" ?d ,ews-notes-directory))))
 
-(package-vc-install '(denote-explore
-                        :url "https://github.com/pprevos/denote-explore/"))
+;; (unless (package-installed-p 'denote-explore)
+;;   (package-vc-install
+;;    '(denote-explore
+;;      :url "https://github.com/pprevos/denote-explore/")))
 
-  (use-package denote-explore
-    :after
-    dashboard
-    :load-path
-    "~/Documents/projects/denote-explore/"
-    :init
-    ;; Add a widget to the dashboard
-    (require 'denote-explore-dashboard)
-    (denote-explore-dashboard-activate)
-    :bind
-    (;; Statistics
-     ("C-c n e c" . denote-explore-count-notes)
-     ("C-c n e C" . denote-explore-count-keywords)
-     ;; Janitor
-     ("C-c n e S" . denote-explore-single-keywords)
-     ("C-c n e K" . denote-explore-rename-keyword)
-     ;; Random walks
-     ("C-c n e r" . denote-explore-random-note)
-     ("C-c n e l" . denote-explore-random-link)
-     ("C-c n e k" . denote-explore-random-keyword)
-     ;; Visualise
-     ("C-c n e w" . denote-explore-keywords-barchart)
-     ("C-c n e x" . denote-explore-extensions-barchart)
-     ("C-c n e n" . denote-explore-network-r)))
-
+(use-package denote-explore)
 
 ;; Fleeting notes
 (use-package org
@@ -382,27 +345,18 @@
   :config
   (citar-denote-mode)
   :custom
-  (citar-open-always-create-notes t)
-  :bind (("C-c w c n" . citar-create-note)
-         ("C-c w c o" . citar-denote-open-note)
-         ("C-c w c f" . citar-denote-find-citation)
-         ("C-c w c d" . citar-denote-dwim)
-         ("C-c w c e" . citar-denote-open-reference-entry)
-         ("C-c w c a" . citar-denote-add-citekey)
-         ("C-c w c k" . citar-denote-remove-citekey)
-         ("C-c w c r" . citar-denote-find-reference)
-         ("C-c w c l" . citar-denote-link-reference)
-         ("C-c w c x" . citar-denote-nocite)
-         ("C-c w c y" . citar-denote-cite-nocite)))
+  (citar-open-always-create-notes t))
 
 (use-package org
   :custom
   (org-list-allow-alphabetical t))
 
-;; Notes drawers
-(with-eval-after-load "org"
-  (define-key org-mode-map (kbd "C-c C-x n") #'ews-org-insert-notes-drawer)
-  (define-key org-mode-map (kbd "C-c w c") #'ews-org-insert-notes-drawer))
+;; Update Org files with last modified date when #+lastmod: is available
+(setq time-stamp-active t
+      time-stamp-start "#\\+lastmod:[ \t]*"
+      time-stamp-end "$"
+      time-stamp-format "[%04Y-%02m-%02d %a]")
+(add-hook 'before-save-hook 'time-stamp nil)
 
 ;; PUBLISHING DOCUMENTS
 
@@ -414,7 +368,7 @@
   (org-export-with-broken-links t)
   (org-export-with-toc nil)
   (org-export-with-smart-quotes t)
-  (org-export-date-timestamp-format "%d %B %Y"))
+  (org-export-date-timestamp-format "%e %B %Y"))
 
 (with-eval-after-load 'ox-latex
   (add-to-list 'org-latex-classes
@@ -510,10 +464,93 @@
 (use-package emacs
   :bind
   ((:map image-mode-map
-              ("k" . image-kill-buffer)
-              ("<right>" . image-next-file)
-              ("<left>"  . image-previous-file))
+         ("k" . image-kill-buffer)
+         ("<right>" . image-next-file)
+         ("<left>"  . image-previous-file))
    (:map dired-mode-map
-    ("C-<return>" . image-dired-dired-display-external))))
+	 ("C-<return>" . image-dired-dired-display-external))))
 
+;; Set keybindings
+;; https://www.youtube.com/watch?v=gojOZ3k1mmk
+(defvar-keymap ews-denote-map
+  :doc "Denote keybindings."
+  "n" #'denote-create-note
+  "d" #'denote-date
+  "i" #'denote-link-or-create
+  "l" #'denote-find-link
+  "b" #'denote-find-backlink
+  "D" #'denote-org-dblock-insert-links
+  "r" #'denote-rename-file
+  "R" #'denote-rename-file-using-front-matter
+  "k" #'denote-keywords-add
+  "K" #'denote-keywords-remove)
+
+(defvar-keymap ews-denote-explore-map
+  :doc "Denote-Epxlore keybindings"
+  "c" #'denote-explore-count-notes
+  "C" #'denote-explore-count-keywords
+  "S" #'denote-explore-single-keywords
+  "K" #'denote-explore-rename-keyword
+  "r" #'denote-explore-random-note
+  "l" #'denote-explore-random-link
+  "k" #'denote-explore-random-keyword
+  "w" #'denote-explore-keywords-barchart
+  "x" #'denote-explore-extensions-barchart
+  "n" #'denote-explore-network-r)
+
+(defvar-keymap ews-modus-themes-map
+  :doc "Modus Themes keymap."
+  "t" #'modus-themes-toggle
+  "s" #'modus-themes-select)
+
+(defvar-keymap ews-bibliography-map
+  :doc "Bibliograpic functions keymap."
+  "a" #'citar-denote-add-citekey
+  "c" #'citar-open
+  "d" #'citar-denote-dwim
+  "e" #'citar-denote-open-reference-entry
+  "f" #'citar-denote-find-citation
+  "k" #'citar-denote-remove-citekey
+  "l" #'citar-denote-link-reference
+  "n" #'citar-create-note
+  "o" #'citar-denote-open-note
+  "r" #'citar-denote-find-reference
+  "x" #'citar-denote-nocite
+  "y" #'citar-denote-cite-nocite
+  "B" #'ews-biblio-bibtex-lookup)
+
+(defvar-keymap ews-emms-map
+  :doc "Emacs Multimedia System (EMMS) keymap."
+  "b" #'emms-browser
+  "e" #'emms)
+	    
+(defvar-keymap ews-map
+  :doc "Emacs Writing Studio key bindings."
+  "b" ews-bibliography-map
+  "c" #'scratch-buffer
+  "d" ews-denote-map
+  "e" #'elfeed
+  "m" ews-emms-map
+  "n" #'consult-notes
+  "o" #'ews-distraction-free
+  "s" #'consult-notes-search-in-all-notes  
+  "t" ews-modus-themes-map
+  "w" #'org-web-tools-insert-link-for-url
+  "x" ews-denote-explore-map)
+
+(which-key-add-keymap-based-replacements ews-map
+  "b" `("Bibliography" . ,ews-bibliography-map)
+  "d" `("Denote" . ,ews-denote-map)
+  "m" `("Music" . ,ews-emms-map)
+  "t" `("Themes" . ,ews-modus-themes-map)
+  "x" `("Explore Notes" . ,ews-denote-explore-map))
+
+(keymap-set global-map "C-c w" ews-map)
+
+;; Org mode keymap modifications
+(with-eval-after-load "org"
+  (keymap-set org-mode-map "C-c w b b" #'org-cite-insert)
+  (keymap-set org-mode-map "C-c w S" #'ews-org-screenshot)
+  (keymap-set org-mode-map "C-c x n" #'ews-org-insert-notes-drawer)
+  (keymap-set org-mode-map "C-c w c" #'ews-org-count-words))
 ;;; init.el ends here
