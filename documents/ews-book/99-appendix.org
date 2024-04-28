@@ -1,7 +1,6 @@
 #+title: Appendix: The Annotated Emacs Writing Studio Configuration
-#+property:     header-args:elisp :tangle ../../init.el :results none
+#+property:     header-args:elisp :tangle ../../init.el :results none :eval no
 #+startup:      content
-#+bibliography: ../library/emacs-writing-studio.bib
 
 I learned writing computer code by typing long listings of Atari BASIC code and slowly but surely understood its syntax and logic. This method is also a great starting point to learn Emacs Lisp. The purpose of this configuration is for you as a starting point. Feel free to modify anything in the {{{ews}}} (EWS) initialisation file and study its effects.
 
@@ -37,14 +36,10 @@ Any changes made by the Emacs customisation system in EWS are stored in =custom.
 EWS also provides a range of bespoke convenience functions for various aspects of the writing process. This package is not available on any Emacs repository, but is loaded directly from the GitHub repository.
 
 #+begin_src elisp
-  ;; Install ews package to define variables and provide convenience functions
-  ;; (unless (package-installed-p 'ews)
-  ;;   (package-vc-install
-  ;;    '(ews
-  ;;      :url "https://github.com/pprevos/ews-convenience")))
-
-  (use-package ews
-    :load-path "~/documents/projects/ews/ews")
+    ;; Load EWS functions
+  (load-file (concat (file-name-as-directory
+                      user-emacs-directory)
+                     "ews.el"))
 #+end_src
 
 ** Packages and External Software
@@ -68,18 +63,18 @@ These are the basic principles of installing and configuring packages. The Use-P
 To read the finer details of the Use-Package macro, read the manual with =C-h R use-package=.
 
 #+begin_src elisp
-;; Set package archives
-(use-package package
-  :config
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-  (package-initialize))
+  ;; Set package archives
+  (use-package package
+    :config
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+    (package-initialize))
 
-;; Package Management
-(use-package use-package
-  :custom
-  (use-package-always-ensure t)   ;; Always install from online source
-  (package-native-compile t)      ;; Compile all packages
-  (warning-minimum-level :error)) ;; Reduce annoying messages
+  ;; Package Management
+  (use-package use-package
+    :custom
+    (use-package-always-ensure t)
+    (package-native-compile t)
+    (warning-minimum-level :emergency))
 #+end_src
 
 The ~ews-missing-executables~ function checks if external software is available on your system. Emacs writes a message in the minibuffer if any of the recommended tools is missing. You can jump to the =*Messages*= buffer with =C-h e= to review the output. If packages are missing, then Emacs will function normally, but some features might be unavailable. The relevant chapters in this book provide more details which software is required and the tasks it undertakes.
@@ -91,17 +86,17 @@ This function looks whether all these packages are available on your system. Any
 #+begin_src elisp
   ;; Check for missing external software
   (ews-missing-executables
-   '("soffice" "zip" "pdftotext" "ddjvu"         ;; Read ebooks
-     "curl"                                      ;; Read RSS feeds
-     "dvipng"                                    ;; LaTeX formulas
-     "dot"                                       ;; Denote network diagrams
-     ("convert" "gm")                            ;; Modify images
-     "latex"                                     ;; Export to PDF
-     "hunspell"                                  ;; Spellcheck
-     ("grep" "ripgrep")                          ;; Search files
-     ("gs" "mutool")                             ;; View PDF
-     "pdftotext"                                 ;; Convert PDF to plain text
-     ("mpg321" "ogg123" "mplayer" "mpv" "vlc"))) ;; Play music
+   '("soffice" "zip" "pdftotext" "ddjvu"
+     "curl"
+     "dvipng"
+     "dot"
+     ("convert" "gm")
+     "latex"
+     "hunspell"
+     ("grep" "ripgrep")
+     ("gs" "mutool")
+     "pdftotext"
+     ("mpg321" "ogg123" "mplayer" "mpv" "vlc")))
 #+end_src
 
 ** Look and Feel
@@ -150,7 +145,8 @@ The =:init= section activates the tinted version of the Modus-Vivendi (light) th
     (modus-themes-headings '((1 . (1.2))
                              (2 . (1.1))
                              (t . (1.0))))
-    (modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
+    (modus-themes-to-toggle
+     '(modus-operandi-tinted modus-vivendi-tinted))
     :init
     (load-theme 'modus-operandi-tinted :no-confirm)
     :bind
@@ -175,7 +171,7 @@ This last code snippet in the look-and-feel section changes the way Emacs automa
 
 Alternatively, you can add these settings directly to your =init.el= file by adding the following three lines, with your fonts and sizes of choice.
 
-#+begin_src elisp :tangle no :eval no
+#+begin_src elisp :tangle no
   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 130)
   (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono")
   (set-face-attribute 'variable-pitch nil :font "DejaVu Sans")
@@ -320,6 +316,7 @@ The Org-Fragtog package automatically toggles Org mode LaTeX fragment previews a
 Most of the features of Org-Modern have been switched off in the custom section because it might be better for beginning users as these settings hide the semantic symbols. 
 
 #+begin_src elisp
+  ;; Org modern: Most features disables for beginnng users
   (use-package org-modern
     :hook
     (org-mode . org-modern-mode)
@@ -368,10 +365,14 @@ There is currently a confirmed bug in Org mode (version 9.6.6) that overrides th
 
 #+begin_src elisp
   ;; Reading LibreOffice files
+  ;; Fixing a bug in Org Mode pre 9.7
+  ;; Org mode clobbers associations with office documents
   (use-package ox-odt
     :ensure nil
     :config
-    (add-to-list 'auto-mode-alist '("\\.\\(?:OD[CFIGPST]\\|od[cfigpst]\\)\\'" . doc-view-mode-maybe)))
+    (add-to-list 'auto-mode-alist
+                 '("\\.\\(?:OD[CFIGPST]\\|od[cfigpst]\\)\\'"
+                   . doc-view-mode-maybe)))
 #+end_src
 
 ** Bibliographies
@@ -387,6 +388,8 @@ BibTeX mode has many more options that you can configure to modify all sorts of 
      '(("keywords" "Keywords to describe the entry" "")
        ("file" "Link to a document file." "" )))
     (bibtex-align-at-equal-sign t)
+    :config
+    (ews-bibtex-register)
     :bind
     (("C-c w b r" . ews-biblio-register-files)))
 #+end_src
@@ -400,7 +403,7 @@ BibTeX is old but stable software that was last updated in 1988 and has minor li
 The Biblio package provides a useful interface to online literature repositories. The ~ews-biblio-lookup~ function makes this package a little easier to use.
 
 #+begin_src elisp
-  ;; Biblio package for adding BibTeX records and download publications
+  ;; Biblio package for adding BibTeX records
   (use-package biblio
     :bind
     (("C-c w b b" . ews-biblio-lookup)))
@@ -442,8 +445,11 @@ Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system'
     :config
     (elfeed-org)
     :custom
-    (rmh-elfeed-org-files (list ews-elfeed-config-file)))
-
+    (rmh-elfeed-org-files
+     (list (concat (file-name-as-directory
+                (getenv "HOME"))
+                   "Documents/elfeed.org"))))
+  
   ;; Easy insertion of weblinks
   (use-package org-web-tools
     :bind
@@ -486,7 +492,9 @@ The possibilities for capture templates are extensive and depend on your individ
     (("C-c c" . org-capture)
      ("C-c l" . org-store-link))
     :custom
-    (org-default-notes-file ews-inbox-file)
+    (org-default-notes-file
+     (concat (file-name-as-directory ews-home-directory)
+           "Documents/inbox.org"))
     (org-capture-bookmark nil)
     ;; Capture templates
     (org-capture-templates
@@ -503,11 +511,11 @@ The possibilities for capture templates are extensive and depend on your individ
 #+begin_src elisp
   (use-package denote
     :custom
-    (denote-directory ews-notes-directory)
-    (denote-known-keywords nil)
     (denote-sort-keywords t)
     :hook
     (dired-mode . denote-dired-mode)
+    :custom-face
+    (denote-faces-link ((t (:slant italic))))
     :bind
     (("C-c w d b" . denote-find-backlink)
      ("C-c w d d" . denote-date)
@@ -532,7 +540,8 @@ For the search functionality to work you need to install the RipGrep program, an
     (consult-notes-file-dir-sources
      `(("Denote Notes"  ?d ,ews-notes-directory)))
     :bind
-    (("C-c w f" . consult-notes)
+    (("C-c w h" . consult-org-heading)
+     ("C-c w f" . consult-notes)
      ("C-c w g" . consult-notes-search-in-all-notes)))
 #+end_src
 
@@ -557,8 +566,8 @@ For the search functionality to work you need to install the RipGrep program, an
 
 
 #+begin_src elisp
-    (use-package denote-explore
-      :bind
+  (use-package denote-explore
+    :bind
     (;; Statistics
      ("C-c w x c" . denote-explore-count-notes)
      ("C-c w x C" . denote-explore-count-keywords)
@@ -586,15 +595,15 @@ For the search functionality to work you need to install the RipGrep program, an
   (use-package org
     :custom
     (sentence-end-double-space nil)
-  :bind
-  (:map org-mode-map
-        ("C-c w n" . ews-org-insert-notes-drawer)
-        ("C-c w p" . ews-org-insert-screenshot)
-        ("C-c w c" . ews-org-count-words)))
+    :bind
+    (:map org-mode-map
+          ("C-c w n" . ews-org-insert-notes-drawer)
+          ("C-c w p" . ews-org-insert-screenshot)
+          ("C-c w c" . ews-org-count-words)))
 #+end_src
 
 #+begin_src elisp
-(use-package undo-tree
+  (use-package undo-tree
     :config
     (global-undo-tree-mode)
     :custom
@@ -607,7 +616,7 @@ For the search functionality to work you need to install the RipGrep program, an
   (use-package olivetti
     :bind
     (:map text-mode-map
-          ("C-c w o" . ews-distraction-free)))
+          ("C-c w o" . ews-olivetti)))
 #+end_src
 
 ** Citations
@@ -616,7 +625,7 @@ For the search functionality to work you need to install the RipGrep program, an
   (require 'oc-natbib)
   (require 'oc-csl)
 
-  (setq org-cite-csl-styles-dir ews-bibliography-directory
+  (setq org-cite-csl-styles-dir ews-bibtex-directory
         org-cite-export-processors
         '((latex natbib "apalike2" "authoryear")
           (t     csl    "apa6.csl")))
@@ -648,6 +657,7 @@ The [[https://github.com/bnbeckwith/writegood-mode][writegood package]] helps to
 The ~ediff~ family of function by default does not split its windows nicely, so these settings make the program easier to use.
 
 #+begin_src elisp
+  ;; ediff
   (setq ediff-keep-variants nil
         ediff-split-window-function 'split-window-horizontally
         ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -759,11 +769,10 @@ The timestamp for exporting files is set to the European date format of day mont
 ** Getting Things Done
 #+begin_src elisp
    (use-package org
-    :custom
-    (org-agenda-files ews-todo-file)
     :bind
     (("C-c a" . org-agenda)))
 #+end_src
+
 ** Manage Files
 The dired package is a convenient and powerful tool to keep your drives organised and access your information. Developers have published an extensive collection of extensions to dired to add functionality, which you can find in the package manager.
 
@@ -842,7 +851,7 @@ Last but not least, you can define key sequences within Emacs itself. The exampl
 
 This example uses the global keymap, meaning the shortcut is available in all modes. You can also define a shortcut for a specific mode, which is only available when that mode is active. The example below sets the same shortcut but only applies when Org mode is active.
 
-#+begin_src elisp :tangle no
+#+begin_src elisp :tangle yes
   (keymap-set org-mode-map "C-t" #'whitespace-mode)
 #+end_src
 

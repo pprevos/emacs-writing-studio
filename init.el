@@ -8,6 +8,11 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
+;; Load EWS functions
+(load-file (concat (file-name-as-directory
+                    user-emacs-directory)
+                   "ews.el"))
+
 ;; Set package archives
 (use-package package
   :config
@@ -17,26 +22,23 @@
 ;; Package Management
 (use-package use-package
   :custom
-  (use-package-always-ensure t)   ;; Always install from online source
-  (package-native-compile t)          ;; Compile all packages
-  (warning-minimum-level :emergency)) ;; Reduce annoying messages
-
-;; Load EWS functions
-(load-file (concat (file-name-as-directory user-emacs-directory) "ews.el"))
+  (use-package-always-ensure t)
+  (package-native-compile t)
+  (warning-minimum-level :emergency))
 
 ;; Check for missing external software
 (ews-missing-executables
- '("soffice" "zip" "pdftotext" "ddjvu"         ;; Read ebooks
-   "curl"                                      ;; Read RSS feeds
-   "dvipng"                                    ;; LaTeX formulas
-   "dot"                                       ;; Denote network diagrams
-   ("convert" "gm")                            ;; Modify images
-   "latex"                                     ;; Export to PDF
-   "hunspell"                                  ;; Spellcheck
-   ("grep" "ripgrep")                          ;; Search files
-   ("gs" "mutool")                             ;; View PDF
-   "pdftotext"                                 ;; Convert PDF to plain text
-   ("mpg321" "ogg123" "mplayer" "mpv" "vlc"))) ;; Play music
+ '("soffice" "zip" "pdftotext" "ddjvu"
+   "curl"
+   "dvipng"
+   "dot"
+   ("convert" "gm")
+   "latex"
+   "hunspell"
+   ("grep" "ripgrep")
+   ("gs" "mutool")
+   "pdftotext"
+   ("mpg321" "ogg123" "mplayer" "mpv" "vlc")))
 
 ;; Keyboard-centric user interface removing tool, menu and scroll bars
 (tool-bar-mode -1)
@@ -62,19 +64,18 @@
   (modus-themes-headings '((1 . (1.2))
                            (2 . (1.1))
                            (t . (1.0))))
-  (modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
+  (modus-themes-to-toggle
+   '(modus-operandi-tinted modus-vivendi-tinted))
   :init
   (load-theme 'modus-operandi-tinted :no-confirm)
   :bind
   (("C-c w t t" . modus-themes-toggle)
    ("C-c w t s" . modus-themes-select)))
 
-;; Fonts
 (use-package mixed-pitch
   :hook
   (text-mode . mixed-pitch-mode))
 
-;; Spliting windows nicely
 (setq split-width-threshold 120
       split-height-threshold nil)
 
@@ -82,7 +83,7 @@
   :config
   (balanced-windows-mode))
 
-;;; MINIBUFFER COMPLETION
+;; MINIBUFFER COMPLETION
 
 ;; Enable vertico
 (use-package vertico
@@ -178,8 +179,7 @@
    (plist-put org-format-latex-options :foreground 'auto)
    (plist-put org-format-latex-options :background 'auto)))
 
-;; Ricing Org mode
-;; Most features disabled to not confuse new users
+;; Org modern: Most features disables for beginnng users
 (use-package org-modern
   :hook
   (org-mode . org-modern-mode)
@@ -201,25 +201,25 @@
 ;; INSPIRATION
 
 ;; Doc-View
-(use-package doc-view
-  :custom
-  (doc-view-resolution 300)
-  (large-file-warning-threshold (* 50 (expt 2 20))))
+  (use-package doc-view
+    :custom
+    (doc-view-resolution 300)
+    (large-file-warning-threshold (* 50 (expt 2 20))))
 
 ;; Read ePub files
-(use-package nov
-  :init
-  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
+ (use-package nov
+   :init
+   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
 
 ;; Reading LibreOffice files
 ;; Fixing a bug in Org Mode pre 9.7
-;; Org mode clobbers the associations with office documents for DocView
+;; Org mode clobbers associations with office documents
 (use-package ox-odt
   :ensure nil
   :config
   (add-to-list 'auto-mode-alist
-	       '("\\.\\(?:OD[CFIGPST]\\|od[cfigpst]\\)\\'"
-		 . doc-view-mode-maybe)))
+               '("\\.\\(?:OD[CFIGPST]\\|od[cfigpst]\\)\\'"
+                 . doc-view-mode-maybe)))
 
 ;; Managing Bibliographies
 (use-package bibtex
@@ -231,12 +231,12 @@
   :config
   (ews-bibtex-register)
   :bind
-  (("C-c w b r" . ews-bibtex-register)))
+  (("C-c w b r" . ews-biblio-register-files)))
 
-;; Biblio package for adding BibTeX records and download publications
+;; Biblio package for adding BibTeX records
 (use-package biblio
   :bind
-  (("C-c w b b" . ews-bibtex-biblio-lookup)))
+  (("C-c w b b" . ews-biblio-lookup)))
 
 ;; Citar to access bibliographies
 (use-package citar
@@ -248,6 +248,9 @@
   (org-cite-activate-processor 'citar)
   :bind
   (("C-c w b o" . citar-open)))
+
+;; Use EWW
+;; (setq browse-url-browser-function 'eww-browse-url)
 
 ;; Configure Elfeed
 (use-package elfeed
@@ -265,8 +268,8 @@
   :custom
   (rmh-elfeed-org-files
    (list (concat (file-name-as-directory
-		  (getenv "HOME"))
-		 "Documents/elfeed.org"))))
+              (getenv "HOME"))
+                 "Documents/elfeed.org"))))
 
 ;; Easy insertion of weblinks
 (use-package org-web-tools
@@ -299,7 +302,7 @@
   :custom
   (org-default-notes-file
    (concat (file-name-as-directory ews-home-directory)
-	   "Documents/inbox.org"))
+         "Documents/inbox.org"))
   (org-capture-bookmark nil)
   ;; Capture templates
   (org-capture-templates
@@ -307,13 +310,6 @@
       item
       (file+headline org-default-notes-file "Notes")
       "- %?")
-     ("p" "Permanent note" plain
-      (file-last-path)
-      #'denote-org-capture
-      :no-save t
-      :immediate-finish nil
-      :kill-buffer t
-      :jump-to-captured t)
      ("t" "New task" entry
       (file+headline org-default-notes-file "Tasks")
       "* TODO %i%?"))))
@@ -328,7 +324,7 @@
   :bind
   (("C-c w d b" . denote-find-backlink)
    ("C-c w d d" . denote-date)
-   ("C-c w d l" . denote-find-link)
+   ("C-c w d f" . denote-find-link)
    ("C-c w d i" . denote-link-or-create)
    ("C-c w d I" . denote-org-extras-dblock-insert-links)
    ("C-c w d k" . denote-keywords-add)
@@ -340,8 +336,8 @@
 (use-package consult-notes
   :custom
   (consult-narrow-key ":")
-  (consult-notes-sources
-   `(("Denote Notes"  ?d ,denote-directory)))
+  (consult-notes-file-dir-sources
+   `(("Denote Notes"  ?d ,ews-notes-directory)))
   :bind
   (("C-c w h" . consult-org-heading)
    ("C-c w f" . consult-notes)
@@ -389,9 +385,9 @@
   (sentence-end-double-space nil)
   :bind
   (:map org-mode-map
-	("C-c w n" . ews-org-insert-notes-drawer)
-	("C-c w p" . ews-org-insert-screenshot)
-	("C-c w c" . ews-org-count-words)))
+        ("C-c w n" . ews-org-insert-notes-drawer)
+        ("C-c w p" . ews-org-insert-screenshot)
+        ("C-c w c" . ews-org-count-words)))
 
 (use-package undo-tree
   :config
@@ -428,6 +424,7 @@
   :hook
   (text-mode . writegood-mode))
 
+;; ediff
 (setq ediff-keep-variants nil
       ediff-split-window-function 'split-window-horizontally
       ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -506,8 +503,8 @@
  '((dot . t))) ; this line activates dot
 
 (use-package org
-  :bind
-  (("C-c a" . org-agenda)))
+ :bind
+ (("C-c a" . org-agenda)))
 
 ;; FILE MANAGEMENT
 (use-package dired
