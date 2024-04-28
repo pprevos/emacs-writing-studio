@@ -1,14 +1,14 @@
 #+title: Emacs Writing Studio
 #+author: Peter Prevos
 
-/Emacs Writing Studio/ (EWS) is a configuration and a [[https://lucidmanager.org/tags/emacs/][series of articles]] for authors who want to use Emacs to research and publish articles, books, scripts and websites.
+/Emacs Writing Studio/ (EWS) is a configuration and a [[https://lucidmanager.org/tags/emacs/][series of articles]] for authors who want to use Emacs to research and publish articles, books, scripts and websites. EWS is also a forthcoming ebook and paperback, which is an expanded version of the blog posts.
 
 #+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
 #+attr_org: :width 400
 [[file:emacs-writing-studio.png]]
  
 This configuration follows the following principles:
-- Leverage functionality in Emacs 29.1
+- Leverage functionality in Emacs 29
 - Standard keyboard shortcuts
 - No configuration for writing code
 - Centred around Org mode
@@ -16,22 +16,6 @@ This configuration follows the following principles:
 Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to see additional packages useful to authors.
 
 * Install EWS
-To try /Emacs Writing Studio/ configuration, download the =init.el= file and run Emacs with the =--init-directory= option followed by the init directory.
+To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository (=github.com/pprevos/emacs-writing-studio=) and save them in the configuration folder. The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=. Copy the bot files from the EWS repository to this directory. EWS will activate after you evaluate the ~restart-emacs~ function or the next time you start the program.
 
-~emacs --init-directory <path/to/emacs-writing-studio>~
-
-Emacs requires external software to assist with reading and manipulating non-text files, such as ebooks, images and sound files. EWS checks for the presence of required external software and will generate a warning in the =*Messages*= buffer if one or more programs are missing. If this is the case, some functionality might not be available, but Emacs will work fine otherwise.
-
-* Using EWS
-/Emacs Writing Studio/ uses default Emacs key bindings. For commands without default keybinding, it uses the =C-c w= prefix keys (=w= for Writing Studio).
-
-Read the [[https://lucidmanager.org/tags/emacs/][accompanying website]] for a detailed description of its functionality.
-
-** EWS Functions
-/Emacs Writing Studio/ includes bespoke convenience commands:
-
-- ~ews-biblio-bibtex-lookup~: Combines functionality from the [[https://github.com/cpitclaudel/biblio.el][biblio]] and [[https://github.com/emacs-citar/citar][Citar]] packages.
-- ~ews-distraction-free~: Activate [[https://github.com/rnkn/olivetti][Olivetti mode]] and reset old values when deactivated.
-- ~ews-org-insert-notes-drawer~: Inserts an notes [[https://orgmode.org/manual/Drawers.html][drawer]] under the current Org heading.
-- ~ews-org-count-words~: Count words in each Org mode heading and add the result in a property drawer.
-- Custom org mode link type for Hugo website development.
+If you an experienced Emacs user, then you can try the EWS configuration by creating a separate folder for the init file and start Emacs with =emacs --init-directory <folder-path>=. That way you can try EWS without clobbering your existing configuration.
