@@ -1,0 +1,11 @@
+#+title:      Common User Access (CUA)
+#+date:       [2024-04-16 Tue 17:41]
+#+filetags:   :bib:computing:emacs:
+#+identifier: 20240416T174132
+#+reference:  berry_1988
+
+Emacs can implement CUA keys, but they conflict with some Org mode default bindings.
+
+[[info:emacs#CUA Bindings][Emacs Manual: CUA Bindings]]
+
+Wikipedia has an interesting page comparing keyboard shortcuts in various systems, including Emacs: [[https://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts][Table of keyboard shortcuts - Wikipedia]]

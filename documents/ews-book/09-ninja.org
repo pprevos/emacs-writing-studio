@@ -1,0 +1,86 @@
+#+title: Becoming an Emacs ninja
+:NOTES:
+- [X] Recommended books
+- [ ] Alternative packages
+- [X] Ask for help
+- [X] Learn Elisp
+- [ ] [[https://www.youtube.com/watch?v=-mifMOjRBr8][Emacs Repeat Commands (Advanced Topic) - YouTube]]
+:END:
+
+Now that you have reached the end of thie book you know enough to start publishing a website or write a book or whatever else you want to share with the world. You have mastered the steep part of the Emacs learning curve. However, as you use Emacs for a while you will undoutably want to finetune it to your needs and become and 
+
+There are five steps to becoming an Emacs ninja. 
+
+1. Understand the basics
+2. Modify your init file by hand
+3. Create simple functions to make your life easier
+4. Build a package
+5. Help others
+
+This book has helped you to take the first step
+
+* Some more random functions
+** Bookmarks
+** Keyboard Macros
+Writing and editing can sometimes be a repetitive task. Lets assume that your editor tells you that ...
+
+=F3= starts recording a macro (~kmacro-start-macro-or-insert-counter~).
+
+=F4= completes the recording (~kmacro-end-or-call-macro~).
+
+* Migrating to Emacs
+Now that you are well on your way in your Emacs journey, you might want to consider converting your old files to Org mode or another plain text format.
+
+The Pandoc program is your friend and can assist with a seamless transition to Emacs. Pandoc (=pandoc.org=) is a universal (pan) document (doc) converter. It can covert almost any file format. The program works in the command line. To convert an MS Word document to org mode and extract any images, use this line in your Linux or macOS shell or Windows Powershell. The first two parameters instruct Pandoc to extract images to the images folder. The =-o= option defines the output file name and format. You can use the same approach with any input format that Pandoc supports, just replace the input filename.
+
+=pandoc --extract-media ./images input.docx -o output.org=
+
+If you need to convert a folder full of files, this method can be a bit tedious. In Linux and macOS you can use the line below to convert all Word documents to Org mode files.
+
+=for file in *.docx; do pandoc --extract-media ./images "$file" -o "${file%.docx}.org"; done=
+
+Windows users need to evoke this Powershell script to achieve the same results:
+
+#+begin_src shell
+  Get-ChildItem -Filter *.docx | ForEach-Object {
+          $newName = $_.Name -replace '.docx$', '.org'
+          pandoc --extract-media ./images "$_" -o $newName
+      }
+#+end_src
+
+
+
+* Is Emacs a productivity sink?
+Configuring Emacs can be a daunting task that can take a lot of time and can become a productivity sink because of the easy by which it can be done. Within the Emacs community, a discussion emerges every now and then about the need to make so many changes to the vanilla software to get it to behave how you like it. This may seem like a reasonable question.
+
+The freedom you enjoy in Emacs means that everybody will have specific preferences, depending on how their needs. The Emacs developers cannot cater to every personal preference so they provide a skeleton system that you need to develop to suit your personal workflow. Emacs Lisp is like a box of Lego. You can play with it out of the box using vanilla Emacs, but it is much more fun when you create your own toys. Working on your Emacs configuration is like building with Lego, it is a lot of fun, but not the same as actually playing with it.
+
+It can be tempting to constantly fine-tune your configuration, which can become a productivity sink. Wielding the power to create a bespoke Emacs system is a great temptation that can lead to fake productivity, which one of the three forms of procrastination:
+
+1. /Nihilistic/: Watching TV, playing computer games.
+2. /Sophisticated/: Fake productivity, e.g. Emacs hacking, switching productivity tools, taking notes for the sake of volume instead of quality.
+3. /Productive/: Daydreaming.
+
+Tinkering with your Emacs configuration is not as bad as nihilistic procrastination, but can become a form of fake productivity. The productivity gains from fine-tuning your Emacs to cut out a few keystrokes can take more time than you will save with your new workflow. The act of writing is about much more than the number of words you can type into your buffer. Writing is as much a contemplative act as it is about productivity.
+
+Hopefully the /Emacs Writing Studio/ configuration will help you reduce the time it takes to configure Emacs to suit your preferred workflow.
+
+* Communication
+:NOTES:
+  - [ ] Social Media
+  - [ ] Email
+:END:
+
+
+
+* Learning more about Emacs
+This book is not a comprehensive manual of Emacs but an opinionated description of how to achieve a series of tasks. The text in this book is opinionated because it describes only one or two ways of completing each objective. The flexible nature of Emacs provides many ways to achieve the same thing. This freedom is both a strength and a weakness. This book aims to shorten the learning curve as much as possible so that you can become creative and productive. If, after reading this book, you would like to know more, I recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual [cite:@stallman_2023_gnu; @petersen_2022; @cameron_2005_lear].
+
+This book has only scratched the surface of the myraid of possibilities that Emacs has to offer. Due to its extensibility,
+
+
+
+#+begin_export latex
+\backmatter
+#+end_export
+

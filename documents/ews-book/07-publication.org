@@ -1,0 +1,338 @@
+#+title:  Publishing Articles and Books with Org Mode Export
+#+startup:      content
+
+Now that you have written your magnum opus in Org mode it is time to share it with the world. You can of course share your Org source files, but is not.
+
+Emacs Org mode is an ideal tool for writing without distractions because working with plain text allows you to focus on content instead of design. While writing articles and books in plain text is pleasant and productive, it is not ideal for sharing your work. Org mode can export your work to PDF through LaTeX, to a website or a word processor document. There are also additional packages that can export to additional formats such as an ePub book. This article explains how to export your work as a journal article, a print-ready book PDF, or an ebook in ePub format.
+
+The first section in this chapter explains the basic principles of exporting Org mode content and how to configure the output. The remaining sections explain the specific settings to export to Office documents, PDF files for physical books, ePub files for ebooks, and presentations in PDF format.
+
+* Org Mode Export Principles
+The basic principle of exporting Org mode files to the desired format is that the system converts the text to the relevant format and then connects it to a document class, CSS style sheet or other type of template. Your text file can also link to a local or global bibliography to manage citations. Org mode has built-in export facilities for LaTeX (PDF), HTML and ODT (LibreOffice) and some other formats. Using the Ox-Epub package you can also export to other formats, such as ePub (Figure [[fig:export]]).
+
+#+begin_src dot :file images/org-mode-export-principles.png
+  digraph {
+      graph [dpi=300]
+      rankdir=LR
+      node [fontname=Arial fontsize=10]
+      edge [fontname=Courier fontsize=9 color = gray]
+
+      bibtex [label="Bibliography" shape="polygon"]
+      org [label="Org\nmode" shape="polygon"]
+
+      pdf [label="PDF" shape="note"]
+      html [label="Website" shape="note"]
+      epub [label="EPub" shape="note"]
+      office [label="Office\nDocument" shape="note"]
+      
+      bibtex -> org [constraint=false label="BibTeX"]
+      org -> pdf [label="LaTeX"]
+      org -> html [label="CSS"]
+      org -> epub [label="CSS\nox-epub"]
+      org -> office [label="libreoffice"]
+  }
+#+end_src
+#+caption: Org mode export principles.
+#+name: fig:export
+#+attr_html: :width 300 :alt Org mode explort principles :title Org mode explort principles
+#+attr_latex: :width 0.5\textwidth
+#+RESULTS:
+[[file:images/org-mode-export-principles.png]]
+
+In principle you don't need to know HTML or LaTeX, but it will certainly help with fine tuning the output. The Org mode export function understands how to convert between formats. For example, if you create a website, any Org mode text surrounded by forward slashes (=/example/=) is translated as ~<i>example</i>/~ while in LaTeX it becomes ~\emph{example}~. The HTML style sheet or LaTeX document class determines the way this code looks in the final output (the "what you get" in WYSIWYG). This example becomes italic text by default, but it could be something different if the stylesheet or document class defined it as such.
+
+** The Org mode Export Dispatcher
+Start the export module with the ~org-export-dispatch~ function, which you can run with the default =C-c C-e= keyboard shortcut. The dispatch provides a range of options. The first letter you type determines the export format, and subsequent letters the specific options. Using =q= exists the export dispatcher.
+
+** Document Settings
+Before delving into the specific export formats, some housekeeping sets the defaults on how a document is exported. There are various settings to control how Org mode exports your document, which you add to the front matter of your file, or set them as global variable for all exports. Some generic export variables are:
+
+- =#+title:= Document title.
+- =#+author:= Author name (defaults to ~user-full-name~).
+- =#+date:= Date of publication (You can set the format of the export with the ~org-export-date-timestamp-format~ variable).
+
+You can obtain a template for exporting to ePub  through the ~org-export-insert-default-template~, which inserts keywords for your Org file's front matter. You can also access this function trough the export dispatcher with =C-c C-e #=.
+
+By default, Org mode saves the result of the export process in the same folder as the source document. The exported file has the same name as the source file but with a different extension.
+
+Exporting [[{{% ref taking-notes-with-emacs-denote.org %}}][Denote]] Org mode files can create a filename conflict because you are effectively creating two files with the same identifier, so ideally you should change the name of the exported file. 
+
+You can change this behaviour by adding ~#+export_file_name: <filename>~ to the header. The filename can be any string without file extension. You can save the exported file in another folder, but this might cause errors for certain formats.
+
+When you add =num= to the startup keyword, Org mode will number every heading (=#+startup: num=). The numbering appears in the Org file. Whether this numbering also appears in any published output depends on your export template.
+
+** Section Settings
+Headings in Org mode can be numbered by setting the startup keyword: =#+STARTUP: num=. 
+
+In some publications, not all headings are numbered, such as in the front or back matter of a book. You can exclude individual sections from the numbering system by setting the =:UNNUMBERED:= property as shown below. To add this property, type =C-c C-x p= (~org-set-property~) to set the unnumbered property set it as =t= (true).
+
+This setting also excludes
+
+#+begin_example
+  :PROPERTIES:
+  :UNNUMBERED: t
+  :END:
+#+end_example
+
+Not everything you write should be exported, as suggested in the export defaults in the previous section. Org mode exudes any lines with a  =#= symbol. The /Emacs Writing Studio/ configuration does not export drawers, so your notes remain private. Furthermore, you can also exclude a section of your writing from export by adding the =:noexport:= tag to a heading with =C-c C-q= (~org-set-tags-command~). You enter the tag in the minibuffer and you can use completion to find select tags. The tag appears on the right side of the heading name between colon markers.
+
+** Tables
+:NOTES:
+- [ ] https://orgmode.org/worg/org-tutorials/tables.html
+:END:
+
+Org exports tables without vertical lines
+
+
+
+
+[cite:@chicago_2017 section 3.53]. Org exports tables without vertical lines, but occasionally vertical lines can be useful to structure a table into groups of columns. To specify which columns form a group, use a special row where the first field contains only a forward slash (=/=). The other fields either contain a lesser-than symbol (=<=) to indicate that this column starts a group, or a greater-than (=>=) symbol to indicate the end of a column. Using =<>= inside a column makes it a separate group so it is surrounded by vertical lines.
+
+
+
+# Change example
+
+#+begin_example
+|---+-----+-----+-----+---------+------------|
+| N | N^2 | N^3 | N^4 | sqrt(n) | sqrt[4](N) |
+|---+-----+-----+-----+---------+------------|
+| / |  <  |     |  >  |       < |          > |
+| 1 |  1  |  1  |  1  |       1 |          1 |
+| 2 |  4  |  8  | 16  |  1.4142 |     1.1892 |
+| 3 |  9  | 27  | 81  |  1.7321 |     1.3161 |
+|---+-----+-----+-----+---------+------------|
+#+end_example
+
+#+caption: Example of table with vertical lines.
+|---+-----+-----+-----+---------+------------|
+| N | N^2 | N^3 | N^4 | sqrt(n) | sqrt[4](N) |
+|---+-----+-----+-----+---------+------------|
+| / |   < |     |   > |       < |          > |
+| 1 |   1 |   1 |   1 |       1 |          1 |
+| 2 |   4 |   8 |  16 |  1.4142 |     1.1892 |
+| 3 |   9 |  27 |  81 |  1.7321 |     1.3161 |
+|---+-----+-----+-----+---------+------------|
+
+** Bibliographic References
+:PROPERTIES:
+:CUSTOM_ID: sec:citation-export
+:END:
+
+Org mode has a built-in citation manager that can use BibTeX / BibLaTeX or CSL files to reference bibliographic items such as articles and books. Chapter [[#chap:inspiration]] explains how to create a bibliography and Chapter [[#chap:production]] explains how to add citations in Org files.
+
+When exporting to LaTeX, citations are managed by  the external software. When exporting to any other format you need to specify how Org mode manages citations. The default settings in Org mode provide basic citation support in author-year format.
+
+This website by Tecosaur provides an in-depth description of how to [[https://blog.tecosaur.com/tmio/2021-07-31-citations.html][manage citations in Org mode]], much better than I can explain it.
+
+* Office Documents
+The export function in Org Mode can export to the ODT format, which is compatible with MS Word, out of the box. The ODT export back-end relies on the =zip= program to create the final output
+
+If you have LibreOffice installed, you can also create a =docx= file to make it easier for MS Word users to share in the joy of reading your writing. When you set this option, the export process will result in both an =odt= and a =docx= file. This behaviour is not the default in /Emacs Writing Studio/, so you must add this yourself if you prefer exporting in the Microsoft format. Alternatively, you can also use this variable to export to PDF.
+
+#+begin_src emacs-lisp :tangle no
+  ;; Export ODT to MS-Word
+  (setq-default org-odt-preferred-output-format "docx")
+  ;; Export ODT to PDF
+  (setq-default org-odt-preferred-output-format "pdf")
+#+end_src
+
+It is possible to set this option specific to the file you are exporting by adding these three lines somewhere in your Org mode file:
+
+#+begin_src org :tangle no
+  # local variables:
+  # org-odt-preferred-output-format: "pdf"
+  # end:
+#+end_src
+
+When Org mode exports the file, these lines are evaluated but not exported as they are treated as comments.
+
+You can use specific export settings in the front matter:
+
+- =#+subtitle:= The document subtitle.
+- =#+description:= and =#+keywords= are added to the exported file(s) metadata.
+- =#+odt_styles_file:= Add the path to an LibreOffice style file (=ott= format)
+
+Creating a LibreOffice style file is straightforward:
+
+1. Create a LibreOffice file of your liking using the Styles menu (press =F11= in LibreOffice),
+2. Modify each style to your liking.
+3. Test the document.
+4. Save as =ott= file.
+
+A LibreOffice file is essentially a =zip= file with an embedded set of =xml= files. Org mode extracts the =styles.xml= file embedded in your template file. You cannot use this method for templates (pre-configured content).
+
+You can fine-tune how Org exports to OpenOffice to a great extent. For a detailed discussion on =odt= Export, read the online Org mode manual.
+
+* Physical Books with LaTeX PDF
+LaTeX is a powerful typesetting system (pronounced “LAY-tek” or “LAH-tek”), especially for writing scientific and technical documents. LaTeX can convert your text into a beautifully designed PDF file for publishing an article, ebook or physical book. Many publishers of technical literature have LaTeX templates to comply with their style guide. 
+
+You don’t necessarily need any knowledge of LaTeX to export to PDF. Still, it will certainly help if you like to fine-tune the design of your document. The basic syntax of LaTeX is easy to explain. Let's assume you have a straightforward Org mode file that looks like this:
+
+#+begin_src org :tangle no
+  ,#+title:  Example document
+  ,#+author: Peter Prevos
+  ,#+latex_class: book
+
+  Minimum example for a Org mode document.
+#+end_src
+
+The Latex equivalent of this example is:
+
+
+#+begin_example
+\documentclass{article}
+  \title{Example document}
+  \author{Peter Prevos}
+  \begin{document}
+  \maketitle
+  Minimum example for a LaTeX document.
+  \end{document}
+#+end_example
+
+The LaTeX software can convert this document to a wonderfully formatted article due to the document class, which defines the typography and layout.
+
+Writing documents directly in LaTeX can be confusing because you need to know its markup language, and your text is littered with backslashes, curly braces, and other syntactical distractions. Being productive as a writer requires focusing on the text’s content instead of how it looks. Org mode is the perfect LaTeX editor because it frees you from distractions and integrates perfectly with LaTeX.
+
+To enable exporting Org mode files to PDF, you need to have LaTeX installed on your system. How to install LaTeX depends on your operating system, and your favourite search engine will point you in the right direction.
+
+Keying =C-c C-e= to open the export dispatch, then =l p= creates and opens a PDF file. Other options are available to export the buffer to LaTeX or to save a PDF file without opening it.
+
+To make the magic work, Org Mode converts your file to a =tex= file, after which the LaTeX software converts it to PDF. The system works out of the box without any configuration. With some configuration you can produce PDF files that are perfect for producing printed books.
+
+** Text elements
+Org mode converts headers to relevant LaTeX headers, and text becomes a paragraph. The relationship between the heading level in your Org file and LaTeX depends on the configuration, explained below. 
+
+** Tables and images
+Org mode converts images and tables to LaTeX floats. You can add specific attributes to these floats by using =#+attr_latex:=, as shown in the image example below:
+
+#+begin_src org :tangle no
+  ,#+caption: This is an example image caption.
+  ,#+attr_latex: :width 5cm :options angle=90 :placement h
+  [[directory/filename.png]]
+#+end_src
+
+Various parameters are available to determine how your table or image looks in the final output. The Org mode manual provides a detailed overview in [[https://orgmode.org/manual/LaTeX-Export.html][section 3.10]].
+
+** LaTeX snippets
+You can write simple LaTeX commands directly into your org file. For example, =\newpage= will add a page break. You can also place equations using dollar signs, for instance =$e^{i\pi} + 1 = 0$= results in $e^{i\pi} + 1 = 0$.
+
+The =org-latex-preview= function (=C-c C-x C-l=) shows a preview of any LaTeX equations within the open buffer. The chapter on [[{{% ref ricing-org-mode.org %}}][Ricing Org mode]] introduces the =org-fragtog= package to automatically toggle between the plain text and the preview.
+
+To create front and back matter, use the ~\frontmatter~ and ~\backmatter~ LaTeX commands in your Org file at the appropriate locations.
+
+For more complex snippets, you need to use a structure template. Press =C-c C-, l= to insert a LaTeX source block. This LaTeX example creates an image using the picture environment. 
+
+#+begin_src latex :tangle no :eval no
+  ,#+begin_export latex
+  \setlength{\unitlength}{1cm}
+  \begin{picture}(10,10)(-5,5)
+  \linethickness{1pt}
+  \put(-2.5,0){\vector(1,0){5}}
+  \put(0,-2.5){\vector(0,1){5}}
+  \put(0,0){\circle{3}}
+  \end{picture}
+  ,#+end_export
+#+end_src
+
+The image will not appear in Org mode as it is generated by LaTeX and will only appear when exporting to LaTeX. Any LaTeX fragments, except for formulas, in Org mode files will only be visible when exporting to PDF. This means that if you like to export to multiple formats, you will need to replace these fragments with something that applies to all formats, for example an image.
+
+** LaTeX Packages and Classes
+By default, Org mode uses the article class and a set of default packages to export documents. Org mode provides three mechanisms to use LaTeX packages in your export:
+
+1. In the header, using ~#+latex_header:~
+2. Configuring the ~org-latex-packages-alist~ variable.
+3. Configure the ~org-latex-classes~ variable.
+
+The Org mode header can do a lot of the work. The example below specifies the book document class with A4 paper size. This example also specifies the Times fonts package. The last line tells Org mode to omit the table of contents from the export.
+
+#+begin_src org :tangle no
+  ,#+latex_class: book
+  ,#+latex_class_options: [a4paper]
+  ,#+latex_header: \usepackage{times}
+  ,#+options: toc:nil
+#+end_src
+
+The ~org-latex-packages-alist~ variable defines the default packages that are used for every LaTeX export.
+
+You can define more complex header configurations by changing the =org-latex-classes= association list. 
+
+The example below adds the template for the American Psychological Association (APA) journals. This list's documentation provides all the details you need to configure packages and classes for your exports. The ~with-eval-after-load~ function ensures that this variable is only set once the LaTeX export function is loaded by Emacs. Note the double backslash instead of the single one in regular LaTeX syntax for compatibility with Emacs Lisp. 
+
+#+begin_src elisp
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+                 '("apa6"
+                   "\\documentclass[a4paper, jou, 11pt]{apa6}
+                    \\usepackage[nodoi]{apacite}
+                    \\usepackage{graphicx}
+                    \\usepackage[T1]{fontenc}
+                    \\usepackage{times}"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}"))))
+#+end_src
+
+The last part of this association list specifies the mapping between Org mode and LaTeX headers. In this case, the highest level is associated with the section header, the second level with a subsection, and so on.
+
+You can call this particular class by adding =#+latex_class: apa6= to your file header. This mechanism empowers you to define bespoke LaTeX classes to create a library of export options.
+
+These three mechanisms allow fine-grained control over how your Org mode document is exported to LaTeX and PDF. The /Emacs Writing Studio/ configuration only uses the default settings for these variables because the possible use cases are too numerous to define a sensible default other than what is already available.
+
+** PDF export configuration
+The /Emacs Writing Studio/ configuration for PDF export defines the export process to ensure that bibliographies work appropriately. This configuration also cleans all temporary files that LaTeX creates so that only the exported file remains.
+
+* Ebooks Export to ePub
+Most ebook publishers use the ePub format for distribution. This file type is a ZIP file with your book stored as a website optimised for an e-reader. The =ox-epub= package adds this functionality to the Org export dispatcher. This package uses the built-in Org to HTML export to create the ebook, so you can use any of its features to fine-tune the output.
+
+There are some export options that need to be set in your header:
+
+- =#+title:= the document title.
+- =#+uid:= a unique ID of the document, otherwise known as URI, could be a website or ISBN number.
+- =#+date=: the date of the document.
+- =#+subject=:
+- =#+description=:
+- =#+publisher=:
+- =#+license=:
+- =#+epubstyle=:
+- =#+epubcover=:
+- =#+author:= the document author or editor, the creator in the EPUB spec
+
+
+The default settings adds a postamble to the bottom of the last page with a timestamp, author and a HTML validation service. Adding =#+options: html-postamble:nil= to the Org file header removes these from your ebook.
+
+Any LaTeX fragments are ignored in the export, which means that you have to convert them 
+
+However, LaTeX math formulas are possible with the =tex:dvipng= option added to the options line in the front mater. This option converts any LaTeX formula to a PNG image, which is not ideal but readable.
+
+The =ox-epub= package does not convert Org mode timestamps to a date format that complies with the ePub standard. You can correct this by removing the square brackets and the day and time from the timestamp.
+
+The export process for ePub is not as forgiving with missing images. While you can export to HTML and PDF without any errors, your ePub will not render if any linked images are missing. 
+
+Lastly, only use open image formats such as =.png= as some ebook readers cannot display JPG files and other proprietary formats. The ebook will look alright on your computer but might not pass any checks by a publisher.
+
+* Presentations
+:NOTES:
+- https://orgmode.org/worg/exporters/beamer/tutorial.html
+:END:
+
+Presentations are the
+
+The slide deck 
+
+Death by PowerPoint
+
+Using Emacs to write presentations is not ideal, but it can be done. Being a text processor, any set of slides exported from Org mode will most consist of lists of text. Unfortunately, most presenters use their slides as speaker notes and rely on the dot points to keep their talk on track.
+
+Various methodologies exist that can convert your Org mode files to a presentation, most of which require additional packages. This section explains how to create presentations as a PDF file using the LaTeX bearer document class.
+
+The first line enables the Beamer specific commands for Org mode explained below. The next two lines set the LaTeX exporter to use the Beamer class and to use the larger font settings. Using large text is good as it minimises the amount of test that fits on a slide. Who has not seen a presenter revealing a new slide and say: "I know you can't read this but \ldots", so don't be like them and keep text on a slide to a minimum.
+
+The following line sets the theme for the presentation. 
+
+#+begin_example
+ #+STARTUP: beamer
+ #+LaTeX_CLASS: beamer
+ #+LaTeX_CLASS_OPTIONS: [bigger]
+ #+BEAMER_THEME: Rochester [height=20pt]
+#+end_example
+
+

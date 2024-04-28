@@ -1,15 +1,14 @@
-;;; ews.el --- Emacs Writing Studio: configuration for authors  -*- lexical-binding: t; -*-
+;;; ews.el --- Convenience functions for authors  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024 Peter Prevos
 
 ;; Author: Peter Prevos <peter@prevos.net>
 ;; Maintainer: Peter Prevos <peter@prevos.net>
 ;; Created: 1 January 2024
-;; Version: 1.1
+;; Version: 1.2
 ;; Keywords: convenience
 ;; Homepage: https://lucidmanager.org/tags/emacs/
 ;; URL: https://github.com/pprevos/emacs-writing-studio
-;; Package-Requires ((olivetti "2.0.5") (biblio "0.3") (citar "1.4.0") (org "9.6.6") (emacs "29.1"))
 
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -33,69 +32,32 @@
 ;;
 ;;; Code:
 
-(require 'cl-lib)
-(require 'olivetti)
-(require 'biblio)
-(require 'citar)
-(require 'org)
-
 ;; Emacs Writing Studio Customisation
+(defvar ews-home-directory
+  (file-name-as-directory (getenv "HOME"))
+  "Location of documents.")
+
 (defgroup ews ()
   "Emacs Writing Studio."
   :group 'files
   :link '(url-link :tag "Homepage" "https://lucidmanager.org/tags/emacs/"))
 
-(defcustom ews-documents-directory
-  (concat (file-name-as-directory (getenv "HOME")) "Documents")
-  "Location of documents."
+(defcustom ews-bibtex-directory
+  (concat (file-name-as-directory ews-home-directory) "Documents/library")
+  "Location of BibTeX files and attachments."
   :group 'ews
   :type 'directory)
 
-(defcustom ews-bibliography-directory
-  (concat (file-name-as-directory ews-documents-directory) "library")
-  "Location of BibTeX bibliographies and attachments."
+(defcustom ews-denote-para-keywords
+  '("projects" "areas" "resources" "archives")
+  "List of keywords to use for implementing the PARA method with Denote."
   :group 'ews
-  :type 'directory)
-
-(defcustom ews-notes-directory
-  (concat (file-name-as-directory ews-documents-directory) "notes")
-  "Location of notes."
-  :group 'ews
-  :type 'directory)
-
-(defcustom ews-music-directory
-  (concat (file-name-as-directory (getenv "HOME")) "Music")
-  "Location of music files."
-  :group 'ews
-  :type 'directory)
-
-(defcustom ews-inbox-file
-  (concat (file-name-as-directory ews-documents-directory) "inbox.org")
-  "Location of notes."
-  :group 'ews
-  :type 'file)
-
-(defcustom ews-elfeed-config-file
-      (concat (file-name-as-directory ews-documents-directory) "elfeed.org")
-  "Location of RSS feed configuration."
-  :group 'ews
-  :type 'file)
-
-(defcustom ews-todo-file
-      (concat (file-name-as-directory ews-documents-directory) "todo.org")
-  "Location of todo lists."
-  :group 'ews
-  :type 'file)
-
-(defvar ews--load-directory
-  (file-name-directory load-file-name)
-  "Path of the ews package.")
+  :type 'list)
 
 ;; Check for missing external software
 ;;;###autoload
 (defun ews-missing-executables (prog-list)
   "Identified missing executables in PROG-LIST.
-
 Sublists indicate that one of the entries is required."
   (let ((missing '()))
     (dolist (exec prog-list)
@@ -108,27 +70,26 @@ Sublists indicate that one of the entries is required."
         (message "Missing executable files(s): %s"
                  (mapconcat 'identity missing ", ")))))
 
-;; Distraction-free writing
-;;;###autoload
-(defun ews-distraction-free ()
-  "Distraction-free writing environment using Olivetti package."
-  (interactive)
-  (if (equal olivetti-mode nil)
-      (progn
-        (window-configuration-to-register 1)
-        (delete-other-windows)
-        (text-scale-set 2)
-        (olivetti-mode t))
-    (progn
-      (if (eq (length (window-list)) 1)
-          (jump-to-register 1))
-      (olivetti-mode 0)
-      (text-scale-set 0))))
+;;; BIBLIOGRAPHIE
+(defvar ews-bibtex-files
+  (when (file-exists-p ews-bibtex-directory)
+    (directory-files ews-bibtex-directory t "^[A-Z|a-z|0-9].+.bib$"))
+  "List of BibTeX files. Use `ews-bibtex-register-files` to configure.")
 
 ;;;###autoload
-(defun ews--biblio-lookup ()
-  "Combines biblio-lookup and biblio-doi-insert-bibtex."
+(defun ews-bibtex-register ()
+  "Register the contents of the `ews-bibtex-directory` with `ews-bibtex-files`.
+Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
   (interactive)
+  (when (file-exists-p ews-bibtex-directory)
+    (let ((bib-files (directory-files ews-bibtex-directory t
+				      "^[A-Z|a-z|0-9].+.bib$")))
+      (setq ews-bibtex-files bib-files
+  	    org-cite-global-bibliography bib-files
+	    citar-bibliography bib-files))))
+
+(defun ews--bibtex-combined-biblio-lookup ()
+  "Combines biblio-lookup and biblio-doi-insert-bibtex."
   (let* ((dbs (biblio--named-backends))
          (db-list (append dbs '(("DOI" . biblio-doi-backend))))
          (db-selected (biblio-completing-read-alist
@@ -140,24 +101,119 @@ Sublists indicate that one of the entries is required."
       (biblio-lookup db-selected))))
 
 ;;;###autoload
-(defun ews-biblio-bibtex-lookup ()
+(defun ews-bibtex-biblio-lookup ()
   "Use curent buffer or Select BibTeX file, lookup with Biblio and insert entry."
   (interactive)
-  (let ((current-mode major-mode)
-	(bibfile (if (equal major-mode 'bibtex-mode)
-		     (buffer-file-name)
-		   (completing-read
-                    "BibTeX file:"
-                    (citar--bibliography-files))
-		   )))
-    (find-file bibfile)
-    (goto-char (point-max))
-    (ews--biblio-lookup)
-    (save-buffer)))
+  (if-let ((current-mode major-mode)
+	   ews-bibtex-files
+	   (bibfiles (length ews-bibtex-files))
+	   (bibfile (cond ((eq bibfiles 1) (car ews-bibtex-files))
+			  ((equal major-mode 'bibtex-mode)
+			   (buffer-file-name))
+			  (t (completing-read "Select BibTeX file:" ews-bibtex-files)))))
+      (progn (find-file bibfile)
+	     (goto-char (point-max))
+	     (ews--bibtex-combined-biblio-lookup)
+	     (save-buffer))
+    (message "No BibTeX file(s) defined.")))
+
+;; Search for missing BibTeX attachments and filenames
+(defun ews--bibtex-extract-filenames ()
+  "Extract attachment file names from BibTeX files in `ews-bibtex-directory'."
+  (ews-bibtex-register)
+  (let ((attachments '()))
+    (dolist (bibtex-file ews-bibtex-files)
+      (with-temp-buffer
+        (insert-file-contents bibtex-file)
+        (goto-char (point-min))
+        (while (re-search-forward "file.*=.*{\\([^}]+\\)}" nil t)
+          (let ((file-paths (split-string (match-string 1)
+                                          "[[:space:]]*;[[:space:]]*")))
+            (dolist (file-path file-paths)
+              (push (expand-file-name (string-trim file-path)
+                                      ews-bibtex-directory)
+                    attachments))))))
+    attachments))
+
+(defun ews--bibtex-extract-files ()
+  "List files recursively in `ews-bibtex-directory'.  Excludes `.bib` and `.csl`."
+  (seq-remove (lambda (file)
+                (or (string-suffix-p ".bib" file)
+                    (string-suffix-p ".csl" file)))
+              (directory-files-recursively ews-bibtex-directory "")))
+
+(defun ews-bibtex-missing-files ()
+  "List BibTeX attachments not listed in BibTeX files."
+  (interactive)
+  (let* ((files (ews--bibtex-extract-files))
+         (attachments (ews--bibtex-extract-filenames))
+         (missing (cl-remove-if
+                   (lambda (f) (member f attachments)) files)))
+    (message "%s files not registered in bibliography" (length missing))
+    (dolist (file missing)
+      (message "Missing file: %s" file))))
+
+(defun ews-bibtex-missing-attachments ()
+  "List BibTeX files without matching attachment."
+  (interactive)
+  (let* ((files (ews--bibtex-extract-files))
+         (attachments (ews--bibtex-extract-filenames))
+         (missing (cl-remove-if
+                   (lambda (f) (member f files)) attachments)))
+    (message "%s BibTeX files without matching attachment." (length missing))
+    (dolist (file missing)
+      (message "Missing file: %s" file))))
+
+;; Denote
+(defun ews-denote-assign-para ()
+  "Move your note to either Project, Area, Reource or Archive (PARA)."
+  (interactive)
+  (if-let* ((file (buffer-file-name))
+            ((denote-filename-is-note-p file))
+            (all-keywords (string-split (denote-retrieve-filename-keywords file) "_"))
+            (keywords (seq-remove (lambda (keyword)
+                                    (member keyword ews-denote-para-keywords))
+                                  all-keywords))
+            (para (completing-read "Select category: " ews-denote-para-keywords))
+            (new-keywords (push para keywords)))
+      (denote-rename-file
+       file
+       (denote-retrieve-title-or-filename file (denote-filetype-heuristics file))
+       new-keywords
+       (denote-retrieve-filename-signature file))
+    (message "Current buffer is not a Denote file.")))
+
+;; Narrow Dired to Regular Expression
+(defun ews-dired-narrow (selection)
+  "Mark files in denote-firectory using a regular expression."
+  (interactive "sMark files (regexp):")
+  ;;  (dired denote-directory)
+  (dired-mark-files-regexp selection)
+  (dired-toggle-marks)
+  (dired-do-kill-lines))
+
+;; Distraction-free writing
+;;;###autoload
+(defun ews-distraction-free ()
+  "Distraction-free writing environment using Olivetti package."
+  (interactive)
+  (if (equal olivetti-mode nil)
+      (progn
+        (window-configuration-to-register 1)
+        (delete-other-windows)
+        (text-scale-set 1)
+        (olivetti-mode t))
+    (progn
+      (if (eq (length (window-list)) 1)
+          (jump-to-register 1))
+      (olivetti-mode 0)
+      (text-scale-set 0))))
 
 ;;;###autoload
 (defun ews-org-insert-notes-drawer ()
-  "Generate or open a NOTES drawer under the current heading."
+  "Generate or open a NOTES drawer under the current heading.
+If a drawer exists for this section, a new line is created at the end of the
+current note."
   (interactive)
   (push-mark)
   (org-previous-visible-heading 1)
@@ -181,12 +237,10 @@ Sublists indicate that one of the entries is required."
      (let* ((start (point))
             (end (save-excursion (org-end-of-subtree)))
             (word-count (count-words start end)))
-       (org-set-property "wordcount" (number-to-string word-count))
-       (unless (org-entry-get nil "target")
-         (org-set-property "target" "0"))))))
+       (org-set-property "WORDCOUNT" (number-to-string word-count))))))
 
 ;;;###autoload
-(defun ews-org-screenshot ()
+(defun ews-org-insert-screenshot ()
   "Take a screenshot with ImageMagick and insert as an Org mode link."
   (interactive)
   (let ((filename (read-file-name "Enter filename for screenshot: " default-directory)))
@@ -197,42 +251,6 @@ Sublists indicate that one of the entries is required."
     (insert (format "[[file:%s]]" filename))
     (org-redisplay-inline-images)))
 
-;; Create Hugo links
-(defun ews--get-hugo-directory ()
-  "Lists the directory of the current Hugo website or nil."
-  (if (string-match "\\(.*\\)content" default-directory)
-      (match-string 1 default-directory)
-    nil))
-
-(defun ews--hugo-list-content ()
-  "List the content of the Hugo website of the current buffer.
-When not in an apparent Hugo directory then return error."
-  (if-let* ((hugodir (ews--get-hugo-directory))
-            (hugo-p (not (null (directory-files hugodir nil "^config\\..*"))))
-            (content-dir (concat hugodir "content/")))
-      (let ((org-files (directory-files-recursively content-dir "\\.org\\'"))
-            (md-files (directory-files-recursively content-dir "\\.md\\'")))
-        (append org-files md-files))
-    (user-error "Not in a Hugo buffer")))
-
-(defun ews--hugo-link-complete ()
-  "Complete a Hugo weblink through the `org-insert-link' and hugo: hyperlink type."
-  (let* ((posts (ews--hugo-list-content))
-         (titles (mapcar (lambda (post)
-                           (string-remove-prefix
-                            (concat (ews--get-hugo-directory)
-                                    "content/") post)) posts))
-         (selection (completing-read "Choose page:" titles))
-         (target (concat "/"
-                         (replace-regexp-in-string
-                          "_index.*" "" selection))))
-    (when titles
-      (concat "{{< ref \"" target "\" >}}"))))
-
-;; New link type for Org-Hugo internal links
-(with-eval-after-load "org"
-  (org-link-set-parameters
-   "hugo"
-   :complete #'ews--hugo-link-complete))
-
+(provide 'ews)
 ;;; ews.el ends here
+

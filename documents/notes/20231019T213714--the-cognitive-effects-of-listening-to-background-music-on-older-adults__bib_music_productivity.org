@@ -1,6 +1,0 @@
-#+title:      The cognitive effects of listening to background music on older adults
-#+date:       [2023-10-19 Thu 21:37]
-#+filetags:   :music:productivity:
-#+identifier: 20231019T213714
-
-Processing speed improves with upbeat music, while memory seems to benefit from both upbeat and downbeat music.
