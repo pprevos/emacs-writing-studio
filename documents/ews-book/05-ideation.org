@@ -1,6 +1,7 @@
 #+title: Ideation: Building Second Brain with Denote
-#+startup: num
-#+todo: DRAFT EDITED | REVIEWED FINAL
+#+startup:      content
+#+bibliography: ../library/emacs-writing-studio.bib
+#+todo:         DRAFT EDITED | REVIEWED FINAL
 :NOTES:
 - [X] [[denote:20230907T074555][Note-taking methodologies]]
 - [X] One file vs multiple files
@@ -111,6 +112,8 @@ Modern operating systems can effortlessly manage tens of thousands of files in o
 
 The ~denote~ function, which you activate with =C-c w d n=, creates new notes as Org mode files. It first asks for a title and then for the relevant keywords. You either select a keyword from the completion list of existing notes in the minibuffer with the =TAB= key or enter new ones as free text, separated by a comma. The timestamp is automatically generated using the date and time you create the note. You can also activate this command with the Org capture system and select 'Permanent Note'.
 
+Note that when creating a new note, it first opens as an unsaved buffer. You will need to save it to disk with =C-c C-s= to make it permanent. When you create a permanent note with the Org capture mechanism saves the note when exiting the capture popup screen with =C-c C-c=. Some functionality might not work unless you have saved the note to disk,so if you get a warning that says "Buffer not visiting a Denote file", you might have to save the buffer first so the software can recognise it.
+
 The default EWS configuration does not require a signature or a subdirectory for new notes. You can customise the ~denote-prompts~ variable to define the default way Denote generates and renames files by ticking the items you like to include when creating an new note.
 
 The note's title becomes part of the filename and becomes the title inside the Org mode file. The date and identifier are also part of the header of the file. Keywords become file tags, which are the same as tags we saw in the section about using a single file, but they apply to the whole file. The front matter for the Org mode file of the note in the example above would look like this. Now, all you have to do is fill the buffer with relevant content and save it to disk.
@@ -172,7 +175,9 @@ Several functions are available to manage the current buffer when inside a bibli
 
 What is the point of building a bibliography without citing or using each in a bibliographic note? The last two functions let you cite literature or create a new bibliographic note for any item not used in your Denote collection. The ~citar-denote-nocite~ (=C-c w b x=)  function opens the Citar menu and shows all items in your bibliography that are neither cited nor referenced. From there, you can create a new bibliographic note, follow a link or read the file.
 
-You can also add citations to your bibliographic and other notes. For a detailed description on how to insert citations into Org mode files, read section [[#sec:citations]] in the next chapter.
+When writing literature notes you might have the note open in one window and the ebook or other reference in another window. You can move pages in the document you are reading without moving the cursor away from the note you are wiring. Adding the Alt key to the page-up or down key will scroll the other window up and down without needing to move your cursor.
+
+Emacs has a large collection of commands that can act on other windows. If you like to explore other options, the type =C-h x other-window= and the completing system will show all commands that match this criteria and the Marginalia package provides a short description and any available keyboard shortcuts. This method is a productive way to explore Emacs commands that you might not know about yet.
 
 ** EDITED Attachments
 :PROPERTIES:
@@ -221,11 +226,19 @@ A regular expression is an advanced search term much like using wildcard in file
 ** EDITED Linking Notes
 The Denote signature and keyword offer a unique way to categorise and rank notes, ordering and grouping similar ideas. Additionally, Org mode can also become a personal wiki by linking notes. While the term 'personal wiki' may seem contradictory, given that wikis are by definition collaborative, the power of linking notes allows for the creation of an interconnected web of ideas.
 
-Org mode features a versatile system of links. In the previous chapter, we explored how to add hyperlinks to the World Wide Web and links to images (section [[#sec:rss]] and chapter [[#chap:ews]]). Org mode can recognise various types of hyperlinks, including links to other files, internal links, and other special formats. To create a hyperlink from an Org mode file to another file use =C-u C-c C-l=, navigate to the target file and enter a description. The link is now active and You can follow it with ~org-open-at-point~, bound to =C-c C-o=. Linking to other documents is a great way to structure your file system, but this method has a problem because the link breaks as soon as the target file changes name or location.
+Org mode features a versatile system of links. In the previous chapter, we explored how to add hyperlinks to the World Wide Web and links to images (section [[#sec:rss]] and chapter [[#chap:ews]]). Org mode can recognise various types of hyperlinks, including links to other files, internal links, and other special formats.
 
-Denote enhances Org mode's functionality by creating stable links between notes. A denote link only stores the identifier of the target file, so the signature, name and keywords can change freely without the risk of creating dead links. You can link notes and attachments with the ~denote-link-or-create~ function (=C-c w d i=). This command lists all available notes using the minibuffer completion system, from which you can select one and hit enter. To modify the link's label, press =C-c C-l= (~org-insert-link~) while the cursors is on the link and follow the prompts. The source of a Denote link looks something like this: =[[denote:20210208T150244][Description]]=.
+To create a hyperlink from an Org mode file to another file use =C-u C-c C-l=, navigate to the target file and enter a description. The link is now active and You can follow it with ~org-open-at-point~, bound to =C-c C-o=. Linking to other documents is a great way to structure your file system, but this method has a problem because the link breaks as soon as the target file changes name or location.
+
+Denote enhances Org mode's functionality by creating stable links between notes. A denote link only stores the identifier of the target file, so the signature, name and keywords can change freely without the risk of creating dead links.
+
+You can link notes and attachments with the ~denote-link-or-create~ function (=C-c w d i=). This command lists all available notes using the minibuffer completion system, from which you can select one and hit enter. To modify the link's label, press =C-c C-l= (~org-insert-link~) while the cursors is on the link and follow the prompts. The source of a Denote link looks something like this:
+
+=[[denote:20210208T150244][Description]]=.
 
 If you enter a name for a note that does not yet exist, Denote will first let you create a new note and then link to it. Denote links are indicated with italics in EWS to distinguish them from links to other resources, such as websites.
+
+Denote can also create links to headings inside of other Org mode notes. The ~denote-org-extras-link-to-heading~ function (=C-c w d h=). This function will assk for the Org mode file to link to and then shows a menu of the headings inside this file. When you now click on the new link, it will take you directly to the heading inside the other file.
 
 You can jump to any linked note without having the cursor on it with ~denote-link-find-file~ (=C-c w d l=). This function shows all notes linked from the open note in the minibuffer where you can select the one you like to jump to. To find out which notes link to the one you are currently reading, use the ~denote-find-backlink~ function (=C-c w d b=). 
 
@@ -298,10 +311,12 @@ You can remove or rename keywords with ~denote-explore-rename-keyword~. Select o
 
 Denote stores the metadata for each note in the filename using its ingenious file naming convention. Some of this metadata is copied to the front matter of a note, which can lead to differences between the two metadata sources. The ~denote-explore-sync-metadata~ function checks all notes and asks the user to rename any file where these two data sets are mismatched. The front matter data is the source of truth. This function also enforces the alphabetisation of keywords, which assists with finding notes.
 
-** EDITED Visualising Denote Networks
+* EDITED Visualising Denote Networks
 Committing your ideas to text requires a linear way of thinking, as you can only process one word at a time. In my paper journal, I often use diagrams, such as a mind map, rather than a narrative to relate my thoughts. Visual thinking is another way to approach your ideas, and one of the most common methods to visualise interlinked documents is in a network diagram.
 
-Viewing your notes as a network can help discover hitherto unseen connections between your thoughts. Visualising your Denote digital garden as a network can be helpful in your creative process. A network diagram has nodes (vertices) and edges. Each node represents a file in your Denote system, and each edge is a link between notes  (figure [[fig:network]]).
+Linking ideas in a network is not a modern tool. Medieval monks sketches diagrams in the margins of books hey read, connecting their short notes with lines. These diagrams are the source of the curly braces symbols ={}=, which originally indicated branching an idea into two new ones [cite:@even-ezra_2021_lines].
+
+Viewing your thoughts as a network can help discover hitherto unseen connections between your thoughts. Visualising your Denote digital garden as a network can be helpful in your creative process. A network diagram has nodes (vertices) and edges. Each node represents a file in your Denote system, and each edge is a link between notes  (figure [[fig:network]]).
 
 #+begin_src dot :file images/denote-explore-example.png
   digraph denote {

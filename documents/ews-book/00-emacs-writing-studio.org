@@ -1,7 +1,7 @@
 #+title:        Emacs Writing Studio
 #+subtitle:     Research, Write and Publish Articles, Books and Websites in Plain Text
 #+author:       Peter Prevos
-#+startup:      num
+#+startup:      num content
 #+options:      html-postamble:nil tex:dvipng
 #+bibliography: ../library/emacs-writing-studio.bib
 #+latex_class:  crc
@@ -38,6 +38,9 @@ By Protesilaos (Prot) Stavrou
 #+include: "01-why-emacs.org" :lines "2-"
 
 * Getting Started with Vanilla Emacs
+:PROPERTIES:
+:CUSTOM_ID: chap:vanilla
+:END:
 #+include: "02-getting-started.org"  :lines "2-"
 
 * Using Emacs Writing Studio

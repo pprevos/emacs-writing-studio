@@ -1,6 +1,7 @@
 #+title: Appendix: The Annotated Emacs Writing Studio Configuration
 #+property:     header-args:elisp :tangle ../../init.el :results none :eval no
 #+startup:      content
+#+bibliography: ../library/emacs-writing-studio.bib
 
 I learned writing computer code by typing long listings of Atari BASIC code and slowly but surely understood its syntax and logic. This method is also a great starting point to learn Emacs Lisp. The purpose of this configuration is for you as a starting point. Feel free to modify anything in the {{{ews}}} (EWS) initialisation file and study its effects.
 
@@ -21,8 +22,11 @@ The first part of the configuration checks if the latest version of Emacs is run
 
 Any changes made by the Emacs customisation system in EWS are stored in =custom.el= instead of directly to the init file. This approach prevents the customisation system modifying the initialisation file. The =custom.el= file is loaded when found. If variables are set in both the custom file and the init file, the latter takes preference.
 
+#+begin_src elisp :exports none
+    ;; Emacs 29? EWS leverages functionality from the latest Emacs version.
+#+end_src
+
 #+begin_src elisp
-  ;; Emacs 29?
   (when (< emacs-major-version 29)
     (error "Emacs Writing Studio requires Emacs version 29 or later"))
 
@@ -31,15 +35,6 @@ Any changes made by the Emacs customisation system in EWS are stored in =custom.
 
   (when (file-exists-p custom-file)
     (load custom-file))
-#+end_src
-
-EWS also provides a range of bespoke convenience functions for various aspects of the writing process. This package is not available on any Emacs repository, but is loaded directly from the GitHub repository.
-
-#+begin_src elisp
-    ;; Load EWS functions
-  (load-file (concat (file-name-as-directory
-                      user-emacs-directory)
-                     "ews.el"))
 #+end_src
 
 ** Packages and External Software
@@ -62,19 +57,38 @@ These are the basic principles of installing and configuring packages. The Use-P
 
 To read the finer details of the Use-Package macro, read the manual with =C-h R use-package=.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Set package archives
+#+end_src
+
+#+begin_src elisp
   (use-package package
     :config
     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
     (package-initialize))
+#+end_src
 
+#+begin_src elisp :exports none
   ;; Package Management
+#+end_src
+
+#+begin_src elisp
   (use-package use-package
     :custom
     (use-package-always-ensure t)
     (package-native-compile t)
     (warning-minimum-level :emergency))
+#+end_src
+
+** Emacs Writing Studio Functionality
+EWS also provides a range of bespoke convenience functions for various aspects of the writing process. This package is not available on any Emacs repository, but is loaded directly from the GitHub repository.
+
+#+begin_src elisp
+  ;; Load EWS functions
+#+end_src
+
+#+begin_src elisp
+  (load-file (concat (file-name-as-directory user-emacs-directory) "ews.el"))
 #+end_src
 
 The ~ews-missing-executables~ function checks if external software is available on your system. Emacs writes a message in the minibuffer if any of the recommended tools is missing. You can jump to the =*Messages*= buffer with =C-h e= to review the output. If packages are missing, then Emacs will function normally, but some features might be unavailable. The relevant chapters in this book provide more details which software is required and the tasks it undertakes.
@@ -83,8 +97,11 @@ The input for this function is a list, which is a series of strings between pare
 
 This function looks whether all these packages are available on your system. Any software in a nested list, such as =("convert" "gm")=, only one of them has to be available as these programs are alternatives for the same functionality.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Check for missing external software
+#+end_src
+
+#+begin_src elisp
   (ews-missing-executables
    '("soffice" "zip" "pdftotext" "ddjvu"
      "curl"
@@ -106,13 +123,22 @@ The first three lines of code for the EWS look and feel disable the toolbar, the
 
 Vanilla Emacs has the slightly paternalistic habit to require only a single =Y= or =N= answer while on some occasions it requires you to type =yes= or =no=, due to the perceived higher risk of typing the wrong answer. The ~setq~ function sets the ~use-short-answers~ variable to =t=. If you like to retain this behaviour, then change the =t= into a nil. In Emacs Lisp, =t= means TRUE and =nil= is equivalent to FALSE. Confusingly Emacs documentation often mentions to set a value to "non-nil", which is a double negative to suggest setting the variable to true.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
+  ;;; LOOK AND FEEL
   ;; Keyboard-centric user interface removing tool, menu and scroll bars
+#+end_src
+
+#+begin_src elisp
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
+#+end_src
 
+#+begin_src elisp :exports none
   ;; Short answers only please
+#+end_src
+
+#+begin_src elisp
   (setq use-short-answers t)
 #+end_src
 
@@ -120,8 +146,11 @@ The next two sections of code further improve the Emacs interface with two packa
 
 The Spacious Padding package is used using only default values. The =:init= section contains code that Emacs evaluates when loading the package. In this case, it enables the Spacious Padding mode. The =:custom= section also sets the line spacing to a more spacious value. You can read the manual for this mode with =C-h R spacious=.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Spacious padding
+#+end_src
+
+#+begin_src elisp
   (use-package spacious-padding
     :custom
     (line-spacing 3)
@@ -135,8 +164,11 @@ The =:custom= section of the macro sets some variables to define fonts. This sec
 
 The =:init= section activates the tinted version of the Modus-Vivendi (light) theme. The next section binds some keys to commands to either toggle between dark and light or select any of the available modus themes. All EWS custom keybindings start with =C-c w= as the prefix key and =C-c w t= as the prefix key for the two Modus theme functions. You can obviously change these  The last section hooks the Variable Pitch mode to any buffer in text mode. This means that written prose is displayed in variable pitch, while metadata, code and other items are in fixed pitch. A hook is a construction in Emacs that associates modes with each other. In this case, variable pitch text will is enabled for all text mode buffers.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Modus Themes
+#+end_src
+
+#+begin_src elisp
   (use-package modus-themes
     :custom
     (modus-themes-italic-constructs t)
@@ -160,50 +192,79 @@ The =:init= section activates the tinted version of the Modus-Vivendi (light) th
 
 This last code snippet in the look-and-feel section changes the way Emacs automatically split windows to favour vertical splits over horizontal ones to improve readability. This section also installs the Balanced Windows package which manages window sizes automatically. For example, when opening three windows and you close one, the remaining windows each get half the screen.
 
+#+begin_src elisp :exports none
+  ;; Window management
+  ;; Split windows sensibly
+#+end_src
+
 #+begin_src elisp
   (setq split-width-threshold 120
         split-height-threshold nil)
-
+#+end_src
+#+begin_src elisp  :exports none
+  ;; Keep window sizes balanced
+#+end_src
+#+begin_src elisp
   (use-package balanced-windows
     :config
     (balanced-windows-mode))
 #+end_src
 
-Alternatively, you can add these settings directly to your =init.el= file by adding the following three lines, with your fonts and sizes of choice.
+Alternatively, you can add these settings directly to your =init.el= file by adding the following three lines, with your fonts and sizes of choice. Any settings you ...
 
 #+begin_src elisp :tangle no
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 130)
-  (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono")
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 200)
+  (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono" :heigh 200)
   (set-face-attribute 'variable-pitch nil :font "DejaVu Sans")
 #+end_src
 
 ** Minibuffer Completion
 {{{ews}}} uses the Vertico-Orderless-Marginalia stack of minibuffer completion packages in their standard configuration.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; MINIBUFFER COMPLETION
 
   ;; Enable vertico
+  #+end_src
+  
+  #+begin_src elisp
   (use-package vertico
     :init
     (vertico-mode)
     :custom
     (vertico-sort-function 'vertico-sort-history-alpha))
 
+  #+end_src
+  
+  #+begin_src elisp :exports none
   ;; Persist history over Emacs restarts.
+  #+end_src
+  
+  #+begin_src elisp
   (use-package savehist
     :init
     (savehist-mode))
 
+  #+end_src
+  
+  #+begin_src elisp :exports none
   ;; Search for partial matches in any order
+  #+end_src
+  
+  #+begin_src elisp
   (use-package orderless
     :custom
     (completion-styles '(orderless basic))
     (completion-category-defaults nil)
     (completion-category-overrides
      '((file (styles partial-completion)))))
-
+  #+end_src
+  
+  #+begin_src elisp :exports none
   ;; Enable richer annotations using the Marginalia package
+  #+end_src
+  
+  #+begin_src elisp
   (use-package marginalia
     :init
     (marginalia-mode))
@@ -212,25 +273,31 @@ Alternatively, you can add these settings directly to your =init.el= file by add
 ** Keyboard Shortcuts Menu
 The Which-Key package improves discoverability of keyboard shortcuts with a popup in the minibuffer. The columns are widened a bit to prevent long truncated function names. Due to the naming conventions in Emacs, most functions start with the package name, so some can be quite long.
 
-#+begin_src elisp
-    ;; Improve keyboard shortcut discoverability
-    (use-package which-key
-      :config
-      (which-key-mode)
-      :custom
-      (which-key-max-description-length 40))
+#+begin_src elisp :exports none
+  ;; Improve keyboard shortcut discoverability
+#+end_src
+  
+  #+begin_src elisp
+  (use-package which-key
+    :config
+    (which-key-mode)
+    :custom
+    (which-key-max-description-length 40))
 #+end_src
 
 ** Improved Help Functionality
 Emacs is advertised as the self-documenting text editor. While this is not quite correct (if only computer code could document itself), almost every single aspect of Emacs is documented within the program itself. The /Helpful/ package by Wilfred Hughes is an alternative to the built-in Emacs help that provides more contextual information. When, for example, asking for documentation about a variable, the help file provides links to its customisation screen.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Improved help buffers
+#+end_src
+  
+#+begin_src elisp
   (use-package helpful
     :bind
-    (("C-h x" . helpful-command)    ;; Help about commands
-     ("C-h k" . helpful-key)        ;; Help about keystrokes
-     ("C-h v" . helpful-variable))) ;; Help about variables
+    (("C-h x" . helpful-command)
+     ("C-h k" . helpful-key)
+     ("C-h v" . helpful-variable)))
 #+end_src
 
 ** Configure Text Modes
@@ -238,25 +305,32 @@ Emacs is principally designed for developing computer code, so it needs some mod
 
 By default, Emacs does not replace text when you select a section and then start typing, which is unusual behaviour when writing prose. The =:init= section enables a more common default so that selected text is deleted when typed over. The =:custom= section enables the page-up and page-down keys to scroll all the way to the top or bottom of a buffer. The last variable saves any existing clipboard text into the kill ring for better operability between the operating system's clipboard and Emacs's kill ring.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;;; Text mode settings
-  (use-package text-mode
-    :ensure
-    nil
-    :hook
-    (text-mode . visual-line-mode)
-    :init
-    (delete-selection-mode t)
-    :custom
-    (scroll-error-top-bottom t)
-    (save-interprogram-paste-before-kill t))
+  #+end_src
+  
+  #+begin_src elisp
+    (use-package text-mode
+      :ensure
+      nil
+      :hook
+      (text-mode . visual-line-mode)
+      :init
+      (delete-selection-mode t)
+      :custom
+      (sentence-end-double-space nil)
+      (scroll-error-top-bottom t)
+      (save-interprogram-paste-before-kill t))
 #+end_src
 
 ** Spellchecking
 Writing without automated spell checking would be very hard even for the most experienced authors. The Flyspell package requires the hunspell software to be available and the relevant dictionary. You might want to change the standard dictionary to your local variety with the ~flyspell-default-dictionary~  variable.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Check spelling with flyspell and hunspell
+#+end_src
+  
+#+begin_src elisp
   (use-package flyspell
     :custom
     (ispell-silently-savep t)
@@ -279,8 +353,11 @@ You can easily add other variables or remove some to make Org mode look the way 
 
 If you have no need for mathematical notation and LaTeX, then you should disable the ~org-startup-with-latex-preview~ variable to prevent error messages.
 
+#+begin_src elisp :exports none
+  ;;; Ricing Org mode
+#+end_src
+  
 #+begin_src elisp
-    ;;; RICING ORG MODE
   (use-package org
     :custom
     (org-startup-indented t)
@@ -291,8 +368,13 @@ If you have no need for mathematical notation and LaTeX, then you should disable
     (org-startup-with-latex-preview t)
     (org-pretty-entities t)
     (org-use-sub-superscripts "{}"))
-
+#+end_src
+  
+#+begin_src elisp :exports none
   ;; Show hidden emphasis markers
+#+end_src
+  
+#+begin_src elisp  
   (use-package org-appear
     :hook
     (org-mode . org-appear-mode))
@@ -300,8 +382,11 @@ If you have no need for mathematical notation and LaTeX, then you should disable
 
 The Org-Fragtog package automatically toggles Org mode LaTeX fragment previews as the cursor enters and exits them. By default, the text is a bit small and can become unreadable when changing between dark and light themes. The =org-format-latex-options= variable controls the way the Emacs presents fragments. This variable is a list with properties such as colours and size. The =plist-put= function lets you change one of these options in the list. The foreground and background are set to take the same colour as your text. If you change from dark to light mode or vice versa, you might need to evaluate the ~org-latex-preview~ function (=C-c C-x C-l=) to change the preview images.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; LaTeX previews
+#+end_src
+
+#+begin_src elisp
   (use-package org-fragtog
     :after org
     :hook
@@ -315,8 +400,11 @@ The Org-Fragtog package automatically toggles Org mode LaTeX fragment previews a
 
 Most of the features of Org-Modern have been switched off in the custom section because it might be better for beginning users as these settings hide the semantic symbols. 
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Org modern: Most features disables for beginnng users
+#+end_src
+
+#+begin_src elisp
   (use-package org-modern
     :hook
     (org-mode . org-modern-mode)
@@ -340,10 +428,13 @@ Most of the features of Org-Modern have been switched off in the custom section 
 ** Read ebooks
 The built-in Doc-View package can read various file formats with the assistance of external software. This configuration increases the resolution of the generated image file and raises the threshold for warning before opening large files to fifty MB ($50 \times 2^{20}$). Section [[#sec:pdf]] explains how to use this package.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; INSPIRATION
-  
+
   ;; Doc-View
+#+end_src
+
+#+begin_src elisp
     (use-package doc-view
       :custom
       (doc-view-resolution 300)
@@ -354,19 +445,25 @@ DocView has some limitations compared to other document viewers. The text is dis
 
 The Nov package by Vasilij Schneidermann provides useful functionality for viewing ePub books inside Emacs. The init section ensures that any file with an =epub= extension is associated with this package. Refer to section [[#sec:epub]] on how to read ePub files.
 
+#+begin_src elisp :exports none
+  ;; Read ePub files
+#+end_src
+
 #+begin_src elisp
- ;; Read ePub files
-  (use-package nov
-    :init
-    (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
+   (use-package nov
+     :init
+     (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
 #+end_src
 
 There is currently a confirmed bug in Org mode (version 9.6.6) that overrides the associations between LibreOffice and Doc View mode. The code below is a workaround to reinstate the desired behaviour and associates the various file extensions with Doc View. The bug is slotted to be resolved in version 9.7.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Reading LibreOffice files
   ;; Fixing a bug in Org Mode pre 9.7
   ;; Org mode clobbers associations with office documents
+#+end_src
+
+#+begin_src elisp
   (use-package ox-odt
     :ensure nil
     :config
@@ -380,8 +477,11 @@ These lines of code add two field types to BibTeX entries: keywords to help you 
 
 BibTeX mode has many more options that you can configure to modify all sorts of behaviour. This mode is unfortunately not very well documented. 
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Managing Bibliographies
+#+end_src
+
+#+begin_src elisp
   (use-package bibtex
     :custom
     (bibtex-user-optional-fields
@@ -391,7 +491,7 @@ BibTeX mode has many more options that you can configure to modify all sorts of 
     :config
     (ews-bibtex-register)
     :bind
-    (("C-c w b r" . ews-biblio-register-files)))
+    (("C-c w b r" . ews-bibtex-register)))
 #+end_src
 
 BibTeX is old but stable software that was last updated in 1988 and has minor limitations. The BibLaTeX dialect is a more recent version that provides more functionality and flexibility. To change BibTeX Mode to BibLaTeX, change the =bibtex-dialect= variable in the configuration to BibLaTeX by adding the following line to your configuration:
@@ -402,17 +502,21 @@ BibTeX is old but stable software that was last updated in 1988 and has minor li
 
 The Biblio package provides a useful interface to online literature repositories. The ~ews-biblio-lookup~ function makes this package a little easier to use.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Biblio package for adding BibTeX records
-  (use-package biblio
-    :bind
-    (("C-c w b b" . ews-biblio-lookup)))
 #+end_src
 
+#+begin_src elisp
+  (use-package biblio
+    :bind
+    (("C-c w b b" . ews-bibtex-biblio-lookup)))
+#+end_src
 
+#+begin_src elisp :exports none
+  ;; Citar to access bibliographies
+#+end_src
 
 #+begin_src elisp
-  ;; Citar to access bibliographies
   (use-package citar
     :custom
     (org-cite-global-bibliography ews-bibtex-files)
@@ -427,11 +531,14 @@ The Biblio package provides a useful interface to online literature repositories
 ** Reading Websites
 Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system's default browser. If you prefer to use EWW as the default, add this code to your configuration file: ~(setq browse-url-browser-function 'eww-browse-url)~. You can configure the EWW search engine by configuring the ~eww-search-prefix~ variable.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Use EWW
   ;; (setq browse-url-browser-function 'eww-browse-url)
 
   ;; Configure Elfeed
+#+end_src
+
+#+begin_src elisp
   (use-package elfeed
     :custom
     (elfeed-db-directory
@@ -439,8 +546,13 @@ Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system'
     (elfeed-show-entry-switch 'display-buffer)
     :bind
     ("C-c w e" . elfeed))
-
+#+end_src
+  
+#+begin_src elisp :exports none
   ;; Configure Elfeed with org mode
+#+end_src
+  
+  #+begin_src elisp
   (use-package elfeed-org
     :config
     (elfeed-org)
@@ -449,16 +561,24 @@ Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system'
      (list (concat (file-name-as-directory
                 (getenv "HOME"))
                    "Documents/elfeed.org"))))
+#+end_src
   
+#+begin_src elisp :exports none
   ;; Easy insertion of weblinks
+#+end_src
+  
+#+begin_src elisp
   (use-package org-web-tools
     :bind
     (("C-c w w" . org-web-tools-insert-link-for-url)))
 #+end_src
 
 ** Playing Multimedia Files
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Emacs Multimedia System
+#+end_src
+
+#+begin_src elisp
   (use-package emms
     :init
     (require 'emms-setup)
@@ -481,12 +601,13 @@ Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system'
 ** Org Capture
 You could, for example, create a separate entry for a shopping list. You can access the configuration in the capture menu with the =C= button, which pops up the customisation screen for the ~org-capture-templates~ variable. Next click the =INS= button to add another entry and complete the relevant fields as below and save the new variable. The example below create a shopping list stored in a file in your Dropbox folder. Several mobile apps exist that can read Org mode files, so you can take your list to the shops if you have a means to synchronise the relevant files.
 
-
-
 The possibilities for capture templates are extensive and depend on your individual use cases. Explaining the configuration of the Org capture options in detail is outside the scope of this website. The Org manual (=C-h R org ENTER g capture ENTER=) discusses developing capture templates in detail.
 
 #+begin_src elisp
   ;; Fleeting notes
+#+end_src
+
+#+begin_src elisp
   (use-package org
     :bind
     (("C-c c" . org-capture)
@@ -496,18 +617,35 @@ The possibilities for capture templates are extensive and depend on your individ
      (concat (file-name-as-directory ews-home-directory)
            "Documents/inbox.org"))
     (org-capture-bookmark nil)
+#+end_src
+    
+#+begin_src elisp
     ;; Capture templates
+#+end_src
+    
+#+begin_src elisp
     (org-capture-templates
      '(("f" "Fleeting note"
         item
         (file+headline org-default-notes-file "Notes")
         "- %?")
+       ("p" "Permanent note" plain
+        (file denote-last-path)
+        #'denote-org-capture
+        :no-save t
+        :immediate-finish nil
+        :kill-buffer t
+        :jump-to-captured t)
        ("t" "New task" entry
         (file+headline org-default-notes-file "Tasks")
         "* TODO %i%?"))))
 #+end_src
 
 ** Denote
+#+begin_src elisp :exports none
+  ;; Denote
+#+end_src
+
 #+begin_src elisp
   (use-package denote
     :custom
@@ -520,10 +658,12 @@ The possibilities for capture templates are extensive and depend on your individ
     (("C-c w d b" . denote-find-backlink)
      ("C-c w d d" . denote-date)
      ("C-c w d f" . denote-find-link)
+     ("C-c w d h" . denote-org-extras-link-to-heading)
      ("C-c w d i" . denote-link-or-create)
      ("C-c w d I" . denote-org-extras-dblock-insert-links)
      ("C-c w d k" . denote-keywords-add)
      ("C-c w d K" . denote-keywords-remove)
+     ("C-c w d l" . denote-link-find-file)
      ("C-c w d n" . denote)
      ("C-c w d r" . denote-rename-file)
      ("C-c w d R" . denote-rename-file-using-front-matter)))
@@ -533,25 +673,32 @@ The Consult-Notes package helps to quickly find notes. The default location to f
 
 For the search functionality to work you need to install the RipGrep program, an extremely fast program to search through text files. 
 
+#+begin_src elisp :exports none
+  ;; Consult-Notes for easy access
+#+end_src
+
 #+begin_src elisp
   (use-package consult-notes
     :custom
     (consult-narrow-key ":")
     (consult-notes-file-dir-sources
-     `(("Denote Notes"  ?d ,ews-notes-directory)))
+     `(("Denote Notes"  ?n ,denote-directory)))
     :bind
     (("C-c w h" . consult-org-heading)
      ("C-c w f" . consult-notes)
      ("C-c w g" . consult-notes-search-in-all-notes)))
 #+end_src
 
+#+begin_src elisp :exports none
+  ;; Citar-Denote to manage literature notes
+#+end_src
 
 #+begin_src elisp
   (use-package citar-denote
     :demand t
     :custom
     (citar-open-always-create-notes t)
-    :config
+    :init
     (citar-denote-mode)
     :bind
     (("C-c w b c" . citar-create-note)
@@ -563,7 +710,9 @@ For the search functionality to work you need to install the RipGrep program, an
      ("C-c w b d" . citar-denote-dwim)))
 #+end_src
 
-
+#+begin_src elisp :exports none
+  ;; Explore and manage your Denote collection
+#+end_src
 
 #+begin_src elisp
   (use-package denote-explore
@@ -591,15 +740,31 @@ For the search functionality to work you need to install the RipGrep program, an
 
 * Production
 ** Managing the Writing Process
+#+begin_src elisp :exports none
+  ;; Set some Org mode shortcuts
+#+end_src
+
 #+begin_src elisp
   (use-package org
-    :custom
-    (sentence-end-double-space nil)
     :bind
     (:map org-mode-map
           ("C-c w n" . ews-org-insert-notes-drawer)
           ("C-c w p" . ews-org-insert-screenshot)
           ("C-c w c" . ews-org-count-words)))
+#+end_src
+
+#+begin_src elisp :exports none
+  ;; Distraction-free writing
+#+end_src
+
+#+begin_src elisp
+  (use-package olivetti
+    :bind
+    (("C-c w o" . ews-olivetti)))
+#+end_src
+
+#+begin_src elisp :exports none
+  ;; Undo Tree
 #+end_src
 
 #+begin_src elisp
@@ -612,16 +777,12 @@ For the search functionality to work you need to install the RipGrep program, an
     (("C-c w u" . undo-tree-visualize)))
 #+end_src
 
-#+begin_src elisp
-  (use-package olivetti
-    :bind
-    (:map text-mode-map
-          ("C-c w o" . ews-olivetti)))
+** Citations
+#+begin_src elisp :exports none
+  ;; Export citations with Org Mode
 #+end_src
 
-** Citations
 #+begin_src elisp
-  ;; Export citations with Org Mode
   (require 'oc-natbib)
   (require 'oc-csl)
 
@@ -633,8 +794,11 @@ For the search functionality to work you need to install the RipGrep program, an
 
 ** Quality Assurance
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Lookup words in online dictionary
+#+end_src
+
+#+begin_src elisp
   (use-package dictionary
     :custom
     (dictionary-server "dict.org")
@@ -643,6 +807,10 @@ For the search functionality to work you need to install the RipGrep program, an
 #+end_src
 
 The [[https://github.com/bnbeckwith/writegood-mode][writegood package]] helps to detect buzzwords, passive writing and repeated words. This package also contains functions to estimate the complexity of a text.
+
+#+begin_src elisp :exports none
+  ;; Writegood-Mode for buzzwords, passive writing and repeated word word detection
+#+end_src
 
 #+begin_src elisp
   (use-package writegood-mode
@@ -653,11 +821,13 @@ The [[https://github.com/bnbeckwith/writegood-mode][writegood package]] helps to
 #+end_src
 
 ** Version Control
-
 The ~ediff~ family of function by default does not split its windows nicely, so these settings make the program easier to use.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; ediff
+#+end_src
+
+#+begin_src elisp
   (setq ediff-keep-variants nil
         ediff-split-window-function 'split-window-horizontally
         ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -668,8 +838,11 @@ The ~ediff~ family of function by default does not split its windows nicely, so 
 
 The timestamp for exporting files is set to the European date format of day month and year. If you publish for American audiences, perhaps you like to modify the ~org-export-date-timestamp-format~ to ="%B %e %Y"=. The letters each stand for the full name of the month, the day number without leading zero and the year in four digits. See the documentation for the ~format-time-string~ function for details on how to format dates in other methods.
 
+#+begin_src elisp :exports none
+  ;; Generic Org Export Settings
+#+end_src
+
 #+begin_src elisp
-  ;; Org Export Settings
   (use-package org
     :custom
     (org-export-with-drawers nil)
@@ -683,15 +856,20 @@ The timestamp for exporting files is set to the European date format of day mont
 ** Office Documents
 #+begin_src elisp :tangle no
   ;; Not included in EWS
+
   ;; Export ODT to MS-Word
   (setq-default org-odt-preferred-output-format "docx")
+  
   ;; Export ODT to PDF
   (setq-default org-odt-preferred-output-format "pdf")
 #+end_src
 
 ** Latex
-#+begin_src elisp
+#+begin_src elisp:exports none
   ;; LaTeX PDF Export settings
+#+end_src
+
+#+begin_src elisp
   (use-package ox-latex
     :ensure nil
     :demand t
@@ -710,9 +888,12 @@ The timestamp for exporting files is set to the European date format of day mont
              "tex" "bcf"))))
 #+end_src
 
+#+begin_src elisp :exports none
+  ;; LaTeX templates
+#+end_src
+
 #+begin_src elisp
   (with-eval-after-load 'ox-latex
-    ;; CRC Publishing template
     (add-to-list
      'org-latex-classes
      '("crc"
@@ -746,19 +927,21 @@ The timestamp for exporting files is set to the European date format of day mont
        ("\\subsubsection{%s}" . "\\paragraph*{%s}"))))
 #+end_src
 
-
 ** ePub
-#+begin_src elisp
+#+begin_src elisp:exports none
   ;; epub export
+#+end_src
+
+#+begin_src elisp
   (use-package ox-epub
     :demand t)
 #+end_src
 
 ** Advanced Export Settings for EWS                               :noexport:
 #+begin_src elisp
-  ;; ADVANCED EXPORT SETTINGS FOR EWS (UNDOCUMENTED)
+  ;; ADVANCED NDOCUMENTED EXPORT SETTINGS FOR EWS
   
-  ;; Use GraphViz for diagrams
+  ;; Use GraphViz for flow diagrams
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((dot . t))) ; this line activates dot
@@ -767,10 +950,16 @@ The timestamp for exporting files is set to the European date format of day mont
 * Administration
 
 ** Getting Things Done
+#+begin_src elisp :exports none
+  ;;; ADMINISTRATION
+
+  ;; Bind org agenda command
+#+end_src
+
 #+begin_src elisp
-   (use-package org
-    :bind
-    (("C-c a" . org-agenda)))
+  (use-package org
+   :bind
+   (("C-c a" . org-agenda)))
 #+end_src
 
 ** Manage Files
@@ -782,9 +971,11 @@ This last bit of configuration code defines how Emacs deals with automated backu
 
 Alternatively, you could instruct Emacs to not save backups at all with ~(setq-default make-backup-files nil)~. I prefer keeping backups as they have saved my bacon a few times in the past.
 
+#+begin_src elisp :exports none
+  ;; FILE MANAGEMENT
+#+end_src
 
 #+begin_src elisp
-  ;; FILE MANAGEMENT
   (use-package dired
     :ensure
     nil
@@ -795,17 +986,27 @@ Alternatively, you could instruct Emacs to not save backups at all with ~(setq-d
      "-goah --group-directories-first --time-style=long-iso")
     (dired-dwim-target t)
     (delete-by-moving-to-trash t)
-    :init  ;; Open dired folders in same buffer
+    :init
     (put 'dired-find-alternate-file 'disabled nil))
-
+#+end_src
+  
+#+begin_src elisp :exports none
   ;; Hide hidden files
+#+end_src
+  
+#+begin_src elisp
   (use-package dired-hide-dotfiles
     :hook
     (dired-mode . dired-hide-dotfiles-mode)
     :bind
     (:map dired-mode-map ("." . dired-hide-dotfiles-mode)))
-
+#+end_src
+  
+#+begin_src elisp:exports none
   ;; Backup files
+#+end_src
+  
+#+begin_src elisp
   (setq backup-directory-alist
         `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
         version-control t
@@ -815,8 +1016,11 @@ Alternatively, you could instruct Emacs to not save backups at all with ~(setq-d
 
 The function to save the recent files runs every five minutes, instead of only when Emacs exists. The function to save the list of recent files needs some modifictaion to prevent messages popping up in the buffer every so often.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Recent files
+#+end_src
+
+#+begin_src elisp
   (use-package recentf
     :config
     (recentf-mode t)
@@ -828,7 +1032,13 @@ The function to save the recent files runs every five minutes, instead of only w
     :bind
     (("C-c w r" . recentf-open)))
 
+  #+end_src
+  
+#+begin_src elisp :exports none
   ;; Bookmarks
+#+end_src
+  
+#+begin_src elisp
   (use-package bookmark
     :custom
     (bookmark-save-flag 1)
@@ -851,7 +1061,7 @@ Last but not least, you can define key sequences within Emacs itself. The exampl
 
 This example uses the global keymap, meaning the shortcut is available in all modes. You can also define a shortcut for a specific mode, which is only available when that mode is active. The example below sets the same shortcut but only applies when Org mode is active.
 
-#+begin_src elisp :tangle yes
+#+begin_src elisp :tangle no
   (keymap-set org-mode-map "C-t" #'whitespace-mode)
 #+end_src
 

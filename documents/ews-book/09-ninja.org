@@ -1,4 +1,6 @@
 #+title: Becoming an Emacs ninja
+#+bibliography: ../library/emacs-writing-studio.bib
+#+startup:      content
 :NOTES:
 - [X] Recommended books
 - [ ] Alternative packages

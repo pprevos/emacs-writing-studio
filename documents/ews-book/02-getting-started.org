@@ -1,7 +1,8 @@
 #+title: Getting Started With Vanilla GNU Emacs
 #+bibliography: ../library/emacs-writing-studio.bib
 #+startup: content
-#+property: header-args:elisp :results none :eval no
+#+macro: ews /Emacs Writing Studio/
+#+latex_header: \usepackage[english, russian]{babel}
 :NOTES:
 - [X] [[https://ux.stackexchange.com/questions/30682/are-there-any-recent-studies-of-the-keyboard-vs-mouse-issue][research - Are there any recent studies of the "Keyboard vs Mouse"-issue? - User Experience Stack Exchange]]
 - [X] A logical line in Emacs is a paragraph. A visual line relates to how it is displayed in Emacs
@@ -291,7 +292,7 @@ For example, type "Socrates", erase it with =M-d=, change it to "Plato", and the
 Another feature of the Emacs undo system is that it can apply only to a selected region. Lets say that you have just completed the first chapter and have started writing the chapter two. You then realise that you need to undo some of the edits in the chapter one. If you use the undo function, it will first undo all your work on chapter two before changing the first chapter. You can solve this problem by selecting the relevant region of text in chapter one and then issue the ~undo~ command over just that region.
 
 ** Languages Other than English
-For the majority of the world, English is not their first language. When you set the keyboard settings in your operating system to another language, Emacs can get confused when using modifier keys. Typing =M-x= on a Ukrainian computer results in =M-џ=, which Emacs cannot compute.
+For the majority of the world, English is not their first language. When you set the keyboard settings in your operating system to another language, Emacs can get confused when using modifier keys. Typing =M-x= on a Russian computer results in =M-ч=, which Emacs cannot compute.
 
 Emacs supports a large range of input methods to type the rich variety of languages of the world. To see an overview of the various languages that Emacs supports run ~view-hello-file~ (=C-h h=). An input method either converts keyboard characters to a different one or it converts a sequence of characters into one letter. For example, with the Balinese input method, the letter D becomes a ᬥ. Using one of the various methods to type Chinese, you start keying and a menu appears in the minibuffer from where you can select the desired character. So 'san' can become 三, or one of the other characters in the menu.
 
@@ -336,7 +337,7 @@ Commercial software provides graphical menus to define how it operates. For exam
 
 Being a plain text program, Emacs does not have such facilities but uses the Emacs Lisp programming language. The code below is equivalent to the form shown in Figure [[fig:graphical-config]]. Compare the code with the image to reverse engineer the Elisp code.
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle no :eval no
   (setq inhibit-startup-message t
         initial-scratch-message "Hello world"
         cursor-type 'bar)

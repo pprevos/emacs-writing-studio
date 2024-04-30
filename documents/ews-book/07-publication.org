@@ -1,5 +1,6 @@
 #+title:  Publishing Articles and Books with Org Mode Export
 #+startup:      content
+#+bibliography: ../library/emacs-writing-studio.bib
 
 Now that you have written your magnum opus in Org mode it is time to share it with the world. You can of course share your Org source files, but is not.
 
@@ -164,6 +165,23 @@ A LibreOffice file is essentially a =zip= file with an embedded set of =xml= fil
 You can fine-tune how Org exports to OpenOffice to a great extent. For a detailed discussion on =odt= Export, read the online Org mode manual.
 
 * Physical Books with LaTeX PDF
+Writing technical documents can be a bit more challenging than normal prose. Technical writers often present mathematical formulas, tables and images. LaTeX offers a variety of features like automatic numbering of equations and references, making it ideal for technical documents. It's also extensible, allowing for customisation through packages for specific needs. While Latex has a learning curve, it produces professional-looking documents and is widely used in academia and technical fields. The output of LaTeX documents is optimised for printed works, so it is also great for writing non-technical books.
+
+LaTeX is a modified version of an older format called TeX, first released by computer genius Donald Knuth in 1978. Knuth developed this tool because he was unhappy with the way his publisher typeset the books he wrote. The original TeX language is quite complex, so Leslie Lamport developed the LaTeX variety, which basically is a collection of macros to simplify writing TeX [cite:@lamport_1994_latex].
+
+The "Hello World!" example shown in the previous section would like like this in LaTeX. It looks a bit less busy than the HTML version. In this example, the text specifies that this document will be formatted as an article, which is one of the many document classes. In LaTeX, instructions start with a backslash and a function name, with any parameters between curly braces.
+
+#+begin_example
+\documentclass{article}
+\title{LaTeX Example}
+\begin{document}
+\maketitle
+Hello world!
+\end{document}
+#+end_example
+
+The AUCTeX Emacs package assists with writing and formatting LaTeX files. This package is not part of /Emacs Writing Studio/. Org mode has perfect export capabilities for LaTeX so you can take advantage of the lightweight markup of Org mode. The next chapter discusses exporting Org mode to LaTeX and other formats in detail.
+
 LaTeX is a powerful typesetting system (pronounced “LAY-tek” or “LAH-tek”), especially for writing scientific and technical documents. LaTeX can convert your text into a beautifully designed PDF file for publishing an article, ebook or physical book. Many publishers of technical literature have LaTeX templates to comply with their style guide. 
 
 You don’t necessarily need any knowledge of LaTeX to export to PDF. Still, it will certainly help if you like to fine-tune the design of your document. The basic syntax of LaTeX is easy to explain. Let's assume you have a straightforward Org mode file that looks like this:
@@ -177,7 +195,6 @@ You don’t necessarily need any knowledge of LaTeX to export to PDF. Still, it 
 #+end_src
 
 The Latex equivalent of this example is:
-
 
 #+begin_example
 \documentclass{article}
@@ -308,6 +325,30 @@ The =ox-epub= package does not convert Org mode timestamps to a date format that
 The export process for ePub is not as forgiving with missing images. While you can export to HTML and PDF without any errors, your ePub will not render if any linked images are missing. 
 
 Lastly, only use open image formats such as =.png= as some ebook readers cannot display JPG files and other proprietary formats. The ebook will look alright on your computer but might not pass any checks by a publisher.
+
+* Websites
+** HTML
+:PROPERTIES:
+:wordcount: 138
+:target:   0
+:END:
+The HyperText Markup Language (HTML) is the engine that drives the World Wide Web. Internet pioneer Berners-Lee specified HTML in late 1990. The example below shows a simple HTML file. In HTML, the markup is designated by angle braces (less than and greater than symbols). The indentation is not required, but helps with understanding the structure of the document, also called the DOM (Document Object Model).
+
+#+begin_example
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTML Example</title>
+  </head>
+  <body>
+    <div>
+        <p>Hello world!</p>
+    </div>
+  </body>
+</html>
+#+end_example
+
+Emacs has a built-in mode for editing HTML files. However, Org mode has perfect export capabilities for HTML so you can take advantage of the lightweight markup of Org mode. Chapter [[#chap:publication]] discusses exporting Org mode to HTML in detail.
 
 * Presentations
 :NOTES:

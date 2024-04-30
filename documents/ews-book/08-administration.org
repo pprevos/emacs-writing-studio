@@ -1,5 +1,5 @@
 #+title: Administration
-#+bibliography: emacs-writing-studio.bib
+#+bibliography: ../library/emacs-writing-studio.bib
 :NOTES:
 - [[https://blog.dornea.nu/2023/09/21/emacs-and-the-cybernetic-productivity/][Emacs and the Cybernetic Productivity - blog.dornea.nu]]
 - [[https://orgmode.org/manual/Moving-subtrees.html][Moving subtrees (The Org Manual)]]

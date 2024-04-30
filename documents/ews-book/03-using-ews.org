@@ -1,4 +1,6 @@
 #+title: Using Emacs Writing Studio
+#+bibliography: ../library/emacs-writing-studio.bib
+#+startup:      content
 :NOTES:
 - [X] Minimalist interface
   - [X] Modus Themes
@@ -144,7 +146,7 @@ One of the unofficial rules of writing is to define the structure before writing
 
 When you press =M-RET=, the following line becomes a new heading. With =C-RET=, the new line is added after the text in the current section. You can also promote a standard paragraph to a heading using =C-c *= (~org-toggle-heading~). Org mode also makes it easy to move and promote or demote existing headings and associated subheadings and text (which in Org mode is a subtree). Just use the =ALT= and arrow keys to move a subtree around the document. You can also use these keys to move paragraphs.
 
-When the cursor is on a heading the =TAB= key collapses the text. Repeatedly pressing =TAB= shows the subheadings and then again the full text. To collapse the whole document, add the Shift key. Pressing =S-TAB= collapses the whole buffer, showing only the level one headings. Pressing =S-TAB= once again will show headings, and repeating it for a second time reveals all text. You can keep cycling through these modes with the =S-TAB= key (figure [[#fig:org-cycle]] and table [[#tab:org-structure]]).
+When the cursor is on a heading the =TAB= key collapses the text. Repeatedly pressing =TAB= shows the subheadings and then again the full text. To collapse the whole document, add the Shift key. Pressing =S-TAB= collapses the whole buffer, showing only the level one headings. Pressing =S-TAB= once again will show headings, and repeating it for a second time reveals all text. You can keep cycling through these modes with the =S-TAB= key (figure [[#fig:org-cycle]] and table [[#tab:org-structure]]). You can recognise folded headings by the ellipses (=…=) at the end of the line. The Org-Modern package (section [[#sec:rice]]) also changes the asterisks to triangles. When the triangle points to the right, the heading is collapsed and when it points down, the heading is open.
 
 #+begin_src dot :file images/org-cycle.png
   digraph {
@@ -251,12 +253,16 @@ Although Emacs is a text processor, it can also display images. In Org mode, an 
   #+caption: Image caption.
   #+name: fig:example
   #+attr_org: :width 600
-  file:path/to/image
+  [[file:path/to-image]]
 #+end_example
 
-After adding the image link, you can preview it with the ~org-redisplay-inline-images~ function or =C-c C-x C-M-v=. To toggle pictures in your whole document, use =C-c C-x C-v= (~org-toggle-inline-images~). The EWS configuration enables default image previews in all Org mode buffers, but adding an image switches this off so you run the redisplay command whenever you add a new image. The pictures in the buffer are all shown at 300 pixels wide. You can configure the preview size to your preference by adding a line above the image, for example: =#+attr_org:: width 600=. 
+After adding the link, you can preview the image with the ~org-redisplay-inline-images~ function or =C-c C-x C-M-v=. To toggle previewing pictures in the whole document, use =C-c C-x C-v= (~org-toggle-inline-images~).
+
+The EWS configuration enables default image previews in all Org mode buffers, but adding a new image removes the preview so you run the redisplay command. The pictures in the buffer are all shown at 300 pixels wide. You can configure the preview size to your preference by adding a line above the image, for example: =#+attr_org:: width 600=. 
 
 You open a link in Org mode with a mouse click or by pressing =C-c C-o= (~org-open-at-point~) with your cursor on the link text. Emacs has some facilities to manage image libraries through the Image-Dired package, discussed in Chapter [[#chap:admin]].
+
+Image links are links to other files without a description. You can use the same process to link to any type of file and add a description, so it looks like a regular hyperlink. The structure of a complete file link is: =[[file:path/to-image][Description]]=. Org mode hides the structure of links and only shows the description. You can change this behaviour with ~org-toggle-link-display~.
 
 Like tables, you can add a caption and a reference name to an image. Various other attributes can be added to define how the image is displayed in the published version, as explained in Chapter [[#chap:publication]].
 
@@ -286,11 +292,16 @@ Org mode can preview LaTeX fragments as images if the =dvipng= program is availa
 The Org-Fragtog package by Benjamin Levy provides convenient functionality to toggle between the plain text LaTeX fragments and the image preview. When the cursor is inside a formula, Emacs shows the plain text, and when outside a formula, it shows the graphical version, preventing the need for manual switching.
 
 ** Ricing Org Mode
+:PROPERTIES:
+:CUSTOM_ID: sec:rice
+:END:
 Ricing is slang term among software developers referring to heavily customising the appearance of their editor. This prettification could involve themes, fonts, and other visual tweaks to create a unique style. Vanilla Emacs is an ugly duckling that can be configured into a beautiful swan. The EWS configuration file contains some modifications to the user interface.
 
 The main difference between a plain text processor and a WYSIWYG word processor is that in Emacs the design of the text (font, colour and so on) communicates meaning and rather than design. Your Emacs theme sets the colours and perhaps also fonts for your document. The purpose this styling is to help you navigate the document. The way your document looks in the buffer is not what it looks like when exported to the final product.
 
 The active theme and various configurations and packages define the display of an Org mode buffer. Emacs defines how a buffer looks through =font-lock-mode=. Font locking assigns faces to (or 'fontifies' in Emacs speak) various parts of your text using logical rules. Evaluating =font-lock-mode= toggles between the fully configured version of your Org mode file and the plain text version. Run this function on an existing Org mode file to see the difference between pure plain text and a fontified text. To take it a step further, you can open an Org mode file and run ~text-mode~ to disable all Org mode functionality and see the file in its raw beauty. To jump back to safety, simply run ~org-mode~ to restore the file.
+
+EWS uses parts of the Org-Modern package *********
 
 * Checking Spelling
 Writing with a spell checker has become the ultimate security blanket for authors. Without the squiggly red lined underneath our text, the final product would be littered with typos, at least in my case. The Emacs Flyspell minor mode provides an interface to the Hunspell spell-checking software, so you must ensure that it is available on your computer. The EWS configuration enables the Flyspell minor mode for all text modes.
@@ -332,19 +343,26 @@ The process of writing can be chaotic as it involves many iterative cycles. But 
           rank=same
           label="Inspiration"
           penwidth=0.5
-          lit [label="Other media" shape="rect" width=1.3]
-          ideas [label="Ideas" shape="rect" width=1.3]
-          other [label="Literature" shape="rect" width=1.3]
+          lit [label="Other media" shape="rect" width=1]
+          blogs [label="Internet" shape="rect" width=1]
+          other [label="Literature" shape="rect" width=1]
       }
 
-      subgraph ideation {
+       subgraph ideation {
           cluster=true
           rank="same"
           label="Ideation"
           penwidth=0.5
-          tasks [label="Org Mode\nTodo" shape="folder" width=1]
           notes [label="Denote\nnotes" shape="folder" width=1]
           biblio [label="BibTeX\nbibliography" shape="folder" width=1]
+          notes -> biblio [constraint=false dir=both]
+      }
+
+      subgraph manage {
+          cluster=true
+          label="Managing"
+          penwidth=0.5
+          tasks [label="Org Mode\nTodo" shape="folder" width=1]
       }
 
       subgraph production {
@@ -352,12 +370,13 @@ The process of writing can be chaotic as it involves many iterative cycles. But 
          rank=same
          label="Production"
          penwidth=0.5
-         typeset [label="Typesetting" shape="folder"]
-         edit [label="Editing" shape="folder"]
-         write [label="Writing" shape="folder"]
+         typeset [label="Typesetting" shape="folder" width=1]
+         edit [label="Editing" shape="folder" width=1]
+         write [label="Writing" shape="folder" width=1]
+         write -> edit -> typeset [constraint=false]
       }
 
-      subgraph publication {
+       subgraph publication {
           cluster=true
           rank=same
           label="Publication"
@@ -367,18 +386,19 @@ The process of writing can be chaotic as it involves many iterative cycles. But 
           office [label="Office\ndocument" shape="note" width=1]
       }
 
-      ideas -> notes [ltail=inspiration lhead=ideation]
-      notes -> biblio [constraint=false dir=both]
-      notes -> tasks [constraint=false dir=both]
+      blogs -> notes [ltail=inspiration lhead=ideation]
       notes -> edit [ltail=ideation lhead=production]
-      write -> edit -> typeset [constraint=false]
       edit -> ebook [ltail=production lhead=publication]
+      notes -> tasks [constraint=false ltail=ideation lhead=manage]
+
+      {rank=same; notes; tasks}
   } 
 #+end_src
 #+caption: Emacs Writing Studio workflow.
 #+name: fig:workflow
-#+attr_html: :width 900 :alt Emacs Writing Studio workflow :title Emacs Writing Studio workflow
+#+attr_html: :width 600 :alt Emacs Writing Studio workflow :title Emacs Writing Studio workflow
 #+attr_latex: :width 0.8\textwidth
+#+attr_org: :width 100
 #+RESULTS:
 [[file:images/emacs-workflow.png]]
 

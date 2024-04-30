@@ -1,6 +1,6 @@
 #+title: Inspiration: Reading, Listening and Watching
 #+macro:        ews /Emacs Writing Studio/
-#+startup:      num content
+#+startup:      content
 #+bibliography: ../library/emacs-writing-studio.bib
 :NOTES:
 - [X] History of ebooks
@@ -374,6 +374,7 @@ EMMS has many more advanced features that allow you to control your sound collec
 - ~emms-play-directory~: Add a directory to the playlist.
 - ~emms-play-find~: Plays all files in the music directory that match a given search criterion.
 
-The Emacs Multimedia System has a plethora of additional options to fine-tune your listening experience. Read the EMMS manual with the info browser (=C-h R emms ENTER=) for detailed information about the various options.
+  The Emacs Multimedia System has a plethora of additional options to fine-tune your listening experience. Read the EMMS manual with the info browser (=C-h R emms ENTER=) for detailed information about the various options.
 
 Now that you know how to inspire yourself with Emacs, it is time to solidify your thought by writing them into an electronic notebook. The next chapter explains how to use {{{ews}}} as your personal knowledge management system.
+
