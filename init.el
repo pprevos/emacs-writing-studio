@@ -1,4 +1,5 @@
-;; Emacs 29?
+;; Emacs 29? EWS leverages functionality from the latest Emacs version.
+
 (when (< emacs-major-version 29)
   (error "Emacs Writing Studio requires Emacs version 29 or later"))
 
@@ -8,25 +9,27 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; Load EWS functions
-(load-file (concat (file-name-as-directory
-                    user-emacs-directory)
-                   "ews.el"))
-
 ;; Set package archives
+
 (use-package package
   :config
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (package-initialize))
 
 ;; Package Management
+
 (use-package use-package
   :custom
   (use-package-always-ensure t)
   (package-native-compile t)
   (warning-minimum-level :emergency))
 
+;; Load EWS functions
+
+(load-file (concat (file-name-as-directory user-emacs-directory) "ews.el"))
+
 ;; Check for missing external software
+
 (ews-missing-executables
  '("soffice" "zip" "pdftotext" "ddjvu"
    "curl"
@@ -40,15 +43,19 @@
    "pdftotext"
    ("mpg321" "ogg123" "mplayer" "mpv" "vlc")))
 
+;;; LOOK AND FEEL
 ;; Keyboard-centric user interface removing tool, menu and scroll bars
+
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
 ;; Short answers only please
+
 (setq use-short-answers t)
 
 ;; Spacious padding
+
 (use-package spacious-padding
   :custom
   (line-spacing 3)
@@ -56,6 +63,7 @@
   (spacious-padding-mode 1))
 
 ;; Modus Themes
+
 (use-package modus-themes
   :custom
   (modus-themes-italic-constructs t)
@@ -76,8 +84,13 @@
   :hook
   (text-mode . mixed-pitch-mode))
 
+;; Window management
+;; Split windows sensibly
+
 (setq split-width-threshold 120
       split-height-threshold nil)
+
+;; Keep window sizes balanced
 
 (use-package balanced-windows
   :config
@@ -86,6 +99,7 @@
 ;; MINIBUFFER COMPLETION
 
 ;; Enable vertico
+
 (use-package vertico
   :init
   (vertico-mode)
@@ -93,11 +107,13 @@
   (vertico-sort-function 'vertico-sort-history-alpha))
 
 ;; Persist history over Emacs restarts.
+
 (use-package savehist
   :init
   (savehist-mode))
 
 ;; Search for partial matches in any order
+
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
@@ -106,11 +122,13 @@
    '((file (styles partial-completion)))))
 
 ;; Enable richer annotations using the Marginalia package
+
 (use-package marginalia
   :init
   (marginalia-mode))
 
 ;; Improve keyboard shortcut discoverability
+
 (use-package which-key
   :config
   (which-key-mode)
@@ -118,13 +136,15 @@
   (which-key-max-description-length 40))
 
 ;; Improved help buffers
+
 (use-package helpful
   :bind
-  (("C-h x" . helpful-command)    ;; Help about commands
-   ("C-h k" . helpful-key)        ;; Help about keystrokes
-   ("C-h v" . helpful-variable))) ;; Help about variables
+  (("C-h x" . helpful-command)
+   ("C-h k" . helpful-key)
+   ("C-h v" . helpful-variable)))
 
 ;;; Text mode settings
+
 (use-package text-mode
   :ensure
   nil
@@ -133,10 +153,12 @@
   :init
   (delete-selection-mode t)
   :custom
+  (sentence-end-double-space nil)
   (scroll-error-top-bottom t)
   (save-interprogram-paste-before-kill t))
 
 ;; Check spelling with flyspell and hunspell
+
 (use-package flyspell
   :custom
   (ispell-silently-savep t)
@@ -151,7 +173,8 @@
   (("C-c w s s" . ispell)
    ("C-;"       . flyspell-auto-correct-previous-word)))
 
-;;; RICING ORG MODE
+;;; Ricing Org mode
+
 (use-package org
   :custom
   (org-startup-indented t)
@@ -164,11 +187,13 @@
   (org-use-sub-superscripts "{}"))
 
 ;; Show hidden emphasis markers
+
 (use-package org-appear
   :hook
   (org-mode . org-appear-mode))
 
 ;; LaTeX previews
+
 (use-package org-fragtog
   :after org
   :hook
@@ -180,6 +205,7 @@
    (plist-put org-format-latex-options :background 'auto)))
 
 ;; Org modern: Most features disables for beginnng users
+
 (use-package org-modern
   :hook
   (org-mode . org-modern-mode)
@@ -201,19 +227,22 @@
 ;; INSPIRATION
 
 ;; Doc-View
-  (use-package doc-view
-    :custom
-    (doc-view-resolution 300)
-    (large-file-warning-threshold (* 50 (expt 2 20))))
+
+(use-package doc-view
+  :custom
+  (doc-view-resolution 300)
+  (large-file-warning-threshold (* 50 (expt 2 20))))
 
 ;; Read ePub files
- (use-package nov
-   :init
-   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
+
+(use-package nov
+  :init
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
 
 ;; Reading LibreOffice files
 ;; Fixing a bug in Org Mode pre 9.7
 ;; Org mode clobbers associations with office documents
+
 (use-package ox-odt
   :ensure nil
   :config
@@ -222,6 +251,7 @@
                  . doc-view-mode-maybe)))
 
 ;; Managing Bibliographies
+
 (use-package bibtex
   :custom
   (bibtex-user-optional-fields
@@ -231,14 +261,16 @@
   :config
   (ews-bibtex-register)
   :bind
-  (("C-c w b r" . ews-biblio-register-files)))
+  (("C-c w b r" . ews-bibtex-register)))
 
 ;; Biblio package for adding BibTeX records
+
 (use-package biblio
   :bind
-  (("C-c w b b" . ews-biblio-lookup)))
+  (("C-c w b b" . ews-bibtex-biblio-lookup)))
 
 ;; Citar to access bibliographies
+
 (use-package citar
   :custom
   (org-cite-global-bibliography ews-bibtex-files)
@@ -253,6 +285,7 @@
 ;; (setq browse-url-browser-function 'eww-browse-url)
 
 ;; Configure Elfeed
+
 (use-package elfeed
   :custom
   (elfeed-db-directory
@@ -262,6 +295,7 @@
   ("C-c w e" . elfeed))
 
 ;; Configure Elfeed with org mode
+
 (use-package elfeed-org
   :config
   (elfeed-org)
@@ -272,11 +306,13 @@
                  "Documents/elfeed.org"))))
 
 ;; Easy insertion of weblinks
+
 (use-package org-web-tools
   :bind
   (("C-c w w" . org-web-tools-insert-link-for-url)))
 
 ;; Emacs Multimedia System
+
 (use-package emms
   :init
   (require 'emms-setup)
@@ -295,6 +331,7 @@
    ("<XF86AudioPlay>" . emms-pause)))
 
 ;; Fleeting notes
+
 (use-package org
   :bind
   (("C-c c" . org-capture)
@@ -304,15 +341,26 @@
    (concat (file-name-as-directory ews-home-directory)
          "Documents/inbox.org"))
   (org-capture-bookmark nil)
-  ;; Capture templates
-  (org-capture-templates
-   '(("f" "Fleeting note"
-      item
-      (file+headline org-default-notes-file "Notes")
-      "- %?")
-     ("t" "New task" entry
-      (file+headline org-default-notes-file "Tasks")
-      "* TODO %i%?"))))
+
+;; Capture templates
+
+(org-capture-templates
+ '(("f" "Fleeting note"
+    item
+    (file+headline org-default-notes-file "Notes")
+    "- %?")
+   ("p" "Permanent note" plain
+    (file denote-last-path)
+    #'denote-org-capture
+    :no-save t
+    :immediate-finish nil
+    :kill-buffer t
+    :jump-to-captured t)
+   ("t" "New task" entry
+    (file+headline org-default-notes-file "Tasks")
+    "* TODO %i%?"))))
+
+;; Denote
 
 (use-package denote
   :custom
@@ -333,21 +381,25 @@
    ("C-c w d r" . denote-rename-file)
    ("C-c w d R" . denote-rename-file-using-front-matter)))
 
+;; Consult-Notes for easy access
+
 (use-package consult-notes
   :custom
   (consult-narrow-key ":")
   (consult-notes-file-dir-sources
-   `(("Denote Notes"  ?d ,ews-notes-directory)))
+   `(("Denote Notes"  ?n ,denote-directory)))
   :bind
   (("C-c w h" . consult-org-heading)
    ("C-c w f" . consult-notes)
    ("C-c w g" . consult-notes-search-in-all-notes)))
 
+;; Citar-Denote to manage literature notes
+
 (use-package citar-denote
   :demand t
   :custom
   (citar-open-always-create-notes t)
-  :config
+  :init
   (citar-denote-mode)
   :bind
   (("C-c w b c" . citar-create-note)
@@ -357,6 +409,8 @@
    ("C-c w b k" . citar-denote-add-citekey)
    ("C-c w b K" . citar-denote-remove-citekey)
    ("C-c w b d" . citar-denote-dwim)))
+
+;; Explore and manage your Denote collection
 
 (use-package denote-explore
   :bind
@@ -380,14 +434,22 @@
    ("C-c w x v" . denote-explore-network-regenerate)
    ("C-c w x D" . denote-explore-degree-barchart)))
 
+;; Set some Org mode shortcuts
+
 (use-package org
-  :custom
-  (sentence-end-double-space nil)
   :bind
   (:map org-mode-map
         ("C-c w n" . ews-org-insert-notes-drawer)
         ("C-c w p" . ews-org-insert-screenshot)
         ("C-c w c" . ews-org-count-words)))
+
+;; Distraction-free writing
+
+(use-package olivetti
+  :bind
+  (("C-c w o" . ews-olivetti)))
+
+;; Undo Tree
 
 (use-package undo-tree
   :config
@@ -397,12 +459,8 @@
   :bind
   (("C-c w u" . undo-tree-visualize)))
 
-(use-package olivetti
-  :bind
-  (:map text-mode-map
-        ("C-c w o" . ews-olivetti)))
-
 ;; Export citations with Org Mode
+
 (require 'oc-natbib)
 (require 'oc-csl)
 
@@ -412,11 +470,14 @@
         (t     csl    "apa6.csl")))
 
 ;; Lookup words in online dictionary
+
 (use-package dictionary
   :custom
   (dictionary-server "dict.org")
   :bind
   (("C-c w s d" . dictionary-lookup-definition)))
+
+;; Writegood-Mode for buzzwords, passive writing and repeated word word detection
 
 (use-package writegood-mode
   :bind
@@ -425,11 +486,13 @@
   (text-mode . writegood-mode))
 
 ;; ediff
+
 (setq ediff-keep-variants nil
       ediff-split-window-function 'split-window-horizontally
       ediff-window-setup-function 'ediff-setup-windows-plain)
 
-;; Org Export Settings
+;; Generic Org Export Settings
+
 (use-package org
   :custom
   (org-export-with-drawers nil)
@@ -439,7 +502,6 @@
   (org-export-with-smart-quotes t)
   (org-export-date-timestamp-format "%e %B %Y"))
 
-;; LaTeX PDF Export settings
 (use-package ox-latex
   :ensure nil
   :demand t
@@ -457,8 +519,9 @@
            "blg" "brf" "fls" "entoc" "ps" "spl" "bbl"
            "tex" "bcf"))))
 
+;; LaTeX templates
+
 (with-eval-after-load 'ox-latex
-  ;; CRC Publishing template
   (add-to-list
    'org-latex-classes
    '("crc"
@@ -491,22 +554,26 @@
      ("\\subsection{%s}" . "\\subsection*{%s}")
      ("\\subsubsection{%s}" . "\\paragraph*{%s}"))))
 
-;; epub export
 (use-package ox-epub
   :demand t)
 
-;; ADVANCED EXPORT SETTINGS FOR EWS (UNDOCUMENTED)
+;; ADVANCED NDOCUMENTED EXPORT SETTINGS FOR EWS
 
-;; Use GraphViz for diagrams
+;; Use GraphViz for flow diagrams
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((dot . t))) ; this line activates dot
+
+;;; ADMINISTRATION
+
+;; Bind org agenda command
 
 (use-package org
  :bind
  (("C-c a" . org-agenda)))
 
 ;; FILE MANAGEMENT
+
 (use-package dired
   :ensure
   nil
@@ -517,17 +584,17 @@
    "-goah --group-directories-first --time-style=long-iso")
   (dired-dwim-target t)
   (delete-by-moving-to-trash t)
-  :init  ;; Open dired folders in same buffer
+  :init
   (put 'dired-find-alternate-file 'disabled nil))
 
 ;; Hide hidden files
+
 (use-package dired-hide-dotfiles
   :hook
   (dired-mode . dired-hide-dotfiles-mode)
   :bind
   (:map dired-mode-map ("." . dired-hide-dotfiles-mode)))
 
-;; Backup files
 (setq backup-directory-alist
       `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
       version-control t
@@ -535,6 +602,7 @@
       create-lockfiles nil)  ; No lock files
 
 ;; Recent files
+
 (use-package recentf
   :config
   (recentf-mode t)
@@ -547,6 +615,7 @@
   (("C-c w r" . recentf-open)))
 
 ;; Bookmarks
+
 (use-package bookmark
   :custom
   (bookmark-save-flag 1)

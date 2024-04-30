@@ -70,7 +70,7 @@ Sublists indicate that one of the entries is required."
         (message "Missing executable files(s): %s"
                  (mapconcat 'identity missing ", ")))))
 
-;;; BIBLIOGRAPHIE
+;;; BIBLIOGRAPHY
 (defvar ews-bibtex-files
   (when (file-exists-p ews-bibtex-directory)
     (directory-files ews-bibtex-directory t "^[A-Z|a-z|0-9].+.bib$"))
@@ -194,8 +194,8 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
 
 ;; Distraction-free writing
 ;;;###autoload
-(defun ews-distraction-free ()
-  "Distraction-free writing environment using Olivetti package."
+(defun ews-olivetti ()
+  "Distraction-free writing environment enhancing Olivetti mode."
   (interactive)
   (if (equal olivetti-mode nil)
       (progn
