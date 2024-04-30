@@ -247,6 +247,9 @@ Org mode can only handle simple tables without spanning columns or rows. To crea
 #+end_example
 
 ** Images
+:PROPERTIES:
+:CUSTOM_ID: sec:images
+:END:
 Although Emacs is a text processor, it can also display images. In Org mode, an image is a link to an image file, so the text and the images remain separate files. To add an image, press =C-c C-l= (~org-insert-link~), which opens the link menu. Org mode understands many types of links and for images we need a file link, so type =file:=. Press enter and select the image filename in the minibuffer. You can skip the =file= part by adding the universal argument with the =C-u C-c C-l= shortcut, from where you can start selecting the image file. Your buffer will now contain a link that starts with =file:=, the directory and file name. Under the hood, Org mode wraps the link between double square brackets, so it looks like: =[[file:path/to/image]]=. 
 
 #+begin_example

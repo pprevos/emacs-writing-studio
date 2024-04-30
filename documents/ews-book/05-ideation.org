@@ -1,4 +1,4 @@
-#+title: Ideation: Building Second Brain with Denote
+#+title:        Ideation: Building Second Brain with Denote
 #+startup:      content
 #+bibliography: ../library/emacs-writing-studio.bib
 #+todo:         DRAFT EDITED | REVIEWED FINAL
@@ -7,10 +7,10 @@
 - [X] One file vs multiple files
 - [X] [[denote:20220918T055032][Building a Second Brain]]
 - [X] [[https://en.wikipedia.org/wiki/Commonplace_book][Commonplace book - Wikipedia]]
-- [ ] [[denote:20220718T175338][Zettelkasten]]
+- [X] [[denote:20220718T175338][Zettelkasten]]
 - [X] [[denote:20230822T091357][Zettelkasten as septic tank and primordial soup]]
-- [ ] [[denote:20230909T192133][Note taking habits of college students]]
-- [ ] [[denote:20210728T184400][Taking Notes]]
+- [X] [[denote:20230909T192133][Note taking habits of college students]]
+- [X] [[denote:20210728T184400][Taking Notes]]
 - [X] Fleeting notes configuration
 - [X] https://protesilaos.com/codelog/2024-03-22-re-advice-emacs-note-taking/
 :END:
@@ -49,6 +49,9 @@ As you create more fleeting notes, your inbox steadily fills with random musings
 The Org mode capture functionality is a versatile system that allows you to craft templates for different types of notes. You can develop bespoke templates that capture information into various files and include metadata, such as timestamps and other properties. The Appendix explains how to modify the capture system to meet your needs.
 
 * EDITED Permanent Notes
+:PROPERTIES:
+:ID:       c43f80cf-e318-4887-9ec6-060fc7f92333
+:END:
 Your notes are a treasure trove that slowly develops over the years. Permanent notes in Emacs form an external electronic storehouse of information that you can structure and search to create new insights.
 
 Many different ways exist in Org mode to store permanent notes. Don't worry too much about which method to use when you start your collection of electronic notes. You can start with a single file and start writing. Your ideal workflow will emerge from your personal needs as they arise. The key to writing good notes is not worrying about the second brain, as your first brain is much more important in the creative process [cite:@prot_2024].
@@ -62,7 +65,7 @@ First, we explore using a single Org mode file to store permanent notes. Create 
     In the Phaedrus, ...
 #+end_example
 
-A few tools in Emacs and Org mode help to manage an extensive collection of notes. To view the table of contents of a file when you open it, add =#+startup: content= to your front matter. With this keyword, Org mode only shows headings when the file is first opened. Org mode's ability to fold and unfold headings with =S-TAB= lets you focus on what is essential.
+A few tools in Emacs and Org mode help to manage an extensive collection of notes in a single file. To view the table of contents of a file when you open it, add =#+startup: content= to your front matter. With this keyword, Org mode only shows headings when the file is first opened. Org mode's ability to fold and unfold headings with =S-TAB= lets you focus on what is essential.
 
 Another method to create focus within large files is to narrow the buffer to show only the section you are working in. The =C-x n= prefix key brings you to the narrowing functionality. The ~org-narrow-to-subtree~ function (=C-x n s=) narrows the current buffer to only show the content of the section that the cursor is in. The other text is not erased; it is just hidden from view. To revert to the complete buffer, use the ~widen~ command, bound to =C-x n w=. The narrowing functionality has a few other options, which you can explore through the popup menu when you invoke the prefix key.
 
@@ -79,9 +82,25 @@ Adding notes to categories by structuring headings is helpful but limited becaus
 
 You add a tag to a note with =C-c C-q= (~org-set-tags-command~). Type the name of the new tag in the minibuffer. Any tags already used in the document are displayed in the minibuffer completion list. You can also set a library for each file by adding something like this to the front matter of the Org file: =#+tags: philosophy(p) writing(w)=. The letters between parentheses become a shortcut in the minibuffer menu for fast selection. To create a new tag, just type free text into the minibuffer. Once you have a file with tagged entries, you can use this to search notes by category using the /sparse trees/ functionality. To select one or more tags for a sparse tree, use ~org-match-sparse-tree~ (=C-c \=). This function collapses the whole document and highlights the sections where the selected tags occur.
 
+The Consult package by Daniel Mendler includes a convenient function  to move around large Org mode files. The ~consult-org-heading~ function (=C-c w h=) provides al list of all headings in the current Org mode file in the minibuffer, from where you can navigate to the desired location. The Consult package provides a broad range of search and navigation commands to improve the way you use Emacs.
+
 A further tool to manage large files is the ~org-refile~ function, bound to =C-c C-w=. This command lets you easily move sections to another section in your document. When evoking this function, a list of names of chapters (level 1 headings) in your document appears. The subtree that the cursor is currently in will move to the selected chapter. To jump to the relevant entry, use the =C-u C-u C-c C-w= shortcut (two universal arguments before the command). Another method to refile your headings is with the Alt and arrow keys, as explained in section [[#sec:org-structure]].
 
-The Consult package by Daniel Mendler includes a convenient function  to move around Org mode files. The ~consult-org-heading~ function (=C-c w h=) provides al list of all headings in the current Org mode file in the minibuffer, from where you can navigate to the desired. The Consult package provides search and navigation commands to improve the way you use Emacs.
+Lastly, you might want to create links between notes in a file. we have already seen file links in section [[#sec:images]], but we can also link o a heading within an Org mode file. The easiest way is to create an internal link with =C-c l= and enter the name of the heading you need to link to and add a description. The link now looks something like this:
+
+=[[* Heading name][Description]]=
+
+The problem with this approach is that the name of the heading might change or perhaps you misspelled it. When following a link to a non existing target Org mode does not throw an error but asks whether you like to create a new heading. A better approach to linking is giving the heading a unique ID. EWS is configured so that Org mode create a unique ID for a heading. To create a link between notes in a single note document, move the cursor to the heading you like to link to and press =C-c l= (~org-store-link~). This function create a drawer underneath the heading. , A drawer is a section of collapsible text that can store metadata about a heading. Drawers are useful for a lot of tasks, and are further discussed in chapter [[#chap:production]]. The drawer might look something like this:
+
+#+begin_example
+ :PROPERTIES:
+ :ID:       d454979b-2d40-4f95-9f85-f5d9314c28d7
+ :END:
+#+end_example
+
+The random string of number is a Universally Unique Identifier (UUI), which creates a random ID. The likelihood of a duplicate ID is astronomically small so we can consider it unique. A link to  this ID is now stored in memory and you can insert it where you need it with =C-c =C-l= (~org-store-link~). A link to an ID looks like this under the hood:
+
+=[[id:d454979b-2d40-4f95-9f85-f5d9314c28d7][Example]]=
 
 Using one large file for your notes is a great way to commit your thoughts to Emacs. However, the file can become unwieldy after a while, and if you get really productive, a large file can slow down the system. The next section shows how to use the Denote package to write your notes as a collection of interconnected notes.
 
@@ -240,7 +259,7 @@ If you enter a name for a note that does not yet exist, Denote will first let yo
 
 Denote can also create links to headings inside of other Org mode notes. The ~denote-org-extras-link-to-heading~ function (=C-c w d h=). This function will assk for the Org mode file to link to and then shows a menu of the headings inside this file. When you now click on the new link, it will take you directly to the heading inside the other file.
 
-You can jump to any linked note without having the cursor on it with ~denote-link-find-file~ (=C-c w d l=). This function shows all notes linked from the open note in the minibuffer where you can select the one you like to jump to. To find out which notes link to the one you are currently reading, use the ~denote-find-backlink~ function (=C-c w d b=). 
+You don't need to search through a document to find relevant links. Jump to any linked note without placing the cursor on it with ~denote-link-find-file~ (=C-c w d l=). This function shows all notes linked from the open note in the minibuffer where you can select the one you like to jump to. To find out which notes link to the one you are currently reading, use the ~denote-find-backlink~ function (=C-c w d b=). 
 
 ** EDITED Finding Notes and Attachments
 When collecting thousands of notes and attachments, it is important to have pathways in the system to find the information you need or to make new connections between ideas. The most straightforward method to find files is opening one with the standard ~find-file~ function. The minibuffer completion system helps you to find what you need.

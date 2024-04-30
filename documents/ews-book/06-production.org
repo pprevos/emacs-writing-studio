@@ -33,9 +33,11 @@ A typical writing project contains a lot more than just letters, numbers, and pu
 ** Taking Notes
 The previous chapter explained in detail how to take notes in Emacs. You can also take notes inside your writing project, which is useful to remind yourself of what still needs to be done, outside your formal note-taking system. These notes are not exported in the final version. You could add a checklist of what needs to be done, links to websites or notes in your Denote digital garden, or anything else of importance worth remembering during the process of writing. If you need to take any notes unrelated to the document at hand, then a fleeting note stored in your central inbox using the Org capture system is a better choice (Chapter [[#chap:ideation]]).
 
-Two methods are available to keep notes inside an Org mode file. The first method is straightforward. Any line in Org mode that starts with a hashtag / pound symbol (=#=) is a comment, which Emacs ignores when exporting the text to the final output: =# This is a comment.=
+Two methods are available to keep notes inside an Org mode file. The first method is straightforward. Any line in Org mode that starts with a hashtag / pound symbol (=#=) is a comment, which Emacs ignores when exporting the text to the final output:
 
-The second method uses drawers, which are sections of collapsible text that can store notes and other types of information. You can keep multiple lines of text inside a drawer, for example, if you need to cut out a bit of text and would like to save it for future reference, or keep a checklist. The beauty of Org mode drawers is that they are collapsible, so their contents do not distract you from the primary task. You can close or open a drawer with the =TAB= key when the cursor is on the drawer.
+=# This is a comment.=
+
+The second method uses a collectable drawer under the heading. You can keep multiple lines of text inside a drawer, for example, if you need to cut out a bit of text and would like to save it for future reference, or keep a checklist. The beauty of Org mode drawers is that they are collapsible, so their contents do not distract you from the primary task. You can close or open a drawer with the =TAB= key when the cursor is on the drawer.
 
 #+begin_example
   * This is a headline
