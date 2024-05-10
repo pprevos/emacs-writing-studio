@@ -29,6 +29,23 @@
 (load-file (concat (file-name-as-directory user-emacs-directory) "ews.el"))
 
 ;; Check for missing external software
+;;
+;; - soffice (LibreOffice): View and create office documents
+;; - zip: Unpackk epub documents
+;; - pdftotext (poppler-utils): Convert PDF to text
+;; - djvu (DjVuLibre): View DjVu files
+;; - curl: Reading RSS feeds
+;; - divpng: Part of LaTeX
+;; - dot (GraphViz): Create note network diagrams
+;; - convert (ImageMagick): Convert image files 
+;; - gm (GraphicsMagick): Convert image files
+;; - latex (TexLive, MacTex or MikTeX): Preview LaTex and export Org to PDF
+;; - hunspell: Spellcheck. Also requires a hunspell dictionary
+;; - grep: Search inside files
+;; - ripgrep: Faster alternative for grep
+;; - gs (GhostScript): View PDF files
+;; - mutool (MuPDF): View PDF files
+;; - mpg321, ogg123 (vorbis-tools), mplayer, mpv, vlc: Media players
 
 (ews-missing-executables
  '("soffice" "zip" "pdftotext" "ddjvu"
@@ -40,7 +57,6 @@
    "hunspell"
    ("grep" "ripgrep")
    ("gs" "mutool")
-   "pdftotext"
    ("mpg321" "ogg123" "mplayer" "mpv" "vlc")))
 
 ;;; LOOK AND FEEL
@@ -69,9 +85,6 @@
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
   (modus-themes-mixed-fonts t)
-  (modus-themes-headings '((1 . (1.2))
-                           (2 . (1.1))
-                           (t . (1.0))))
   (modus-themes-to-toggle
    '(modus-operandi-tinted modus-vivendi-tinted))
   :init
@@ -184,7 +197,8 @@
   (org-fold-catch-invisible-edits 'error)
   (org-startup-with-latex-preview t)
   (org-pretty-entities t)
-  (org-use-sub-superscripts "{}"))
+  (org-use-sub-superscripts "{}")
+  (org-id-link-to-org-use-id t))
 
 ;; Show hidden emphasis markers
 
@@ -256,7 +270,7 @@
   :custom
   (bibtex-user-optional-fields
    '(("keywords" "Keywords to describe the entry" "")
-     ("file" "Link to a document file." "" )))
+     ("file"     "Relative or absolute path to attachments" "" )))
   (bibtex-align-at-equal-sign t)
   :config
   (ews-bibtex-register)
@@ -273,18 +287,15 @@
 
 (use-package citar
   :custom
-  (org-cite-global-bibliography ews-bibtex-files)
   (citar-bibliography ews-bibtex-files)
+  (org-cite-global-bibliography ews-bibtex-files)
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
   :bind
   (("C-c w b o" . citar-open)))
 
-;; Use EWW
-;; (setq browse-url-browser-function 'eww-browse-url)
-
-;; Configure Elfeed
+;; Read RSS feeds with Elfeed
 
 (use-package elfeed
   :custom
@@ -330,21 +341,22 @@
    ("<XF86AudioNext>" . emms-next)
    ("<XF86AudioPlay>" . emms-pause)))
 
+(use-package openwith
+  :config
+  (openwith-mode t)
+  :custom
+  (openwith-association nil))
+
 ;; Fleeting notes
 
 (use-package org
   :bind
   (("C-c c" . org-capture)
-   ("C-c l" . org-store-link))
-  :custom
-  (org-default-notes-file
-   (concat (file-name-as-directory ews-home-directory)
-         "Documents/inbox.org"))
-  (org-capture-bookmark nil)
+   ("C-c l" . org-store-link)))
 
 ;; Capture templates
 
-(org-capture-templates
+(setq org-capture-templates
  '(("f" "Fleeting note"
     item
     (file+headline org-default-notes-file "Notes")
@@ -358,7 +370,7 @@
     :jump-to-captured t)
    ("t" "New task" entry
     (file+headline org-default-notes-file "Tasks")
-    "* TODO %i%?"))))
+    "* TODO %i%?")))
 
 ;; Denote
 
@@ -373,10 +385,12 @@
   (("C-c w d b" . denote-find-backlink)
    ("C-c w d d" . denote-date)
    ("C-c w d f" . denote-find-link)
+   ("C-c w d h" . denote-org-extras-link-to-heading)
    ("C-c w d i" . denote-link-or-create)
    ("C-c w d I" . denote-org-extras-dblock-insert-links)
    ("C-c w d k" . denote-keywords-add)
    ("C-c w d K" . denote-keywords-remove)
+   ("C-c w d l" . denote-link-find-file)
    ("C-c w d n" . denote)
    ("C-c w d r" . denote-rename-file)
    ("C-c w d R" . denote-rename-file-using-front-matter)))
@@ -408,7 +422,8 @@
    :map org-mode-map
    ("C-c w b k" . citar-denote-add-citekey)
    ("C-c w b K" . citar-denote-remove-citekey)
-   ("C-c w b d" . citar-denote-dwim)))
+   ("C-c w b d" . citar-denote-dwim)
+   ("C-c w b e" . citar-denote-open-reference-entry)))
 
 ;; Explore and manage your Denote collection
 
@@ -446,6 +461,7 @@
 ;; Distraction-free writing
 
 (use-package olivetti
+  :demand t
   :bind
   (("C-c w o" . ews-olivetti)))
 
@@ -487,9 +503,16 @@
 
 ;; ediff
 
-(setq ediff-keep-variants nil
-      ediff-split-window-function 'split-window-horizontally
-      ediff-window-setup-function 'ediff-setup-windows-plain)
+(use-package edif
+  :ensure nil
+  :custom
+  (ediff-keep-variants nil)
+  (ediff-split-window-function 'split-window-horizontally)
+  (ediff-window-setup-function 'ediff-setup-windows-plain))
+
+(use-package fountain-mode)
+
+(use-package markdown-mode)
 
 ;; Generic Org Export Settings
 
@@ -569,8 +592,10 @@
 ;; Bind org agenda command
 
 (use-package org
- :bind
- (("C-c a" . org-agenda)))
+  :custom
+  (org-log-into-drawer t)
+  :bind
+  (("C-c a" . org-agenda)))
 
 ;; FILE MANAGEMENT
 

@@ -32,7 +32,9 @@
 ;;
 ;;; Code:
 
+
 ;; Emacs Writing Studio Customisation
+
 (defvar ews-home-directory
   (file-name-as-directory (getenv "HOME"))
   "Location of documents.")
@@ -250,7 +252,4 @@ current note."
     (insert (format "#+caption: %s\n" (read-from-minibuffer "Caption: ")))
     (insert (format "[[file:%s]]" filename))
     (org-redisplay-inline-images)))
-
-(provide 'ews)
-;;; ews.el ends here
 
