@@ -31,7 +31,7 @@
 ;; Check for missing external software
 ;;
 ;; - soffice (LibreOffice): View and create office documents
-;; - zip: Unpackk epub documents
+;; - zip: Unpack ePub documents
 ;; - pdftotext (poppler-utils): Convert PDF to text
 ;; - djvu (DjVuLibre): View DjVu files
 ;; - curl: Reading RSS feeds

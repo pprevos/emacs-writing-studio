@@ -16,6 +16,35 @@ This configuration follows the following principles:
 Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to see additional packages useful to authors.
 
 * Install EWS
-To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository (=github.com/pprevos/emacs-writing-studio=) and save them in the configuration folder. The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=. Copy the bot files from the EWS repository to this directory. EWS will activate after you evaluate the ~restart-emacs~ function or the next time you start the program.
+To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository and save them in the configuration folder.
+
+The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=.
+
+Copy both files from the EWS repository to this directory. EWS will activate after you evaluate the ~restart-emacs~ function or the next time you start the program.
 
 If you an experienced Emacs user, then you can try the EWS configuration by creating a separate folder for the init file and start Emacs with =emacs --init-directory <folder-path>=. That way you can try EWS without clobbering your existing configuration.
+
+* External Packages
+Emacs Writing Studio also depends on a series of other software that Emacs interfaces with to do various tasks. When EWS starts, a message will appear in the =*Messages*= buffer listing the missing software. Some of the listed packages are alternatives for each other, for example (=convert= or =gm=).
+
+- =soffice= ([[https://www.libreoffice.org/][LibreOffice]]): View and create office documents
+- =zip=: Unpack ePub documents
+- =pdftotext= ([[https://poppler.freedesktop.org/][poppler-utils]]): Convert PDF to text
+- =djvu= ([[http://djvu.org/][DjVuLibre]]): View DjVu files
+- =curl=: Reading RSS feeds
+- =dot= ([[https://graphviz.org/][GraphViz]]): Create note network diagrams
+- Convert image files
+  - =convert= ([[https://imagemagick.org/][ImageMagick]])  
+  - =gm= ([[http://www.graphicsmagick.org/][GraphicsMagick]])
+- =latex= ([[https://www.latex-project.org/get/][TexLive, MacTex or MikTeX]]): Preview LaTex and export Org to PDF
+  - =divpng=: Part of LaTeX
+- =hunspell=: Spellcheck. Also requires a hunspell dictionary
+- Search inside files
+  - =grep=
+  - =ripgrep=: Faster alternative for grep
+- View PDF files
+  - =gs= ([[https://www.ghostscript.com/][GhostScript]]): View PDF files
+  - =mutool= ([[https://mupdf.com/][MuPDF]]): View PDF files
+- Play music
+  - =mpg321=, =ogg123= ([[https://www.xiph.org/][vorbis-tools]]), =mplayer=, =mpv=, =vlc=
+
