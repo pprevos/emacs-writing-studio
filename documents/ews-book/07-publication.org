@@ -114,16 +114,59 @@ Org exports tables without vertical lines
 | 3 |   9 |  27 |  81 |  1.7321 |     1.3161 |
 |---+-----+-----+-----+---------+------------|
 
-** Bibliographic References
+
+** Structure Templates
+If you need to add more than a few words, then a comment block can be useful. A block in Org mode is a section between =#+begin= and =#+end= keywords. Org mode blocks can contain several types of content, some of which are explained in the next chapter. Org mode has defined a set of structure templates to help insert blocks with ~org-insert-structure-template~ (=C-c C-,=) opens the 
+
+=C-c C-, C=
+
+#+begin_example
+ #+begin_comment
+ Add your comments here ...
+ #+end_comment
+#+end_example
+
+** Quotations
+The best advice to any writer is to use original words when expressing your thoughts. However, sometimes the words fom other authors are so original that you like to add them verbatim.
+
+The most direct way is obviously using "quotation marks"
+
+In Org mode quotations
+
+=C-c C-, q=
+
+#+begin_example
+ #+begin_quote
+   Good writing is essentially rewriting (Roald Dahl) 
+ #+end_quote
+#+end_example
+
+
+
+** Macros
+#+begin_comment
+Using Macros for publishing: [[https://git.sr.ht/~jamesendreshowell/org-teach/tree/master/item/org-teach-headers-include.org][~jamesendreshowell/org-teach (master): org-teach-headers-include.org - sourcehut git]]
+#+end_comment
+
+** Citations
 :PROPERTIES:
 :CUSTOM_ID: sec:citation-export
 :END:
+Org mode has a built-in citation manager that can use BibTeX / BibLaTeX or CSL files to reference bibliographic items such as articles and books. Chapter [[#chap:inspiration]] explained how to create a bibliography and chapter [[#chap:production]] explained how to add citations in Org files. This section explains how Org mode converts these technical constructs such as =wittgenstein_1922_tract= into a formatted citation such as "(Wittgenstein, 1905)". A long list of citation styles exists and each publisher and university, or even individual lecturers, insist that authors use their preferred style. Org mode has two mechanisms to convert citation links to formatted citations.
 
-Org mode has a built-in citation manager that can use BibTeX / BibLaTeX or CSL files to reference bibliographic items such as articles and books. Chapter [[#chap:inspiration]] explains how to create a bibliography and Chapter [[#chap:production]] explains how to add citations in Org files.
+When exporting to LaTeX or PDF, Org mode translate citations in to LaTeX commands, such as =\cite{wittgenstein_1922_tract}=. The LaTeX preamble for the exported document sets the citation style which determines the final format of these citations. When exporting to any other format you need to specify how Org mode manages citations using a Citation Style Language (CSL) file. This language consists of =.CSL= files that contain instructions on how to format citations and bibliographies. You can find =.CSL= files for the citation style you require on the =citationstyles.org= website. When using CSL, Org mode converts the citation links to formatted text during the export process.
 
-When exporting to LaTeX, citations are managed by  the external software. When exporting to any other format you need to specify how Org mode manages citations. The default settings in Org mode provide basic citation support in author-year format.
+EWS is configured for LaTeX exports to use its native citation engine and any other documents iuses CSL The documents folder contains the =apa.csl= file, which was used for creating the non-PDF versions of this book.
+
+The default settings in Org mode provide basic citation support in author-year format.
 
 This website by Tecosaur provides an in-depth description of how to [[https://blog.tecosaur.com/tmio/2021-07-31-citations.html][manage citations in Org mode]], much better than I can explain it.
+
+To active the list of references in the final result add the following to its nominated location:
+
+#+begin_example
+ #+PRINT_BIBLIOGRAPHY:
+#+end_example
 
 * Office Documents
 The export function in Org Mode can export to the ODT format, which is compatible with MS Word, out of the box. The ODT export back-end relies on the =zip= program to create the final output

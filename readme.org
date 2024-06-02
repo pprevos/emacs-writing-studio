@@ -1,17 +1,19 @@
 #+title: Emacs Writing Studio
 #+author: Peter Prevos
 
-/Emacs Writing Studio/ (EWS) is a configuration and a [[https://lucidmanager.org/tags/emacs/][series of articles]] for authors who want to use Emacs to research and publish articles, books, scripts and websites. EWS is also a forthcoming ebook and paperback, which is an expanded version of the blog posts.
+/Emacs Writing Studio/ (EWS) is a configuration for researchers and authors who want to use Emacs to write and publish articles, books and dissertations. EWS is also a forthcoming ebook and paperback, which is an expanded version of a [[https://lucidmanager.org/tags/emacs/][series of articles]] on my website.
 
-#+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
-#+attr_org: :width 400
-[[file:emacs-writing-studio.png]]
- 
 This configuration follows the following principles:
+ 
+- Stays as close as humanly bearable to vanilla GNU Emacs
 - Leverage functionality in Emacs 29
 - Standard keyboard shortcuts
 - No configuration for writing code
 - Centred around Org mode
+
+#+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
+#+attr_org: :width 400
+[[file:emacs-writing-studio.png]]
 
 Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to see additional packages useful to authors.
 
@@ -22,10 +24,12 @@ The location of the configuration folder depends on your operating system and Em
 
 Copy both files from the EWS repository to this directory. EWS will activate after you evaluate the ~restart-emacs~ function or the next time you start the program.
 
-If you an experienced Emacs user, then you can try the EWS configuration by creating a separate folder for the init file and start Emacs with =emacs --init-directory <folder-path>=. That way you can try EWS without clobbering your existing configuration.
+If you an experienced Emacs user, then you can try the EWS configuration by cloning this repository and start Emacs with =emacs --init-directory <folder-path>=. That way you can try EWS without clobbering your existing configuration.
 
 * External Packages
-Emacs Writing Studio also depends on a series of other software that Emacs interfaces with to do various tasks. When EWS starts, a message will appear in the =*Messages*= buffer listing the missing software. Some of the listed packages are alternatives for each other, for example (=convert= or =gm=).
+Emacs is not only a text editor but also an interface to other software. EWS depends on external software that Emacs interfaces with to do various tasks.
+
+When EWS starts, a message will appear in the =*Messages*= buffer listing the missing software. Some of the listed packages are alternatives for each other, for example (=convert= or =gm=). The core functionality of Emacs will work fine without these, but some specialised tasks require assistance from this software.
 
 - =soffice= ([[https://www.libreoffice.org/][LibreOffice]]): View and create office documents
 - =zip=: Unpack ePub documents
@@ -47,4 +51,3 @@ Emacs Writing Studio also depends on a series of other software that Emacs inter
   - =mutool= ([[https://mupdf.com/][MuPDF]]): View PDF files
 - Play music
   - =mpg321=, =ogg123= ([[https://www.xiph.org/][vorbis-tools]]), =mplayer=, =mpv=, =vlc=
-

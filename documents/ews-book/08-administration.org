@@ -74,6 +74,9 @@ Your list will be a mess of tasks, projects, goals and vague ideas. Your next ta
 You can also add notes or link images below any heading to provide some context to the task by hitting enter at the end of the headline and typing. Your list is starting to take shape now. The following steps will add more context to your tasks. 
 
 ** /Organise/ Place it where it belongs
+:PROPERTIES:
+:CUSTOM_ID: sec:organise
+:END:
 The problem with most todo-lists is that you get overwhelmed by the amount of stuff to be done. But in reality, most actions don't need or can't be progressed. You can be more precise in your records and mark items as the next action to be undertaken, or mark the ones where you are waiting for somebody else.
 
 - /Next/: The next action to be taken.
@@ -163,30 +166,33 @@ During your regular review, you assess each bit of information you collected. If
 
 If the new item is actionable and it only takes a few minutes to do, then just go ahead and do it; don't waste your time formally registering the action.
 
-Lastly, if the inbox item is actionable, bur requires some time, you can add it as an action to your agenda file. The status of each action depends on external circumstances.
+Lastly, if the inbox item is actionable, bur requires some time, you can add it as an action to your todo file. The status of each action depends on external circumstances.
 
-The key of any productivity workflow is to regularly review your list of actions, your priorities and goals. The central tool in Org mode to look at your list of registered actions is the agenda.
+** /Engage/: Take action
+Emacs is a powerful multifunctional tool, but unfortunately, it cannot help you mow the lawn for you, go shopping or do the other tasks on your lists. Emacs can help you with any task that involves creating written content, but it can't mow the lawn for you. In the end, there is no productivity system in the world that does the tasks for you, no matter what the gurus promise. However, bringing order into your tasks keeps you focussed on your goals.
 
-The agenda provides a summary of all your headings with an action status.  Firstly, it is common practice to bind =C-c a= to the agenda menu. You can assign one or more Org mode files that contain your actions. Org mode will read these files and present the todo items as an agenda. In /Emacs Writing Studio/, the default agenda file is =agenda.org=.
+The key of any productivity workflow is to regularly review your list of actions, your priorities and goals and actually do  them. The central tool in Org mode to look at your list of registered actions is the agenda.
 
-When you evaluate the ~org-agenda~ function with =C-c a=, Org mode reads all agenda files and constructs an agenda, listing actions by date.
+The agenda is a time-based summary of the actions in your todo file(s). You first need to add the relevant files to the agenda list. You add the file linked to the current buffer with ~org-agenda-file-to-front~ (=C-c [=). You can add multiple todo files to your agenda list, for example the inbox, a todo file for your personal life and one for your work.  You remove a file from the agenda list with ~org-remove-file~ (=C-c ]=). Once your agenda files are in the list, you can jump to them quickly with =C-'= (~org-cycle-agenda-files~). This command cycles through the registered agenda files.
+
+The agenda function in org mode is highly versatile and configurable. When you evaluate the ~org-agenda~ function with =C-c a=, Org mode provides a menu for t he many types of 
 
 You can change the status of items from within the agenda or jump to the file that contains the action, so you can ready any context or maintain checklist items.
 
 The agenda starts with a self-explanatory menu screen which you can explore. Org mode has extensive capabilities to configure how the agenda is presented, which are outside the scope of this article.
-
-** /Engage/: Take action
-Emacs is a powerful multifunctional tool, but unfortunately, it cannot help you mow the lawn for you, go shopping or do the other tasks on your lists. Emacs can help you with any task that involves creating written content, but it can't mow the lawn for you. In the end, there is no productivity system in the world that does the tasks for you, no matter what the gurus promise. However, bringing order into your tasks keeps you focussed on your goals.
 
 ** Learning More
 Getting Things Done is just one of many methods to manage your busy life. This article shows how to implement the principles of David Allan's GTD method with Org mode. The beauty of Emacs is that you have the freedom to implement whatever method you prefer, so be creative and use Org mode to suit your needs.
 
 Bavarian Org mode guru Rainer König has developed a comprehensive series of YouTube videos that explain using Org mode for managing actions and projects in great detail. Ranier has also published a more comprehensive course on Udemy, which provides more detail than the freely available videos [cite:@koenig_2020_org].
 
+The key to a successful implementation of any productivity method is not to become you own abusive parent. Unless there are external deadlines, everything on my action list is optional. Putting the correct rubbish bin at the kerb is not optional, because I rely on the truck to pick it up. But actions such as writing a new chapter for this book are optional. Use the capabilities of managing your life with Org mode wisely and don't become a slave to the list and then loosing self-esteem because you can't keep up with your own expectations.
+
 * Manage Files
 :NOTES:
 - [ ] [[https://emacs.stackexchange.com/questions/2433/shrink-zoom-scale-images-in-image-mode][Shrink/Zoom/Scale images in image-mode - Emacs Stack Exchange]]
 - [ ] [[https://idiomdrottning.org/bad-emacs-defaults][Bad Emacs defaults]]
+- [ ] =(= to hide metadata
 :END:
 :PROPERTIES:
 :CUSTOM_ID: sec:dired

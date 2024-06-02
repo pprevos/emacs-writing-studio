@@ -20,16 +20,16 @@
 :UNNUMBERED: t
 :END:
 :NOTES:
-- [ ] By Prot (500-1000 w)
+- [X] By Prot (500-1000 w)
 :END:
-
-By Protesilaos (Prot) Stavrou
+#+include: "00-i-foreword.org" :lines "2-"
 
 * Preface
 :PROPERTIES:
 :UNNUMBERED: t
 :END:
-#+include: "00-ii-preface.org" :lines "2-"
+# #+include: "00-ii-preface.org" :lines "2-"
+
 #+begin_export latex
 \mainmatter
 #+end_export
@@ -80,11 +80,15 @@ By Protesilaos (Prot) Stavrou
 #+include: "08-administration.org" :lines "2-"
 
 * Become an Emacs Ninja
+:PROPERTIES:
+:CUSTOM_ID: chap:ninja
+:END:
 #+include: "09-ninja.org" :lines "2-"
 
 #+begin_export latex
 \backmatter
 #+end_export
+
 * Appendix
 #+include: "99-appendix.org" :lines "2-"
 

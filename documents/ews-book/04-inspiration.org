@@ -24,16 +24,16 @@ A common interview question for authors and other creative people is where they 
 
 Therefore, the first step in /Emacs Writing Studio/ workflow (EWS) is consuming information created by other people, either by reading, listening or watching content. The thoughts and ideas of other people are the foundation upon which authors build their works. In 1675, Sir Isaac Newton wrote a letter to Robert Hooke in which he penned the now-famous phrase, "If I have seen further, it is by standing on the shoulders of Giants". This quote is perhaps a cliché, but it still holds true, even in the age of generative AI. Depending on other creators' works is essential not only in academic writing with its strict conventions on referencing. All authors need to read to be able to write. 
 
-Even though Emacs is a text processor, it can evoke other software to display ebooks. Besides being malleable software, Emacs is also an interface to other software. This means that we can use Emacs for tasks beside writing and editing text. You can as such also use Emacs to listen to music or podcasts, and watch videos, but only with the assistance from some additional software. Keeping track of your collection of physical and electronic literature collection is another important task of a scholar. Emacs can also assist with creating a searchable bibliography for easy access to your resources using BibTeX files. You can access electronic files and hyperlinks from this bibliography and attach notes to each item. This chapter explains how to use Emacs to read electronic documents in the most common open formats, surf the web, and consume multimedia files. This chapter also explains how to create a plain text database to manage your collections of electronic books.
+Even though Emacs is a text processor, it can invoke other software to display ebooks. Besides being malleable software, Emacs is also an interface to other software. This means that we can use Emacs for tasks beside writing and editing text. You can as such also use Emacs to listen to music or podcasts, and watch videos, but only with the assistance from some additional software. Keeping track of your collection of physical and electronic literature collection is another important task of a scholar. Emacs can also assist with creating a searchable bibliography for easy access to your resources using BibTeX files. You can access electronic files and hyperlinks from this bibliography and attach notes to each item. This chapter explains how to use Emacs to read electronic documents in the most common open formats, surf the web, and consume multimedia files. This chapter also explains how to create a plain text database to manage your collections of electronic books.
 
 * Reading eBooks
 In the pre-digital era, people shared information physically, from clay tablets to paper books and other tangible formats. Before the internet the only way to get information was to visit a library and spend hours and days wading through catalogues and books. Digital documents have become the norm in the last two decades and visits to the local library have been replaced by internet searches.
 
 Most ebooks are not distributed in plain text but either PDF, ePUB or DjVu. A wonderful exception is Project Gutenberg (=gutenberg.org=), a vast electronic library of over 70,000 copyright-free eBooks. This library started in 1971 and distributes books in plain text and other open formats.
 
-Emacs can only render ebooks in open formats. An open format, as opposed to a proprietary format, has a publicly available specification so anyone can develop software that can create and read these files. The greatest advantage to an open format for ebooks is that your book can be displayed on any device. The most common proprietary formats such as Apple ibook and any Kindle books cannot be read with Emacs. Proprietary file formats pose a grave risk to cultural continuity. Some governments therefore require open documents formats to enforce digital sovereignty and liberate themselves from the dominance of large internet corporations [cite:@pohle_2020]. 
+Emacs can only render ebooks in open formats. An open format, as opposed to a proprietary format, has a publicly available specification so anyone can develop software that can create and read these files. The greatest advantage to an open format for ebooks is that your book can be displayed on any device. The most common proprietary formats such as Apple ibook and any Kindle books cannot be read with Emacs. Proprietary file formats pose a grave risk to cultural continuity. Some governments therefore require open document formats to enforce digital sovereignty and liberate themselves from the dominance of large internet corporations [cite:@pohle_2020]. 
 
-Emacs needs assistance from external software to display ebooks and word processor documents. The diagram below shows the various external software packages necessary to render pages from the supported file formats. This external software converts each page to a plain text buffer or a PNG image, which Emacs can display. The following external software is required to read the most common ebook formats:
+Emacs needs assistance from other software to display ebooks and word processor documents. The diagram below shows the various programs necessary to render pages from the supported file formats. This software converts each page to a plain text buffer or a PNG image, which Emacs can display. The following software is required to read the most common ebook formats:
 
 - Ghostscript (~gs~) and/or MuPDF (~mutool~): These two packages can convert PDF files to images.
 - Poppler (~pdftotext~): Another tool to render PDF files and convert them to plain text.
@@ -57,11 +57,11 @@ Emacs needs assistance from external software to display ebooks and word process
       text [label="Plain\ntext" shape="note"]
       png [label="Image\ndisplay" shape = "note"]
 
-      office -> pdf [label="     libreoffice" constraint=false]
       epub -> text [label="unzip"]
       pdf -> text [label="pdf2text"]
       pdf -> png [label="gs / mutool"]
       djvu -> png [label="djvulibre"]
+      office -> pdf [label="    libreoffice" constraint=false]
   }  
 #+end_src
 #+caption: Document conversion in Doc-View.
@@ -82,9 +82,7 @@ Portable Document Format (PDF) is a versatile system developed by Adobe in the e
 
 Each PDF file includes a complete description of a fixed-layout document. The file contains the text, fonts, layout and typography, images and other information needed to display the content. A PDF document is not a real ebook because the layout is fixed, contrasting with other electronic formats that adjust to the screen. A PDF file follows a traditional physical layout and typography, assuming that documents are printed.
 
-Emacs can display PDF files with the built-in DocView major mode with some assistance from external software. GhostScript or MuPDF convert PDF files to images for DocView to display. This conversion means that DocView can be sluggish when reading large documents, and the system issues a warning when a file is larger than fifty megabytes.
-
-To navigate a document use the arrow and page-up / page-down keys to turn pages. Several other keyboard shortcuts are available to find your way through the document (table [[#tab:docview]]).
+Emacs can display PDF files with the built-in DocView major mode with some assistance from GhostScript or MuPDF, which convert the files to images. Open a PDF file just like any other document. To navigate the file use the arrow and page-up / page-down keys. Several other keyboard shortcuts are available to find your way through the document (table [[#tab:docview]]).
 
 #+caption: Doc-View keyboard shortcuts.
 #+name: tab:docview
@@ -113,13 +111,20 @@ DJVU (pronounced /déjà vu/) is a file format intended for scanned books. Since
 
 DocView displays PDF, office documents and DjVu documents, so the same functionality that is available when viewing PDF files also applies to other formats. You can read more details about this package in the Emacs Manual, which you can quickly find with =C-h r g docu=.
 
-The DocView program within Emacs can be a bit slow when dealing with large documents. The Appendix provides some alternative solutions to this problem.
+** DocView Limitations
+DocView has some limitations compared to other document viewers. The text is displayed as a PNG file which limits search capabilities and makes copying text impossible. The =pdf-tools= package by Vedang Manerikar is much more versatile than DocView. It is unfortunately not included in /Emacs Writing Studio/ because it is complex to install on non-Linux systems. As a workaround you can open PDF files with your favourite non-Emacs PDF viewer using the /Openwith/ package by  Markus Triska. This package lets you associate file types with software external to Emacs. To create such an association customise the ~openwith-associations~ variable. Click on the =Ins= button and Add the following three parameters:
+
+- =Files:= The file extension (in this case "=pdf=")
+- =Program:= The name of the program top open your files (for example "=acroread=")
+- =Parameters:= This should be =(file)= by default instructing Emacs to send the filename to the program.
+
+This package has more advanced features for associating files with external software, such as using regular expressions, which are outside the scope of this book. You can use the same approach to open other types of files, such as video footage or audio files. Just click on =Ins= to add a new association and =Apply and Save= so that it is available next Emacs session. Enter the relevant file and program entries and the default parameter. Section [[#sec:emms]] introduces the Emacs Multimedia System to manage libraries of sound and video files.
 
 ** ePub Files
 :PROPERTIES:
 :CUSTOM_ID: sec:epub
 :END:
-An ePub file (Electronic Publication) is a widely used open format for digital books, magazines, and other written content. Unlike PDF and DjVu formats, The content adapts to the geometry of the screen, making it ideal for e-readers, tablets, and other devices. An ePub file is a website in a box. You can see the raw content of an ePub file when opening it with an archiving utility. The file consists of a collection of XML files that define the content and design of the book, and any image files for illustrations. This file format thus needs the =unzip= package to enable viewing the content.
+An ePub file (Electronic Publication) is a widely used open format for digital books, magazines, and other written content. Unlike PDF and DjVu formats, the content adapts to the geometry of the screen, making it ideal for e-readers, tablets, and other devices. An ePub file is a website in a box. You can see the raw content of an ePub file when opening it with an archiving utility. The file consists of a collection of XML files that define the content and design of the book, and any image files for illustrations. This file format thus needs the =unzip= package to enable viewing the content.
 
 The =nov= package by Vasilij Schneidermann provides useful functionality for viewing ePub books inside Emacs. Open an ePub file and scroll with the space bar, the arrow keys or the =page-up= / =page-down= keys. Several keyboard shortcuts are available to move through the book (Table [[tab:nov]]).
 
@@ -140,7 +145,7 @@ You can copy and paste text from ePub files into your bibliographic notes (Chapt
 * Managing Your Digital Library
 Maintaining a large collection of literature can quickly lead to some chaos so most scholars use an electronic bibliography to keep track of what they read. Emacs can help you to build a plain text library catalogue to easily access your bibliography. This bibliography can also link to notes (chapter [[#chap:ideation]]) and link to scholarly citations (chapters [[#chap-production]] and [[#chap:publication]]).
 
-Creating and managing a bibliography requires three Emacs packages that seamlessly integrate with each other. The built-in BibTeX Mode assists with creating and maintaining a plain-text bibliography. The Biblio package by Clément Pit-Claudel searches online scholarly databases and inserts relevant items to you bibliography. Bruce D'Arcus' Citar package provides easy access to your bibliography using the minibuffer completion system. These three packages turn Emacs into a fully featured literature management system.
+Creating and managing a bibliography requires three Emacs packages that seamlessly integrate with each other. The built-in BibTeX Mode assists with creating and maintaining a plain-text bibliography. The Biblio package by Clément Pit-Claudel searches online scholarly databases and inserts relevant items to your bibliography. Bruce D'Arcus' Citar package provides easy access to your bibliography using the minibuffer completion system. These three packages turn Emacs into a fully featured literature management system.
 
 ** Getting Started with Emacs BibTeX Mode
 BibTeX Mode is a major mode to create and manage bibliographies. As the name suggests, this mode uses the BibTeX file format as your default literature database. BibTeX is a plain text format to organise literature and citations. It is typically used for typesetting scholarly publications with LaTeX [cite:@lamport_1994_latex]. A typical entry for a book will look like this:
@@ -234,7 +239,7 @@ The Citar package uses minibuffer completion to access your bibliographies. It p
 
 Within Org mode, bibliographies can have a global or a local scope. The global bibliography is a set of BibTeX files available from anywhere within Emacs, located in the ~ews-bibtex-directory~. You can also link one or more project-specific local BibTeX files to an Org mode file. This might be useful when working on a project that only references literature relevant to the work at hand. Add a local bibliography to an Org mode file with something like =#+bibliography: ews.bib=.
 
-Citar processes all bibliography files in the global folder and any files referenced in an active Org mode buffer. If you add another global bibliography file, then you need to let Citar know with the  ~ews-bibtex-register~ function (=C-c w b r=). This function registers all bibliography files in the nominated directory for Citar to use and displays them in the echo area. You only use this function to register new files, it is not required when adding new literature to an existing file.
+Citar processes all bibliography files in the global folder and any files referenced in an active Org mode buffer. If you add another global bibliography file, then you need to let Citar know with the ~ews-bibtex-register~ function (=C-c w b r=). This function registers all bibliography files in the nominated directory for Citar to use and displays them in the echo area. You only use this function to register new files, it is not required when adding new literature to an existing file.
 
 You activate Citar with ~citar-open~, which in EWS is bound to =C-c w b o=. A menu pops up in the minibuffer where you can search your collection. The first three columns in the menu indicate which entries include a hyperlink (=L=), one or more attached files (=F=) and an associated note (=N=). The remainder shows the author, year, title, citation key and keywords (Figure [[fig:citar-menu]]).
 
@@ -247,9 +252,9 @@ You activate Citar with ~citar-open~, which in EWS is bound to =C-c w b o=. A me
 Finding literature with Citar is easy due to the power of the Vertico and Orderless packages. After every keystroke, Citar narrows the list of options to relevant matches. Select your candidate with the arrow keys, or use =TAB= to select more than one entry, and hit the Enter key. You can filter the Citar completion menu for entries with an attachment using =":f"= and with links with =":l"=. Chapter [[#chap:ideation]] explains attaching notes to literature and chapter [[#chap:production]] shows how to insert citations. After hitting the Enter key, Citar provides a popup menu in the minibuffer where you can open attachments or follow any hyperlinks listed in the BibTeX entry.
 
 * Surf the Web
-Emacs has a built-in web browser called the Emacs Web Wowser (EWW). This package focuses on readability over functionality by displaying websites as a plain text. It can display images but does not render any CSS or run JavaScript. A wowser is somebody with moral views for temperance and abstinence. The plain text approach to browsing is as such an ethical stance on the World Wide Web and its security and privacy issues. Although some people suggest that the name stands for the reaction you might have when you first see a website rendered in plain text.
+Any internet links embedded in Emacs various types of files will open the default browser of your operating system. Emacs also has a built-in web browser called the Emacs Web Wowser (EWW). This package focuses on readability over functionality by displaying websites as a plain text. It can display images but does not render any CSS or run JavaScript. A wowser is somebody with moral views for temperance and abstinence. The plain text approach to browsing is as such an ethical stance on the World Wide Web and its security and privacy issues. Although some people suggest that the name stands for the reaction you might have when you first see a website rendered in plain text. Reading websites in plain text is a more secure way of surfing the internet because EWW does not render any JavaScript.
 
-You can open a URL or search the web with the command =eww=. If the input doesn't look like a URL, EWW will search the web with DuckDuckGo, a privacy-focused search engine that doesn't track your online behaviour. After the page loads, use the arrow and page-up / page-down keys to navigate the page. Several keyboard shortcuts are available to navigate the webpage. 
+You can open a URL or search the web with the command =eww=. If the input doesn't look like a URL, EWW will search the web with DuckDuckGo, a privacy-focused search engine that doesn't track your online behaviour. After the page loads, use the arrow and page-up / page-down keys to navigate the page. Several keyboard shortcuts are available to navigate the webpage. You can read the EWW manual with =C-h R eww= to find our more details.
 
 - =<=, =>=: Beginning and end of the page
 - =R=: Readable format (only display the main text)
@@ -268,9 +273,7 @@ The most useful option pressing =R= to ignore most of the navigation parts of th
 
 If you find a website you like, bookmark it with ~eww-add-bookmark~, bound to the =b= key inside EWW. The ~eww-list-bookmarks~ function lists all stored bookmarks, from which you can select one and visit the page. Keeping a collection of bookmarks is helpful, but you have to regularly visit these sites to see if anything new has been published. Many blogs and podcasts use RSS feeds to notify their readers of new content, which are the topic of the next section.
 
-Once you get used to browsing the internet in plain text then you might like to set EWW as the default browser to follow links in Emacs. To make this change, customise the ~browse-url-browser-function~ variable and select 'Emacs Web Wowser' in the value menu.
-
-You can read the complete EWW manual with =C-h R eww=.
+Once you get used to browsing the internet in plain text then you might like to set EWW as the default browser to follow links in Emacs. To make this change, customise the ~browse-url-browser-function~ variable, select 'Emacs Web Wowser' in the value menu and click =Apply and Save=.
 
 ** Read RSS and Atom Feeds with Elfeed
 :PROPERTIES:
@@ -312,7 +315,7 @@ You can either use a plain URL or an Org mode hyperlink. A hyperlink in Org mode
 
 The only configuration you need for =elfeed-org= is to customise the name of the Org file(s) you like to use to store your feed links. In EWS, the location of the Elfeed configuration is stored in the ~rmh-elfeed-org-files~ variable, which by default is set to  ="~/Documents/elfeed.org"=.
 
-You need to customise this variable to match the file you like to us for Elfeed and then restart Emacs. To add or remove a feed, edit this file and update the database with ~elfeed-update~. You are now ready to read your RSS feeds.
+You need to customise this variable to match the file you like to use for Elfeed and then restart Emacs. To add or remove a feed, edit this file and update the database with ~elfeed-update~. You are now ready to read your RSS feeds.
 
 #+caption: Elfeed screendump.
 #+attr_html: :alt Emacs Elfeed screendump :title Emacs Elfeed screendump :width 800
@@ -333,9 +336,12 @@ Press =C-c w e= to start the Elfeed browser, which shows a list with the date an
 All new entries are tagged as unread by default. The other tags derive from your list of RSS feeds. When you remove a feed from your list, all articles that you previously downloaded will remain in the database and will show on your list until you read or remove them. Elfeed also has a powerful search filter that can be used to filter by tag, feed name, and dates. 
 
 * Emacs Multimedia System
+:PROPERTIES:
+:CUSTOM_ID: sec:emms
+:END:
 Music is a great tool for boosting productivity. Playing J.S. Bach' transcendental fugues or Sepultura's polychromic metal soothes the soul while writing you next great work of art. Psychologist Sara Bottiroli and her colleges studied the psychological effect of background music and found that it can improve episodic memory, intelligence, and verbal and visual processing speeds [cite: @bottiroli_2014].
 
-Emacs might be a humble text processor, but it can also facilitate playing background music while you write, listen to podcasts or your field interviews. You might already have a great music player on your computer, but not having to switch applications to play music helps to retain your focus. The Emacs Multimedia System (EMMS), is a comprehensive music and video player for Emacs. It contains an intuitive browser displaying album covers and metadata, converting your Emacs system into a personal jukebox.
+Emacs might be a humble text processor, but it can also facilitate playing background music while you write, listen to podcasts or your field interviews. You might already have a great music player on your computer, but not having to switch applications to play music helps to retain your focus. The Emacs Multimedia System (EMMS) is a comprehensive music and video player for Emacs. It contains an intuitive browser displaying album covers and metadata, converting your Emacs system into a personal jukebox.
 
 Emacs needs access to an external music player to produce sound and access to image software to convert album covers to thumbnails. To play sounds with Emacs, you must install one of the compatible sound players (ogg123, mpg321, MPlayer, MPV, or VLC). When you run the Emacs Writing Studio configuration, the system checks whether one of these players is available. Any missing software is listed in the messages buffer, which you can access with =C-h e=.
 
@@ -353,7 +359,7 @@ When in the EMMS browser, use the =b= key followed by a number to browse by arti
 As is the case in most Emacs applications, press =?= for a list of available keystrokes, such as:
 
 - =r=: Jump to a random entry
-- =s=: Search by album, artist, title, performer or composer
+- =s=: Search by album, artist, title, performer, or composer
 - =ENTER=: Add selection to playlist
 - =C-j=: Add selection to playlist and play
 - =W=: Lookup entry on Wikipedia
@@ -374,7 +380,6 @@ EMMS has many more advanced features that allow you to control your sound collec
 - ~emms-play-directory~: Add a directory to the playlist.
 - ~emms-play-find~: Plays all files in the music directory that match a given search criterion.
 
-  The Emacs Multimedia System has a plethora of additional options to fine-tune your listening experience. Read the EMMS manual with the info browser (=C-h R emms ENTER=) for detailed information about the various options.
+The Emacs Multimedia System has a plethora of additional options to fine-tune your listening experience. Read the EMMS manual with the info browser (=C-h R emms ENTER=) for detailed information about the various options.
 
 Now that you know how to inspire yourself with Emacs, it is time to solidify your thought by writing them into an electronic notebook. The next chapter explains how to use {{{ews}}} as your personal knowledge management system.
-

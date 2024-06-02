@@ -10,38 +10,29 @@ In the good old days all a writer needed was a typewriter, a pack of smokes and 
 
 Computers have replaced mechanical typewriters. I was very excited when I wrote my first document on a computer. There was no more need for correction fluid 
 
-I used to hop from application to application—jumping from the action list to my schedule, onward to the word processor, spreadsheet, PDF reader, and so on. A had to manage a complex web of software tools to work on a single project. Wouldn't it be nice if there was one program that could help you with almost all your tasks?
+I used to hop from application to application—jumping from the action list to my schedule, onward to the word processor, spreadsheet, PDF reader, and so on. I had to manage a complex web of software tools to work on a single project. Wouldn't it be nice if there was one program that could help you with almost all your tasks?
 
-
-This book describes
 
 This book is not a manual on how to use Emacs but a guided tour through Emacs to teach you how it can help you being an author. When you install Emacs it comes fully equipped with extensive documentation. This book includes regular references to the built-in manuals to provide more detailed information.
 
 This book has been completely researched and written with Emacs. In essence this book is about how to write this book with the plain text Org mode format. 
 
+- Emacs manuals are references, so hard to imagine how you can use it
+  
 The /Emacs Writing Studio/  configuration file and the source Org mode files for this book are available in the GitHub repository on https://github.com/pprevos/emacs-writing-studio.
 
 * Acknowledgements
 A full list of acknowledgements for an free software project such as Emacs would consist of a huge list of names. Emacs can only exist because of the hundreds if not thousands of volunteers who develop and maintain the code of the core system and the many packages.
 
-My inspiration for writing this book came from the excellent work of people like Protesoleas (Prot) Stavrou, *** Wilson from System Crafters, *** and many other people who helped me flatten the learning curve of my Emacs journey.
+My inspiration for writing this book came from the excellent work of people like Protesilaos (Prot) Stavrou, *** Wilson from System Crafters, *** and many other people who helped me flatten the learning curve of my Emacs journey.
 
 Arjan Zuidhof
 
-Big thanks to the test readers
-
 * Test readers
-- [X] Harald Kirsch: 1-3 (email)
-- [ ] Harald 5--6 
-- [X] Thomas Montfort: 1--3
-- [ ] Thomas 5--6 
-- [X] Ben Finney @bignose@fosstodon.org : 1:3
-- [-] Bignose 5--6
-- [ ] Prot: 1--6 
+Mastodon and Emacs users Harold Kirsch, Thomas Montfort, Ben Finney volunteered to review the book. Their feedback has helped to make this book both more easy to read and comprehensive, which is a fine balance to achieve.
 
-who volunteered to review the content of the book after a short message on Mastodon. Their feedback has helped to make this book both easy to read and comprehensive, which is a fine balance.
-
-
-Youtub channels
-- LigerLearn, Emacs from Scratch Series.
+* YouTube channels
+- LigerLearn
+- Emacs from Scratch Series
+- Emacs Elements
 

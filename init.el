@@ -13,7 +13,8 @@
 
 (use-package package
   :config
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/"))
   (package-initialize))
 
 ;; Package Management
@@ -174,12 +175,14 @@
 
 (use-package flyspell
   :custom
-  (ispell-silently-savep t)
-  (ispell-program-name "hunspell")
-  (flyspell-default-dictionary "en_AU")
-  (flyspell-case-fold-duplications t)
   (flyspell-issue-message-flag nil)
+  (ispell-program-name "hunspell")
+  (ispell-dictionary "en_AU")
+  (flyspell-mark-duplications-flag nil) ;; Writegood mode does this
   (org-fold-core-style 'overlays) ;; Fix Org mode bug
+  :config
+  (ispell-hunspell-add-multi-dic ispell-dictionary)
+  (ispell-set-spellchecker-params)
   :hook
   (text-mode . flyspell-mode)
   :bind
@@ -286,14 +289,19 @@
 ;; Citar to access bibliographies
 
 (use-package citar
+  :defer t
   :custom
   (citar-bibliography ews-bibtex-files)
-  (org-cite-global-bibliography ews-bibtex-files)
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
   :bind
   (("C-c w b o" . citar-open)))
+
+(use-package citar-embark
+:after citar embark
+:no-require
+:config (citar-embark-mode)
+:bind (("C-M-." . embark-act)
+       :map citar-embark-citation-map
+       ("c" . citar-denote-find-citation)))
 
 ;; Read RSS feeds with Elfeed
 
@@ -375,12 +383,15 @@
 ;; Denote
 
 (use-package denote
+  :defer t
   :custom
   (denote-sort-keywords t)
   :hook
   (dired-mode . denote-dired-mode)
   :custom-face
   (denote-faces-link ((t (:slant italic))))
+  :init
+  (require 'denote-org-extras)
   :bind
   (("C-c w d b" . denote-find-backlink)
    ("C-c w d d" . denote-date)
@@ -395,22 +406,23 @@
    ("C-c w d r" . denote-rename-file)
    ("C-c w d R" . denote-rename-file-using-front-matter)))
 
-;; Consult-Notes for easy access
+;; Consult-Denote for easy access
 
-(use-package consult-notes
+(use-package consult-denote
   :custom
-  (consult-narrow-key ":")
-  (consult-notes-file-dir-sources
-   `(("Denote Notes"  ?n ,denote-directory)))
+  (consult-denote-find-command
+   #'(lambda() (find-file (consult-denote-file-prompt))))
+  :config
+  (consult-denote-mode)
   :bind
   (("C-c w h" . consult-org-heading)
-   ("C-c w f" . consult-notes)
-   ("C-c w g" . consult-notes-search-in-all-notes)))
+   ("C-c w f" . consult-denote-find)
+   ("C-c w g" . consult-denote-grep)
+   ("C-x b"   . consult-buffer)))
 
 ;; Citar-Denote to manage literature notes
 
 (use-package citar-denote
-  :demand t
   :custom
   (citar-open-always-create-notes t)
   :init
@@ -443,7 +455,7 @@
    ("C-c w x z" . denote-explore-zero-keywords)
    ("C-c w x s" . denote-explore-single-keywords)
    ("C-c w x o" . denote-explore-sort-keywords)
-   ("C-c w x r" . denote-explore-rename-keywords)
+   ("C-c w x w" . denote-explore-rename-keyword)
    ;; Visualise denote
    ("C-c w x n" . denote-explore-network)
    ("C-c w x v" . denote-explore-network-regenerate)
@@ -483,7 +495,11 @@
 (setq org-cite-csl-styles-dir ews-bibtex-directory
       org-cite-export-processors
       '((latex natbib "apalike2" "authoryear")
-        (t     csl    "apa6.csl")))
+        (t     csl    "apa6.csl"))
+      org-cite-global-bibliography ews-bibtex-files
+      org-cite-insert-processor 'citar
+      org-cite-follow-processor 'citar
+      org-cite-activate-processor 'citar)
 
 ;; Lookup words in online dictionary
 
@@ -493,7 +509,11 @@
   :bind
   (("C-c w s d" . dictionary-lookup-definition)))
 
-;; Writegood-Mode for buzzwords, passive writing and repeated word word detection
+(use-package powerthesaurus
+:bind
+(("C-c w s p" . powerthesaurus-transient)))
+
+;; Writegood-Mode for buzzwords, passive writing and repeated word detection
 
 (use-package writegood-mode
   :bind
@@ -594,6 +614,7 @@
 (use-package org
   :custom
   (org-log-into-drawer t)
+  (org-enforce-todo-checkbox-dependencies t)
   :bind
   (("C-c a" . org-agenda)))
 

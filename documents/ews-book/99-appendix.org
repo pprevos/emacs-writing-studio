@@ -1,7 +1,6 @@
-#+title: Appendix: The Annotated Emacs Writing Studio Configuration
+#+title:        Appendix: The Annotated Emacs Writing Studio Configuration
 #+property:     header-args:elisp :tangle ../../init.el :results none :eval no
 #+startup:      content
-#+bibliography: ../library/emacs-writing-studio.bib
 
 I learned writing computer code by typing long listings of Atari BASIC code and slowly but surely understood its syntax and logic. This method is also a great starting point to learn Emacs Lisp. The purpose of this configuration is for you as a starting point. Feel free to modify anything in the {{{ews}}} (EWS) initialisation file and study its effects.
 
@@ -42,21 +41,6 @@ This configuration heavily relies on John Wiegley's Use-Package. This package ma
 
 Emacs users have developed and shared thousands of packages with the rest of the community. The first part of the configuration sets the basic elements to load and install packages from the MELPA archive, in addition to the default ELPA repository.
 
-The Use-Package system consists of a set of statements between parenthesis, which in this case is a macro. In it's simplest form it is something like ~(use-package <package-name>)~. The code can also contain one or more sections to set various options. The =:config= section in the first part evaluates code after the package is loaded, which in this case adds MELPA to the archives and initialises the package manager. The =:custom= section in the second Use-Package macro sets three variables, documented in the comments.
-
-The easiest method to install packages is with the Use-Package macro, which downloads, installs and configures a package. The example below downloads and installs the Dracula theme, a popular colour theme available for hundreds of software packages. The first line identifies the package. The ~:ensure t~ in the second line ensures that Emacs downloads the package if not already available. Any code under ~:config~ will run when the package is activated. In this case, we load the theme without asking for confirmation.
-
-#+begin_src elisp :tangle no
-  (use-package dracula-theme
-    :ensure t
-    :config
-    (load-theme 'dracula :no-confirm))
-#+end_src
-
-These are the basic principles of installing and configuring packages. The Use-Package methodology has many more options, which are discussed in the Appendix.
-
-To read the finer details of the Use-Package macro, read the manual with =C-h R use-package=.
-
 #+begin_src elisp :exports none
   ;; Set package archives
 #+end_src
@@ -64,7 +48,8 @@ To read the finer details of the Use-Package macro, read the manual with =C-h R 
 #+begin_src elisp
   (use-package package
     :config
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+    (add-to-list 'package-archives
+                 '("melpa" . "https://melpa.org/packages/"))
     (package-initialize))
 #+end_src
 
@@ -79,6 +64,21 @@ To read the finer details of the Use-Package macro, read the manual with =C-h R 
     (package-native-compile t)
     (warning-minimum-level :emergency))
 #+end_src
+
+The Use-Package system consists of a set of statements between parenthesis, which in this case is a macro. In it's simplest form it is something like ~(use-package <package-name>)~. The code can also contain one or more sections to set various options. The =:config= section in the first part evaluates code after the package is loaded, which in this case adds MELPA to the archives and initialises the package manager. The =:custom= section in the second Use-Package macro sets three variables, documented in the comments.
+
+The easiest method to install packages is with the Use-Package macro, which downloads, installs and configures a package. The example below downloads and installs the Dracula theme, a popular colour theme available for hundreds of software packages. The first line identifies the package. The ~:ensure t~ in the second line ensures that Emacs downloads the package if not already available. Any code under ~:config~ will run when the package is activated. In this case, we load the theme without asking for confirmation.
+
+#+begin_src elisp :tangle no
+  (use-package dracula-theme
+    :ensure t
+    :config
+    (load-theme 'dracula :no-confirm))
+#+end_src
+
+These are the basic principles of installing and configuring packages. The Use-Package methodology has many more options, which are discussed in the Appendix.
+
+To read the finer details of the Use-Package macro, read the manual with =C-h R use-package=.
 
 ** Emacs Writing Studio Functionality
 EWS also provides a range of bespoke convenience functions for various aspects of the writing process. This package is not available on any Emacs repository, but is loaded directly from the GitHub repository.
@@ -99,6 +99,23 @@ This function looks whether all these packages are available on your system. Any
 
 #+begin_src elisp :exports none
   ;; Check for missing external software
+  ;;
+  ;; - soffice (LibreOffice): View and create office documents
+  ;; - zip: Unpack ePub documents
+  ;; - pdftotext (poppler-utils): Convert PDF to text
+  ;; - djvu (DjVuLibre): View DjVu files
+  ;; - curl: Reading RSS feeds
+  ;; - divpng: Part of LaTeX
+  ;; - dot (GraphViz): Create note network diagrams
+  ;; - convert (ImageMagick): Convert image files 
+  ;; - gm (GraphicsMagick): Convert image files
+  ;; - latex (TexLive, MacTex or MikTeX): Preview LaTex and export Org to PDF
+  ;; - hunspell: Spellcheck. Also requires a hunspell dictionary
+  ;; - grep: Search inside files
+  ;; - ripgrep: Faster alternative for grep
+  ;; - gs (GhostScript): View PDF files
+  ;; - mutool (MuPDF): View PDF files
+  ;; - mpg321, ogg123 (vorbis-tools), mplayer, mpv, vlc: Media players
 #+end_src
 
 #+begin_src elisp
@@ -112,7 +129,6 @@ This function looks whether all these packages are available on your system. Any
      "hunspell"
      ("grep" "ripgrep")
      ("gs" "mutool")
-     "pdftotext"
      ("mpg321" "ogg123" "mplayer" "mpv" "vlc")))
 #+end_src
 
@@ -174,9 +190,6 @@ The =:init= section activates the tinted version of the Modus-Vivendi (light) th
     (modus-themes-italic-constructs t)
     (modus-themes-bold-constructs t)
     (modus-themes-mixed-fonts t)
-    (modus-themes-headings '((1 . (1.2))
-                             (2 . (1.1))
-                             (t . (1.0))))
     (modus-themes-to-toggle
      '(modus-operandi-tinted modus-vivendi-tinted))
     :init
@@ -233,7 +246,6 @@ Alternatively, you can add these settings directly to your =init.el= file by add
     (vertico-mode)
     :custom
     (vertico-sort-function 'vertico-sort-history-alpha))
-
   #+end_src
   
   #+begin_src elisp :exports none
@@ -244,7 +256,6 @@ Alternatively, you can add these settings directly to your =init.el= file by add
   (use-package savehist
     :init
     (savehist-mode))
-
   #+end_src
   
   #+begin_src elisp :exports none
@@ -333,12 +344,14 @@ Writing without automated spell checking would be very hard even for the most ex
 #+begin_src elisp
   (use-package flyspell
     :custom
-    (ispell-silently-savep t)
-    (ispell-program-name "hunspell")
-    (flyspell-default-dictionary "en_AU")
-    (flyspell-case-fold-duplications t)
     (flyspell-issue-message-flag nil)
+    (ispell-program-name "hunspell")
+    (ispell-dictionary "en_AU")
+    (flyspell-mark-duplications-flag nil) ;; Writegood mode does this
     (org-fold-core-style 'overlays) ;; Fix Org mode bug
+    :config
+    (ispell-hunspell-add-multi-dic ispell-dictionary)
+    (ispell-set-spellchecker-params)
     :hook
     (text-mode . flyspell-mode)
     :bind
@@ -367,7 +380,8 @@ If you have no need for mathematical notation and LaTeX, then you should disable
     (org-fold-catch-invisible-edits 'error)
     (org-startup-with-latex-preview t)
     (org-pretty-entities t)
-    (org-use-sub-superscripts "{}"))
+    (org-use-sub-superscripts "{}")
+    (org-id-link-to-org-use-id t))
 #+end_src
   
 #+begin_src elisp :exports none
@@ -435,13 +449,11 @@ The built-in Doc-View package can read various file formats with the assistance 
 #+end_src
 
 #+begin_src elisp
-    (use-package doc-view
-      :custom
-      (doc-view-resolution 300)
-      (large-file-warning-threshold (* 50 (expt 2 20))))
+  (use-package doc-view
+    :custom
+    (doc-view-resolution 300)
+    (large-file-warning-threshold (* 50 (expt 2 20))))
 #+end_src
-
-DocView has some limitations compared to other document viewers. The text is displayed as a PNG file which limits search capabilities and makes copying text impossible. The =pdf-tools= package by Vedang Manerikar is much more versatile than DocView. It is unfortunately not included in /Emacs Writing Studio/ because it is complex to install on non-Linux systems.
 
 The Nov package by Vasilij Schneidermann provides useful functionality for viewing ePub books inside Emacs. The init section ensures that any file with an =epub= extension is associated with this package. Refer to section [[#sec:epub]] on how to read ePub files.
 
@@ -486,7 +498,7 @@ BibTeX mode has many more options that you can configure to modify all sorts of 
     :custom
     (bibtex-user-optional-fields
      '(("keywords" "Keywords to describe the entry" "")
-       ("file" "Link to a document file." "" )))
+       ("file"     "Relative or absolute path to attachments" "" )))
     (bibtex-align-at-equal-sign t)
     :config
     (ews-bibtex-register)
@@ -518,24 +530,33 @@ The Biblio package provides a useful interface to online literature repositories
 
 #+begin_src elisp
   (use-package citar
+    :defer t
     :custom
-    (org-cite-global-bibliography ews-bibtex-files)
     (citar-bibliography ews-bibtex-files)
-    (org-cite-insert-processor 'citar)
-    (org-cite-follow-processor 'citar)
-    (org-cite-activate-processor 'citar)
     :bind
     (("C-c w b o" . citar-open)))
+
+  (use-package citar-embark
+  :after citar embark
+  :no-require
+  :config (citar-embark-mode)
+  :bind (("C-M-." . embark-act)
+         :map citar-embark-citation-map
+         ("c" . citar-denote-find-citation)))
 #+end_src
 
 ** Reading Websites
 Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system's default browser. If you prefer to use EWW as the default, add this code to your configuration file: ~(setq browse-url-browser-function 'eww-browse-url)~. You can configure the EWW search engine by configuring the ~eww-search-prefix~ variable.
 
-#+begin_src elisp :exports none
+#+begin_src elisp :tangle no
   ;; Use EWW
   ;; (setq browse-url-browser-function 'eww-browse-url)
 
   ;; Configure Elfeed
+#+end_src
+
+#+begin_src elisp :exports none
+  ;; Read RSS feeds with Elfeed
 #+end_src
 
 #+begin_src elisp
@@ -597,6 +618,16 @@ Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system'
      ("<XF86AudioPlay>" . emms-pause)))
 #+end_src
 
+** Opening files with external software
+
+#+begin_src elisp
+  (use-package openwith
+    :config
+    (openwith-mode t)
+    :custom
+    (openwith-association nil))
+#+end_src
+
 * Ideation
 ** Org Capture
 You could, for example, create a separate entry for a shopping list. You can access the configuration in the capture menu with the =C= button, which pops up the customisation screen for the ~org-capture-templates~ variable. Next click the =INS= button to add another entry and complete the relevant fields as below and save the new variable. The example below create a shopping list stored in a file in your Dropbox folder. Several mobile apps exist that can read Org mode files, so you can take your list to the shops if you have a means to synchronise the relevant files.
@@ -611,34 +642,29 @@ The possibilities for capture templates are extensive and depend on your individ
   (use-package org
     :bind
     (("C-c c" . org-capture)
-     ("C-c l" . org-store-link))
-    :custom
-    (org-default-notes-file
-     (concat (file-name-as-directory ews-home-directory)
-           "Documents/inbox.org"))
-    (org-capture-bookmark nil)
+     ("C-c l" . org-store-link)))
 #+end_src
     
 #+begin_src elisp
-    ;; Capture templates
+  ;; Capture templates
 #+end_src
     
 #+begin_src elisp
-    (org-capture-templates
-     '(("f" "Fleeting note"
-        item
-        (file+headline org-default-notes-file "Notes")
-        "- %?")
-       ("p" "Permanent note" plain
-        (file denote-last-path)
-        #'denote-org-capture
-        :no-save t
-        :immediate-finish nil
-        :kill-buffer t
-        :jump-to-captured t)
-       ("t" "New task" entry
-        (file+headline org-default-notes-file "Tasks")
-        "* TODO %i%?"))))
+  (setq org-capture-templates
+   '(("f" "Fleeting note"
+      item
+      (file+headline org-default-notes-file "Notes")
+      "- %?")
+     ("p" "Permanent note" plain
+      (file denote-last-path)
+      #'denote-org-capture
+      :no-save t
+      :immediate-finish nil
+      :kill-buffer t
+      :jump-to-captured t)
+     ("t" "New task" entry
+      (file+headline org-default-notes-file "Tasks")
+      "* TODO %i%?")))
 #+end_src
 
 ** Denote
@@ -648,12 +674,15 @@ The possibilities for capture templates are extensive and depend on your individ
 
 #+begin_src elisp
   (use-package denote
+    :defer t
     :custom
     (denote-sort-keywords t)
     :hook
     (dired-mode . denote-dired-mode)
     :custom-face
     (denote-faces-link ((t (:slant italic))))
+    :init
+    (require 'denote-org-extras)
     :bind
     (("C-c w d b" . denote-find-backlink)
      ("C-c w d d" . denote-date)
@@ -669,24 +698,24 @@ The possibilities for capture templates are extensive and depend on your individ
      ("C-c w d R" . denote-rename-file-using-front-matter)))
 #+end_src
 
-The Consult-Notes package helps to quickly find notes. The default location to find notes is the Denote folder. You can add other locations to the search menu to create a one-stop shop to find any files. If, for example, you keep your photographs in =~/Photos= then add ~("Photographs" ?p "~/Photos")~ so they become part of the search menu. The letter after the question mark becomes the key to limit the search to this silo, prefixed with a colon. So in this example, starting with =:p= will only show files in the photos directory.
-
 For the search functionality to work you need to install the RipGrep program, an extremely fast program to search through text files. 
 
 #+begin_src elisp :exports none
-  ;; Consult-Notes for easy access
+  ;; Consult-Denote for easy access
 #+end_src
 
 #+begin_src elisp
-  (use-package consult-notes
+  (use-package consult-denote
     :custom
-    (consult-narrow-key ":")
-    (consult-notes-file-dir-sources
-     `(("Denote Notes"  ?n ,denote-directory)))
+    (consult-denote-find-command
+     #'(lambda() (find-file (consult-denote-file-prompt))))
+    :config
+    (consult-denote-mode)
     :bind
     (("C-c w h" . consult-org-heading)
-     ("C-c w f" . consult-notes)
-     ("C-c w g" . consult-notes-search-in-all-notes)))
+     ("C-c w f" . consult-denote-find)
+     ("C-c w g" . consult-denote-grep)
+     ("C-x b"   . consult-buffer)))
 #+end_src
 
 #+begin_src elisp :exports none
@@ -695,7 +724,6 @@ For the search functionality to work you need to install the RipGrep program, an
 
 #+begin_src elisp
   (use-package citar-denote
-    :demand t
     :custom
     (citar-open-always-create-notes t)
     :init
@@ -707,7 +735,8 @@ For the search functionality to work you need to install the RipGrep program, an
      :map org-mode-map
      ("C-c w b k" . citar-denote-add-citekey)
      ("C-c w b K" . citar-denote-remove-citekey)
-     ("C-c w b d" . citar-denote-dwim)))
+     ("C-c w b d" . citar-denote-dwim)
+     ("C-c w b e" . citar-denote-open-reference-entry)))
 #+end_src
 
 #+begin_src elisp :exports none
@@ -731,7 +760,7 @@ For the search functionality to work you need to install the RipGrep program, an
      ("C-c w x z" . denote-explore-zero-keywords)
      ("C-c w x s" . denote-explore-single-keywords)
      ("C-c w x o" . denote-explore-sort-keywords)
-     ("C-c w x r" . denote-explore-rename-keywords)
+     ("C-c w x w" . denote-explore-rename-keyword)
      ;; Visualise denote
      ("C-c w x n" . denote-explore-network)
      ("C-c w x v" . denote-explore-network-regenerate)
@@ -759,6 +788,7 @@ For the search functionality to work you need to install the RipGrep program, an
 
 #+begin_src elisp
   (use-package olivetti
+    :demand t
     :bind
     (("C-c w o" . ews-olivetti)))
 #+end_src
@@ -789,7 +819,11 @@ For the search functionality to work you need to install the RipGrep program, an
   (setq org-cite-csl-styles-dir ews-bibtex-directory
         org-cite-export-processors
         '((latex natbib "apalike2" "authoryear")
-          (t     csl    "apa6.csl")))
+          (t     csl    "apa6.csl"))
+        org-cite-global-bibliography ews-bibtex-files
+        org-cite-insert-processor 'citar
+        org-cite-follow-processor 'citar
+        org-cite-activate-processor 'citar)
 #+end_src
 
 ** Quality Assurance
@@ -806,10 +840,18 @@ For the search functionality to work you need to install the RipGrep program, an
     (("C-c w s d" . dictionary-lookup-definition)))
 #+end_src
 
+The English version of the Synosaurus package depends on the Wordnet software to interface with the online database. 
+
+#+begin_src elisp
+  (use-package powerthesaurus
+  :bind
+  (("C-c w s p" . powerthesaurus-transient)))
+#+end_src
+
 The [[https://github.com/bnbeckwith/writegood-mode][writegood package]] helps to detect buzzwords, passive writing and repeated words. This package also contains functions to estimate the complexity of a text.
 
 #+begin_src elisp :exports none
-  ;; Writegood-Mode for buzzwords, passive writing and repeated word word detection
+  ;; Writegood-Mode for buzzwords, passive writing and repeated word detection
 #+end_src
 
 #+begin_src elisp
@@ -828,9 +870,21 @@ The ~ediff~ family of function by default does not split its windows nicely, so 
 #+end_src
 
 #+begin_src elisp
-  (setq ediff-keep-variants nil
-        ediff-split-window-function 'split-window-horizontally
-        ediff-window-setup-function 'ediff-setup-windows-plain)
+  (use-package edif
+    :ensure nil
+    :custom
+    (ediff-keep-variants nil)
+    (ediff-split-window-function 'split-window-horizontally)
+    (ediff-window-setup-function 'ediff-setup-windows-plain))
+#+end_src
+
+** Other Text Modes
+#+begin_src elisp
+  (use-package fountain-mode)
+#+end_src
+
+#+begin_src elisp
+  (use-package markdown-mode)
 #+end_src
 
 * Publication
@@ -958,8 +1012,12 @@ The timestamp for exporting files is set to the European date format of day mont
 
 #+begin_src elisp
   (use-package org
-   :bind
-   (("C-c a" . org-agenda)))
+    :custom
+    (org-log-into-drawer t)
+    (org-enforce-todo-checkbox-dependencies t)
+    (org-enforce-todo-dependencies t)
+    :bind
+    (("C-c a" . org-agenda)))
 #+end_src
 
 ** Manage Files
@@ -1047,13 +1105,13 @@ The function to save the recent files runs every five minutes, instead of only w
 #+end_src
 
 * Modifying Key Sequences
-Emacs ships with a range of predefined keyboard shortcuts for its core functionality and the built-in packages. Most external packages don't define key keyboard shortcuts to prevent conflicts with your configuration.
+Emacs ships with a range of predefined keyboard shortcuts for its core functionality and the built-in packages. Most external packages don't define key keyboard shortcuts to prevent conflicts with your configuration. The EWS configuration assigns shortcuts to the most common functions.
 
 You can change the keyboard's behaviour at three levels: programmable keyboards, the operating system/window manager, and Emacs.
 
 Some high-end keyboards are programmable and let you define the output of each key. For example, you could map the right control key as the Hyper key. At the second level, your operating system interprets the input from the keyboard. In Windows, =s-E= (Windows and E) opens the file explorer. You can erase this binding to make it available in Emacs. Each operating system has its own methods to change keyboard maps (keymaps). Some experienced Emacs users remap the caps lock key to act as the control key to make it easier to use.
 
-Last but not least, you can define key sequences within Emacs itself. The example below binds =F5= to toggling whitespace mode. This minor mode indicates whitespace in the current buffer with characters. The =#'= characters before the function name are a technical requirement to instruct Emacs not to evaluate this function but only to store its value. If you like to unset a keystroke, just use ~nil~ as the function.
+Last but not least, you can define key sequences within Emacs itself. The example below binds =F5= to toggling whitespace mode. This minor mode indicates whitespace in the current buffer with characters. The =#'= characters before the function name are a technical requirement to instruct Emacs not to evaluate this function but only to store its value. If you like to remove a keystroke, just use ~nil~ as the function.
 
 #+begin_src elisp :tangle no
   (keymap-global-set "<F5>" #'whitespace-mode)
@@ -1064,6 +1122,8 @@ This example uses the global keymap, meaning the shortcut is available in all mo
 #+begin_src elisp :tangle no
   (keymap-set org-mode-map "C-t" #'whitespace-mode)
 #+end_src
+
+The key to good keyboard shortcuts is to encode semantic information, which is why almost all EWS-specific shortcuts start with =C-c w= where the =w= stands for 'writing'. 
 
 Some people don’t like the Emacs keyboard defaults much because they require frequent use of the modifier keys. These people suggest that repetitive use of these keys causes strain injury, the dreaded’ Emacs pinky’. Several packages, such as Evil Mode and God Mode, exist within the Emacs ecosystem that change the default keybindings to a different model. /Emacs Writing Studio/ follows the standard conventions and does not modify default keybindings.
 

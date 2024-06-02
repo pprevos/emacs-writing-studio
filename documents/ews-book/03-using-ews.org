@@ -19,17 +19,17 @@ The EWS configuration is an opinionated set of choices that might not suit every
 * Installing /Emacs Writing Studio/
 You don't have to learn to program in Elisp to use Emacs. You can start with the /Emacs Writing Studio/ configuration to get you going. The next step is to install EWS and start using it. The remainder of the book does not explain any methods to configure Emacs but explains how to use the functionality in EWS to research, write and publish articles, books and websites. The Appendix to this book provides a detailed explanation of the EWS configuration.
 
-To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository (=github.com/pprevos/emacs-writing-studio=) and save them in the configuration folder. The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=. Copy the bot files from the EWS repository to this directory. EWS will activate after you evaluate the ~restart-emacs~ function or the next time you start the program.
+To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository (=github.com/pprevos/emacs-writing-studio=) and save them in the configuration folder. The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=. Copy the files from the EWS repository to this directory. EWS will activate after you evaluate the ~restart-emacs~ function or the next time you start the program.
 
 If you an experienced Emacs user, then you can try the EWS configuration by creating a separate folder for the init file and start Emacs with =emacs --init-directory <folder-path>=. That way you can try EWS without clobbering your existing configuration.
 
 The EWS configuration also installs a package from GitHub with some bespoke variables and additional functionality. All such variables and functions start with ~ews-~. You will need to configure these variables to prevent errors as you work through this book.
 
-Emacs can also in integrate with various other free software to extend its functionality. Some of the features provided by EWS requite you to install additional software that Emacs will control. You don't need to know how these packages work as Emacs will control them for you. Each chapter in this book outlines which software is required for which purpose.
+Emacs can also integrate with various other free software to extend its functionality. Some of the features provided by EWS require you to install additional software that Emacs will control. You don't need to know how these packages work as Emacs will control them for you. Each chapter in this book outlines which software is neccesary for which purpose.
 
-The ~ews-missing-executables~ function checks if external software is available on your system. Emacs writes a message in the minibuffer if any of the recommended tools is missing. You can jump to the =*Messages*= buffer with =C-h e= to review the output. If packages are missing, then Emacs will function normally, but some features might be unavailable. The relevant chapters in this book provide more details which software is required and the tasks it undertakes.
+The ~ews-missing-executables~ function checks if external software is available on your system. Emacs writes a message in the minibuffer if any of the recommended tools is missing. You can jump to the =*Messages*= buffer with =C-h e= to review the output. Emacs will function normally when if any of the listed software is missing, but some features will be unavailable. The relevant chapters in this book provide more details the required software and the tasks it undertakes.
 
-This book was written and published with the configuration it describes, so it is fully tested to real-life conditions. The GitHub repository for EWS also contains the =documents= folder which contains the Org mode files for this book. You can download these files to see an example of a book written in Emacs.
+This book was written and published with the configuration it describes, so it is fully tested to real-life conditions. The GitHub repository for EWS also contains the =documents= folder which contains the Org mode files for this book. You can download these files as an example of a book researched, written and published with Emacs.
 
 * Minimalist Interface
 Emacs is a place of rest and contemplation away from the cacophony of contemporary software filled with buttons and functionality you don't need. The default Emacs user interface is a hybrid between keyboard and mouse-driven operations. While using the mouse might seem convenient, a keyboard-driven system is more efficient because you don't have to move your hand that much and switch contexts when finding icons.
@@ -43,7 +43,7 @@ A theme is a set of instructions that describe the colours of defined text parts
 
 Two basic classes of themes exist for text processors: light and dark. Light backgrounds, common with most modern word processing software, can cause asthenopia (eye strain) after you stare at the screen for a while. Dark colour schemes increase visual acuity and reduce visual fatigue, especially in low-light physical environments with complex backgrounds [cite:@kim_2019_dark]. Many text processor users prefer dark themes. Light themes are not bad intrinsically as they are effective when you work in a brightly lit room.
 
-The EWS configuration installs and activates the most recent version of Prot's Modus themes. The Modus themes have two primary versions: the =modus-operandi= theme is the primary light theme, while the =modus-vivendi= theme is its dark counterpart. The primary Modus themes maximise contrast between background and foreground following the Web Content Accessibility Guidelines (WCAG). The Modus themes comply with the triple-A standard of the WCAG, which specifies a contrast ratio between background and foreground of 7:1. This high contrast ratio is legible for people with moderately low vision. Each of the primary themes has three modified versions: two versions for red-green and blue-yellow colour blindness (deuteranopia and tritanopia) and a more colourful variety (tinted).
+The EWS configuration installs and activates the most recent version of Prot's Modus themes. The Modus themes have two primary versions: the =modus-operandi= theme is the primary light theme, while the =modus-vivendi= theme is its dark counterpart. The primary Modus themes maximise contrast between background and foreground following the Web Content Accessibility Guidelines (WCAG). The Modus themes comply with the triple-A standard of the WCAG, which specifies a minimum contrast ratio between background and foreground of 7:1. This high contrast ratio is legible for people with moderately low vision. Each of the primary themes has three modified versions: two versions for red-green and blue-yellow colour blindness (deuteranopia and tritanopia) and a more colourful variety (tinted).
 
 /Emacs Writing Studio/ uses the tinted versions as default. These versions have a slightly lower contrast ratio and are suitable for people with normal vision. The Modus themes do not prescribe keyboard shortcuts, so EWS defines some. The =C-c w t t= shortcut toggles between the light and dark side (insert Star Wars pun here). Using =C-c w t s= provides a selection menu of all Modus themes. /Emacs Writing Studio/ uses =C-c w= as its default prefix key for its specific functionality, where the =w= is a mnemonic for writing and =t= for theme.
 
@@ -70,7 +70,7 @@ In Emacs lingo, a 'face' is a collection of attributes to display text. It defin
 - =font=: The name of the font
 - =height=: The font height as an integer in units of 1/10 point.
 
-You can use the customisation menu by evoking ~customise-face~ and selecting =default=, =fixed-pitch= or =variable-pitch= and entering the font name in the /Font Family/ box. Click /Apply and Save/ for each font. This action saves the font settings to the =custom.el= file, which Emacs evaluates at the beginning of the startup sequence. Please note that anything you customise this way overrides any theme settings, so ideally, only customise font family and size.
+You can use the customisation menu by evoking ~customize-face~ and selecting =default=, =fixed-pitch= or =variable-pitch= and entering the font name in the /Font Family/ box. Click /Apply and Save/ for each font. This action saves the font settings to the =custom.el= file, which Emacs evaluates at the beginning of the startup sequence. Please note that anything you customise this way overrides any theme settings, so ideally, only customise font family and size.
 
 To see which fonts are available, you use the graphical window by running ~menu-set-font~. When you use the GUI to set the default font, the change is immediate but transient. Use ~menu-bar-options-save~ to save your default font and size to the =custom.el= file.
 
@@ -89,7 +89,7 @@ The minibuffer completion system is highly configurable, and several packages ex
 
 The Vertico package uses incremental search, meaning the list of candidates is shortened to match your entry as soon as you type one or more characters. For example, when opening a file with =C-c C-f=, you can start typing any part of the filename to locate the file you seek. Use =C-backspace= keys to move to a higher directory.
 
-The Savehist package remembers your selections and saves your minibuffer history when exiting Emacs. This package ensures that your most popular choices remain on top for further convenience. To further refine our ability to find completion candidates, the orderless package enhances Vertico and matches patterns, irrespective of the order in which they are typed. For example, typing =emacs writing TAB= provides the same results as =writing emacs TAB=. 
+The Savehist package remembers your selections and saves your minibuffer history when exiting Emacs. This package ensures that your most popular choices remain on top for further convenience. To further refine our ability to find completion candidates, the Orderless package enhances Vertico and matches patterns, irrespective of the order in which they are typed. For example, typing =emacs writing TAB= provides the same results as =writing emacs TAB=. 
 
 Emacs is a self-documenting computing environment, meaning every function and variable includes a text describing what it does. The Marginalia package displays the first line of these texts next to your completion candidates. This package also shows available keyboard shortcuts for relevant completion candidates (Figure [[fig:vertico]]). When you type =M-x=, you will see a list of functions and a brief description of what they do and whether there is a keyboard shortcut to access it.
 
@@ -102,7 +102,7 @@ Emacs is a self-documenting computing environment, meaning every function and va
 ** Keyboard Shortcuts
 Completion shortens the amount of text you must type and is ideal for discovering functionality you did not yet realise existed. However, as explained in the previous chapter, we usually don’t type function names but use keyboard shortcuts.
 
-Remembering which keyboard shortcut you need takes some effort. The Which-Key package by Justin Burkett is not so much a completion system but a great help when trying to remember which keyboard shortcut to use. This package provides a minor mode that displays the keybindings following the currently-entered incomplete command (a prefix) in a popup.
+Remembering which keyboard shortcut you need takes some effort. The Which-Key package by Justin Burkett is not so much a completion system but a great help when trying to remember which keyboard shortcut to use. This package provides a minor mode that displays the keybindings following the currently entered incomplete command (a prefix) in a popup.
 
 Many keyboard shortcuts have multiple parts, such as =C-x C-f=. The which-key package shows a popup menu that lists all the available options. When, for example, you press =C-x=, the menu will list all follow-up keys and the function they are bound to. Where it says =prefix= in the popup, this means that there is a deeper level. So, by pressing =C-c w=, the EWS prefix, you see a list of the available sub-menus and functions.
 
@@ -116,7 +116,7 @@ If the shortcuts are too large to fit in the popup window, you can move to the n
 :PROPERTIES:
 :CUSTOM_ID: sec:org-mode
 :END:
-The previous chapter explained how to write a plain text file. Now, we add a new layer of complexity by introducing Org mode, a powerful major mode that comes with Emacs by default. This software was initially developed in 2003 by Carsten Dominik, professor of astronomy at the University of Amsterdam. Since then, countless other developers have continued to advance Org mode. Many people use Emacs because of Org mode as it is a perfect environment for writing. 
+The previous chapter explained how to write a plain text file. Now, we add a new layer of complexity by introducing Org mode, a powerful major mode that comes with Emacs by default. This software was initially developed in 2003 by Carsten Dominik, professor of astronomy at the University of Amsterdam. Since then, countless other developers have continued to advance Org mode. Many people use Emacs because of Org mode is a perfect environment for writing. 
 
 You can use Org mode to publish websites, articles and books, keep a diary, write research notes, manage your actions, and more. And on top of all that, it is intuitive to use. This section shows you the basics of writing prose in Org mode. The remainder of the book explains the more specialised functionality of this extensive package.
 
@@ -136,7 +136,7 @@ This section only provides a short introduction to using Org mode to write prose
 :PROPERTIES:
 :CUSTOM_ID: sec:org-structure
 :END:
-One of the unofficial rules of writing is to define the structure before writing the content. Books have chapters, sections and paragraphs; articles have headings; poems have verses; and so on. Almost all forms of writing have a hierarchy. Org mode has a flexible set of commands to quickly define the structure of your writing project. Defining headings is as easy as string a line with an asterisk followed by a space. To create deeper levels, add more stars:
+One of the unofficial rules of writing is to define the structure before writing the content. Books have chapters, sections and paragraphs; articles have headings; poems have verses; and so on. Almost all forms of writing have a hierarchy. Org mode has a flexible set of commands to quickly define the structure of your writing project. Defining headings is as easy as starting a line with an asterisk followed by a space. To create deeper levels, add more stars:
 
 #+begin_example
   * Heading 1
@@ -186,10 +186,10 @@ Org mode also provides a set of commands to make it easier to jump between headi
 ** Text Formatting
 Writing all words in the same style can be boring and some text needs some emphasis. To change how Org Mode displays text, you surround it with special characters: =/italic/=, =*bold*=, =_underline_=, =+strikethrough+= and ==verbatim==. In Vanilla Emacs, these markers remain visible but disappear when exporting the document to its published format.
 
-The EWS configuration hides these markers. The only problem with hiding emphasis markers that way is that rich text becomes hard to edit because it is unclear whether your cursor is on the marker or the first or last character. EWS therefore uses the Org-Appear package by Alice Hacker, which displays the rich text markers while the cursor is on a the word but hides them otherwise.
+The EWS configuration hides these markers. The only problem with hiding emphasis markers that way is that rich text becomes hard to edit because it is unclear whether your cursor is on the marker or the first or last character. EWS therefore uses the Org-Appear package by Alice Hacker. This tool displays the rich text markers while the cursor is on a word but hides them otherwise, resulting in a less cluttered screen.
 
 ** Lists
-Writing lots of prose in long paragraphs can make content hard to understand, so non-fiction authors use lists to create clarity in writing. Writing lists in Org mode could not be easier. Start a line with a dash and complete the entry with =M-RET= to create the next entry. Using the Alt and left or right arrow keys changes the depth of the item. The Alt key with the up and down arrows moves the line up or down in the hierarchy. You can change the list prefix with the =SHIFT= and left/right arrow keys. The default options are:  =-=, =+=, =1.= or =1)=. You can convert a paragraph to a list with =C-c -= (~org-toggle-item~). Repeatedly using this command change the bullet type, just like shift and the arrow keys. To demote a list item back to a paragraph, simply remove the list characters.
+Writing lots of prose in long paragraphs can make content hard to understand, so non-fiction authors use lists to create clarity in writing. Writing lists in Org mode could not be easier. Start a line with a dash and complete the entry with =M-RET= to create the next entry. Using the Alt and left or right arrow keys changes the depth of the item. The Alt key with the up and down arrows moves the line up or down in the hierarchy. You can change the list prefix with the =SHIFT= and left/right arrow keys. The default options are:  =-=, =+=, =1.= or =1)=. You can convert a paragraph to a list with =C-c -= (~org-toggle-item~). Repeatedly using this command changes the bullet type, just like shift and the arrow keys. To demote a list item back to a paragraph, simply remove the list characters.
 
 #+begin_example
   - Item
@@ -246,6 +246,24 @@ Org mode can only handle simple tables without spanning columns or rows. To crea
 +------------+-----------+----------+----------+-------------+
 #+end_example
 
+** Links
+:PROPERTIES:
+:CUSTOM_ID: sec:links
+:END:
+A text, just like a person, neither can exist in solitude. A as people we have family and friends and so do texts. You might need links to connect related files (friends) or reference text from which your writing borrows ideas (parents). Relationships between electronic texts are established with hyperlinks. Org mode recognises a large suite of link types, such as websites, Document Object Identifiers (DOI) and internal files.
+
+Links in Org mode start with an identifier, followed by the link itself. For example, websites start with the usual =https:= and files start with =file:= and DOI numbers, you guessed it, start with =doi:=. Org mode recognises these automatically as you type them, for example adding =doi:10.1201k/9781003326977= creates a clickable link.
+
+When the link location contains spaces you need to surround it with a double square brackets for it to become active: =[[file:file-name]]=. Links can also contain a description using the following syntax: =[[type:link][description]]=. When a link has a description, Org mode hides the syntax and formats it like hyperlink on a website. You can switch this behaviour on and off with ~org-toggle-link-display~.
+
+You follow a link in Org mode with a mouse click or by pressing =C-c C-o= (~org-open-at-point~) with your cursor on the link text. If you use this shortcut anywhere in the text that is not a link, Org mode presents a list of links in the current heading.
+
+You don't have to type the square brackets and create and edit links with =C-c C-l= (~org-insert-link~). This function first asks you to select the link type and then for the full link address. The last step asks for an optional description. To remove a link and only keep the description as plain text, use this command and erase the link address, keeping or modifying the description.
+
+To create a link to a website, copy the URL from the browser and use the ~org-web-tools-insert-link-for-url~ function (=C-c w w=) which creates a fully-formatted link from the URL in the kill ring and fetches the description from the website.
+
+Org mode can also insert references to literature, which is covered in chapters [[#chap:inspiration]] and [[#chap:production]].
+
 ** Images
 :PROPERTIES:
 :CUSTOM_ID: sec:images
@@ -259,13 +277,17 @@ Although Emacs is a text processor, it can also display images. In Org mode, an 
   [[file:path/to-image]]
 #+end_example
 
+Links to files can be absolute or relative to the directory the document you are linking from is in.
+
+
+
 After adding the link, you can preview the image with the ~org-redisplay-inline-images~ function or =C-c C-x C-M-v=. To toggle previewing pictures in the whole document, use =C-c C-x C-v= (~org-toggle-inline-images~).
 
 The EWS configuration enables default image previews in all Org mode buffers, but adding a new image removes the preview so you run the redisplay command. The pictures in the buffer are all shown at 300 pixels wide. You can configure the preview size to your preference by adding a line above the image, for example: =#+attr_org:: width 600=. 
 
-You open a link in Org mode with a mouse click or by pressing =C-c C-o= (~org-open-at-point~) with your cursor on the link text. Emacs has some facilities to manage image libraries through the Image-Dired package, discussed in Chapter [[#chap:admin]].
+Emacs has some facilities to manage image libraries through the Image-Dired package, discussed in Chapter [[#chap:admin]].
 
-Image links are links to other files without a description. You can use the same process to link to any type of file and add a description, so it looks like a regular hyperlink. The structure of a complete file link is: =[[file:path/to-image][Description]]=. Org mode hides the structure of links and only shows the description. You can change this behaviour with ~org-toggle-link-display~.
+Image links are links to other files without a description. 
 
 Like tables, you can add a caption and a reference name to an image. Various other attributes can be added to define how the image is displayed in the published version, as explained in Chapter [[#chap:publication]].
 
@@ -277,7 +299,9 @@ Technical authors often rely on mathematical notation, which in Org mode is writ
 
 Pretty entities (more precisely UTF-8 characters) in Org mode relate to special symbols, such as superscript and subscript (=x^{2}= or =x_{2}=) and other characters, such as =\pi=, which display as x², x₂ and π. Org mode also understands other LaTeX characters, such as Greek letters (=\alpha= to =\omega=), superscripts and subscripts. You can write these plainly inside an Org buffer. EWS converts these to their 'pretty' version by default. The underlying text remains the same. You can switch this behaviour on and off with the =C-c C-x \= keys (~org-toggle-pretty-entities~). By default, Org mode does not require curly braces for sub- and superscripts. But this can cause confusion if you like to write something using 'snake_case'. The EWS configuration limits applying sub- and superscripts to characters between curly braces.
 
-For more complex formulas you need to use the full LaTeX formula notation. A formula is surrounded by one or two dollar signs. A single dollar sign indicates an inline formula, while a formal with double dollar signs the formula has its own paragraph. To give you a taste of what LaTeX formulas look like, this is Ramanujan's formula for \pi, both graphically and in LaTeX notation. A full explanation of LaTeX formula notation is outside the scope of this book. You can reverse-engineer this example as it contains what you need for 80% of mathematical formulas. 
+For more complex formulas you need to use the full LaTeX formula notation. A formula is surrounded by one or two dollar signs. A single dollar sign indicates an inline formula, while using double dollar signs displays the formula as a separate paragraph with larger symbols.
+
+To give you a taste of what LaTeX formulas look like, this is Ramanujan's formula for \pi, both graphically and in LaTeX notation. A full explanation of LaTeX formula notation is outside the scope of this book. You can reverse-engineer this example as it contains what you need for 80% of mathematical formulas. 
 
 $$\frac{1}{\pi} = \frac{\sqrt{8}}{9801} \sum_{n=0}^{\infty}\frac{(4n)!}{(n!)^4}\times\frac
 {26390n + 1103}{396^{4n}}$$
@@ -288,7 +312,7 @@ $$\frac{1}{\pi} = \frac{\sqrt{8}}{9801}
 \frac{26390n + 1103}{396^{4n}}$$
 #+end_example
 
-If you the pretty entities functionality is enabled, then some LaTeX symbols are converted to mathematical notation, so you might want to disable this when writing mathematical expressions with =C-c C-x \=.
+If the pretty entities functionality is enabled, then some LaTeX symbols are converted to mathematical notation, so you might want to disable this when writing mathematical expressions with =C-c C-x \=.
 
 Org mode can preview LaTeX fragments as images if the =dvipng= program is available. To preview the fragment under the cursor, press =C-c C-x C-l= (~org-latex-preview~). This process converts LaTeX formulas to an SVG file stored in a subdirectory named =ltximg=. 
 
@@ -300,37 +324,27 @@ The Org-Fragtog package by Benjamin Levy provides convenient functionality to to
 :END:
 Ricing is slang term among software developers referring to heavily customising the appearance of their editor. This prettification could involve themes, fonts, and other visual tweaks to create a unique style. Vanilla Emacs is an ugly duckling that can be configured into a beautiful swan. The EWS configuration file contains some modifications to the user interface.
 
-The main difference between a plain text processor and a WYSIWYG word processor is that in Emacs the design of the text (font, colour and so on) communicates meaning and rather than design. Your Emacs theme sets the colours and perhaps also fonts for your document. The purpose this styling is to help you navigate the document. The way your document looks in the buffer is not what it looks like when exported to the final product.
+The main difference between a plain text processor and a WYSIWYG word processor is that in Emacs the design of the text (font, colour and so on) communicates meaning rather than design. Your Emacs theme sets the colours and perhaps also fonts for your document. The purpose of this styling is to help you navigate the document. The way your document looks in the buffer is not what it looks like when exported to the final product.
 
 The active theme and various configurations and packages define the display of an Org mode buffer. Emacs defines how a buffer looks through =font-lock-mode=. Font locking assigns faces to (or 'fontifies' in Emacs speak) various parts of your text using logical rules. Evaluating =font-lock-mode= toggles between the fully configured version of your Org mode file and the plain text version. Run this function on an existing Org mode file to see the difference between pure plain text and a fontified text. To take it a step further, you can open an Org mode file and run ~text-mode~ to disable all Org mode functionality and see the file in its raw beauty. To jump back to safety, simply run ~org-mode~ to restore the file.
 
 EWS uses parts of the Org-Modern package *********
 
 * Checking Spelling
-Writing with a spell checker has become the ultimate security blanket for authors. Without the squiggly red lined underneath our text, the final product would be littered with typos, at least in my case. The Emacs Flyspell minor mode provides an interface to the Hunspell spell-checking software, so you must ensure that it is available on your computer. The EWS configuration enables the Flyspell minor mode for all text modes.
+Writing with a spellchecker has become the ultimate security blanket for authors. Without the squiggly red lined underneath our text, the final product would be littered with typos, at least in my case. The Emacs ispell package Flyspell minor mode provide an interface to the Hunspell spell-checking software, so you must ensure that it is available on your computer, including at least one dictionary. The EWS configuration enables the Flyspell minor mode (spelling on-the-fly) for all text modes.
 
 There are basically two ways to correct your writing. Either just keep the juices flowing and check the complete text when your complete the session, or fix typos as detected.
 
-The ~ispell~ function (=C-c w s s=) walks through possible spelling mistakes in the buffer or in a selected region. This function displays the proposed corrections at the top of the window. You can select the preferred version by entering the relevant number. The minibuffer provides a menu to ignore the typo with the space bar, accept it for this session (=a=), insert in your personal dictionary with =i= and other options which =C-h= reveals. Any key not in the menu quits the spell checking session.
+The ~ispell~ function (=C-c w s s=) walks through possible spelling mistakes in the buffer or in a selected region. This function displays the proposed corrections at the top of the window. You can select the preferred version by entering the relevant number. The minibuffer provides a menu to ignore the typo with the space bar, accept it for this session (=a=), insert in your personal dictionary with =i= and other options which =C-h= reveals. Any key not in the menu quits the spellchecking session.
 
-To fix typos on the fly use the ~flyspell-auto-correct-previous-word~ (=C-;=) function. This function replaced the first detected spelling error visible on the screen before the cursor with the most likely correction. Repeatedly pressing =C-;= cycles through the options until you return to the original version. The echo area shows the list of possible corrections. Typing any other key breaks the chain. All options are also stored in the undo system, so you can still go back if you accidentally break the chain and still need changes. 
+To fix typos on the fly use the ~flyspell-auto-correct-previous-word~ (=C-;=) function. This function replaces the first detected spelling error before the cursor visible on the screen with the most likely correction. This function prevents you from having to jump to your spelling mistakes and back to where you came from. Repeatedly pressing =C-;= cycles through the available options until you return to the original version. The echo area shows the list of possible corrections. Typing any other key breaks the chain. All changes are also stored in the undo system, so you can still go back to an earlier option if you accidentally go to far. 
 
-This function prevents you from having to jump to your spelling mistakes and back to where you came from. To store the supposedly mistyped word in your personal dictionary, move to the word and use ~ispell-word~ (=M-$=) and use the options in the menu.
+Flyspell has a handy command to jump between suspected spelling errors. The ~flyspell-goto-next-error~ function (=C-,=) places the cursor at the next word that need a review. Add thing the universal argument (=C-c C-,)= jumps to the previous possible error. To store the supposedly mistyped word in your personal dictionary, move to the word and use ~ispell-word~ (=M-$=) and use the options in the menu.
 
-The Hunspell software has access to a wide collection of dictionaries, including variations of English, which you have to install as a separate download. The default dictionary for EWS is the Australian English dictionary. See the Appendix for instructions on how to set your preferred default dictionary.
-
-If you are multilingual, install multiple dictionaries and set a different language for buffers in the non-standard language using a file variable. Add the text below as the last lines in your Org mode file, where you replace =nederlands= (Dutch) with your preferred dictionary:
-
-#+begin_example
-# Local Variables:
-# ispell-local-dictionary: nederlands
-# End:
-#+end_example
-
-Emacs evaluates this line and activates the dictionary the next time you open the file or when using =normal-mode=. This dictionary only applies to the relevant file; all other buffers remain in the default language. Unfortunately, a language can only apply to a complete buffer and not to sections of text.
+The Hunspell software has access to a wide collection of dictionaries, including variations of English, which you have to install separately. The default dictionary for EWS is Australian English. Customise the ~ispell-dictionary~ variable to change the default language. If you are multilingual, then you can add multiple dictionaries in the variable, separated by a comma, for example ="en_AU,nederlands=", which are my preferred languages. Any changes to dictionaries will only have effect when the chosen dictionary is available on your system. Download the dictionaries of the language(s) you write and configure ispell to help you write correct syntax.
 
 * The {{{ews}}} Workflow
-The process of writing can be chaotic as it involves many iterative cycles. But an orderly pattern emerges when we stand back from details of the daily grind. We read literature and get inspired, develop new ideas, produce new works and publish the results. Even though reality is never as linear as this list suggests, it is a helpful guide to organise the {{{ews}}} workflow and the content of the rest of this book (Figure [[fig:workflow]]).
+The process of writing can be chaotic as it involves successive iterative cycles. But an orderly pattern emerges when we stand back from details of the daily grind. We read literature and get inspired, develop new ideas, produce new works and publish the results. Even though reality is never as linear as this list suggests, it is a helpful guide to organise the {{{ews}}} workflow and the content of the rest of this book (Figure [[fig:workflow]]).
 
 #+begin_src dot :file images/emacs-workflow.png
   digraph {
@@ -358,14 +372,13 @@ The process of writing can be chaotic as it involves many iterative cycles. But 
           penwidth=0.5
           notes [label="Denote\nnotes" shape="folder" width=1]
           biblio [label="BibTeX\nbibliography" shape="folder" width=1]
-          notes -> biblio [constraint=false dir=both]
       }
 
       subgraph manage {
           cluster=true
           label="Managing"
           penwidth=0.5
-          tasks [label="Org Mode\nTodo" shape="folder" width=1]
+          tasks [label="Org Mode\nTodo" shape="folder" width=1]	
       }
 
       subgraph production {
@@ -393,9 +406,7 @@ The process of writing can be chaotic as it involves many iterative cycles. But 
       notes -> edit [ltail=ideation lhead=production]
       edit -> ebook [ltail=production lhead=publication]
       notes -> tasks [constraint=false ltail=ideation lhead=manage]
-
-      {rank=same; notes; tasks}
-  } 
+  }  
 #+end_src
 #+caption: Emacs Writing Studio workflow.
 #+name: fig:workflow
@@ -408,12 +419,12 @@ The process of writing can be chaotic as it involves many iterative cycles. But 
 The basic principle of this workflow is that the author collects information from literature, the web, movies, and so on (/inspiration/), which they process in a note-taking system. These notes are the central repository of information and are linked to a bibliography (/ideation/). These ideas and notes form the foundation of the writing process (/production/). When the work is completed, the author publishes it in its final format (/publication/). However, there is a fifth step. At the end of a long day of writing and editing, we must also do some /Administration/ to keep our systems in good shape.
 
 ** Inspiration
-Ideas don't pop into minds out of thin air. Our thoughts, plans, and inspirations derive from our lived experiences and what we read, hear, or watch. Emacs has extensive facilities to read any plain text format imaginable and display PDF files, ebooks and images. Listening to a podcast or watching a video is impossible within Emacs, but it can provide an interface to integrate with external multimedia applications. You can also maintain a bibliography to organise and access your collection of electronic literature. Emacs can also browse the internet, although the built-in browser is not fully featured but a tool that displays websites as plain text. Chapter [[#chap:inspiration]] discusses how to read ebooks, surf the web and consume multimedia files with Emacs.
+Ideas don't pop into minds out of thin air. Our thoughts, plans, and inspirations derive from our lived experiences and what we read, hear, or watch. Emacs has extensive facilities to read any plain text format imaginable and display PDF files, ebooks and images. Listening to a podcast or watching a video is impossible within Emacs, but it can provide an interface to integrate with multimedia applications. You can also maintain a bibliography to organise and access your collection of electronic literature. Emacs can also browse the internet, although the built-in browser is not fully featured but a tool that displays websites as plain text. Chapter [[#chap:inspiration]] discusses how to read ebooks, surf the internet, and consume multimedia files with Emacs.
 
 ** Ideation
 Ingesting all these new ideas is only worthwhile if you keep a record of your new-found inspirations. Hence, maintaining notes is essential to facilitate the ideation process. Emacs is an ideal tool for storing notes in plain text. Several packages are available to manage your digital brain. This step in the EWS workflow revolves around the Denote package by Protesilaos (Prot) Stavrou.
 
-You don't need to follow any specific note taking methods such as /Zettelklasten/ or /Bullet Journal/. My personal collection of notes is a primordial soup of ideas, categorised using organically grown tags and opportunistically linked. Besides digital musings, You can add anything worth keeping to Denote, including binary files such as PDFs or photographs. Chapter [[#chap:ideation]] discusses how to use Org mode and the Denote package to develop a personal knowledge management system.
+You don't need to follow any specific note taking methods such as /Zettelklasten/ or /Bullet Journal/. My personal collection of notes is a primordial soup of ideas, categorised using organically grown tags and opportunistically linked. Besides digital musings, you can add anything worth keeping to Denote, including binary files such as PDFs or photographs. Chapter [[#chap:ideation]] discusses how to use Org mode and the Denote package to develop a personal knowledge management system.
 
 ** Production
 Once you have gathered your thoughts, it is time to start writing. Org mode is ideal for writing articles and books or developing websites. Emacs developers have also published many additional utilities to assist with the writing process, such as completion, grammar checking, a dictionary, thesaurus, and other indispensable tools. During production you also might want to collaborate with other authors, which requires some control over different versions. Chapter [[#chap:production]] describes how to use Org mode to write articles, websites and books and manage large projects.
