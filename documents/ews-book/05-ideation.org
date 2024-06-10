@@ -86,7 +86,7 @@ The Consult package by Daniel Mendler includes a convenient function  to move ar
 
 A further tool to manage large files is the ~org-refile~ function, bound to =C-c C-w=. This command lets you easily move sections to another section in your document. When evoking this function, a list of names of chapters (level 1 headings) in your document appears. The subtree that the cursor is currently in will move to the selected chapter. To jump to the relevant entry, use the =C-u C-u C-c C-w= shortcut (two universal arguments before the command). Another method to refile your headings is with the Alt and arrow keys, as explained in section [[#sec:org-structure]].
 
-Lastly, you might want to create links between notes in a file. we have already seen file links in section [[#sec:images]], but we can also link o a heading within an Org mode file. The easiest way is to create an internal link with =C-c l= and enter the name of the heading you need to link to and add a description. The link now looks something like this:
+Lastly, you might want to create links between notes in a file. we have already seen file links in section [[#sec:images]], but we can also link to a heading within an Org mode file. The easiest way is to create an internal link with =C-c l= and enter the name of the heading you need to link to and add a description. The link now looks something like this:
 
 =[[* Heading name][Description]]=
 
@@ -125,13 +125,15 @@ The timestamp is a unique and immutable identifier Denote uses to link notes. Th
 
 The file naming convention in Denote places some limitations. The Denote signature can only contain letters, numbers and the equals sign to maintain the integrity of the system. The title only letter, numbers and dashes. Keywords can only contain letters and numbers. Denote cleans (sluggifies) file names to enforce compliance with the convention.
 
-Denote stores new notes in the same folder, signified by the ~denote-directory~ variable, which defaults to =~/Documents/notes=. You can customise this variable to suit your needs and restart Emacs. Denote can store notes in subdirectories within this primary location, but there is no need to do so. When subdirectories categorise files, a part of the metadata for that file disappears as soon as you move the file to another location. Also, a file can only reside in one directory.
+Denote stores new notes in the same folder, signified by the ~denote-directory~ variable, which defaults to =~/Documents/notes=. You can customise this variable to suit your needs. Use the ~customize-variable~ function, add the new location and click the "Apply and Save" box.
+
+Denote can store notes in subdirectories within this primary location, but there is no need to do so. When subdirectories categorise files, a part of the metadata for that file disappears as soon as you move the file to another location. Also, a file can only reside in one directory.
 
 Modern operating systems can effortlessly manage tens of thousands of files in one directory, so there is no need to use subdirectories. Instead of subdirectories you can use file tags, which makes it easy to view files that logically belong in the same group. File tags are more flexible than subdirectories because each file can have more than one tag, but can only live in one directory.
 
 The ~denote~ function, which you activate with =C-c w d n=, creates new notes as Org mode files. It first asks for a title and then for the relevant keywords. You either select a keyword from the completion list of existing notes in the minibuffer with the =TAB= key or enter new ones as free text, separated by a comma. The timestamp is automatically generated using the date and time you create the note. You can also activate this command with the Org capture system and select 'Permanent Note'.
 
-Note that when creating a new note, it first opens as an unsaved buffer. You will need to save it to disk with =C-c C-s= to make it permanent. When you create a permanent note with the Org capture mechanism saves the note when exiting the capture popup screen with =C-c C-c=. Some functionality might not work unless you have saved the note to disk,so if you get a warning that says "Buffer not visiting a Denote file", you might have to save the buffer first so the software can recognise it.
+Note that when creating a new note, it first opens as an unsaved buffer. You will need to save it to disk with =C-x C-s= to make it permanent. When you create a permanent note with the Org capture mechanism saves the note when exiting the capture popup screen with =C-c C-c=. Some functionality might not work unless you have saved the note to disk,so if you get a warning that says "Buffer not visiting a Denote file", you might have to save the buffer first so the software can recognise it.
 
 The default EWS configuration does not require a signature or a subdirectory for new notes. You can customise the ~denote-prompts~ variable to define the default way Denote generates and renames files by ticking the items you like to include when creating an new note.
 
@@ -236,7 +238,9 @@ Meta notes, the last type of permanent note, serve as a gateway to other notes o
 
 Let's say that you are working on a project to write a paper about the /Daimonion/ (prophetic monitor) that spoke to the ancient Greek philosopher Socrates. You read the literature and create a bunch of permanent and bibliographic notes that use the =_daimonion= keyword. When it is time to gather your thoughts into an integrated view, you can create a new note that links to all your relevant notes.
 
-In Org mode, a dynamic block is a section in your document that can be updated using a function. Denote offers functions to add dynamic lists of links to other documents, which are incredibly handy as they always reflect the latest version of your note collection. To use this feature, simply invoke the ~denote-org-extras-dblock-insert-links~ function  (=C-c w d D=), and provide a search string that matches the notes you want to list (in this case, it's =_daimonion=). Denote will insert a block in your note that lists all notes matching this search criterion. The dynamic block is enclosed between two lines: =#+BEGIN:= and =#+END:=. If you add new notes with the Daimonion tag, simply place the cursor on the beginning or end lines and use =C-c C-c= to update the list. To modify the search criteria, edit the text between the quotation marks after the =:regexp= part of the first line and update the dynamic block.
+In Org mode, a dynamic block is a section in your document that can be updated using a function. Denote offers functions to add dynamic lists of links to other documents, which are incredibly handy as they always reflect the latest version of your note collection. To use this feature, simply invoke the ~denote-org-extras-dblock-insert-links~ function  (=C-c w d I=), and provide a search string that matches the notes you want to list (in this case, it's =_daimonion=).
+
+Denote will insert a block in your note that lists all notes matching this search criterion. The dynamic block is enclosed between two lines: =#+BEGIN:= and =#+END:=. If you add new notes with the Daimonion tag, simply place the cursor on the beginning or end lines and use =C-c C-c= to update the list. To modify the search criteria, edit the text between the quotation marks after the =:regexp= part of the first line and update the dynamic block.
 
 #+begin_example
  #+BEGIN: denote-links :regexp "_daimonion"
@@ -285,7 +289,7 @@ Searching for titles, tags, and other metadata is a powerful way to access your 
 The search is incremental, just like minibuffer completion. As you type your search criterion, a list of results appears. The results show the filename and the matching lines within each file. The search term starts with a hashtag; when you type another such symbol, for example, =#topology# ball=, the next part will be searched within the results.
 
 * Implementing Note-Taking Systems with Denote
-The Denote package is flexible and malleable, so you can use it to implement any published note-taking methodology. This section provides some suggestions on how to implement each of these methods. EWS does not promote any note-taking systems. This section only demonstrates how you could implement them. Try mot to get distracted by 'shiny-object syndrome' and focus on what is useful (writing), rather than chasing the latest ideas. The ideal method is one that you grow organically based on your needs. The power of the Denote file naming convention and regular expressions basically provide everything you need at your fingertips. 
+The Denote package is flexible and malleable, so you can use it to implement any published note-taking methodology. This section provides some suggestions on how to implement each of these methods. EWS does not promote any note-taking systems. This section only demonstrates how you could implement them. Try not to get distracted by 'shiny-object syndrome' and focus on what is useful (writing), rather than chasing the latest ideas. The ideal method is one that you grow organically based on your needs. The power of the Denote file naming convention and regular expressions basically provide everything you need at your fingertips. 
 
 ** EDITED PARA
 Tiago Forte has developed the PARA method to organise your digital life [cite:@forte_2022_buil]. In his system, all digital assets form part of one of four folders:
@@ -393,7 +397,7 @@ Denote stores the metadata for each note in the filename using its ingenious fil
 * EDITED Visualising Denote Networks
 Committing your ideas to text requires a linear way of thinking, as you can only process one word at a time. In my paper journal, I often use diagrams, such as a mind map, rather than a narrative to relate my thoughts. Visual thinking is another way to approach your ideas, and one of the most common methods to visualise interlinked documents is in a network diagram.
 
-Linking ideas in a network is not a modern tool. Medieval monks sketched diagrams in the margins of books hey read, connecting their short notes with lines. These diagrams are the source of the curly braces symbols ={}=, which originally indicated branching an idea into two new ones [cite:@even-ezra_2021_lines].
+Linking ideas in a network is not a modern tool. Medieval monks sketched diagrams in the margins of books they read, connecting their short notes with lines. These diagrams are the source of the curly braces symbols ={}=, which originally indicated branching an idea into two new ones [cite:@even-ezra_2021_lines].
 
 Viewing your thoughts as a network can help discover hitherto unseen connections between your thoughts. Visualising your Denote digital garden as a network can be helpful in your creative process. A network diagram has nodes (vertices) and edges. Each node represents a file in your Denote system, and each edge is a link between notes  (figure [[fig:network]]).
 

@@ -313,9 +313,9 @@ The basic configuration for Elfeed includes setting the ~elfeed-feeds~ variable 
 
 You can either use a plain URL or an Org mode hyperlink. A hyperlink in Org mode consists of a nested set of square brackets =[[link][description]]=. In an Org mode buffer, the link looks like a traditionally-formatted hyperlink. You can insert a link with the ~org-insert-link~ function (=C-c C-l=), paste the feed URL with =C-y= and give it a name. For further convenience, The Org-Webtools package inserts fully formatted hyperlinks into Org mode. The ~org-web-tools-insert-link-for-url~ function (=C-c w w=) constructs an Org mode link from a web address copied into the kill-ring and extracts the link title from that website. When using the EWW browser you copy the current address to the kill ring with =w=.
 
-The only configuration you need for =elfeed-org= is to customise the name of the Org file(s) you like to use to store your feed links. In EWS, the location of the Elfeed configuration is stored in the ~rmh-elfeed-org-files~ variable, which by default is set to  ="~/Documents/elfeed.org"=.
+The only configuration you need for =elfeed-org= is to customise the name of the Org file(s) you like to use to store your feed links. In EWS, the location of the Elfeed configuration is stored in the ~rmh-elfeed-org-files~ variable, which by default is set to  ="~/Documents/elfeed.org"=. The GitHub repository for this book contains an example file to get you started.
 
-You need to customise this variable to match the file you like to use for Elfeed and then restart Emacs. To add or remove a feed, edit this file and update the database with ~elfeed-update~. You are now ready to read your RSS feeds.
+You need to customise this variable to match the file you like to use for your collection of feeds. To add or remove a feed, edit this file and update the database with ~elfeed-update~. You are now ready to read your RSS feeds.
 
 #+caption: Elfeed screendump.
 #+attr_html: :alt Emacs Elfeed screendump :title Emacs Elfeed screendump :width 800
