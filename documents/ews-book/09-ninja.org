@@ -52,6 +52,15 @@ Windows users need to evoke this Powershell script to achieve the same results:
 
 
 
+* Some more
+** Generative AI
+Autocompletion is a common feature in mobile phones that apparently makes life easier for authors. While it might be a great feature for writing on a small phone keyboard, whether it is a useful when writing on a full-sized computer or laptop is doubtful. Automatic completion of word is 'completion at point' in Emacs speak. Completion at point is not configured for text mode in EWS as many users find it distracting rather than helpful. The last chapter provides some guidance on how to install completion at point, should you really want to use it.
+
+
+Autocompletion also is the basic technology of generative AI. Several packages exist to interface Emacs with generative AI tools.
+
+
+
 * Is Emacs a productivity sink?
 Configuring Emacs can be a daunting task that can take a lot of time and can become a productivity sink because of the easy by which it can be done. Within the Emacs community, a discussion emerges every now and then about the need to make so many changes to the vanilla software to get it to behave how you like it. This may seem like a reasonable question.
 
@@ -79,6 +88,18 @@ Hopefully the /Emacs Writing Studio/ configuration will help you reduce the time
 This book is not a comprehensive manual of Emacs but an opinionated description of how to achieve a series of tasks. The text in this book is opinionated because it describes only one or two ways of completing each objective. The flexible nature of Emacs provides many ways to achieve the same thing. This freedom is both a strength and a weakness. This book aims to shorten the learning curve as much as possible so that you can become creative and productive. If, after reading this book, you would like to know more, I recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual [cite:@stallman_2023_gnu; @petersen_2022; @cameron_2005_lear].
 
 This book has only scratched the surface of the myraid of possibilities that Emacs has to offer. Due to its extensibility,
+
+Some final advice to 
+
+
+
+    Learn Emacs Lisp, read EINTR cover to cover
+
+    Learn how to use the introspection features that Emacs offers: C-h d, C-h f, C-h v, C-h ?, M-x ielm
+
+    Learn how to search the Emacs manual and the Emacs Lisp manual inside Emacs, using info
+
+    Avoid lots of 3rd party packages, stick with stock Emacs and packages you absolutely can not do without
 
 
 

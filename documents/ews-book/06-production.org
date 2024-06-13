@@ -301,7 +301,7 @@ Use the directory editor (~dired~) to view the available backup files. Use the =
 The way Emacs manages backups can be a tad confusing, so lets summarise (figure [[#fig:backup]]). When you create a new file and start editing, a Emacs creates a backup, which at this stage is an empty file. When you obtain a file from elsewhere, the first backup is the state in which you first opened in Emacs. While you are editing and saving intermediate versions, no new backups are created, unless you save the file with the universal argument. Emacs automatically creates a new backup, when you open it again and start editing. You can also revert to the previous saved version and you can view versions of the current buffer with the Undo Tree package. These mechanisms provide fine-tuned version control that minimises the risk of loosing information to close to zero.
 
 #+begin_src dot :file images/backups.png
-  digraph {
+  digraph backups {
     graph [dpi=300]
     rankdir=LR
     splines=polyline
@@ -336,26 +336,26 @@ The way Emacs manages backups can be a tad confusing, so lets summarise (figure 
 [[file:images/backups.png]]
 
 
-** Comparing File Versions
-As your writing project progresses you might end-up with different versions of the same file, either through your own doing, an editor or other collaborator. This situation might raise a problem as you are now unsure which file is the most recent version, or perhaps you need to create a new version that contains all the latest changes. The ~ediff~ command helps you solves this problem. It provides a rich interface to compare two or three files. Ediff visualises differences between files and lets you pick which parts of each file you like to keep.
+** EDITED Comparing File Versions
+As your writing project progresses, you might end up with different versions of the same file, either through your own doing, by an editor or by another collaborator. This situation might raise a problem as you are unsure which file is the most recent version, or you may need to create a new version containing all the latest changes. The ~ediff~ command helps you solve this problem. It provides a rich interface to compare two or three files and manage changes. Ediff visualises differences between files and lets you select the parts of each file you like to merge into the main version.
 
-When issuing this command, you need to select two files using the minibuffer, referred to as file A and B. The Emacs frame splits in three parts, the two files and the control panel at the bottom of the frame. The control panel lets you issue commands to either of the two open buffers.
+Using Ediff is straightforward. Start the ~ediff~ command and Simply select two files in the minibuffer, which are then displayed in the Emacs frame in two windows side-by-side. Ediff refers to the left windows as file A and the right one as file B. The Ediff control panel is below the two file windows. The control panel allows you to issue commands to either of the two open buffers, making the process of file comparison and merging a breeze.
 
-When you type =n=, Ediff takes you to the /next/ difference. The paragraph where the difference occurs is highlighted, with the actual differences in a more intense background. Repeatedly typing =n= takes you through successive differences and =p= to the /previous/ one. The mode line of the control panel displays the number of differences and your progress through them. 
+When you type =n=, Ediff takes you to the /next/ difference. The paragraph where the difference occurs is highlighted, with the actual differences in a more intense background. Repeatedly typing =n= takes you through successive differences and =p= to the /previous/ one. The mode line of the control panel displays the number of differences and your progress through them. The highlighted sections are effectively the tracked changes used in word processing software.
 
-Ediff also lets you act on these difference by synchronising parts of file A with B or vice versa. When you type =a= in the control panel, file B changes the highlighted line(s) to the version in file A, and the other way around when you type =b=.
+Ediff offers a flexible approach to handling differences. You can synchronise parts of file A with B or vice versa by either typing =a= or =b= in the control panel. Using =a= synchronises the two files to the content in file A for the highlighted section, while using =b= makes both files the same as the highlight of file B. Ediff's adaptability allows you to choose the version of the file that best suits your needs, giving you full control over the merging process.
 
-You can also move the cursor into either of the two file buffer to edit them manually as you would normally. However, this can confuse matters as you are no longer certain what you typed and the content of the file. Any text added during the Ediff session is not recognised as a new difference.
+You can also move the cursor into either file buffers to edit them manually as you would normally. However, this can confuse matters as you are unsure of what you typed and the file's content. Any text added during the Ediff session is not recognised as a new difference.
 
-To end the session type =q= in the control panel and follow the prompts. You can kill any unmodified buffers. The changed buffer can be saved to disk.
+To end the session, type =q= in the control panel and follow the prompts to either save or kill the two buffers.
 
-Ediff has a lot of functionality outside the scope of this book. Type the question mark in the control panel for a list of options. Ediff has other available commands. To compare three files (A, B and C), use ~ediff3~. The ~ediff-backup~ command compares a file with its latest backup.
+Ediff is quite useful when you work with an editor. You can send them a plain text file that the editor can change as they see fit. When receiving the modified file, you can then use Ediff to manage any proposed changes to the text. If your editor is uncomfortable using plain text files, the next chapter explains how to export them to common word processor formats.
 
-You can read the Efiff manual for a comprehensive description with ~ediff-documentation~ or =C-h R ediff=.
+Ediff has a lot of functionality outside the scope of this book. Type the question mark when the cursor is in the control panel for a list of options. To compare three files (A, B and C), use ~ediff3~. The ~ediff-backup~ command compares a file with its latest backup. You can read the Ediff manual for a comprehensive description with ~ediff-documentation~ or =C-h R ediff=.
 
 ** Version Control
 
-Steps
+Steps  hdjdh
 
 1. Register the file under version control =C-x v v= (~vc-next-action~). DWIM
 2. Next logical action: commit changes
@@ -372,6 +372,32 @@ The ~vc-dir~ command (=C-x v d=) lists all files in the current directory and th
 The stach is a place to safely store a version 
 
 Emacs ignores creating backups for files that are managed by version control to prevent duplication.
+
+#+begin_src dot :file images/git.png
+  digraph git {
+    graph [dpi=300]
+    edge [dir=none]
+    node [shape=box fontname=Arial]
+    file [label = "Current\nfile"]
+
+    subgraph cluster1 {
+      label = "Git\nRepository"
+      fontname=Arial
+      style=filled
+      color=lightgrey
+      version3 [label="Version 1"]
+      version2 [label="Version 2"]
+      version1 [label="Version 3"]
+      version1 -> version2 -> version3
+    }
+
+    file -> version1 [constraint=false]
+  }
+#+end_src
+#+caption: Local version Git diagram.
+#+name: fig:git
+#+RESULTS:
+[[file:images/git.png]]
 
 
 ** Working in Cloud Storage

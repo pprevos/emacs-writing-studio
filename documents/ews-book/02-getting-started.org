@@ -155,6 +155,7 @@ When splitting a window vertically, the same buffer appears twice. Each window c
 | =C-x 2=       | ~split-window-below~   | Split the current window horizontally    |
 | =C-x 3=       | ~split-window-right~   | Split the current window vertically      |
 | =C-x o=       | ~other-window~         | Move to the next window                  |
+|             | ~follow-mode~          | Show buffer over two or more windows     |
 
 * Finding Help
 Emacs has an extensive built-in help system with different ways to access information, accessible with the =C-h= prefix key. The complete Emacs manual is available with =C-h r= (~info-emacs-manual~). This manual opens in Info mode, which is a specialised mode for manuals. The full Emacs manual is not bedtime reading but more a pool of knowledge to dip your toe into when the need arises. The =g= (~Info-goto-node~) key lets you jump to a chapter or section of the text, using minibuffer completion discussed earlier. For example, =C-h r g help= takes you to the page about the help system.

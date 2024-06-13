@@ -346,75 +346,76 @@ The Hunspell software has access to a wide collection of dictionaries, including
 * The {{{ews}}} Workflow
 The process of writing can be chaotic as it involves successive iterative cycles. But an orderly pattern emerges when we stand back from details of the daily grind. We read literature and get inspired, develop new ideas, produce new works and publish the results. Even though reality is never as linear as this list suggests, it is a helpful guide to organise the {{{ews}}} workflow and the content of the rest of this book (Figure [[fig:workflow]]).
 
-#+begin_src dot :file images/emacs-workflow.png
+#+begin_src dot :file test.png
   digraph {
-      rankdir=LR
-      fontname=Arial
-      compound=true
-      graph [dpi=300 nodesep=.5 ranksep=0.7]
-      node [fontsize=10 fontname=Arial]
-      edge [color=gray]
+  rankdir=LR
+  newrank=true
+  fontname=Arial
+  graph [dpi=300 nodesep=.5 ranksep=0.7]
+  node [fontsize=10 fontname=Arial]
+  edge [color=gray]
 
-      subgraph inspiration {
-          cluster=true
-          rank=same
-          label="Inspiration"
-          penwidth=0.5
-          lit [label="Other media" shape="rect" width=1]
-          blogs [label="Internet" shape="rect" width=1]
-          other [label="Literature" shape="rect" width=1]
-      }
+  subgraph custer3 {
+    rank="same"
+    cluster=true
+    label="Managing"
+    penwidth=0.5
+    tasks [label="Org Mode\nTodo" shape="folder" width=1]
+  }
 
-       subgraph ideation {
-          cluster=true
-          rank="same"
-          label="Ideation"
-          penwidth=0.5
-          notes [label="Denote\nnotes" shape="folder" width=1]
-          biblio [label="BibTeX\nbibliography" shape="folder" width=1]
-      }
+  subgraph cluster1 {
+    rank="same"
+    label="Inspiration"
+    penwidth=0.5
+    other [label="Other media" shape="rect" width=1]
+    blogs [label="Internet" shape="rect" width=1]
+    lit [label="Literature" shape="rect" width=1]
+  }
 
-      subgraph manage {
-          cluster=true
-          label="Managing"
-          penwidth=0.5
-          tasks [label="Org Mode\nTodo" shape="folder" width=1]	
-      }
+  subgraph cluster2 {
+    rank="same"
+    label="Ideation"
+    penwidth=0.5
+    biblio [label="BibTeX\nbibliography" shape="folder" width=1]
+    notes [label="Denote\nnotes" shape="folder" width=1]
 
-      subgraph production {
-         cluster=true
-         rank=same
-         label="Production"
-         penwidth=0.5
-         typeset [label="Typesetting" shape="folder" width=1]
-         edit [label="Editing" shape="folder" width=1]
-         write [label="Writing" shape="folder" width=1]
-         write -> edit -> typeset [constraint=false]
-      }
+  }
 
-       subgraph publication {
-          cluster=true
-          rank=same
-          label="Publication"
-          penwidth=0.5   
-          www [label="Website" shape="note" width=1]
-          ebook [label="eBook\nePub / PDF" shape="note" width=1]
-          office [label="Office\ndocument" shape="note" width=1]
-      }
+  subgraph cluster4 {
+    rank=same
+    label="Production"
+    penwidth=0.5
+    typeset [label="Typesetting" shape="folder" width=1]
+    edit [label="Editing" shape="folder" width=1]
+    write [label="Writing" shape="folder" width=1]
+    write -> edit -> typeset [constraint=false]
+  }
 
-      blogs -> notes [ltail=inspiration lhead=ideation]
-      notes -> edit [ltail=ideation lhead=production]
-      edit -> ebook [ltail=production lhead=publication]
-      notes -> tasks [constraint=false ltail=ideation lhead=manage]
-  }  
+  subgraph cluster5 {
+    rank=same
+    label="Publication"
+    penwidth=0.5   
+    www [label="Website" shape="note" width=1]
+    ebook [label="eBook\nePub / PDF" shape="note" width=1]
+    office [label="Office\ndocument" shape="note" width=1]
+  }
+
+  biblio -> tasks
+  blogs -> biblio 
+  notes -> write
+  typeset  -> www [lhead=cluster4]
+
+
+  {rank=same; notes; tasks;}
+
+  }
 #+end_src
 #+caption: Emacs Writing Studio workflow.
 #+name: fig:workflow
 #+attr_html: :width 600 :alt Emacs Writing Studio workflow :title Emacs Writing Studio workflow
 #+attr_latex: :width 0.8\textwidth
-#+attr_org: :width 100
 #+RESULTS:
-[[file:images/emacs-workflow.png]]
+[[file:test.png]]
 
 The basic principle of this workflow is that the author collects information from literature, the web, movies, and so on (/inspiration/), which they process in a note-taking system. These notes are the central repository of information and are linked to a bibliography (/ideation/). These ideas and notes form the foundation of the writing process (/production/). When the work is completed, the author publishes it in its final format (/publication/). However, there is a fifth step. At the end of a long day of writing and editing, we must also do some /Administration/ to keep our systems in good shape.
 

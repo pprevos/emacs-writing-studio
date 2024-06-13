@@ -196,7 +196,8 @@ The =:init= section activates the tinted version of the Modus-Vivendi (light) th
     (load-theme 'modus-operandi-tinted :no-confirm)
     :bind
     (("C-c w t t" . modus-themes-toggle)
-     ("C-c w t s" . modus-themes-select)))
+     ("C-c w t m" . modus-themes-select)
+     ("C-c w t s" . consult-theme)))
 
   (use-package mixed-pitch
     :hook
@@ -862,6 +863,13 @@ The [[https://github.com/bnbeckwith/writegood-mode][writegood package]] helps to
     (text-mode . writegood-mode))
 #+end_src
 
+** Abbreviations
+Abbrev mode is a built-in program that helps you speed-up your writing by defining abbreviations and common spelling mistakes and automatically replace these with 
+
+#+begin_src elisp
+  ;; Abbreviations
+  (add-hook 'text-mode-hook 'abbrev-mode)
+#+end_src
 ** Version Control
 The ~ediff~ family of function by default does not split its windows nicely, so these settings make the program easier to use.
 
@@ -1025,9 +1033,6 @@ The dired package is a convenient and powerful tool to keep your drives organise
 
 Dired lists files and directories in alphabetical order. I prefer a different view, which shows directories on top and files below them. The parameters determine the order of the entries in the folder.
 
-This last bit of configuration code defines how Emacs deals with automated backups. The default setting is that the system stores these files in the folder where the original files lives, clutterin/g your drive with copies of your stuff. The setting below modifies the =backup-directory-alist= variable so that Emacs saves all backups in your configuration folder. This configuration also eliminates lock files, which are only useful when working in shared folders.
-
-Alternatively, you could instruct Emacs to not save backups at all with ~(setq-default make-backup-files nil)~. I prefer keeping backups as they have saved my bacon a few times in the past.
 
 #+begin_src elisp :exports none
   ;; FILE MANAGEMENT
@@ -1059,17 +1064,21 @@ Alternatively, you could instruct Emacs to not save backups at all with ~(setq-d
     :bind
     (:map dired-mode-map ("." . dired-hide-dotfiles-mode)))
 #+end_src
-  
-#+begin_src elisp:exports none
+
+This next bit of configuration defines how Emacs manages automated backups. The default setting is that the system stores these files in the folder where the original files lives, cluttering folders with copies of your stuff. The setting below modifies the =backup-directory-alist= variable so that Emacs saves all backups (indicted by ="."=) in the =bak= subdirectory your init folder. Alternatively, you could instruct Emacs not to save backups at all with ~(setq-default make-backup-files nil)~. I prefer keeping backups as they have saved my bacon a few times in the past.
+
+This configuration also eliminates lock files, which are only useful when working in shared folders. This file prevent other users from opening a file when another user is already editing the file. Change this variable to =t= if you collaborate with other through a file-sharing service such as Nextcloud.
+
+#+begin_src elisp :exports none
   ;; Backup files
 #+end_src
   
 #+begin_src elisp
-  (setq backup-directory-alist
-        `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
-        version-control t
-        delete-old-versions t
-        create-lockfiles nil)  ; No lock files
+  (setq-default backup-directory-alist
+                `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
+                version-control t
+                delete-old-versions t
+                create-lockfiles nil)
 #+end_src
 
 The function to save the recent files runs every five minutes, instead of only when Emacs exists. The function to save the list of recent files needs some modifictaion to prevent messages popping up in the buffer every so often.
@@ -1104,7 +1113,10 @@ The function to save the recent files runs every five minutes, instead of only w
     ("C-x r D" . bookmark-delete))
 #+end_src
 
-* Modifying Key Sequences
+* Enhancing Emacs Wring Studio
+    Don't add something to your Emacs configuration until you understand exactly what it does
+
+** Modifying Key Sequences
 Emacs ships with a range of predefined keyboard shortcuts for its core functionality and the built-in packages. Most external packages don't define key keyboard shortcuts to prevent conflicts with your configuration. The EWS configuration assigns shortcuts to the most common functions.
 
 You can change the keyboard's behaviour at three levels: programmable keyboards, the operating system/window manager, and Emacs.
