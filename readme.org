@@ -4,16 +4,18 @@
 /Emacs Writing Studio/ (EWS) is a configuration for researchers and authors who want to use Emacs to write and publish articles, books and dissertations. EWS is also a forthcoming ebook and paperback, which is an expanded version of a [[https://lucidmanager.org/tags/emacs/][series of articles]] on my website.
 
 This configuration follows the following principles:
- 
+
 - Stays as close as humanly bearable to vanilla GNU Emacs
 - Leverage functionality in Emacs 29
 - Standard keyboard shortcuts
 - No configuration for writing code
 - Centred around Org mode
-
+ 
 #+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
-#+attr_org: :width 400
+#+attr_org: :width 200
 [[file:emacs-writing-studio.png]]
+
+I am currently working on an /Emacs Writing Studio/ book based on the website. The Org mode source code is available in the =documents= folder. The books is written with the EWS configuration and will be available as ebook and paperback when completed.
 
 Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to see additional packages useful to authors.
 

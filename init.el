@@ -92,7 +92,8 @@
   (load-theme 'modus-operandi-tinted :no-confirm)
   :bind
   (("C-c w t t" . modus-themes-toggle)
-   ("C-c w t s" . modus-themes-select)))
+   ("C-c w t m" . modus-themes-select)
+   ("C-c w t s" . consult-theme)))
 
 (use-package mixed-pitch
   :hook
@@ -521,6 +522,8 @@
   :hook
   (text-mode . writegood-mode))
 
+(add-hook 'text-mode-hook 'abbrev-mode)
+
 ;; ediff
 
 (use-package ediff
@@ -615,6 +618,7 @@
   :custom
   (org-log-into-drawer t)
   (org-enforce-todo-checkbox-dependencies t)
+  (org-enforce-todo-dependencies t)
   :bind
   (("C-c a" . org-agenda)))
 

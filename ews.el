@@ -255,3 +255,22 @@ current note."
     (insert (format "[[file:%s]]" filename))
     (org-redisplay-inline-images)))
 
+
+  (defcustom ews-org-completed-action "DONE"
+    "Completed action that triggers resetting checkboxes for recurring tasks.")
+
+  (defun ews--org-recurring-action-p ()
+    "Returns non-nil when the action under point is recurring."
+    (let ((timestamp (or (org-entry-get nil "SCHEDULED" t)
+                         (org-entry-get nil "DEADLINE" t))))
+      (if timestamp (string-match-p "\\+" timestamp))))
+
+  (defun ews-org-reset-checkboxes-when-done ()
+    "Reset all checkboxes in the subtree when status changes."
+    (when (and (ews--org-recurring-action-p)
+             (equal ews-org-completed-action
+                    (substring-no-properties (org-get-todo-state))))
+        (org-reset-checkbox-state-subtree)))
+
+  (add-hook #'org-after-todo-state-change-hook
+            #'ews-org-reset-checkboxes-when-done)
