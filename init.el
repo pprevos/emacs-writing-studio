@@ -523,7 +523,7 @@
 
 ;; ediff
 
-(use-package edif
+(use-package ediff
   :ensure nil
   :custom
   (ediff-keep-variants nil)
