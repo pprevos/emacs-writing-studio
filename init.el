@@ -1,10 +1,43 @@
+;;; init.el --- Emacs Writing Studio init -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2024 Peter Prevos
+
+;; Author: Peter Prevos <peter@prevos.net>
+;; Maintainer: Peter Prevos <peter@prevos.net>
+
+;; This file is NOT part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program. If not, see <https://www.gnu.org/licenses/>.
+;;
+;;; Commentary:
+;;
+;; Emacs Writing Studio init file
+;; https://lucidmanager.org/tags/emacs
+;;
+;; This init file is tangled from the Org mode source:
+;; documents/ews-book/99-appendix.org
+;;
+;;; Code:
+
 ;; Emacs 29? EWS leverages functionality from the latest Emacs version.
 
 (when (< emacs-major-version 29)
   (error "Emacs Writing Studio requires Emacs version 29 or later"))
 
 ;; Custom settings in a separate file and load the custom settings
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+(setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (when (file-exists-p custom-file)
   (load custom-file))
@@ -47,6 +80,7 @@
 ;; - gs (GhostScript): View PDF files
 ;; - mutool (MuPDF): View PDF files
 ;; - mpg321, ogg123 (vorbis-tools), mplayer, mpv, vlc: Media players
+;; - git: Version control
 
 (ews-missing-executables
  '("soffice" "zip" "pdftotext" "ddjvu"
@@ -58,7 +92,8 @@
    "hunspell"
    ("grep" "ripgrep")
    ("gs" "mutool")
-   ("mpg321" "ogg123" "mplayer" "mpv" "vlc")))
+   ("mpg321" "ogg123" "mplayer" "mpv" "vlc")
+   "git"))
 
 ;;; LOOK AND FEEL
 ;; Keyboard-centric user interface removing tool, menu and scroll bars
@@ -148,7 +183,9 @@
   :config
   (which-key-mode)
   :custom
-  (which-key-max-description-length 40))
+  (which-key-max-description-length 40)
+  (which-key-lighter nil)
+  (which-key-sort-order 'which-key-description-order))
 
 ;; Improved help buffers
 
@@ -178,7 +215,7 @@
   :custom
   (flyspell-issue-message-flag nil)
   (ispell-program-name "hunspell")
-  (ispell-dictionary "en_AU")
+  (ispell-dictionary "en_AU,nederlands")
   (flyspell-mark-duplications-flag nil) ;; Writegood mode does this
   (org-fold-core-style 'overlays) ;; Fix Org mode bug
   :config
@@ -522,7 +559,19 @@
   :hook
   (text-mode . writegood-mode))
 
+;; Abbreviations
+
 (add-hook 'text-mode-hook 'abbrev-mode)
+
+;; Lorem Ipsum generator
+
+(use-package lorem-ipsum
+  :custom
+  (lorem-ipsum-list-bullet "- ")
+  :bind
+  (("C-c w i s" . lorem-ipsum-insert-sentences)
+   ("C-c w i p" . lorem-ipsum-insert-paragraphs)
+   ("C-c w i l" . lorem-ipsum-insert-list)))
 
 ;; ediff
 
@@ -645,11 +694,13 @@
   :bind
   (:map dired-mode-map ("." . dired-hide-dotfiles-mode)))
 
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
-      version-control t
-      delete-old-versions t
-      create-lockfiles nil)  ; No lock files
+;; Backup files
+
+(setq-default backup-directory-alist
+              `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
+              version-control t
+              delete-old-versions t
+              create-lockfiles nil)
 
 ;; Recent files
 

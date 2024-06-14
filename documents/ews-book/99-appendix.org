@@ -15,34 +15,37 @@ This appendix presents and explains the /Emacs Writing Studio/ configuration. Th
 - No configuration for writing code
 
 #+begin_src elisp :exports none
-;;; init.el --- Emacs Writing Studio init -*- lexical-binding: t; -*-
+  ;;; init.el --- Emacs Writing Studio init -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 Peter Prevos
+  ;; Copyright (C) 2024 Peter Prevos
 
-;; Author: Peter Prevos <peter@prevos.net>
-;; Maintainer: Peter Prevos <peter@prevos.net>
+  ;; Author: Peter Prevos <peter@prevos.net>
+  ;; Maintainer: Peter Prevos <peter@prevos.net>
 
-;; This file is NOT part of GNU Emacs.
-;;
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program. If not, see <https://www.gnu.org/licenses/>.
-;;
-;;; Commentary:
-;;
-;; Emacs Writing Studio init file
-;; https://lucidmanager.org/tags/emacs
-;;
-;;; Code:
+  ;; This file is NOT part of GNU Emacs.
+  ;;
+  ;; This program is free software; you can redistribute it and/or modify
+  ;; it under the terms of the GNU General Public License as published by
+  ;; the Free Software Foundation, either version 3 of the License, or
+  ;; (at your option) any later version.
+  ;;
+  ;; This program is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ;; GNU General Public License for more details.
+  ;;
+  ;; You should have received a copy of the GNU General Public License
+  ;; along with this program. If not, see <https://www.gnu.org/licenses/>.
+  ;;
+  ;;; Commentary:
+  ;;
+  ;; Emacs Writing Studio init file
+  ;; https://lucidmanager.org/tags/emacs
+  ;;
+  ;; This init file is tangled from the Org mode source:
+  ;; documents/ews-book/99-appendix.org
+  ;;
+  ;;; Code:
 
 #+end_src
 
@@ -323,22 +326,28 @@ Alternatively, you can add these settings directly to your =init.el= file by add
 #+end_src
 
 ** Keyboard Shortcuts Menu
-The Which-Key package improves discoverability of keyboard shortcuts with a popup in the minibuffer. The columns are widened a bit to prevent long truncated function names. Due to the naming conventions in Emacs, most functions start with the package name, so some can be quite long.
+The Which Key package improves discoverability of keyboard shortcuts with a popup in the minibuffer. The columns are widened a bit to prevent truncated function names. Due to the naming conventions in Emacs, most functions start with the package name, so some can be quite long. The problem is that the most interesting part of a function name is at the end of the string so we don't want that to be hidden.
+
+This configuration also instructs Which Key to order the list by function name, rather than by key. In most cases when using this menu, I am looking for a particular function.
 
 #+begin_src elisp :exports none
   ;; Improve keyboard shortcut discoverability
 #+end_src
   
-  #+begin_src elisp
-  (use-package which-key
-    :config
-    (which-key-mode)
-    :custom
-    (which-key-max-description-length 40))
+#+begin_src elisp
+    (use-package which-key
+      :config
+      (which-key-mode)
+      :custom
+      (which-key-max-description-length 40)
+      (which-key-lighter nil)
+      (which-key-sort-order 'which-key-description-order))
 #+end_src
 
 ** Improved Help Functionality
-Emacs is advertised as the self-documenting text editor. While this is not quite correct (if only computer code could document itself), almost every single aspect of Emacs is documented within the program itself. The /Helpful/ package by Wilfred Hughes is an alternative to the built-in Emacs help that provides more contextual information. When, for example, asking for documentation about a variable, the help file provides links to its customisation screen.
+Emacs is advertised as the self-documenting text editor. While this is not quite correct (if only computer code could document itself), every single aspect of Emacs is documented within the program itself. Firstly there are the manuals and also each function contains some documentation.
+
+The /Helpful/ package by Wilfred Hughes adds contextual information to the built-in Emacs help. When, for example, asking for documentation about a variable, the help file provides links to its customisation screen or the source code.
 
 #+begin_src elisp :exports none
   ;; Improved help buffers
@@ -355,7 +364,7 @@ Emacs is advertised as the self-documenting text editor. While this is not quite
 ** Configure Text Modes
 Emacs is principally designed for developing computer code, so it needs some modifications to enable writing text for humans. Firstly we hook Visual Line Mode to Text Mode. Visual Line mode wraps long lines to the nearest word to fit in the current window.
 
-By default, Emacs does not replace text when you select a section and then start typing, which is unusual behaviour when writing prose. The =:init= section enables a more common default so that selected text is deleted when typed over. The =:custom= section enables the page-up and page-down keys to scroll all the way to the top or bottom of a buffer. The last variable saves any existing clipboard text into the kill ring for better operability between the operating system's clipboard and Emacs's kill ring.
+By default, Emacs does not replace text when you select a section and then start typing, which is unusual behaviour when writing prose. The =:init= section enables a more common default so that selected text is deleted when typed over. The =:custom= section enables the page-up and page-down keys to scroll all the way to the top or bottom of a buffer. This section also redefines the way Emacs defines a sentence (see section [[#sec:count]]). The last variable saves any existing clipboard text into the kill ring for better operability between the operating system's clipboard and Emacs's kill ring.
 
 #+begin_src elisp :exports none
   ;;; Text mode settings
@@ -387,7 +396,7 @@ Writing without automated spell checking would be very hard even for the most ex
     :custom
     (flyspell-issue-message-flag nil)
     (ispell-program-name "hunspell")
-    (ispell-dictionary "en_AU")
+    (ispell-dictionary "en_AU,nederlands")
     (flyspell-mark-duplications-flag nil) ;; Writegood mode does this
     (org-fold-core-style 'overlays) ;; Fix Org mode bug
     :config
@@ -401,11 +410,9 @@ Writing without automated spell checking would be very hard even for the most ex
 #+end_src
 
 ** Ricing Org Mode
-This part of the configuration sets a bunch of variables to improve the design of Org mode buffers. Org mode has a lot of other variables you can configure to change its interface, which are all explained in chapter [[#chap:ews]]. The ~setq~ function can take several pairs of variables and their new values as parameters, as shown in the example below.
+This part of the configuration sets a bunch of variables to improve the design of Org mode buffers. Org mode has a lot of other variables you can configure to change its interface. You can easily add other variables or remove some to make Org mode look the way you prefer. For example, to enable alphabetical lists and numerals, you need to customise the ~org-list-allow-alphabetical~ variable to =t=. This adds =a.=, =A.=, =a)= and =A)= as additional options to number a list.
 
-You can easily add other variables or remove some to make Org mode look the way you prefer. For example, to enable alphabetical lists and numerals, you need to customise the ~org-list-allow-alphabetical~ variable to =t=. This adds =a.=, =A.=, =a)= and =A)= as additional options to number a list.
-
-If you have no need for mathematical notation and LaTeX, then you should disable the ~org-startup-with-latex-preview~ variable to prevent error messages.
+If you have no need for mathematical notation and LaTeX, then you should disable the ~org-startup-with-latex-preview~ variable to prevent error messages and delays in displaying buffers.
 
 #+begin_src elisp :exports none
   ;;; Ricing Org mode
@@ -424,7 +431,9 @@ If you have no need for mathematical notation and LaTeX, then you should disable
     (org-use-sub-superscripts "{}")
     (org-id-link-to-org-use-id t))
 #+end_src
-  
+
+The above code snippet hides emphasis markers from view. Emphasis markers are the symbols used to indicate italics, bold and other font decorations. Hiding the syntax of a plain text document is not a good idea because it obfuscates essential information. The Org Appear package shows hidden markers in Org buffers when the cursor in on a emphasised word. This means that an /italic/ word displays as =/italic/=.
+
 #+begin_src elisp :exports none
   ;; Show hidden emphasis markers
 #+end_src
@@ -435,7 +444,7 @@ If you have no need for mathematical notation and LaTeX, then you should disable
     (org-mode . org-appear-mode))
 #+end_src
 
-The Org-Fragtog package automatically toggles Org mode LaTeX fragment previews as the cursor enters and exits them. By default, the text is a bit small and can become unreadable when changing between dark and light themes. The =org-format-latex-options= variable controls the way the Emacs presents fragments. This variable is a list with properties such as colours and size. The =plist-put= function lets you change one of these options in the list. The foreground and background are set to take the same colour as your text. If you change from dark to light mode or vice versa, you might need to evaluate the ~org-latex-preview~ function (=C-c C-x C-l=) to change the preview images.
+The Org Fragtog package is similar to Org Appear, but for LaTeX snippets. It automatically toggles Org mode LaTeX fragment previews as the cursor enters and exits them. By default, the text is a bit small and can become unreadable when changing between dark and light themes. The =org-format-latex-options= variable controls the way the Emacs presents fragments. This variable is a list with properties such as colours and size. The =plist-put= function lets you change one of these options in the list. The foreground and background are set to take the same colour as your text. If you change from dark to light mode or vice versa, you might need to evaluate the ~org-latex-preview~ function (=C-c C-x C-l=) to change the preview images.
 
 #+begin_src elisp :exports none
   ;; LaTeX previews
@@ -453,7 +462,7 @@ The Org-Fragtog package automatically toggles Org mode LaTeX fragment previews a
      (plist-put org-format-latex-options :background 'auto)))
 #+end_src
 
-Most of the features of Org-Modern have been switched off in the custom section because it might be better for beginning users as these settings hide the semantic symbols. 
+The last package to modify Org buffers is Org Modern. However, most of the features have been switched off because it might be better for beginning users as these settings hide the semantic symbols. You can experiment with changing these settings to change the look and feel of Org mode. 
 
 #+begin_src elisp :exports none
   ;; Org modern: Most features disables for beginnng users
@@ -904,12 +913,32 @@ The [[https://github.com/bnbeckwith/writegood-mode][writegood package]] helps to
 #+end_src
 
 ** Abbreviations
-Abbrev mode is a built-in program that helps you speed-up your writing by defining abbreviations and common spelling mistakes and automatically replace these with 
+Abbrev mode is a built-in program that helps you speed-up your writing by defining abbreviations and common spelling mistakes and automatically replace these with words, sentences or complete paragraphs.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Abbreviations
+#+end_src
+  
+#+begin_src elisp
   (add-hook 'text-mode-hook 'abbrev-mode)
 #+end_src
+
+The Lorem Ipsum generator can be useful when designing the layout of a document. This package inserts dummy Latin text into a buffer. 
+
+#+begin_src elisp :exports none
+  ;; Lorem Ipsum generator
+#+end_src
+
+#+begin_src elisp
+  (use-package lorem-ipsum
+    :custom
+    (lorem-ipsum-list-bullet "- ")
+    :bind
+    (("C-c w i s" . lorem-ipsum-insert-sentences)
+     ("C-c w i p" . lorem-ipsum-insert-paragraphs)
+     ("C-c w i l" . lorem-ipsum-insert-list)))
+#+end_src
+
 ** Version Control
 The ~ediff~ family of function by default does not split its windows nicely, so these settings make the program easier to use.
 
@@ -918,7 +947,7 @@ The ~ediff~ family of function by default does not split its windows nicely, so 
 #+end_src
 
 #+begin_src elisp
-  (use-package edif
+  (use-package ediff
     :ensure nil
     :custom
     (ediff-keep-variants nil)
