@@ -148,6 +148,13 @@ When you save the file you are working on, and the current abbreviations table i
 
 The Emacs manual provides extensive documentation about using and configuring abbreviations, including some advanced functionality (=C-h r g abbrev RET=).
 
+** Placeholder text
+/Lorem Ipsum/ is a pseudo-Latin placeholder text used in web design, typography, and printing to demonstrate how a page will look in the final product. The originates in a work by the Roman statesman and philosopher Cicero's treatise /De Finibus Bonorum et Malorum/ (The Extremes of Good and Evil), from 45 BCE. The first two words (/lorem ipsum/) are a truncation of /dolorem ipsum/ ("pain itself"). 
+
+Its primary purpose is to focus the viewer's attention on the layout, typography, and visual elements rather than the content itself. This package helps you to design a layout without being distracted by the meaning of the text. The next chapter discusses document typography and layout in more detail.
+
+{{{EWS}}} includes a package to generate /Lorem Ipsum/ sentences and paragraphs, which you can access with the =C-c w i= prefix key. To insert multiple elements use a numeric prefix, for example =M-6 C-c w i s= inserts six random sentences.
+
 ** EDITED A Clean Writing Interface
 Writing creative prose takes total concentration, and distractions are the author's natural enemy. While your computer is the most essential writing tool, it can also be distracting. Most writing software is littered with icons and options to change the document’s design. Distraction-free writing tools remove these diversions from the screen, making the computer more like a mechanical typewriter that lets the author focus on content over form.
 
@@ -253,12 +260,10 @@ Each heading in Org mode can have a status token, such as =TODO=, =DRAFT= or =ED
 
 If you would like to add the status of your heading to the summary table discussed in the previous section, then add =%20TODO(Status)= or something similar to the column definition in the front matter.
 
-* Control Versions and Collaborate
-In the throws of the writing process, it is not uncommon to change your mind on how a text should flow or even totally change its structure. To ensure you retain valuable information, you need to understand how Emacs manages different versions of a buffer or a file.
+* EDITED Control Versions and Collaborate
+It's not uncommon to revise the flow or structure of your text during the writing process. To ensure you retain valuable information, it's important to understand how Emacs manages different versions of a buffer or a file. Writing may seem like a solitary activity, but more often than not, you collaborate with other authors and editors. In such scenarios, managing the version control also plays a pivotal role in maintaining the collaborative spirit.
 
-Writing may seem like a solitary pursuit, but collaborating with fellow authors is often needed. In such scenarios, version control also plays a pivotal role. While Emacs may not boast the flashy cloud collaboration systems found in office software, its integrated version control system allows for seamless collaboration on a project, ensuring no contributions are lost.
-
-Emacs offers a range of methods to control versions of your files. At the lowest level, we have the version in the current buffer and the one saved to disk. The undo system meticulously tracks all changes within the current buffer at a more granular level. Another method involves the built-in backup system, which saves older versions of files, preserving your manuscript's evolution. For more advanced needs, Emacs also provides version control methods that allow you to formally register files in a version control system.
+While Emacs may not boast the flashy cloud collaboration systems found in office software, it offers various methods to control your files' versions. At the lowest level, we have the version in the current buffer and the one saved to disk. The undo system meticulously tracks all changes within the current buffer at a more granular level. Another method involves using the built-in backup system, which saves older versions of files, preserving your manuscript's evolution. For more advanced needs, Emacs also interfaces with version control software that allows you to formally register files, which is useful when collaborating with other authors or an editor.
 
 ** EDITED Reverting the current buffer
 There are always at least two versions of the text you are working on. The last saved version is stored on disk and the current buffer. You can discard all the changes since the buffer was last saved with the ~revert-buffer~ command, which reloads the file from the disk, erasing all edits since the last saving of the file. 
@@ -287,18 +292,17 @@ In most cases, the tree is simply a straight line. Still, the document forms par
 
 This package provides an intuitive way to manage the various states your document has gone through since you opened the file. The detailed manual for the Undo Tree package provides more detailed scenarios, which can be read by typing ~describe-package~ (=C-h P=) and selecting ~undo-tree~.
 
-** Automated Backups
-Rewriting a file automatically destroys all record of its previous contents, which sometimes means loosing many hours of writing within a split second. To prevent such disasters, Emacs can keep a backup of every file.
+** EDITED Automated Backups
+Rewriting a file destroys its previous contents, which sometimes means losing hours of writing within a split second. To prevent such disasters, Emacs can keep a backup of every file.
 
-Emacs backups a file the first time you ad content to a file. The first backup of any new file is empty. No matter how many times you subsequently save the file, its backup remains unchanged until you kill the buffer and visit the file again. So backup files contain the versions just before starting a new writing session. This backup will be the same as the current file, until the next save.  If you save the buffer with a prefix argument (=C-u C-x C-s=), the saved version will become a backup file. The backup version 
+Emacs backs up a file the first time you add content to a it. The first backup of any new file is therefore an empty file. No matter how often you save the file in the current session, its backup remains unchanged until you kill the buffer and revisit the file. So, backup files contain the versions just before starting a new writing session. This backup will be the same as the current file until the next time save you save the buffer. The saved version will become a backup file if you save the buffer with a prefix argument (=C-u C-x C-s=). The backup version 
 
-By default Emacs stores backup files in the same directory as the original file, which can lead to a lot of clutter. In EWS, backups are stored in the Emacs configuration directory under =backups=. Emacs appends the original file name with a tilde to indicate that it is a backup, so the backup for =origin-of-species.org= would be  =origin-of-species.org~=.
+By default, Emacs stores backup files in the same directory as the original file, which can lead to a lot of clutter. EWS stores backups in the Emacs configuration directory under =backups=. Emacs appends the original file name with a tilde to indicate that it is a backup, so the backup for =origin-of-species.org= would be  =origin-of-species.org~=. EWS is also configured to keep the last three versions of the file. Emacs appends version numbers to the end of the filename: =~1=, =~2=, and so on.
 
-EWS is also configured to keep the last three versions of the file. Emacs appends version numbers to the end of the filename for a backup: =~1~=, =~2= and so on.
+The directory editor (~dired~) enables viewing the available backup files. Use the =C-x d= shortcut and enter the location of the backup folder. Using the arrow and enter keys select and open a file. Chapter [[#chap:admin]] explains how to use the directory editor in detail.
 
-Use the directory editor (~dired~) to view the available backup files. Use the =C-x d= shortcut and enter the location of the backup folder. 
-
-The way Emacs manages backups can be a tad confusing, so lets summarise (figure [[#fig:backup]]). When you create a new file and start editing, a Emacs creates a backup, which at this stage is an empty file. When you obtain a file from elsewhere, the first backup is the state in which you first opened in Emacs. While you are editing and saving intermediate versions, no new backups are created, unless you save the file with the universal argument. Emacs automatically creates a new backup, when you open it again and start editing. You can also revert to the previous saved version and you can view versions of the current buffer with the Undo Tree package. These mechanisms provide fine-tuned version control that minimises the risk of loosing information to close to zero.
+The way Emacs manages backups can be confusing, so let's visualise it (figure [[#fig:backup]]). When you create a new file and start editing, The system creates a backup, which is an empty file at this stage, or the content of the file as it was first opened in Emacs. While editing and saving intermediate versions, new backups are only created if you save the file with the universal argument. The Undo-Tree package manages versions within a live buffer, which are squashed when you close (kill) the buffer. Emacs automatically creates a new backup when you open the file again and start editing.
+These mechanisms provide fine-tuned version control that minimises the risk of losing information to close to zero. Read the relevant Emacs manual entry with =C-h r g bac RET= to find out more about the Emacs backup system.
 
 #+begin_src dot :file images/backups.png
   digraph backups {
@@ -311,23 +315,25 @@ The way Emacs manages backups can be a tad confusing, so lets summarise (figure 
     file1 [label = "New\nfile"]
     file2 [label = "File\nrev. 1"]
     file3 [label = "File\nrev. 2"]
-    backup1 [label = "Backup\nno. 1"]
-    backup2 [label = "Backup\nno. 2"]
-    backup3 [label = "Backup\nno. 3"]
+    buffer1 [label = "Current\nbuffer"]
+    buffer2 [label = "Current\nbuffer"]
+    backup1 [label = "Backup 1"]
+    backup2 [label = "Backup 2"]
+    backup3 [label = "Backup 3"]
 
-    file1 -> file1 [label="undo-tree"]
-    file1 -> file2 
-    file2 -> file1 [label="revert-buffer"]
-    file2 -> file2 [label="undo-tree"]  
-    file2 -> file3 
-    file3 -> file2 [label="revert-buffer"]
-    file3 -> file3 [label="undo-tree"]  
+    file1 -> buffer1 [label="kill-buffer"]
+    buffer1 -> file2 [label = "file-open"]
+    buffer1 -> file1 [label="revert-buffer"]
+    buffer1 -> buffer1 [label="undo-tree"]  
+    file2 -> buffer2 -> file3
+    buffer2 -> file2
+    buffer2 -> buffer2
     file1 -> backup1 [constraint=false]
     file2 -> backup2 [constraint=false]
     file3 -> backup3 [constraint=false]
     {rank=same; file2; backup2}
     {rank=same; file3; backup3}
-  }
+    }
 #+end_src
 #+name: fig:backups
 #+caption:
@@ -335,11 +341,10 @@ The way Emacs manages backups can be a tad confusing, so lets summarise (figure 
 #+RESULTS:
 [[file:images/backups.png]]
 
-
 ** EDITED Comparing File Versions
 As your writing project progresses, you might end up with different versions of the same file, either through your own doing, by an editor or by another collaborator. This situation might raise a problem as you are unsure which file is the most recent version, or you may need to create a new version containing all the latest changes. The ~ediff~ command helps you solve this problem. It provides a rich interface to compare two or three files and manage changes. Ediff visualises differences between files and lets you select the parts of each file you like to merge into the main version.
 
-Using Ediff is straightforward. Start the ~ediff~ command and Simply select two files in the minibuffer, which are then displayed in the Emacs frame in two windows side-by-side. Ediff refers to the left windows as file A and the right one as file B. The Ediff control panel is below the two file windows. The control panel allows you to issue commands to either of the two open buffers, making the process of file comparison and merging a breeze.
+Using Ediff is straightforward. Start the ~ediff~ command and select two files in the minibuffer, which are then displayed in the Emacs frame in two windows side-by-side. Ediff refers to the left windows as file A and the right one as file B. The Ediff control panel is below the two file windows. The control panel allows you to issue commands to either of the two open buffers, making the process of file comparison and merging a breeze.
 
 When you type =n=, Ediff takes you to the /next/ difference. The paragraph where the difference occurs is highlighted, with the actual differences in a more intense background. Repeatedly typing =n= takes you through successive differences and =p= to the /previous/ one. The mode line of the control panel displays the number of differences and your progress through them. The highlighted sections are effectively the tracked changes used in word processing software.
 
@@ -353,59 +358,57 @@ Ediff is quite useful when you work with an editor. You can send them a plain te
 
 Ediff has a lot of functionality outside the scope of this book. Type the question mark when the cursor is in the control panel for a list of options. To compare three files (A, B and C), use ~ediff3~. The ~ediff-backup~ command compares a file with its latest backup. You can read the Ediff manual for a comprehensive description with ~ediff-documentation~ or =C-h R ediff=.
 
-** Version Control
+** EDITED Version Control
+The traditional method of version control, often used by authors, involves changing the filename to distinguish between different versions of their writing. For instance, you might have a file named =article-draft.org= and another named =article-final-draft.org=. While this approach can be practical when all collaborators follow the same process, it can become cumbersome and confusing. With the power of Ediff, you can easily track changes between files, but this approach is cumbersome.
 
-Steps  hdjdh
+Using file name versions litters the project directory with multiple versions of your files. The Emacs backup system prevents the need to keep multiple versions of the same file. However, the backup system does not give you active control over the stored versions.
 
-1. Register the file under version control =C-x v v= (~vc-next-action~). DWIM
-2. Next logical action: commit changes
-   - Add comment on the changes
-   - When no changes are saved, then minibuffer "Fileset is up-to-date"
-   - Enter =C-c C-c=
+Software developers often collaborate when writing their code. They solve issues between versions of the same code with a Version Control System (VCS). These tools are not only suitable for hackers but also benefit authors who write texts for humans.
 
-The ~vc-diff~ command shows a popup buffer that visualises the differences between the current version and the lates commit. Any text that is removed is shown on a red background and new text is marked green. 
+A VCS is like a supercharged filing cabinet. It is your personal assistant that tracks every change to a document, lets you go back to a previous version, and even allows you to work on multiple drafts without getting confused. This assistant can also tell you who made which changes and when, making collaboration a breeze.
 
-Produce a list of changes with =C-x v L= or ~vc-print-root-log~ (quit with =q=). You can also view the evolution of the file with the =d= key on the relevant version. Selecting more than one commit with the =m= and arrow keys and then =d= shows the differences between the oldest and latest version.
+Version control systems can also define different branches of your work. Think of branching as creating parallel universes. You can work on different storylines without mixing them up. When ready, you can merge the changes into the main document. Let's say you're writing a novel. You can create a main branch for the current draft. If you get an idea for an alternate ending, you can create a new branch called "alternate-ending" and work on it without disturbing the primary draft. If you collaborate with an editor, they can make changes and suggest edits in their branch. You can review and merge these changes into your primary draft when ready.
 
-The ~vc-dir~ command (=C-x v d=) lists all files in the current directory and their status. The first line shows the backend for this version controlled directory, which in our case is 
+If you're co-authoring a book or receive feedback from an editor, a VCS can prevent conflicts between versions. You can see who made which changes and resolve any potential conflicts when two people edit the same part of the document.
 
-The stach is a place to safely store a version 
+Since a VCS saves every version of your document, it also serves as a reliable backup. You can recover your work if your computer crashes or accidentally deletes something. Lastly, VCS tools can store comments on specific changes. This is useful for reminding yourself why you made a change or communicating with collaborators. A VCS brings order to the turbulent writing process and ensures you never lose a great idea or a critical revision.
 
-Emacs ignores creating backups for files that are managed by version control to prevent duplication.
+The Emacs built-in VC package can interface with the most common version control systems, of which Git is the most popular. So, for this functionality to work, you will need to install a VCS. I recommend installing Git, a decentralised version control system developed by Linus Torvalds to support Linux development. 
 
-#+begin_src dot :file images/git.png
-  digraph git {
-    graph [dpi=300]
-    edge [dir=none]
-    node [shape=box fontname=Arial]
-    file [label = "Current\nfile"]
+Let's say you are working on a project with a bunch of Org mode files and some illustrations in a directory and subdirectories. When a directory of files is under version control, it is known as a repository or repo in hacker-speak. Start by initialising the current directory as a repository with the ~vc-next-action~ command (~C-x v v~). This command detects the next logical action, which in this case is creating a new repo. You will have to select a backend (Git) and the folder you are promoting to version control. VC stores the version control data in a hidden folder inside your project directory; for Git, this is =.git=. Manual changes to this directory can break your version control, so leave it as is. Please note that the Emacs backup system ignores files managed by version control to prevent duplication.
 
-    subgraph cluster1 {
-      label = "Git\nRepository"
-      fontname=Arial
-      style=filled
-      color=lightgrey
-      version3 [label="Version 1"]
-      version2 [label="Version 2"]
-      version1 [label="Version 3"]
-      version1 -> version2 -> version3
-    }
+The next logical action in this process is to commit a file to the repository. Committing a file to a Git repository means saving a snapshot of the file's current state to the repository's history. When you change a file in your repository and commit those changes, Git records them as a new commit in the repo's history. Each commit has a unique identifier and includes information about what was changed, who made the change, and when the change was made. You commit a file with the same command (=C-x v v=).
 
-    file -> version1 [constraint=false]
-  }
-#+end_src
-#+caption: Local version Git diagram.
-#+name: fig:git
-#+RESULTS:
-[[file:images/git.png]]
+VC will commit the current version of your file and ask you to describe the changes in a short statement of no more than fifty characters. Below the summary (under the horizontal line), you can write a more detailed account of the changes, but this is not compulsory. This summary of changes provides a running commentary on the evolution of your manuscript. At the bottom of the screen, VC lists the file(s) in this commit. You finalise the commit with =C-c C-c=. If you decide you are not yet ready to commit the changes, use =C-c C-k=.
 
+To see a history of the file in the current buffer, use ~vc-print-log~ with =C-x v l=. This buffer shows the history of each commit, including the unique ID, the author, and a summary of the changes. You can see the changes between the committed and the previous version with the =d= key while in the VC change log buffer. This key produces a new buffer that tracks changes like Ediff described in the last section.
 
-** Working in Cloud Storage
-being an authors can be a lonely activity, but
+The mode bar of your file will now show an indicator that it is under version control and the branch it belongs to, usually =Git:master=. This means you are using Git to manage versions for this file and working in the master branch. The ~vc-diff~ command (=C-x v ==) shows a popup buffer that visualises the differences between the current version and the most recent commit.
 
-To collaborate with other people on a project you could store your project files on a file-sharing service such NextCloud. However, one limitation of Emacs is that it is not advisable for more than one person to open a file simultaneously. If that would be the case, then two ore more people
+You can produce a list of current file changes with =C-x v l= or ~vc-print-log~. This list shows the unique commit ID, the author, the change date, and a summary of the changes, with the most recent version at the top. Navigate between the various versions with =n= (next) and =p= (previous). You can view the changes between versions with the =d= key. Selecting more than one commit with the =m= and arrow keys and then =d= shows the differences between the oldest and latest versions. To quit this view, use the trusty =q== key. To view changes in the whole repository, use =C-x v L= (~vc-print-root-log~).
 
-The EWS configuration disables lock files, so if you need this functionality you will need to customise the ~create-lockfiles~ variable.
+There is also a command to show the development history of a selected text region. Select the part of the text you are interested in and use =C-x v= (~vc-region-history~). This buffer works the same way as the previous two examples, but the changes are included. The ~vc-annotate~ command (=C-x v g=) shows the relevant commit for each line in the text, coloured by the age of the contribution.
+
+The ~vc-dir~ command (=C-x v d=) lists the status of all files in the current directory and its subdirectories. The first line shows the backend for this version-controlled directory, which, in our case, is Git. The following four lines show the directory under version control and other metadata. This buffer lets you act on individual files. Press the question mark key to see a list of available options.
+
+Version control has much more functionality, and a full explanation is outside this book's scope, such as creating separate branches of your work and synchronising the repo with an online version to share it with collaborators. You can find the Emacs manual chapter about version control with =C-h r g ver RET=. The manual is written with software development in mind, so please use your imagination to see how it applies to writing prose.
+
+** EDITED Collaborating with other authors and editors
+Unfortunately, writing in plain text with advanced version control systems is not the most common way to collaborate in writing projects. This raises the question of how you collaborate with coauthors or editors. There are three options, collaborator(s) either:
+
+1. Neither use a VCS or plain text files
+2. Don't use a VCS, but write in plain text
+3. Uses both VCS
+
+The fourth scenario, where somebody uses a VCS but not plain text files, makes little sense. Let's briefly discuss each of these three scenarios.
+
+Even if your collaborator does not use a VCS or understands the benefits of plain text, you can still collaborate effectively. The next chapter will guide you on how to export your work to the most common word processor file formats. This allows you to send your manuscript to an editor or other collaborator. When you receive the result, you can easily accept all tracked changes, save it as a text file, and use Ediff to manage differences with your last version. This process ensures that you can still be part of the collaborative writing process, regardless of the tools your collaborators use.
+
+Your collaborators don't necessarily need to use Emacs because any writing program can work with Org mode and other plain text formats. However, the fancy Org mode functionality is unavailable when not using Emacs. When a collaborator sends you a new version of a file, Ediff is again the ideal tool to resolve differences between versions.
+
+When all collaborators use a VCS and can write in Org mode, either in Emacs or with another text editing program, you should push your repository to an online platform, such as GitLab. Uploading a repository to online storage is called pushing a repo. Users can then 'clone' the online repository and work on the manuscript. Collaborators can push their changes to the central repository. The repository owner can then merge the changes into the main branch and resolve potential issues.
+
+Another collaboration method is to share the project folder with a sharing system, such as NextCloud (an open-source version of Dropbox and OneDrive). This method has the risk that you both open the same file simultaneously. Emacs can lock a file for opening by another user, but the EWS configuration disables lock files. To use a shared folder, you must customise the ~create-lockfiles~ variable. If this is set to =t=, then a file can only be opened by one user simultaneously. It achieves this by storing a file that locks it from changes by other users. When another user opens a locked file, Emacs provides a warning and some options to ignore the warning.
 
 * EDITED Other Text Modes
 :PROPERTIES:
