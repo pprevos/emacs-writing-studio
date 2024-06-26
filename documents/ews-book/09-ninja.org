@@ -3,15 +3,14 @@
 #+startup:      content
 :NOTES:
 - [X] Recommended books
-- [ ] Alternative packages
+- [-] Alternative packages
 - [X] Ask for help
 - [X] Learn Elisp
 - [ ] [[https://www.youtube.com/watch?v=-mifMOjRBr8][Emacs Repeat Commands (Advanced Topic) - YouTube]]
 :END:
 
-Now that you have reached the end of thie book you know enough to start publishing a website or write a book or whatever else you want to share with the world. You have mastered the steep part of the Emacs learning curve. However, as you use Emacs for a while you will undoutably want to finetune it to your needs and become and 
-
-There are five steps to becoming an Emacs ninja. 
+* Introduction
+Now that you have reached the end of this book you know enough to start publishing research, write and publish a book, dissertation, or whatever else you want to share with the world. You have mastered the steep part of the Emacs learning curve. However, as you use Emacs for a while you will undoutably want to fine-tune it to your needs. There are five steps to becoming master Emacs:
 
 1. Understand the basics
 2. Modify your init file by hand
@@ -19,16 +18,134 @@ There are five steps to becoming an Emacs ninja.
 4. Build a package
 5. Help others
 
-This book has helped you to take the first step
+This book has helped you to take the first step in understanding the basics. This final chapter puts you on a path to becoming an Emacs Ninja by providing some suggestions on deepening your knowledge.
 
-* Some more random functions
-** Bookmarks
+* Understand the Basics
+:PROPERTIES:
+:ID:       17ab7325-01dd-482d-bb1e-8833d806955d
+:END:
+Before digging deeper into the intricacies of Emacs, this section ties-up a few loose ends from the previous chapters.
+
+** Leveraging the Built-In Help System
+Emacs is advertised as the "self-documenting text editor", this is a confusing tagline as obviously the program does not document itself. What it does mean is that Emacs documentation is deeply integrated into the system at a low level. Succinct documentation exist for every function, command or variable. On top of this, Emacs ships with extensive manuals. Hints on how to access the Emacs help system are dotted around the text of this book. This section provides a more formal introduction to help you get the most out of this resource.
+
+Emacs documentation exists at four levels:
+1. Keystrokes, Commands and variables
+2. Package documentation
+3. Manuals
+
+*** Keystrokes, Commands and Variables
+Developers of Emacs incorporate documentation of the code they write so that every function, command and variable contains a short explanation. The Emacs ~describe-*~ set of functions uncovers this documentation. Emacs Writing Studio uses the Helpful package by Wilfred Hughes This package adds some more context to the help screen, enhancing the information. EWS overrides the regular keybindings for the help system
+
+- =C-h f=: Help about a function (~helpful-function~)
+- =C-h x=: Help about commands (~helpful-command~)
+- =C-h k=: Help about a keyboard shortcut (~helpful-key~)
+- =C-h v=: Help about variables (~helpful-variable~)
+
+The first two functions provide information about a function and a command. A command is an interactive function, which means that you can activate it with =M-x=. A function can only be activate inside code, so they are mainly interesting to advanced users.
+
+Using the help functions in combination with the minibuffer completion is a useful entrance point to discover previously unknown functionality. Basic Emacs commands have very direct names. Commands in packages are named a bit backwards. Most package commands start with the package name and then the actual function name, for example ~denote-explore-count-notes~. This command is defined in the Denote Explore package and it counts the number of notes. Using this naming convention leads to longer command names, but it makes them easier to use and prevent duplication in case another package has a function that undertakes the same task.
+
+*** Package Documentation
+Each package in Emacs has 
+
+*** Emacs Manuals
+The Emacs manuals are great, but they are not bedtime reading that you read cover to cover. 
+
+Emacs also comes with complete documentation of the Elisp language (=C-h R elisp=). This manual is great for experienced users wanting to deepen their knowledge. To get started using Emacs Lisp the book /An Introduction to Programming in Emacs Lisp/ by Robert J. Chassell is also included with Emacs. You can access this manual through info mode (=C-h i=) and search for the book title. You can also find PDF versions of these manuals on the GNU website.
+
 ** Keyboard Macros
 Writing and editing can sometimes be a repetitive task. Lets assume that your editor tells you that ...
 
 =F3= starts recording a macro (~kmacro-start-macro-or-insert-counter~).
 
 =F4= completes the recording (~kmacro-end-or-call-macro~).
+
+** Communication
+:NOTES:
+  - [ ] Social Media
+  - [ ] Email
+:END:
+
+** Learning more about Emacs
+This book is not a comprehensive manual of Emacs but an opinionated description of how to achieve a series of tasks. The text in this book is opinionated because it describes only one or two ways of completing each objective. The flexible nature of Emacs provides many ways to achieve the same thing. This freedom is both a strength and a weakness. This book aims to shorten the learning curve as much as possible so that you can become creative and productive. If, after reading this book, you would like to know more, I recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual [cite:@stallman_2023_gnu; @petersen_2022; @cameron_2005_lear].
+
+** Emacs as a Sever
+
+* Modify the Init File
+Emacs Writing Studio uses a no-code solution by providing a thoroughly-tested configuration and using the customisation front-end to configure Emacs. There will come a time when you like to change some of the defaults directly inside the init file, which means you need to learn some Emacs Lisp.
+
+The easiest method to learn Lisp to change you init file is by copying the patterns in the EWS configuration. The appendix explains the configuration and provides some detailed guidance on how to modify it. Many Emacs users share their configurations and you should feel free to copy any parts of their configurations. Emacs is free software in the freedom sense of the word, so use this power and learn from fellow users.
+
+So why would you want to configure Emacs by writing code instead of the modern graphical features provided by other programs? Commercial software provides graphical menus to define how it operates. For example, in figure [[fig:graphical-config]], you might tick a box, select an item in a list, or enter a value in a text box to configure the program according to your wishes.
+
+#+caption: Typical graphical configuration screen.
+#+name: fig:graphical-config
+#+attr_html: :alt Typical graphical configuration screen :title Typical graphical configuration screen :width 600
+#+attr_latex: \textwidth
+[[file:images/graphical-interface.png]]
+
+The code below is equivalent to the form in figure [[fig:graphical-config]]. The expression in this example determines whether Emacs will show a startup message when you first open it. The second line sets the initial scratch message. In this case the parameter is a string of letters, nested between quotation marks. The last line sets the cursor type to a bar. This variable has other predefined options, such as 'bar' or 'hollow'. To prevent Emacs from confusing this option with a variable, it uses a single quotation mark (also called a tick mark) before the text. Compare the code with the image to reverse engineer the Elisp code.
+
+While on the surface, the text-based method seems more complex than ticking and writing in boxes and picking a drop-down list, it is far more potent than a graphical interface. However, once you learn how to write simple Emacs Lisp, you will realise that Emacs is, in reality, the most user-friendly system possible because of the power it gives you over your computer. Using Emacs Lisp is the epitome of user-friendliness. You decide how your computer behaves instead of some software company controlling your behaviour. But with this immense power comes great responsibility and a learning curve.
+
+#+begin_src emacs-lisp :tangle no :eval no
+  (setq inhibit-startup-message t
+        initial-scratch-message "Hello world"
+        cursor-type 'bar)
+#+end_src
+
+A Lisp program consists of expressions, which are instructions nested between parentheses. Each expression starts with the name of a function (=setq= in the example above). In most cases followed by one or more parameters. The =setq= function sets the value of a variable. For example, =(setq inhibit-startup-message t)= has the same effect as ticking a box called 'inhibit startup message', while =inhibit-startup-message nil= is the same as removing the tick from that box. Fun fact, in Emacs Lisp, =t= means the same as TRUE and =nil= is equivalent to FALSE in other computer languages. Confusingly Emacs documentation often mentions to set a value to "non-nil", which is a double negative suggestion to setting a variable to true.
+
+** Is Emacs a productivity sink?
+Configuring Emacs can be a daunting task that can take a lot of time and can become a productivity sink because of the easy by which it can be done. Within the Emacs community, a discussion emerges every now and then about the need to make so many changes to the vanilla software to get it to behave how you like it. This may seem like a reasonable question.
+
+The freedom you enjoy in Emacs means that everybody will have specific preferences, depending on how their needs. The Emacs developers cannot cater to every personal preference so they provide a skeleton system that you need to develop to suit your personal workflow. Emacs Lisp is like a box of Lego. You can play with it out of the box using vanilla Emacs, but it is much more fun when you create your own toys. Working on your Emacs configuration is like building with Lego, it is a lot of fun, but not the same as actually playing with it.
+
+It can be tempting to constantly fine-tune your configuration, which can become a productivity sink. Wielding the power to create a bespoke Emacs system is a great temptation that can lead to fake productivity, which one of the three forms of procrastination:
+
+1. /Nihilistic/: Watching TV, playing computer games.
+2. /Sophisticated/: Fake productivity, e.g. Emacs hacking, switching productivity tools, taking notes for the sake of volume instead of quality.
+3. /Productive/: Daydreaming.
+
+Tinkering with your Emacs configuration is not as bad as nihilistic procrastination, but can become a form of fake productivity. The productivity gains from fine-tuning your Emacs to cut out a few keystrokes can take more time than you will save with your new workflow. The act of writing is about much more than the number of words you can type into your buffer. Writing is as much a contemplative act as it is about productivity.
+
+Hopefully the /Emacs Writing Studio/ configuration will help you reduce the time it takes to configure Emacs to suit your preferred workflow.
+
+* Create simple functions to make your life easier
+The code that runs Emacs is mostly written in Elisp, which consists of a collection of functions. A function is a bit of code that converts an input into an output. Every time you type a letter in Emacs, the ~self-insert~ function turns the key press into a character on the screen.
+
+The code below shows the architecture of a simple Emacs function. When you run this function, Emacs will show a greeting in the echo area.
+
+#+begin_src elisp :eval no
+  (defun ews-greet-user ()
+    "Display a greeting message in the minibuffer."
+    (interactive)
+    (message "Hello %s, Welcome to Emacs." user-full-name))
+#+end_src
+
+Now, let's break down how this function works:
+
+- The function starts with the ~defun~ macro to define a new function. In this case the name of the function is ~ews-greet-user~. The function name starts with ~ews~ in accordance with informal naming conventions. The parenthesis at the end are empty, which means that this function has no input.
+- The second line describes what the function does, which shows why Emacs is self-documenting.
+- The ~(interactive)~ part turns the function in a command. This means that you can call it using ~M-x ews-greet-user~ or bind it to a key sequence.
+- The last line places the message in the echo area with the ~message~ function. In this case, the =%s= is replaced by the content of the ~user-full-name~ variable.
+
+To try this out you can write this function into the scratch buffer. Then you need to activate it by placing the cursor after the last closing parenthesis and use =C-x C-e= (~eval-last-sexp~). This action registers the function in memory so you can call it with =M-x=.
+
+How you use functions is only limited by your imagination. Emacs Writing Studio comes with a set of bespoke functions that enhance some of the basic functionality.  The previous chapters have discussed these functions. To see a list of all available EWS commands use =M-x ^ews=. This sequence shows all commands in the minibuffer completion menu that start with (=^=) EWS.
+
+* Build a Package
+The next level of sophistication in Emacs is to share your bespoke functions with the world through a package. Most Emacs packages started with a user
+
+
+
+* Help Others
+This book started with a website where I shared my way of using Emacs as an author. This website gained some popularity so I decided to convert it to the book you are now reading.
+
+The EWS project is my way of giving back to the Emacs community and also a way to better understand how the software works. Some cynics suggest that those who can't do teach. However, teaching any subject 
+
+So your task as an Emacs Ninja is to help other people less advanced in their journey. Tell other authors about the freedom that Emacs gives you as an researcher, author, educator or whatever else it is you do. 
 
 * Migrating to Emacs
 Now that you are well on your way in your Emacs journey, you might want to consider converting your old files to Org mode or another plain text format.
@@ -51,59 +168,6 @@ Windows users need to evoke this Powershell script to achieve the same results:
 #+end_src
 
 
-
-* Some more
-** Generative AI
-Autocompletion is a common feature in mobile phones that apparently makes life easier for authors. While it might be a great feature for writing on a small phone keyboard, whether it is a useful when writing on a full-sized computer or laptop is doubtful. Automatic completion of word is 'completion at point' in Emacs speak. Completion at point is not configured for text mode in EWS as many users find it distracting rather than helpful. The last chapter provides some guidance on how to install completion at point, should you really want to use it.
-
-
-Autocompletion also is the basic technology of generative AI. Several packages exist to interface Emacs with generative AI tools.
-
-
-
-* Is Emacs a productivity sink?
-Configuring Emacs can be a daunting task that can take a lot of time and can become a productivity sink because of the easy by which it can be done. Within the Emacs community, a discussion emerges every now and then about the need to make so many changes to the vanilla software to get it to behave how you like it. This may seem like a reasonable question.
-
-The freedom you enjoy in Emacs means that everybody will have specific preferences, depending on how their needs. The Emacs developers cannot cater to every personal preference so they provide a skeleton system that you need to develop to suit your personal workflow. Emacs Lisp is like a box of Lego. You can play with it out of the box using vanilla Emacs, but it is much more fun when you create your own toys. Working on your Emacs configuration is like building with Lego, it is a lot of fun, but not the same as actually playing with it.
-
-It can be tempting to constantly fine-tune your configuration, which can become a productivity sink. Wielding the power to create a bespoke Emacs system is a great temptation that can lead to fake productivity, which one of the three forms of procrastination:
-
-1. /Nihilistic/: Watching TV, playing computer games.
-2. /Sophisticated/: Fake productivity, e.g. Emacs hacking, switching productivity tools, taking notes for the sake of volume instead of quality.
-3. /Productive/: Daydreaming.
-
-Tinkering with your Emacs configuration is not as bad as nihilistic procrastination, but can become a form of fake productivity. The productivity gains from fine-tuning your Emacs to cut out a few keystrokes can take more time than you will save with your new workflow. The act of writing is about much more than the number of words you can type into your buffer. Writing is as much a contemplative act as it is about productivity.
-
-Hopefully the /Emacs Writing Studio/ configuration will help you reduce the time it takes to configure Emacs to suit your preferred workflow.
-
-* Communication
-:NOTES:
-  - [ ] Social Media
-  - [ ] Email
-:END:
-
-
-
-* Learning more about Emacs
-This book is not a comprehensive manual of Emacs but an opinionated description of how to achieve a series of tasks. The text in this book is opinionated because it describes only one or two ways of completing each objective. The flexible nature of Emacs provides many ways to achieve the same thing. This freedom is both a strength and a weakness. This book aims to shorten the learning curve as much as possible so that you can become creative and productive. If, after reading this book, you would like to know more, I recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual [cite:@stallman_2023_gnu; @petersen_2022; @cameron_2005_lear].
-
-This book has only scratched the surface of the myraid of possibilities that Emacs has to offer. Due to its extensibility,
-
-Some final advice to 
-
-
-
-    Learn Emacs Lisp, read EINTR cover to cover
-
-    Learn how to use the introspection features that Emacs offers: C-h d, C-h f, C-h v, C-h ?, M-x ielm
-
-    Learn how to search the Emacs manual and the Emacs Lisp manual inside Emacs, using info
-
-    Avoid lots of 3rd party packages, stick with stock Emacs and packages you absolutely can not do without
-
-
-
 #+begin_export latex
 \backmatter
 #+end_export
-

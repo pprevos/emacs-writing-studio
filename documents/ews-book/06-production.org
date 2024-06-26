@@ -20,8 +20,8 @@
 - [ ] References
   - [ ] Managing references: [[denote:20231012T072736][org-reference: Package to make internal referencing easier]]
 - [ ] [[https://kristofferbalintona.me/posts/202206141852/#org-cite][Citations in org-mode: Org-cite and Citar | Kristoffer Balintona]]
-- [ ] [[https://www.youtube.com/watch?v=axVzCYMsH3I][Emacs: Learning VC for version control - YouTube]]
-- [ ] [[https://www.youtube.com/watch?v=SQ3Beqn2CEc][Emacs: introduction to VC (version control framework) - YouTube]]
+- [X] [[https://www.youtube.com/watch?v=axVzCYMsH3I][Emacs: Learning VC for version control - YouTube]]
+- [X] [[https://www.youtube.com/watch?v=SQ3Beqn2CEc][Emacs: introduction to VC (version control framework) - YouTube]]
 - [X] [[https://www.youtube.com/watch?v=pSvsAutseO0][Emacs: ediff basics - YouTube]]
 :END:
 
@@ -41,6 +41,9 @@ A typical writing project contains more than the words of the manuscript. Org mo
 This section adds some more Org mode functionality to your toolkit to prepare your manuscript for publication. Org mode has provisions to add notes to a document, which are ignored in the final product. This section also explains how to add citations from your bibliography and cross references to other sections, tables and other parts of your document.
 
 ** EDITED Taking Notes
+:PROPERTIES:
+:CUSTOM_ID: sec:notes
+:END:
 The previous chapter detailed the versatility of note-taking in Emacs, whether it's within a single Org file, a network of interconnected files. You can also write notes inside your writing projects, outside your formal note-taking system. These notes serve as reminders of pending tasks or anything else you like to keep hidden from the final product. For instance, you can include a checklist, links to websites or to notes in your Denote digital garden, or any other crucial information during the writing process. However, if you need to jot down any notes unrelated to the current document, then use the Org capture system to store a fleeting note in your inbox (Chapter [[#chap:ideation]]).
 
 Org mode offers three flexible mechanisms for taking editorial notes. The first method is straightforward. Any line that starts with a hashtag / pound symbol (=#=) is a comment, which Emacs disregards when exporting the text to the final output. 
@@ -250,7 +253,7 @@ The headlines become read-only and contain the properties defined as columns. Yo
 Navigate through the table with the arrow keys. You can edit a property with the =e= key. Change the content in the minibuffer and hit Enter. The =g= key resets the columns. Place the cursor on a column overlay to remove the overlay and press =q=.
 
 ** EDITED Tracking the Status of your Writing
-The typical writing workflow goes through various stages, from early drafts to edited versions and completed texts. As you work on various parts of your writing project, it might be good to know the status of each chapter. Org mode includes an extensive system to manage projects, which you can deploy to keep track of progress in your document. This section is only a very brief introduction to this functionality. Chapter [[#chap:admin]] explains project management in more detail.
+The typical writing workflow goes through various stages, from early drafts to edited versions and completed texts. As you work on various parts of your writing project, it might be good to know the status of each chapter. Org mode includes an extensive system to manage projects, which you can deploy to keep track of progress in your document. This section is only a brief introduction to this functionality. Chapter [[#chap:admin]] explains project management in more detail.
 
 Each heading in Org mode can have a status token, such as =TODO=, =DRAFT= or =EDITED=, or whatever workflow you prefer. You add a status token with the shift and left/right arrow keys when the cursor is on a heading. You can also use the =C-c C-t= shortcut (org-todo). By default, the system only recognises the =TODO= and =DONE= status. However, Org mode allows you to add additional workflow states, giving you the flexibility to adapt the system to your specific needs. The example below instructs Org mode to cycle through these four status tokens, but only in this file. The tokens before the vertical line (pipe symbol) are in progress and usually marked in red. Items after the vertical line are completed and marked in green.
 

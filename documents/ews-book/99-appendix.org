@@ -3,10 +3,6 @@
 #+startup:      content
 #+bibliography: ../library/emacs-writing-studio.bib
 
-I learned writing computer code by typing long listings of Atari BASIC code and slowly but surely understood its syntax and logic. This method is also a great starting point to learn Emacs Lisp. The purpose of this configuration is for you as a starting point. Feel free to modify anything in the {{{ews}}} (EWS) initialisation file and study its effects.
-
-Many Emacs users share their configuration so that you can copy parts of their code as an active learning experience. The copy-paste method is a shortcut to learn more about Emacs Lisp, as you can change the settings and explore the results of your changes.
-
 This appendix presents and explains the /Emacs Writing Studio/ configuration. This configuration stays as close to vanilla GNU Emacs as is humanly bearable for an author. The configuration is annotated to explain the logic of he code and provides with some options for enhancements or additional functionality. This configuration follows the following principles:
 
 - Leverage functionality of the latest version of GNU Emacs
@@ -14,6 +10,8 @@ This appendix presents and explains the /Emacs Writing Studio/ configuration. Th
 - Centred around Org mode
 - No configuration for writing code
 
+  I learned writing computer code by typing long listings of Atari BASIC code and slowly but surely understood its syntax and logic. This method is also a great starting point to learn Emacs Lisp. The purpose of this configuration is for you as a starting point. Feel free to modify anything in the {{{ews}}} (EWS) initialisation file and study its effects.
+  
 #+begin_src elisp :exports none
   ;;; init.el --- Emacs Writing Studio init -*- lexical-binding: t; -*-
 
@@ -46,7 +44,6 @@ This appendix presents and explains the /Emacs Writing Studio/ configuration. Th
   ;; documents/ews-book/99-appendix.org
   ;;
   ;;; Code:
-
 #+end_src
 
 * Using EWS
@@ -56,7 +53,7 @@ The first part of the configuration sets the basic principles of the EWS configu
 The first part of the configuration checks if the latest version of Emacs is running. EWS leverages some of the latest functionality, so you will need to install this version. Note that the expression ~(< emacs-major-version 29)~ is in Polish notation. In Lisp, the operator is placed before the operands, unlike the more common infix notation which places the operator between the operands, e.g. ~emacs-major-version < 29~. 
 
 #+begin_src elisp :exports none
-    ;; Emacs 29? EWS leverages functionality from the latest Emacs version.
+  ;; Emacs 29? EWS leverages functionality from the latest Emacs version.
 #+end_src
 
 #+begin_src elisp
@@ -75,6 +72,10 @@ Any changes made by the Emacs customisation system in EWS are stored in =custom.
 
   (when (file-exists-p custom-file)
     (load custom-file))
+#+end_src
+
+#+begin_src elisp
+  (keymap-global-set "C-c w v" 'customize-variable)
 #+end_src
 
 ** Emacs Packages
@@ -356,7 +357,8 @@ The /Helpful/ package by Wilfred Hughes adds contextual information to the built
 #+begin_src elisp
   (use-package helpful
     :bind
-    (("C-h x" . helpful-command)
+    (("C-h f" . helpful-function)
+     ("C-h x" . helpful-command)
      ("C-h k" . helpful-key)
      ("C-h v" . helpful-variable)))
 #+end_src
@@ -394,14 +396,13 @@ Writing without automated spell checking would be very hard even for the most ex
 #+begin_src elisp
   (use-package flyspell
     :custom
-    (flyspell-issue-message-flag nil)
     (ispell-program-name "hunspell")
-    (ispell-dictionary "en_AU,nederlands")
+    (ispell-dictionary ews-hunspell-dictionaries)
     (flyspell-mark-duplications-flag nil) ;; Writegood mode does this
     (org-fold-core-style 'overlays) ;; Fix Org mode bug
     :config
-    (ispell-hunspell-add-multi-dic ispell-dictionary)
     (ispell-set-spellchecker-params)
+    (ispell-hunspell-add-multi-dic ews-hunspell-dictionaries)
     :hook
     (text-mode . flyspell-mode)
     :bind
@@ -600,7 +601,7 @@ Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system'
 
 #+begin_src elisp :tangle no
   ;; Use EWW
-  ;; (setq browse-url-browser-function 'eww-browse-url)
+  (setq browse-url-browser-function 'eww-browse-url)
 
   ;; Configure Elfeed
 #+end_src
@@ -613,7 +614,7 @@ Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system'
   (use-package elfeed
     :custom
     (elfeed-db-directory
-     (expand-file-name "elfeed" user-emacs-directory))
+     (expand-file-name "elfeed.org" (xdg-user-dir "DOCUMENTS")))
     (elfeed-show-entry-switch 'display-buffer)
     :bind
     ("C-c w e" . elfeed))
@@ -932,7 +933,9 @@ The Lorem Ipsum generator can be useful when designing the layout of a document.
 #+begin_src elisp
   (use-package lorem-ipsum
     :custom
-    (lorem-ipsum-list-bullet "- ")
+    (lorem-ipsum-list-bullet "- ") ;; Org mode bullets
+    :init
+    (setq lorem-ipsum-sentence-separator (if sentence-end-double-space "  " " "))
     :bind
     (("C-c w i s" . lorem-ipsum-insert-sentences)
      ("C-c w i p" . lorem-ipsum-insert-paragraphs)
@@ -940,7 +943,7 @@ The Lorem Ipsum generator can be useful when designing the layout of a document.
 #+end_src
 
 ** Version Control
-The ~ediff~ family of function by default does not split its windows nicely, so these settings make the program easier to use.
+The Ediff package lets you compare different versions of files and show the differences between them. The package also lets you decide how to merge the two versions, like a tracked-changes function in a Word processor. The ~ediff~ family of functions by default does not split its windows nicely, so these settings make the program easier to use.
 
 #+begin_src elisp :exports none
   ;; ediff
@@ -966,7 +969,6 @@ The ~ediff~ family of function by default does not split its windows nicely, so 
 
 * Publication
 ** Basic Settings
-
 The timestamp for exporting files is set to the European date format of day month and year. If you publish for American audiences, perhaps you like to modify the ~org-export-date-timestamp-format~ to ="%B %e %Y"=. The letters each stand for the full name of the month, the day number without leading zero and the year in four digits. See the documentation for the ~format-time-string~ function for details on how to format dates in other methods.
 
 #+begin_src elisp :exports none
@@ -996,7 +998,7 @@ The timestamp for exporting files is set to the European date format of day mont
 #+end_src
 
 ** Latex
-#+begin_src elisp:exports none
+#+begin_src elisp :exports none
   ;; LaTeX PDF Export settings
 #+end_src
 

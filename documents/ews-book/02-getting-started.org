@@ -11,9 +11,11 @@
 - [X] Explain need for configuration
 :END:
 
-Start your engines; it is time to install and use Emacs. The installation process for Emacs depends on your operating system. The GNU Emacs website (=emacs.org=) contains instructions on how to install Emacs on the most common operating systems. Please note that you will need the latest version of Emacs, which at the time of writing is 29.
+Start your engines; it is time to install and use Emacs. The installation process for Emacs depends on your operating system. The GNU Emacs website (=emacs.org=) contains instructions on how to install Emacs on the most common operating systems. Please note that you will need the latest version of Emacs, which at the time of writing is 29. Installing Emacs and all the required software is a bit more involved in Windows than it is in Linux or Mac OS. The Emacs Writing Studio website provides guidance on how to install the additional software on this operating system.
 
-Once you have installed the software, it is time to open Emacs and look around. When you first start Emacs, you see a splash screen with links to help files (figure [[fig:splash]]). Click on any of the links to read the tutorial or press the =q= button to close ('kill' in Emacs-speak) the screen. Pressing =q= is the standard method to kill read-only screens. When the splash screen closes, you enter the ’Scratch Buffer’, which you can use for temporary notes. In Emacs terminology, a buffer is an area in the memory of your computer that holds content, which can link to a file. Emacs does not save the content of the Scratch Buffer when you exit the program, so don’t start writing your dissertation just yet.
+Once you have installed the software, it is time to open Emacs and look around. When you first start Emacs, you see a splash screen with links to help files (figure [[fig:splash]]). Click on any of the links to read the tutorial or press the =q= button to close ('kill' in Emacs-speak) the screen. Pressing =q= is the standard method to kill read-only screens.
+
+When the splash screen closes, you enter the ’Scratch Buffer’, which you can use for temporary notes. In Emacs terminology, a buffer is an area in the memory of your computer that holds content, which can link to a file. Emacs does not save the content of the Scratch Buffer when you exit the program, so don’t start writing your dissertation just yet.
 
 #+caption: Emacs 29 splash screen.
 #+name: fig:splash
@@ -22,10 +24,34 @@ Once you have installed the software, it is time to open Emacs and look around. 
 #+attr_org:   :width 20
 [[file:images/splash-screen.png]]
 
-* Working with the Keyboard
-Emacs is by and large a keyboard-driven application. You can use the mouse for occasional tasks, but there is no need for a mouse. There is no agreement on whether using a keyboard or a mouse is most efficient [cite:@tognazzini_1992_tog; @omanson_2010_comp]. Arguably, clicking on an icon in a menu bar seemingly requires less brain capacity than remembering sequences of keystrokes. However, the problem with icon bars is that there is simply insufficient space to display icons for all functionality. Keyboard shortcuts are easy to remember as they become part of your muscle memory. Also, regularly moving your hands between the keyboard and the mouse can be annoying and impede your workflow.
+* Emacs Quickstart Guide
+:PROPERTIES:
+:CUSTOM_ID: sec:quickstart
+:END:
+You don't need to know much about Emacs to start using it. It works more intuitively than some people suggest. Let's start writing an Org mode document and export that to a webpage to get you started.
 
-When misspelling a word in a word processor, you move your hand from the keyboard to the mouse, click on the offending word and select the desired spelling. In Emacs, you use one keystroke to change the typo word to the most likely correct version and keep writing. The most important thing to remember in the keyboard versus mouse debate is that writing is more about thinking than words per minute. Of course, a mouse has advantages.  You can use a mouse in Emacs for some tasks, like selecting text or moving the cursor. Vanilla Emacs also contains drop-down menus and a toolbar for mouse usage. The main advantage of the menu system is that it helps discover functionality in Emacs, but you don't need a mouse for this. Press =F10= and use the arrow keys to navigate the drop-down menu.
+Starting with Emacs is more intuitive than you might think, even for those with little knowledge of it. This section guides you through writing an Org mode document and exporting it to a webpage.
+
+In the menu bar, select /File/ > /Visit New File/, select the directory, and type the filename with a =.org= extension, for example: =test.org=. This file will be in Org mode, a special type of plain text file.
+
+Start typing as you usually do. You can also use Org mode syntax to add structure and metadata to the document. For example, add =#+title: Hello World= as the first line to define the document's title. To insert a heading, start a line with an asterisk, such as =* Chapter One=. Using two or more asterisks renders subheadings. You'll notice that these two lines are of a different colour than the regular text. These colours are not the actual colour of the text but are semantic hints to indicate that this is not regular text. These colours assist in quickly scanning the document. Now, add some regular text below the heading. Lastly, save the results with /File/ > /Save/.
+
+If you find that Emacs doesn't wrap your long sentences at the screen boundary, don't worry. It's just a default setting. You can easily change this by going to the menu bar and selecting/Options/ > /Line Wrapping in This Buffer/ > /Word Wrap (Visual Line Mode)/. Now, Emacs behaves more like the writing software you're used to, giving you the confidence to write without constraints.
+
+Next, we export this simple example to a webpage. Org mode is a /What You See is What You Mean/ system, so the way the text looks on the screen is not necessarily how it will look in our final published result. Org mode translates the syntax to the desired typographical design when exporting the document. So anything after =#+title:= is the document's title, and any line started with one or more asterisks becomes a heading.
+
+In the /Org/ menu, select /Export/Publish/ and type =h= and =o=. Org mode now translates your document to an HTML file and opens your default browser to display the results.
+
+Presto, this is the basic workflow for writing and publishing a document in Emacs Org mode. There is obviously a lot more to this, and Emacs has a myriad of fine-tuning options. The remainder of this chapter introduces some of the basics of using Emacs.
+
+* Working with the Keyboard
+Emacs is by and large a keyboard-driven application. You can use the mouse and the menu bar for occasional tasks, as shown in the previous section, but there is no need to use a mouse. Although there is no formal agreement on whether using a keyboard or a mouse is most efficient [cite:@tognazzini_1992_tog; @omanson_2010_comp], most Emacs users prefer to keep their hands on the keyboard.
+
+It might seem that clicking on an icon in a menu bar seemingly requires less brain capacity than remembering sequences of keystrokes. However, the problem with icon bars is that there is simply insufficient space for icons to cover all available functionality. Keyboard shortcuts are easy to remember as they become part of your muscle memory.
+
+Using keyboard shortcuts instead of the mouse prevents you from regularly moving your hands between the two input devices. When misspelling a word in a common word processor, you move your hand from the keyboard to the mouse, move the cursor to  the offending word, click the mouse and select the desired spelling. In Emacs, you use one keystroke to change the typo to the most likely correct version and keep writing.
+
+The most important thing to remember in the keyboard versus mouse debate is that writing is more about thinking than words per minute. You can use a mouse in Emacs for some tasks, like selecting text or moving the cursor. Vanilla Emacs also contains drop-down menus and a toolbar for mouse usage. The main advantage of the menu system is that it helps discover functionality in Emacs, but you don't need a mouse for this. Press =F10= and use the arrow keys to navigate the drop-down menu.
 
 You have probably used a keyboard for years and wonder why this section appears in this book. As Emacs was developed before standardisation of computer interfaces and the way it interacts with the keyboard is slightly different to what you are perhaps used to. Lets start at the basics. A standard computer keyboard has five types of keys:
 
@@ -43,7 +69,7 @@ The modifier keys on modern PC or Apple keyboards are Shift (and Caps Lock), Con
 
 Emacs documentation uses a special notation for modifier keys. Some of the Emacs terminology for these keys stems from a time when the current standard keyboard layout did not yet exist. What we now call the Alt key used to be the /Meta/ key. The Windows key on PC keyboards or Command on Apple systems maps to the Super key, which was available on some keyboards in the 1980s. Your operating system uses this key, so vanilla Emacs does not use it. There is also the /Hyper/ modifier key, which no longer exists on modern keyboards, so it is unused but still available as a modifier key in Emacs.
 
-Emacs documentation and this book abbreviate key sequences. For example, =C-a= stands for pressing the Control and =a= key at the same time. The dash indicates that the first key modifies the second key, while a space between keys indicates that they are typed consecutively, and actual spaces are shown as =<space>=. Each modifier key has its own letter, as shown in table [[tab:modifier-keys]]. You can combine modifier keys, occasionally leading to awkward combinations, such as =C-M-S-a= (Control, Alt and Shift =a=), which requires the nimble fingers of a sleight-of-hand artist to execute smoothly. The shift modifier is usually not indicated because =C-M-A= is the same as =C-M-S-a=. The escape key can also act as a modifier key. Pressing escape once is the same as holding the meta key. So =ESC x= is the same as =M-x=.
+Emacs documentation and this book abbreviate key sequences. When you use the menu bar as in the previous section you might notice that some functionality adds an abbreviated keyboard shortcut. For example, =C-a= stands for pressing the Control and =a= key at the same time. The dash indicates that the first key modifies the second key, while a space between keys indicates that they are typed consecutively, and actual spaces are shown as =<space>=. Each modifier key has its own letter, as shown in table [[tab:modifier-keys]]. You can combine modifier keys, occasionally leading to awkward combinations, such as =C-M-S-a= (Control, Alt and Shift =a=), which requires the nimble fingers of a sleight-of-hand artist to execute smoothly. The shift modifier is usually not indicated because =C-M-A= is the same as =C-M-S-a=. The escape key can also act as a modifier key. Pressing escape once is the same as holding the meta key. So =ESC x= is the same as =M-x=.
 
 #+caption: Emacs modifier keys.
 #+name: tab:modifier-keys
@@ -177,7 +203,9 @@ You now know enough to start writing. Either visit an existing plain text file o
 This section summarises the most common commands for writing text. The Emacs manual provides a detailed description of all functionality relevant for writing human languages (as opposed to computer languages), which you can read with =C-h r g basic= and =C-h r g text=.
 
 ** Moving Around in a Buffer
-You can move the cursor with arrow keys and other standard navigation keys. Emacs documentation sometimes refers to the cursor as 'point'. The cursor is the character displayed on the screen (a line or a box), and the point indicates where the next typed character will appear. Point is more critical when you write Emacs functions, so this book focuses on the cursor, as that is where the writing action happens.
+You might think that all you need to know is using the arrow and page up and down keys, but Emacs has a lot more to offer to let you hop around the manuscript.
+
+Emacs documentation sometimes refers to the cursor as 'point'. The cursor is the character displayed on the screen (a line or a box), and the point indicates where the next typed character will appear. Point is more critical when you write Emacs functions, so this book focuses on the cursor, as that is where the writing action happens.
 
 In addition to the standard methods for moving around a buffer, Emacs provides additional functionality to help you navigate your project. For example, =C-p= (~previous-line~) does the same as the up key (see Table [[tab:moving]]). Some people prefer these keys so their hands can stay in the default position for fast touch-typing. However, writing is more about thinking than maximising keystrokes per minute, but feel free to try them out.
 
@@ -319,83 +347,48 @@ Emacs has several line-wrapping functions, of which Visual Line Mode is the most
   - [X] Customisation
 - [-] Minibuffer completion
 :END:
-The previous sections explained how to use Emacs in its naked, unconfigured state, more commonly called vanilla Emacs. The software can do anything you need to be an author without any configuration, but that is not ideal. As a malleable system, Emacs is almost infinitely configurable, so you can make it behave how you see fit. Emacs users have shared their configurations and published thousands of packages to add functionality. This chapter discusses the principles of configuring Emacs and how to install the /Emacs Writing Studio/ configuration.
+The previous sections explained how to use Emacs in its naked, unconfigured state, more commonly called vanilla Emacs. The software can do anything you need to be an author without any configuration, but that is not an ideal state. As a malleable system, Emacs is almost infinitely configurable, so you can make it behave how you see fit. Emacs users have shared their configurations and published thousands of packages to add functionality. This chapter discusses the principles of configuring Emacs and how to install the /Emacs Writing Studio/ configuration.
 
-Most software is good at doing one thing well. You can write documents in LibreOffice or MS Word. You can create presentation slides in PowerPoint or Keynote and manage tasks with Trello or Todoist. The problem with using different applications is using various software packages and other methods whenever you switch contexts in your workflow. If you are lucky, the developers let you change the configuration to modify the software's behaviour and optimise your workflow. However, in most cases, you are stuck with the choices that developers made for you. While using commercial software is like renting a furnished house, using Emacs is more like owning a house. However, your digital home needs some paint, new carpets, and furniture to make it your home.
+While using commercial software is like renting a furnished house, using Emacs is more like owning a house. However, your digital home needs some paint, new carpets, and furniture to make it your home.
 
-Emacs does not have the limitations that are common to most software. You undertake almost every task in one program, and nearly everything in the system is configurable. This article explains how to configure Emacs to create a fully personalised productivity suite. Please note that this configuration assumes that you are using the latest version of Emacs, which at the time of writing is 29.3.
-
-Some Emacs users use pre-configured systems, such as Doom Emacs, Spacemacs, SciMax or other starter kits. While these configurations are helpful, they sometimes provide everything but the proverbial kitchen sink. On the other side of the spectrum, you can configure your system from scratch, which can become a productivity sink as you wade your way through a myriad of options. The EWS configuration is a starter kit with a minimum configuration to get you started as a researcher and author. The basic idea is to use this configuration as a set of building blocks that you can modify to your preferences. But before installing the EWS configuration, let's first introduce the principles of configuring Emacs.
-
-** Emacs Lisp
-Commercial software provides graphical menus to define how it operates. For example, in Figure [[fig:graphical-config]], you might tick a box, select an item in a list, or enter a value in a text box to configure the program according to your wishes.
-
-#+caption: Typical graphical configuration screen.
-#+name: fig:graphical-config
-#+attr_html: :alt Typical graphical configuration screen :title Typical graphical configuration screen :width 600
-#+attr_latex: \textwidth
-[[file:images/graphical-interface.png]]
-
-Being a plain text program, Emacs does not have such facilities but uses the Emacs Lisp programming language. The code below is equivalent to the form shown in Figure [[fig:graphical-config]]. Compare the code with the image to reverse engineer the Elisp code.
-
-#+begin_src emacs-lisp :tangle no :eval no
-  (setq inhibit-startup-message t
-        initial-scratch-message "Hello world"
-        cursor-type 'bar)
-#+end_src
-
-#+RESULTS:
-: bar
-
-A Lisp program consists of expressions, which are instructions nested between parentheses. Each expression starts with the name of a function (=setq= in the example above). In most cases followed by one or more parameters. The =setq= function sets the value of a variable. For example, =(setq inhibit-startup-message t)= has the same effect as ticking a box called 'inhibit startup message', while =inhibit-startup-message nil= is the same as removing the tick from that box. Fun fact, in Emacs Lisp, =t= means the same as TRUE and =nil= is equivalent to FALSE in other computer languages. Confusingly Emacs documentation often mentions to set a value to "non-nil", which is a double negative suggestion to setting a variable to true.
-
-The expression in this example determines whether Emacs will show a startup message when you first open it. The second line sets the initial scratch message. In this case the parameter is a string of letters, nested between quotation marks. The last line sets the cursor type to a bar. This variable has other predefined options, such as 'bar' or 'hollow'. To prevent Emacs from confusing this option with a variable, it uses a single quotation mark (also called a tick mark) before the text.
-
-While on the surface, the text-based method seems more complex than ticking and writing in boxes and picking a drop-down list, it is far more potent than a graphical interface. However, once you learn how to write simple Emacs Lisp, you will realise that Emacs is, in reality, the most user-friendly system possible because of the power it gives you over your computer. Using Emacs Lisp is the epitome of user-friendliness. You decide how your computer behaves instead of some software company controlling your behaviour. But with this immense power comes great responsibility and a learning curve.
-
-Section [[#sec:display]] showed how to modify how Emacs wraps long lines by activating ~visual-line-mode~. The code snippet below shows what this would look like in your init file. In this case, we hook visual line mode to text mode. All modes derived from Text Mode, such as Org Mode or Markdown, will inherit this property. The line that starts with two semi-colons is a comment intended to make the code easier to understand and navigate.
-
-#+begin_src elisp :eval no
-  ;; Sensible line-breaking
-  (add-hook 'text-mode-hook 'visual-line-mode)
-#+end_src
+Some Emacs users deploy pre-configured systems, such as Doom Emacs, Spacemacs, SciMax or other starter kits. While these configurations are helpful, they sometimes provide everything but the proverbial kitchen sink. On the other side of the spectrum, you can configure your system from scratch, which can become a productivity sink as you wade your way through a myriad of options. The EWS configuration is a starter kit with a minimum configuration for authors. The basic idea is to use this configuration as building blocks that you can modify to your preferences. But before installing the EWS configuration, let's first introduce the principles of configuring Emacs.
 
 ** The Initialisation File
-When you start Emacs, it loads the initialisation file, or init file in short. This file contains Lisp code that loads additional packages and configurations when Emacs starts. You can run Emacs without an init file as shown in the previous chapter, but you will undoubtedly want to modify the defaults. The first time you start Emacs, it will create the configuration folder which is where the init file lives. This folder also contains the packages you need to personalise your system. Emacs looks for a file called =.emacs=, =.emacs.el= or =init.el=. The dot in front of the file means that it is hidden from view to prevent clutter in your directories. Most Emacs documentation talks about your =.emacs= of init file.
+When you start Emacs, it loads the initialisation file, or init file in short. This file contains Lisp code that loads additional packages and configurations when Emacs starts. You can run Emacs without an init file as shown in the previous chapter, but you will undoubtedly want to modify the defaults.
+
+The first time you start Emacs, it will create the configuration folder which is where the init file lives. This folder also contains the packages you need to personalise your system. Emacs looks for a file called =.emacs=, =.emacs.el= or =init.el=. The dot in front of the file means that it is hidden from view to prevent clutter in your directories. Most Emacs documentation talks about your =.emacs= of init file.
 
 ** Emacs Packages
 :PROPERTIES:
 :CUSTOM_ID: sec:packages
 :END:
-The Emacs base system provides extensive functionality, but you can enhance its capability with any of the thousands of plugins. Many people develop and share software in Emacs Lisp to improve or extend what the system can do. Developers of these packages mostly distribute them through a public package repository, which are websites that let you easily download and install packages. The two most important ones are:
+The Emacs base system provides extensive functionality, but you can enhance its capability with any of the thousands of plugins / packages. Many people develop and share software in Emacs Lisp to improve or extend what the system can do. Developers of these packages mostly distribute them through a public package repository, which are websites that let you easily download and install packages. The two most important ones are:
 
 - ELPA: GNU Emacs Lisp Package Archive --- the official package archive, enabled by default (=elpa.gnu.org=).
 - MELPA: Milkypostman’s Emacs Lisp Package Archive --- Unofficial archive (=melpa.org=).
 
 The main difference between these two repositories relates to who holds the copyright. The Free Software Foundation holds the copyright for all packages in ELPA. For MELPA packages, the copyright remains with the author. The end result for the user is the same as all packages are licensed as free software. You can explore the list of packages with the ~list-packages~ command.
 
-Packages are constantly updated by their developers. To ensure you get the latest version, use the ~package-upgrade-all~ function. This naming convention might seem back to front, as using ~upgrade-all-packages~ is linguistically better. However, the convention for naming Emacs Lisp functions is that the first word is the package name, which in this case is ~package-~. The EWS configuration contains some functions and they all start with ~ews-~. This naming convention makes it easy to group functions by package.
+Packages are constantly updated by their developers. To ensure you get the latest version, use the ~package-upgrade-all~ function. This naming convention might seem back to front, as using ~upgrade-all-packages~ is linguistically clearer. However, the convention for naming Emacs Lisp functions is that the first word is the package name, which in this case is ~package~. This naming convention makes it easy to group functions by package.
 
 ** Customisation System
 :PROPERTIES:
 :CUSTOM_ID: sec:custom
 :END:
-Besides crafting your personal configuration or using a starter kit, Emacs has a customisation menu that lets you configure the system without writing code.
+Besides crafting your personal configuration in Emacs Lisp or using a starter kit, Emacs has a customisation menu that lets you configure the system without writing code.
 
-Let's assume you want to remove the toolbar from view. Type =M-x customize-variable RET tool-bar-mode RET= and a new window pops up showing the customisation options for this variable (figure [[fig: customise-variable]]).
-
-In this case, the variable is a boolean, meaning it can be either true (=t=) or false (=nil=). Note that Lisp does not use false or =f=, but nil. In Lisp, an empty variable is the same a false (0) and any content is interpreted as true (1). Emacs documentation often uses a double-negative. Setting a variable to =non-nil= is equivalent to setting it to =t=.
-
-Other variables can require different types of input, such as a drop-down list, tick-boxes or free text. The 'Apply' button brings this change to immediate effect, but will be reset when restarting Emacs. Clicking 'Apply and Save' applies the new setting and saves it to the init file.
+Let's assume you want to remove the toolbar from view. Type =M-x customize-variable RET tool-bar-mode RET= and a new window pops up showing the customisation options for this variable (figure [[fig: customise-variable]]). In EWS this function is bound to =C-c w v=.
 
 #+caption: Customisation screen for =tool-bar-mode=.
 #+attr_latex: 0.4\textwidth
 #+name: fig: customise-variable
 [[file:images/customise-variable.png]]
 
-Throughout this book there will be suggestions to customise variables. Rather than writing Emacs Lisp you can use the customisation system for a low-code method of configuring Emacs. So when this book suggests to customise a variable, run ~customize-variable~, type the name and complete the configuration screen.
+In this case, the variable is a boolean, meaning it can be either true (=t=) or false (=nil=). Note that Lisp does not use false or =f=, but nil. In Lisp, an empty variable is the same a false (0) and any content is interpreted as true (1). Emacs documentation often uses a confusing double-negative. Setting a variable to =non-nil= is equivalent to setting it to =t=. Other variables can require different types of input, such as a drop-down list, tick-boxes or free text.
 
-The Appendix provides more details on using Emacs Lisp to modify the EWS configuration.
+The 'Apply' button brings this change to immediate effect, but will be reset when restarting Emacs. Clicking 'Apply and Save' applies the new setting and saves it to the =custom.el= file. This file stores all your customisations, which are loaded when you start Emacs or use the ~restart-emacs~ command.
+
+Throughout this book there will be suggestions to customise variables. Rather than writing Emacs Lisp you can use the customisation system for a low-code method of configuring Emacs. So when this book suggests to customise a variable, run ~customize-variable~, type the name and complete the configuration screen.
 
 * Exiting Emacs
 Working with Emacs is so much fun you might never want to shut it down. But all good things come to an end, so we might need to shutdown (kill) Emacs occasionally.

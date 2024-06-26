@@ -7,9 +7,11 @@
 - [X] [[denote:20230716T025508][Plain Text - Dylan Beattie]]
 :END:
 
-Imagine needing a different tool for every step of your writing project: one for brainstorming ideas, another for taking notes, yet another for writing the actual book. Your information is scattered in many places and stored in various formats that are incompatible with other programs. You spend a lot of time switching between programs, using different methods to achieve the same goal. Also finding the information you need can be problematic as it is scattered across your drive. Unfortunately, that's how many people manage their workflows. What if you could do this differently and use the same program to create written works from ideation to publication? This book introduces Emacs, a powerful tool that can handle everything from sparking your initial ideas to publishing your finished article, book or website. Emacs lets you ditch the juggling act and focus on your writing.
+Imagine needing a different tool for every step of your writing project: one for brainstorming ideas, another for taking notes, yet another for writing the actual book. Your information is scattered in many places and stored in various formats that are incompatible with other programs. You spend a lot of time switching between software, using different methods to achieve the same goal. Also finding the information you need can be difficult as it is scattered across your drive.
 
-This book is for authors frustrated by commercial software and are looking for a more efficient workflow and flexibility in their computing needs. This book covers everything you need to know to do research, write and publish electronically or for print. Emacs is originally developed for software developers, but you don't need to be a computer wiz to use it as an author. This book provides a gentle introduction to flatten the learning curve to get started. Most existing Emacs documentation is somewhat technical and assumes prior knowledge. Technical documentation typically examines every aspect of the software, which can be daunting for new users. This book uses a different approach and peels Emacs like an onion, revealing one layer of this software at a time. Each chapter adds more detail and complexity, following the typical workflow for an author. This book does not require you to write any computer code because {{{ews}}} is configured to meet the most common needs of authors.
+Unfortunately, the previous paragraph describes how a lot of people manage their workflows. What if you could do this differently and use the same program to create written works from ideation to publication? This book introduces Emacs, a powerful tool that can handle everything from sparking your initial ideas to publishing your finished article, book or website. Emacs lets you ditch the juggling act and focus on your writing.
+
+This book is for authors frustrated by commercial software and are looking for a more efficient workflow and for flexibility in their computing needs. This book covers everything you need to know to research, write and publish. Emacs is originally developed for software developers, but you don't need to be a computer wiz to use it as an author. This book is a gentle introduction to Emacs that flattens the learning curve. The documentation in Emacs is extensive and of high quality, but it can be opaque to new users. Technical documentation typically examines every aspect of the software, which can be daunting for new users. This book uses a different approach and peels Emacs like an onion, revealing one layer at a time, building on previous knowledge. Each chapter adds more detail and complexity, following the typical workflow for an author. This book does not require you to write any computer code because {{{ews}}} is configured to meet the most common needs of authors.
 
 #+begin_quote
 Welcome to the Emacs computing system, the Swiss army chainsaw of productivity.
@@ -18,28 +20,30 @@ Welcome to the Emacs computing system, the Swiss army chainsaw of productivity.
 * What is Emacs?
 The official tagline of Emacs is that it is an “extensible self-documenting text editor”. These words barely do justice to Emacs because they focus on its original purpose as a software development tool. Emacs is a multi-purpose computing environment that can help you manage your information, track projects, write and publish articles, books, websites and any other text-based activity. Emacs is not a productivity hack; it is a productivity hacking system.
 
-The first version of Emacs was released almost fifty years ago [cite:@stallman_1981_emacs], which might seem like obsolete software. However, a vibrant community of developers continually improves the system. Emacs users are happy to share their configurations and have developed thousands of plugins that extend the system's functionality.
+Emacs being extensible means that each user configures it to their personal needs. An Emacs configuration instructs the system to behave they way you want it to, such as keyboard shortcuts and additional functionality. Emacs is also extensible through the thousands of available packages. An Emacs package is a plugin that adds new capabilities to the system or it enhances existing ones.
 
-Many versions of Emacs have existed over the decades. The most widely used version is GNU Emacs, first released by Richard Stallman in 1984 [cite:@johnson_2022]. GNU Emacs (further referred to as Emacs) is free software released by the Free Software Foundation. The foundation loosely defines free software as:[fn:1-1]
+Richard Stallman released the first version of Emacs over forty years ago [cite:@stallman_1981_emacs]. Software that old might seem obsolete, but a vibrant community of developers continually improves the system. Emacs users freely share their configurations and have developed thousands of plugins that extend the system's functionality.
+
+Many versions of Emacs have existed over the decades. The currently most widely used version is GNU Emacs, first released by Richard Stallman in 1984 [cite:@johnson_2022]. GNU Emacs (further referred to as Emacs) is free software released by the Free Software Foundation. The foundation loosely defines free software as:[fn:1-1]
 
 #+begin_quote
-“Free software” means software that respects users' freedom and community. Roughly, it means that the users have the freedom to run, copy, distribute, study, change and improve the software. Thus, “free software” is a matter of liberty, not price. To understand the concept, you should think of “free” as in “free speech,” not as in “free beer.” 
+“Free software” means software that respects users' freedom and community. Roughly, it means that the users have the freedom to run, copy, distribute, study, change and improve the software. Thus, "free software" is a matter of liberty, not price. To understand the concept, you should think of "free" as in "free speech", not as in "free beer". 
 #+end_quote
 
-Emacs is a text editor, but this does not make sense for authors. A text editor is a tool for developing software. From an author's perspective, Emacs is a /text processor/ because editing is only the last step in writing an article or book. A text editor is a tool for software developers to write code, and a text processor is a tool for authors to write prose. {{{ews}}} (EWS) is a bespoke configuration of Emacs that turns it into a tool for authors and converts a text editor to a text processor.
+Emacs is a text editor, but this does not make sense to authors. A text editor is a tool for developing software. From an author's perspective, Emacs is a text /processor/ because editing is only one step in the writing process. A text editor is a tool for software developers to write code, and a text processor is a tool for authors to write prose. {{{ews}}} (EWS) is a bespoke configuration of Emacs that turns it into a tool for authors, converting a software editor to a text processor.
 
 * Why use Emacs?
-Authors jot down notes in a research tool, meticulously build bibliographies in a database. Then, they write in a familiar word processor. To stay on top of their deadlines, they juggle a productivity tool for managing projects. Finally, after hours of focused work, the researcher might unwind with a quick game of Tetris to take a well-deserved break from the application circus.
+Authors jot down notes in a research tool, meticulously build bibliographies in a database. Then they write in a familiar word processor. To stay on top of their deadlines, they juggle a productivity tool for managing projects. Finally, after hours of focused work, the researcher might unwind with a quick game of Tetris to take a well-deserved break from the application circus.
 
-The problem with this perhaps familiar scene is that each program requires you to learn a new set of skills, navigate a distinct internal logic, and bend to its preordained workflow. Most software is inflexible, forcing you to adapt to the developer's vision of how you should work, besides perhaps some configuration options.
+The problem with this perhaps familiar scene is that each program requires you to learn a new set of skills, navigate a different internal logic, and bend to its preordained workflow. Most software is inflexible, forcing you to adapt to the developer's vision of how you should work, besides perhaps some configuration options provided as a screen of tick boxes.
 
-Emacs offers a revolutionary approach. You can write research notes, manage a bibliography, and yes, even play Tetris --- all within a single, unified environment.  Imagine the efficiency of mastering one set of commands instead of grappling with multiple programs. Emacs empowers you to configure and customise it to your exact preferences, transforming it from a mere writing tool into an extension of your personal workflow.
+Emacs offers a revolutionary approach. You can write research notes, manage a bibliography, and yes, even play Tetris --- all within a single, unified environment. Imagine the efficiency of mastering one set of commands instead of grappling with multiple programs. Emacs empowers you to configure and customise it to your exact preferences, transforming it from a mere writing tool into an extension of your personal workflow.
 
-This statement is perhaps slightly misleading because Emacs does need the assistance of other software to become a writing studio. Emacs provides an interface to control other free software programs. You will thus need to install additional software so that Emacs can read and export to binary file formats such as PDF and audio or video files. Emacs also relies on external software for spell checking, advanced searching and generating diagrams.
+This statement is perhaps slightly misleading because Emacs needs the assistance of other software to become a writing studio. Emacs can process text but also provides an interface to other free software programs. You will thus need to install additional software so that Emacs can read and export to binary file formats such as PDF and audio or video files. Emacs also relies on external software for spell checking, advanced searching and generating diagrams.
 
-While Emacs might appear different from the eye-candy of modern software, there's a method to its apparent lack of sophistication. Don't be fooled by its austere facade. Beneath the surface lies a robust and contemporary computing environment, meticulously crafted that you can bend to your will.
+While Emacs might appear different from the eye-candy of modern graphical software, there's a method to its apparent lack of sophistication. Don't be fooled by its austere façade. Beneath the surface lies a robust and contemporary computing environment, meticulously crafted that you can bend to your will.
 
-Another advantage is the longevity of this tool. How you use Emacs will also be the way you use Emacs in decades to come. Reading the 1981 Emacs manual is almost like reading the most recent version, as the underlying basic functionality has changed only slightly [cite:@stallman_1981_manual].
+Another advantage is the longevity of this tool. How you use Emacs now will also be the way you use Emacs in decades to come. Reading the 1981 Emacs manual is almost like reading the most recent version, as the underlying basic functionality has changed only slightly [cite:@stallman_1981_manual].
 
 Many writers have lamented the constraints of commercial word processors when tackling large documents. Working with commercial word processor software can be a frustrating experience. These programs were first developed when paper memos and reports ruled the world, and have changed little since. Word processors combine content, layout and typography in one file, focusing on printed pieces of paper. Emacs breaks free from this paradigm by separating the content from the design. This liberating approach allows you to focus on crafting your ideas without getting bogged down in the design of the end product. As an added benefit Emacs can transform the same text file effortlessly into a print-ready PDF, a website, or an ebook.
 
@@ -48,7 +52,9 @@ Emacs empowers you to streamline your workflow, ditch the software juggling act,
 * Malleable Software
 Emacs is a 'malleable software' platform, meaning you are free to change and enhance how it works. This malleability ensures that Emacs can perform any task that you can undertake with a keyboard.
 
-The first principle of malleable software is that it is easy to change.[fn:1-2] With Emacs advanced users can build their own applications using the Emacs version of the LISP language, also called Elisp [cite:@monnier_2020]. This task might sound daunting, but it is about the possibility. Writing code is optional because most Emacs users share what they have developed, so you can freely copy their work. You can also extend and configure Emacs with any of the thousands of freely available plugins, also called packages. EWS is a curated collection of such packages to align it with the needs of authors. Users can configure almost everything in the system with little knowledge of Elisp. This knowledge requirement might seem like a hurdle, but learning how to use it will give you nearly unlimited power over how you use your computer. Software should adjust to the user, not vice versa.
+The first principle of malleable software is that it is easy to change.[fn:1-2] Advanced Emacs users can build bespoke applications using the Emacs version of the LISP language, also called Elisp [cite:@monnier_2020]. This task might sound daunting, but it is about the possibility. Emacs users can configure almost everything in the system with little knowledge of Elisp. This knowledge requirement might seem like a hurdle, but learning how to use it will give you nearly unlimited power over how you use your computer. Software should adjust to the user, not vice versa.
+
+Writing code is optional because most Emacs users share what they have developed, so you can freely copy their work. You can also extend and configure Emacs with any of the thousands of freely available packages. EWS is a curated collection of such packages to meet the needs of authors.
 
 The advantage of this approach is that you have complete freedom when using this software. You can instruct it to do almost anything you like and configure it to your specific needs. The disadvantage is that it requires a different computing approach than contemporary software. Using Emacs throws you back to the original intent of using a computer and genuine user-friendliness. Are you ready to change the way you use your computer? To paraphrase a famous scene from The Matrix:
 
@@ -57,7 +63,7 @@ If you take the blue Microsoft pill, the story ends, and everything stays the sa
 #+end_quote
 
 * Redefining User-Friendliness
-Emacs' lack of a slick graphical interface might discourage new users. Unfortunately, most people confuse user-friendliness with a smooth design and using a mouse. However, the graphical approach is not user-friendly at all because the user loses freedom. Graphically driven software is a gilded cage. It might be pleasant to work in, but it is still a cage. Furthermore, the /What You See is What You Get/ approach is outdated as it is only relevant for printed documents. Only a tiny part of written text is printed on paper, so the /What You See is What You Get/ (WYSIWYG) approach does not make much sense in the digital age. 
+Emacs' lack of a slick graphical interface might discourage new users. Unfortunately, most people confuse user-friendliness with a smooth design and using a mouse. However, the graphical approach is not user-friendly at all because the user loses freedom. Graphically driven software is a gilded cage. It might be pleasant to work in, but it is still a cage.
 
 Emacs is a plain text processor that focuses on the semantic meaning of characters on the screen instead of how they will eventually look on a page or screen. Most text is just a paragraph, but adding a few symbols converts it to a heading or figure caption. Plain text is not the same as plain English; it relates to how the information is stored. Plain text is the opposite of rich text, which hides the definitions for font sizes, colours and other attributes.
 
@@ -79,53 +85,60 @@ Text modes can display ‘graphics’. When I went to primary school in the 1970
 
 Graphical interfaces simulate the physical world by making objects on the screen look like pieces of paper and folders on a desk. You point, click and drag documents into folders; documents appear as they would on paper and when done, they go into the rubbish bin. Graphical interfaces are a magic trick that makes you believe you are doing something physical [cite:@tognazzini_1993_prin]. This approach might be convenient, but it prevents people from understanding how a computer works. In word processors, the screen looks like a printed page. While this might be aesthetically pleasing, it distracts the writer from creating content and instead motivates them to fiddle with formatting.
 
-The graphical approach distracts the mind from the content and lures the user into working on style instead of writing text. In a WYSIWYG word processor, formatting instructions are invisible to the user, which can cause repeated issues in getting the final result to look how you want it to. Office workers around the globe waste a lot of time trying to format or typeset documents in graphical environments. In plain text, the content and most semantics are directly visible and editable by the user. 
+Graphical software follows the /What You See is What You Get/ (WYSIWYG) which means that the screen looks like a printed document. This is only relevant when writing printed documents. However, only a tiny part of electronic text is written for print, so the WYSIWYG approach does not make much sense in the digital age.
 
-Following the plain text Emacs way helps you become more productive by not worrying about the document’s design until you complete the content. As I write this book, it only takes a few keystrokes to convert the text into a fully formatted ebook or print-ready PDF copy. The main benefit of using plain text over rich text is that it provides a distraction-free writing environment. Plain text uses the /What You See is What You Mean/ (WYSIWYM) approach. Instead of focusing on the format or presentation of the document, a WYSIWYM editor preserves the intended meaning of each element. Sections, paragraphs, illustrations, and other document elements are labelled as such using various conventions [cite:@khalili_2015].
+The graphical approach distracts the mind from the content and lures the user into editing for style instead of writing text. Text in a WYSIWYG software is so-called rich text as it encapsulates both content and design. The formatting instructions inside of rich text are invisible to the user, which can cause issues in getting the final result to look how you want it to. Office workers around the globe waste oceans of time trying to format or typeset documents in graphical environments. 
 
-Regular plain text files are the simplest form of plain text and don’t contain any semantics. Other plain text formats like HTML, LaTeX, Markdown and Org mode include instruction sets to define the final result. Table [[#tab:plaint-text]] shows how to denote /italic text/ in four popular plain text formats.
+Plain text uses the /What You See is What You Mean/ (WYSIWYM) approach. Instead of focusing on the format or presentation of the document, a WYSIWYM editor preserves the intended meaning of each element. Sections, paragraphs, illustrations, and other document elements are labelled as such using various conventions [cite:@khalili_2015]. In plain text, the content and semantics are directly visible and changeable by the user. 
+
+Following the plain text Emacs way helps you become more productive by not worrying about the document’s design until you complete the content. The main benefit of using plain text over rich text is that it provides a distraction-free writing environment. As I write this book, it only takes a few keystrokes to convert the text into a fully formatted ebook or print-ready PDF copy. 
+
+Regular plain text files are the simplest form of plain text and don’t contain any semantics. Other plain text formats like HTML, LaTeX, Markdown and Org mode include instruction sets to define the final result (the markup). Table [[#tab:plaint-text]] shows how to denote /italic text/ in four popular plain text formats.
 
 #+caption: Italic text in common plain text formats.
 #+name: tab:plaint-text
-| Format   | Italic semantics    |
-|----------+---------------------|
+| Format   | Italic semantics   |
+|----------+--------------------|
 | HTML     | =<i>Italic Text</i>= |
-| LaTeX    | =\emph{Italic Text}=  |
-| Markdown | =_Italic Text_=   |
-| Org mode | =/Italic Text/=       |
+| LaTeX    | =\emph{Italic Text}= |
+| Markdown | =_Italic Text_=      |
+| Org mode | =/Italic Text/=      |
 
-As I write this book, I don’t see what it will look like in printed form as you would using modern word processors. In Emacs, I only see text, images, and some instructions for the computer on what the final product should look like. When exporting this document to a web page or any other format, a template defines the final product's design, such as layout and typography. This approach ensures that your text can be easily exported to multiple formats without loss of information.
+As I write this book, I don’t see what it will look like in printed form as you would using modern word processors. In Emacs, I only see text, images, and some instructions for the computer on what the final product should look like. When exporting this document to a web page or any other format, a template defines the final product's design, such as layout and typography. This approach ensures that your text can be easily exported to multiple formats without loss of information. Furthermore, you can edit plain text in many different programs. Anything written in Emacs can easily by changed in a simple program such as Notepad or any of the plethora of text editing programs out there. You will have less functionality, but the document format is fully compatible.
 
-The image in figure [[fig:wysiwym]] shows writing in Emacs in action. The left side shows the Emacs screen of a page on one of my websites. The right side shows the result after compiling the content. The top of the Emacs screen contains the metadata for one of my web pages, followed by the text. Fonts and colours have semantic meaning and do not necessarily relate to how they are displayed in the final product. The template, in this case a CSS file, determines the final product.
+The image in figure [[fig:wysiwym]] shows writing in Emacs in action. The left side shows the Emacs screen this chapter. The right side shows the result after compiling the content to a PDF file.
 
 #+caption: What You See is What You Mean approach to writing.
 #+name: fig:wysiwym
 #+attr_html: :title What You See is What You Mean approach to writing.
 #+attr_latex: :width \textwidth
-#+attr_org: :width 100
-[[file:images/wysiwym.jpg]]
-
-The style sheet in plain text writing is separate from the text. This means that you can easily export your document to different formats. Org mode in Emacs has a potent export engine (chapter [[#chap:publication]]) that can convert your writing to a website, ebook or physical book with just a few keystrokes and some configuration.
+[[file:images/wysiwym.png]]
 
 In summary, the benefits of writing in plain text over using graphical software are:
 
-1. The plain text is independent of the software you use.
-2. Plain text removes distractions from the screen.
-3. Plain text is versatile and can be exported to any other format.
+1. Independent of the software you use.
+2. Text, metadata and markup are all visible
+3. No distractions from the screen.
+4. Ability to export to any other format.
 
 * The Learning Curve
 :NOTES:
-- [ ] Learning curve graphic
+- [-] Learning curve graphic
 :END:
 
-Emacs supposedly has a steep learning curve because its possibilities are so vast. To make Emacs work for you, you must learn the basic principles of using this editor and some of the associated add-on packages. Within the computing community, the Emacs learning curve is well known and sometimes mocked. Perhaps Emacs is more complex than other plain text processors, but it also is much more powerful than any other tool. But with this great power comes great responsibility, so you have to learn some new skills to use it as your main writing tool.
+Emacs is known for having a steep learning curve because its possible configurations is so vast. To make Emacs work for you, you must learn the basic principles of using this editor and some of the associated add-on packages. Perhaps Emacs is more complex than other plain text processors, but it also is much more powerful than any other tool. But with this great power comes great responsibility, so you have to learn some new skills to use it as your main writing tool.
 
-The key to learning Emacs and flattening the curve is not to get overwhelmed by the virtually infinite possibilities and master those bits of functionality that you need to do what you need to do right now. Even without any configuration, Emacs can do a lot.
+The key to learning Emacs and flattening the curve is not to get overwhelmed by the virtually infinite possibilities and master only those bits of functionality that you need for the task at hand. Even without any configuration Emacs can do a lot.
 
-Emacs' methods and vocabulary seem foreign compared to other contemporary software. The main reason for these differences is that the development of Emacs started in 1974, a time when computing was notably different to our current experience. The Emacs vocabulary is vestigial, a remnant of an earlier epoch in the evolution of computing. For example, opening a file is ‘visiting a file’. Pasting a text is ’yanking’, and cutting it is the same as 'killing'. Perhaps the Emacs terminology is more poetic than the modern handicraft terms, such as cutting, pasting, and moving files between folders as if they were pieces of paper. These differences are not only part of Emacs' charm, but also of its power. You will find that the Emacs equivalent of these familiar software tasks more potent that what is common in modern software.
+Emacs' methods and vocabulary seem foreign compared to other contemporary software. The main reason for these differences is that the development of Emacs started in 1974, a time when computing was notably different to our current experience. The Emacs vocabulary is vestigial, a remnant of an earlier epoch in the evolution of computing. For example, opening a file is ‘visiting a file’. Pasting a text is ’yanking’, and cutting it is the same as 'killing'. Emacs terminology is more poetic than the handicraft terms such as cutting, pasting, and moving files between folders as if they were pieces of paper. These differences are not only part of Emacs' charm, but also of its power. You will find that the Emacs equivalent of these familiar software tasks are more potent that what is common in modern software.
 
-After you master the techniques described in this book, you will start developing your personal configuration. Learning Elisp to configure the software to your wishes might sound daunting, but you can simply copy and paste (kill and yank) examples from the internet. Just remember that the steeper the learning curve, the bigger the reward.
 EWS provides authors with a fine-tuned configuration to convert vanilla Emacs into a specialised research, writing, and publication engine. This book focuses on using this configuration instead of delving deeply into the technical details. The Appendix to this book describes the full configuration for readers interested in venturing into the depths of Emacs Lisp.
+
+After you master the techniques described in this book, you will start developing your own configuration. Learning Elisp to configure software to your wishes might sound daunting, but you can simply copy and paste (kill and yank) examples from the internet. Just remember:
+
+#+begin_quote
+The steeper the learning curve, the bigger the reward.
+#+end_quote
 
 * Advantages and Limitations of Emacs
 In summary, these are some of the significant advantages of using Emacs to create written content:
@@ -138,28 +151,29 @@ In summary, these are some of the significant advantages of using Emacs to creat
 
 After singing the praises of this multi-functional editor, you would almost think that Emacs is the omnipotent god of software. Some people even have established the /Church of Emacs/ as a mock religion to express their admiration for this supremely malleable software environment. Notwithstanding this admiration, Emacs has some limitations.
 
-Emacs can display images and integrate them with text, but it has limited functionality in creating or modifying graphical files. If you need to create or edit pictures, consider using GIMP (GNU Image Manipulation Program). Video content is unsupported other than hyperlinks to a file or website.
+Emacs can display images and integrate them with text, but it has limited functionality in creating or modifying graphical files. If you need to create or edit pictures, consider using GIMP (GNU Image Manipulation Program). Video content is unsupported other than hyperlinks to a file or website. But these limitations are excusable given that Emacs' core capability is processing text.
 
-The second disadvantage is that Emacs does not include a fully operational web browser. You can surf the web within Emacs, but only within the limitations of a plain text interface.
+The second disadvantage is that Emacs does not include a fully operational web browser. You can surf the web within Emacs, but only within the limitations of a plain text interface. You will find though that reading websites in plain text also has some advantages, providing a distraction-free and secure browsing experience.
 
-Lastly, Emacs risks becoming a productivity sink. Just because you can configure everything does not mean you should. Don’t spend too much time /on/ your workflow. Spend this time /in/ your workflow being creative. Most productivity hacks do not materially impact your output because you write with your mind, not the keyboard.
+Lastly, Emacs risks becoming a productivity sink. Just because you can configure everything does not mean that you should. Don’t spend too much time /on/ your workflow. Spend this time /in/ your workflow being creative. Most productivity hacks do not materially impact your output because you write with your mind, not the keyboard.
    
 * How to Read this Book
-This book is not a manual on using Emacs but a guided tour for authors. It describes the typical use cases for an author and how to implement these using Emacs. Each chapter contains references to the comprehensive built-in help system for the intrepid reader to find out more details. The knowledge in this book is enough to get you started on your writing project, and Emacs itself contains all the documentation you need to become a ninja at the keyboard.
+This book is not an Emacs manual but a guided tour for authors. It describes typical use cases for researching, writing and publishing and how to implement these using Emacs. Each chapter contains references to the comprehensive built-in help system for the intrepid reader to explore the content in more detail. The knowledge in this book is enough to get you started on your writing project, and Emacs itself contains all the documentation you need to become a keyboard ninja.
 
-The next chapter explains the principles of using an unconfigured vanilla GNU Emacs system to get you started on the learning curve. Chapter three takes you through the principles of using EWS and how it is different from an unconfigured Emacs experience. The EWS configuration changes how Emacs looks and feels and adds enhancements to help you find the information you need. EWS also uses a series of Emacs packages (plugins) to help authors, such as the Citar bibliography tool and Denote note-taking plugin. The guiding principle of EWS is to stay as close to the vanilla Emacs experience as is humanly bearable.
+The next chapter explains the principles of using an unconfigured vanilla GNU Emacs system to get you started on the learning curve. The EWS configuration changes how Emacs looks and feels and adds enhancements to help you find the information you need. EWS also uses a series of Emacs packages (plugins) to help authors, such as the Citar for accessing bibliographies and Denote for note-taking. The guiding principle of EWS is to stay as close to the vanilla Emacs experience as is humanly bearable. Chapter three takes you through the principles of using EWS and how it is different from an unconfigured Emacs experience.
 
-The remainder of the book follows the EWS workflow, which covers the typical workflow for a writing project. Chapters four to eight describe each aspect of this workflow, taking you from research to writing and to publication. Chapter eight covers administrative tasks such as managing projects and your file system.
+Chapters four to eight describe a typical workflow for a writing project: from research to writing and to publication. 
 
 4. [@4] /Inspiration/: Reading, Listening and Watching
 5. /Ideation/: Recording and Managing Ideas
 6. /Production/: Writing and editing
 7. /Publication/: Sharing Your Writing with the World
-8. /Administration/: Manage your Tasks and Files
 
-The final chapter provides some advice on how to learn even more and become an Emacs Ninja. The appendix to this book contains the annotated EWS configuration with some guidance on how to read it and make changes.
+Chapter eight covers administrative tasks such as managing projects and your files. Org mode has powerful capabilities to help you manage your calendar and action lists to help you stay productive. The final part of the chapter shows how to use Emacs to manage your files. Working on large project undoubtedly will mean that you need to copy, paste, rename and do other things with your computer files. The Emacs Dired package provides everything you need to achieve this.
 
-The best way to read this book is by sitting in front of your computer and trying things out. Experiment with different options, create some files and play around. Don't worry about breaking things, just restart Emacs and have another go. Playing with something is the best way to learn anything, so boot up your computer and get ready for an adventure.
+The final chapter provides some advice on how to become an Emacs Ninja, including a short introduction to Emacs Lisp. The appendix to this book contains the annotated EWS configuration with some guidance on how to read it and make changes.
+
+The best way to read this book is by sitting in front of your computer and trying things out as your read about them. Experiment with different options, create some files and play around. Don't worry about breaking things, just restart Emacs and have another go. To play is the best way to learn, so boot up your computer and get ready for an adventure.
 
 [fn:1-1] Free Software Foundation. What is Free Software? https://www.gnu.org/philosophy/free-sw.en.html
 [fn:1-2] Malleable Systems Collective, https://malleable.systems/
