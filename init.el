@@ -42,6 +42,8 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
+(keymap-global-set "C-c w v" 'customize-variable)
+
 ;; Set package archives
 
 (use-package package
@@ -191,7 +193,8 @@
 
 (use-package helpful
   :bind
-  (("C-h x" . helpful-command)
+  (("C-h f" . helpful-function)
+   ("C-h x" . helpful-command)
    ("C-h k" . helpful-key)
    ("C-h v" . helpful-variable)))
 
@@ -213,14 +216,13 @@
 
 (use-package flyspell
   :custom
-  (flyspell-issue-message-flag nil)
   (ispell-program-name "hunspell")
-  (ispell-dictionary "en_AU,nederlands")
+  (ispell-dictionary ews-hunspell-dictionaries)
   (flyspell-mark-duplications-flag nil) ;; Writegood mode does this
   (org-fold-core-style 'overlays) ;; Fix Org mode bug
   :config
-  (ispell-hunspell-add-multi-dic ispell-dictionary)
   (ispell-set-spellchecker-params)
+  (ispell-hunspell-add-multi-dic ews-hunspell-dictionaries)
   :hook
   (text-mode . flyspell-mode)
   :bind
@@ -567,7 +569,9 @@
 
 (use-package lorem-ipsum
   :custom
-  (lorem-ipsum-list-bullet "- ")
+  (lorem-ipsum-list-bullet "- ") ;; Org mode bullets
+  :init
+  (setq lorem-ipsum-sentence-separator (if sentence-end-double-space "  " " "))
   :bind
   (("C-c w i s" . lorem-ipsum-insert-sentences)
    ("C-c w i p" . lorem-ipsum-insert-paragraphs)
@@ -596,6 +600,8 @@
   (org-export-with-toc nil)
   (org-export-with-smart-quotes t)
   (org-export-date-timestamp-format "%e %B %Y"))
+
+;; LaTeX PDF Export settings
 
 (use-package ox-latex
   :ensure nil
