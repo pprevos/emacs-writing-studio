@@ -32,7 +32,6 @@
 ;;
 ;;; Code:
 
-
 ;; Emacs Writing Studio Customisation
 
 (defvar ews-home-directory
@@ -55,6 +54,16 @@
   "List of keywords to use for implementing the PARA method with Denote."
   :group 'ews
   :type 'list)
+
+(defcustom ews-hunspell-dictionaries "en_AU"
+  "Comma-separated list of Hunspell dictionaries."
+  :group 'ews
+  :type 'list)
+
+(defcustom ews-org-completed-action "DONE"
+  "Completed action that triggers resetting checkboxes for recurring tasks."
+  :group 'ews
+  :type 'string)
 
 ;; Check for missing external software
 ;;;###autoload
@@ -191,27 +200,38 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
 (defun ews-dired-narrow (selection)
   "Mark files in denote-firectory using a regular expression."
   (interactive "sMark files (regexp):")
-  ;;  (dired denote-directory)
+  (when (not (eq major-mode 'dired-mode))
+    (dired denote-directory))
   (dired-mark-files-regexp selection)
   (dired-toggle-marks)
   (dired-do-kill-lines))
 
 ;; Distraction-free writing
+(defvar ews-olivetti-point nil
+  "Stores the point position before enabling Olivetti mode.")
+
 ;;;###autoload
 (defun ews-olivetti ()
-  "Distraction-free writing environment enhancing Olivetti mode."
+  "Distraction-free writing environment enhancing Olivetti mode.
+
+Stores the window configuration when enabling Olivetti mode.
+Restores the previous configuration when existing Olivetti mode
+and moves point to the last location."
   (interactive)
-  (if (equal olivetti-mode nil)
+  (if olivetti-mode
       (progn
-        (window-configuration-to-register 1)
-        (delete-other-windows)
-        (text-scale-set 1)
-        (olivetti-mode t))
+        (if (eq (length (window-list)) 1)
+            (progn
+              (jump-to-register 1)
+              (goto-char ews-olivetti-point)))
+        (olivetti-mode 0)
+        (text-scale-set 0))
     (progn
-      (if (eq (length (window-list)) 1)
-          (jump-to-register 1))
-      (olivetti-mode 0)
-      (text-scale-set 0))))
+      (setq ews-olivetti-point (point))
+      (window-configuration-to-register 1)
+      (delete-other-windows)
+      (text-scale-set 1)
+      (olivetti-mode t))))
 
 ;;;###autoload
 (defun ews-org-insert-notes-drawer ()
@@ -250,27 +270,25 @@ current note."
   (let ((filename (read-file-name "Enter filename for screenshot: " default-directory)))
     (unless (string-equal "png" (file-name-extension filename))
       (setq filename (concat (file-name-sans-extension filename) ".png")))
-    (call-process-shell-command (format "import %s" filename))
+    (call-process-shell-command (format "maim --select %s" filename))
     (insert (format "#+caption: %s\n" (read-from-minibuffer "Caption: ")))
     (insert (format "[[file:%s]]" filename))
     (org-redisplay-inline-images)))
 
+;;; Org mode todo enhancements
+(defun ews--org-recurring-action-p ()
+  "Returns non-nil when the action under point is recurring."
+  (let ((timestamp (or (org-entry-get nil "SCHEDULED" t)
+                       (org-entry-get nil "DEADLINE" t))))
+    (if timestamp (string-match-p "\\+" timestamp))))
 
-  (defcustom ews-org-completed-action "DONE"
-    "Completed action that triggers resetting checkboxes for recurring tasks.")
-
-  (defun ews--org-recurring-action-p ()
-    "Returns non-nil when the action under point is recurring."
-    (let ((timestamp (or (org-entry-get nil "SCHEDULED" t)
-                         (org-entry-get nil "DEADLINE" t))))
-      (if timestamp (string-match-p "\\+" timestamp))))
-
-  (defun ews-org-reset-checkboxes-when-done ()
-    "Reset all checkboxes in the subtree when status changes."
-    (when (and (ews--org-recurring-action-p)
+;;;###autoload
+(defun ews-org-reset-checkboxes-when-done ()
+  "Reset all checkboxes in the subtree when status changes."
+  (when (and (ews--org-recurring-action-p)
              (equal ews-org-completed-action
                     (substring-no-properties (org-get-todo-state))))
-        (org-reset-checkbox-state-subtree)))
+    (org-reset-checkbox-state-subtree)))
 
-  (add-hook #'org-after-todo-state-change-hook
-            #'ews-org-reset-checkboxes-when-done)
+(add-hook #'org-after-todo-state-change-hook
+          #'ews-org-reset-checkboxes-when-done)
