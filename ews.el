@@ -34,17 +34,13 @@
 
 ;; Emacs Writing Studio Customisation
 
-(defvar ews-home-directory
-  (file-name-as-directory (getenv "HOME"))
-  "Location of documents.")
-
 (defgroup ews ()
   "Emacs Writing Studio."
   :group 'files
   :link '(url-link :tag "Homepage" "https://lucidmanager.org/tags/emacs/"))
 
 (defcustom ews-bibtex-directory
-  (concat (file-name-as-directory ews-home-directory) "Documents/library")
+  (concat (file-name-as-directory (getenv "HOME")) "library")
   "Location of BibTeX files and attachments."
   :group 'ews
   :type 'directory)
@@ -64,6 +60,13 @@
   "Completed action that triggers resetting checkboxes for recurring tasks."
   :group 'ews
   :type 'string)
+
+(defcustom ews-org-heading-level-capitalise nil
+  "Minimum level of Org headings to be capitalised.
+'nil implies all levels are capitalised."
+  :group 'ews
+  :type  '(choice (const :tag "All headings" nil)
+		  (integer :tag "Highest level" 1)))
 
 ;; Check for missing external software
 ;;;###autoload
@@ -292,3 +295,20 @@ current note."
 
 (add-hook #'org-after-todo-state-change-hook
           #'ews-org-reset-checkboxes-when-done)
+
+;;;###autoload
+(defun ews-org-headings-titlecase (&optional arg)
+  "Cycle through all headings in an Org buffer and convert them to title case.
+When used with universal argument converts to sentence case.
+Customise `titlecase-style' for styling."
+  (interactive "P")
+  (let ((style (if arg 'sentence titlecase-style)))
+    (message "Converting headings to '%s' style" style)
+    (org-map-entries
+     (lambda ()
+       (let* ((heading (substring-no-properties (org-get-heading t t t t)))
+	      (level (org-current-level))
+	      (heading-lower (downcase heading))
+              (new-heading (titlecase--string heading-lower style)))
+	 (when (<= level (or ews-org-heading-level-capitalise 999))
+	   (org-edit-headline new-heading)))))))
