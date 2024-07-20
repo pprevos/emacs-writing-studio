@@ -1,0 +1,73 @@
+* Foreward
+Who is "Prot"? I actually know, but it might be a good idea to introduce him. He has a lot of credibility, both as a writer and an emacs guru.
+
+Should there be a mention of org-mode in the forward? Just wondering.
+
+I do welcome the non-coding approach in the book, though it might be worth stressing that so much can be done once the reader gets into it. And a lot can be done with the code even when you don't really understand it.
+
+That's one of the things that I love about Emacs -- it can take people who are not coders and introduce them to code /in the context/ of their own work. 
+
+* Chapter 1 -- Why Use emacs?
+
+Not going to do any proofreading here, unless you ask for it. Just trying to get a sense of the overall flow and organization of ideas.
+
+Love the "swiss army chainsaw of productivity"!
+
+** 1.1 What is Emacs?
+
+Not sure if the distinction between "text editor" and "text processor" is going to be clear to many modern writers. Here you're bumping up against the eternal question of trying to tell people "what the heck Emacs is". Almost anything you say sounds either lame or confusing. I do think the part where you mention ALL the things that a writer can do with emacs comes the closest. Definitions don't really do it justice, but I suppose you have to have one!
+
+** 1.2 Why use Emacs?
+
+Would it be worth mentioning Scrivener in this section? That's the one that most people compare it to, since it also gives several of the same functions as emacs. But not free and not extensible (as I understand it; haven't actually used it).
+
+I think you do a good job of clearly setting out that emacs can help writers avoid the frustration of app-hopping.
+
+** 1.3 Malleable Software
+
+I love the Matrix quote! And it's pretty bang-on here.
+
+It's tricky to balance telling readers about the infinite possbilities vs just using it. You're doing a good job of reassuring them that the config you're providing will make it so that they can just start writing, while at the same time showing the possibilities if/when they are ready.
+
+Would you say that emacs appeals to a certain type of writer? Just wondering. I know some people don't have any patience for tinkering, and just the possibility scares them off. Others love getting their proverbial hands dirty and bending the software to their will. Would this book (and emacs) be squarely aimed at the latter?
+
+** 1.4 Redefining User Friendliness
+
+"the internet runs on plain text files" -- I'm pretty sure most people don't know what that means. They don't ever see HTML or CSS or config files on linux servers. They think it's all magical pretty pictures, video, and audio, with fancy graphics.
+
+aThis might just be my own experience from teaching middle school kids, but I'm pretty sure it applies to anyone who has grown up with the web just a part of their lives. For instance, we don't think about how our TV's work. We just turn them on and get audio and video. Much the same with the web. Nobody sees the plain text.
+
+Amen to the distraction of graphical interfaces and how it makes people concentrate on formatting what they're saying rather than their writing. But it's a tricky sell. We're drowning in media all day, so deconstructing it to plain text requires some imagination. And that's a tough sell. Why would most people want to see the plain text? I know and you know that's where writing really lives, but most people are swayed by glitz.
+
+I love the side by side representation of org-mode and the pdf. That says it all. You go on to say that there are multiple ways that the text can be presented. Perhaps it might be instructive to show the page in a few different formats, just to demonstrate your point? And then circle back to how you weren't distracted by any of that when you created the text, because you were able to concentrate on the words themselves and how they would communicate your ideas, thoughts, feelings, etc.
+
+** 1.5 The Learning Curve
+
+I like how you don't minimize the steep learning curve, and also how you encourage the readers to just learn what they need at that time, and only add stuff as they need it. Good advice!
+
+I haven't read far enough to see what your config does, but I'm going to put in a plug here for leaving the toolbar menu up there for beginners. I'm pretty new to emacs and orgmode and I'm pretty comfortable with tinkering, but I've been writing and using shortcuts in Windows for decades. And I've gotten pretty speedy with all of that, so stopping to learn a whole new keyboard paradigm without any safety net is pretty imposing. I like to use the emacs bindings whenever I can remember, but if I'm stuck for something I'll go to the toolbar and use it. I will check to see what the emacs equivalent is.
+
+It's just good for a noob to know that they don't have to unlearn everything they learned and do everything differently. As they become more comfortable with the "new ways", they'll use them, and it will get faster.
+
+** 1.6 Advantages and Limitations of Emacs
+
+Great sub-chapter. I like that you are upfront about the stuff that emacs can't do (or do well). And the warning about emacs becoming a productivity sink is well taken.
+
+** 1.7 How to Read This Book
+
+Good intro to what is coming. I wondered if I was more interested in writing fiction if I would want to continue reading the book?
+
+Very clear roadmap for what's to come.
+
+Final thought on first chapter. What would you think about doing some of those pull-outs that most of these books have: tips, tricks, things to watch out for, etc.? You know, the ones with the obnoxious graphics (like a ticking bomb for something to avoid). As annoying as they can be, I find them a good way to communicate short but important bits of advice to the reader.
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,591 @@
+#+title:  Publishing Articles and Books with Org Mode Export
+#+startup:      content
+#+bibliography: ../library/emacs-writing-studio.bib
+#+macro:        ews /Emacs Writing Studio/
+
+Emacs Org mode is an ideal tool for writing without distractions because working with plain text allows you to focus on content instead of design. While authoring manuscripts in plain text is pleasant and productive, there are better formats to publish your work. You can share your Org source files, but you will only find a small audience appreciative of the power and subtlety of Emacs.
+
+Org mode can export your work to PDF for a printed book, a journal article, a website, or a word processor document. Additional packages can export your manuscript to other formats, such as an e-book in ePub format.
+
+This chapter guides you to prepare Org mode manuscripts for export and navigating the export process with confidence. The first section delves into the principles of the export process and how Org mode interfaces with other software to create the desired output. The second section provides you with the generic settings that apply to all output formats, equipping you with the practical knowledge to prepare your document for publication. The remainder of this chapter explores the intricacies of the most common export formats and guides you on how to configure Emacs and your manuscript to achieve the desired output.
+
+* Org Mode Export Principles
+When preparing a document for export, we are doing something that used to be undertaken by a typesetter. The typesetting process defines the sizes of fonts and graphical elements and their placement on the page. In traditional printing, typesetting involved arranging physical movable type to form a page. In electronic publishing, we no longer have to move physical pieces of lead. Typesetting in Org mode starts with adding appropriate metadata to the manuscript, depending on the chosen export format. 
+
+The basic principle of exporting Org mode files to the desired format is that Emacs converts the text and connects it to a document class, CSS style sheet or other type of template. The template defines the typography and layout of the document. You don't need to know CSS/HTML or LaTeX, but it will help fine-tune the output. To manage citations, your text file can also link to a local or global bibliography. When exporting to PDF or a word processor format, the exported file is passed to either LaTeX or LibreOffice to generate the final result. The Zip program is necessary because ePub and office documents are essentially websites packaged into a single file.
+
+Figure [[fig:export]] shows the Org mode export workflow and the tools used to render the output from the Org mode file to the desired output. You can export the same file to any of the available formats. For example, the source files for this book are configured to produce a print-ready PDF file for the paperback version and an e-book.
+
+#+begin_src dot :file images/org-mode-export-principles.png
+  digraph {
+  graph [dpi=300]
+  rankdir=LR
+  node [fontname=Arial fontsize=10]
+  edge [fontname=Courier fontsize=9 color = gray]
+
+  bibtex [label="Bibliography" shape="polygon" width=1]
+  org [label="Org\nmode" shape="polygon" width=1]
+  tex [label="TeX" shape="polygon"]
+  pdf [label="PDF" shape="note" width=.9]
+  html [label="HTML" shape="note"]
+  epub [label="EPub" shape="note"]
+  odt [label="ODT" shape="note"]
+  word [label="Word\nprocesssor" shape="note" width=.9]
+
+  bibtex -> org [constraint=false]
+  org -> tex [label="Org"]
+  tex -> pdf [label="LaTeX"]
+  org -> html [label="Org"]
+  org -> epub [label="ox-epub/zip"]
+  org -> odt [label="Org/zip"]
+  odt -> pdf [label="LibreOffice"]
+  odt -> word [label="LibreOffice"]
+  }
+#+end_src
+#+caption: Org mode export principles.
+#+name: fig:export
+#+attr_html: :width 600 :alt Org mode export principles :title Org mode export principles
+#+attr_latex: :width 0.5\textwidth
+#+attr_org: :width 400
+#+attr_html: :width 80%
+#+RESULTS:
+[[file:images/org-mode-export-principles.png]]
+
+For example, if you create a website or e-book, any Org mode text surrounded by forward slashes (=/example/=) translates to ~<i>example</i>/~, while in LaTeX it becomes ~\emph{example}~. The default setting for this example is italic text, but it could be something different depending on how you configure your export.
+
+The Org mode document and configuration includes instructions on the layout and typography of the document (the "what you mean" in WYSIWYM). Each export format has its own method to link syntax to typography. When exporting to HTML, a cascading Style Sheet (CSS) define the design while in LaTeX the document class and preamble determines how this syntax looks in the final output. When exporting to word processor format, an OpenDocument Text Template (OTT) file determines the final design.
+
+Exporting an Org mode file to any format starts with the export dispatcher. Activate the export module with the ~org-export-dispatch~ function, which runs with the default =C-c C-e= keyboard shortcut. A new buffer pops up with a large number of options. The first letter you type determines the export format, and subsequent letters the specific options. Using =q= exists the export dispatcher.
+
+* Document Settings
+Your manuscript can store metadata and configurations to guide the export process. Numerous settings control how Org mode exports your document.
+
+** Document Properties
+Some generic metadata applies to all formats:
+
+- =#+title:= Document title.
+- =#+author:= Author name (when not used, it defaults to the content of the ~user-full-name~ variable).
+- =#+date:= Date of publication.
+
+You can define the format of the exported date with the ~org-export-date-timestamp-format~ variable. This variable uses an encoding from common programming languages to display a date. For example, =%e %B %Y= means that it starts with the day number (without leading zero), indicated by =%e%=, then the full name of the month (=%B=), followed by the four-digit year (=%Y=) and separated by spaces. For example, to set the exported date to American format, customise this variable to =%B %e, %Y= (June 3, 2024). The help page for the ~format-time-string~ variable lists the available format options.
+
+The author name appears by default in every exported document, even when not defined in the Org mode file. Adding =#+options: author:nil= negates this behaviour. This option can also remove a title (=title:nil=). 
+
+The title, author and date are the basic metadata. Each export format also uses specific variables in the front matter. You can obtain a template for exporting to your targeted format with ~org-export-insert-default-template~, which inserts keywords in the open buffer. Access this function through the export dispatcher with =C-c C-e #=. Using more than one export format for one manuscript is perfectly fine. However, using this function more than once leads to some duplicate keywords.
+
+Org mode saves the result of the export process in the same directory as the source document. The exported file has the same name as the source file but with a different extension. Exporting Denote Org mode files can create a filename conflict because it results in two files with the same identifier. You can change the exported file's name by adding ~#+export_file_name: <filename>~ to the header. The filename can be any string without the file extension. You can export files to another folder, which can cause errors for LaTeX exports.
+
+** Typography
+A published manuscript includes more than just letters and numbers. Special typographic characters 
+
+The Org mode export module will translate LaTeX characters, such as \alpha, to their respective font values. See section [[#sec:pretty]] for more information on pretty symbols.
+
+To a typographer, a simple dash hides a world of complexity. Most electronic writing uses the plain dash as a hyphen or to separate numbers. Best practice in typography is more subtle. There are three types of dashes, the dah, the En-dash and the M-dash. The En- and Em-dash are named as such because their width is roughly the same as the capital letters N or M. You write these in plain text as a single, double or triple dash:
+
+- =-=: Dashes link elements in compound words or at the end of a justified line of text: (short-term).
+- =--=: En-dash separates numbers or words, replacing the word "to": (1--3, or Marathon--Sparta).
+- =---=: The Em-dash sets thoughts apart and functions like a comma, a colon, or parenthesis: (---).
+
+This method is only needed when writing text. In mathematical expressions, the display engine automatically uses the correct dash.
+
+** Adding a Table of Contents
+Org mode adds a table of contents to every exported manuscript by default. Org mode inserts the table of contents directly above the first headline of the file. You can toggle this behaviour by customising the ~org-export-with-toc~ variable to =nil=. The behaviour for a table of contents can also be modified for each manuscript by adding the =#+options:= keyword to the front matter, for example:
+
+- =#+options: toc:2=: Only include two levels in the table of contents.
+- =#+options: toc:nil=: Don't export a table of contents.
+
+** Numbered Section Settings
+Numbered sections are standard in business and academic writing. When you add =num= to the startup keyword, Org mode will number every heading (=#+startup: num=). The numbering appears in the Org file. Whether this numbering also appears in the published output depends on the export template for the relevant format.
+
+Org mode puts you in control of the numbering system. Some publications, like the front and back matter of a book or a list of references, don't number all headings. You can exclude individual sections from the numbering system by setting the =:UNNUMBERED:= property for each excluded heading, shown below. This level of control allows you to manage your document structure exactly as you need. To add this property, type =C-c C-x p= (org-set-property) and set the 'unnumbered' property as =t= (true).
+
+#+begin_example
+  :PROPERTIES:
+  :UNNUMBERED: t
+  :END:
+#+end_example
+
+** Tables
+Org mode makes it easy to insert tables, as discussed in section [[#sec:tables]]. Within the source document, tables have vertical lines for every column, and the user can add horizontal lines. However, this is not necessarily how a table looks in the final output.
+
+Horizontal lines defined in the source appear in the final result, but vertical lines are omitted, in line with the /The Chicago Manual of Style/ [cite:@chicago_2017 section 3.53]. Most publications only allow horizontal lines because data in a table is aligned into columns, so the eyes don't need a vertical line to separate groups.
+
+Occasionally, vertical lines can be helpful to structure a table into groups of columns. A row with a forward slash (=/=) in the first field specifies which columns form a group flanked by vertical lines. The other fields either contain a lesser-than symbol (=<=) to indicate that this column starts a group or a greater-than (=>=) symbol to indicate the end of a column. Using =<>= inside a column makes it a separate group surrounded by vertical lines. Effectively, the symbols point towards the location of a vertical line. It is also possible to only insert the column group starters (=<=) after every desired vertical line. However, this method does not add a line to the left and right edges of the table.
+
+The standard alignment for Org mode columns is left-aligned. If you would like to overrule the automatic alignment of number columns, you can use a row with either =<r>=, =<c>= or =<l>=. The example below demonstrates these principles, with the exported version in table [[#tab:lines]] below it.
+
+#+begin_example
+| n | n^2 | n^3 | n^4 |        \gamma |  a |  b |
+|---+-----+-----+-----+----------+----+----|
+| / |   < |     |  >  |          | <> |    |
+|   |     | <r> | <c> |      <r> |    |    |
+| 1 |   1 |   1 |  1  | Aardvark |  3 |  4 |
+| 2 |   4 |   8 | 16  |     Bird |  5 | 12 |
+| 3 |   9 |  27 | 81  |      Cow |  8 | 15 |
+|---+-----+-----+-----+----------+----+----|
+#+end_example
+
+#+caption: Example of table with vertical lines and alignment.
+#+name: tab:lines
+| n | n^2 | n^3 | n^4 |        \gamma |  a |  b |
+|---+-----+-----+-----+----------+----+----|
+| / |   < |     |  >  |          | <> |    |
+|   |     | <r> | <c> |      <r> |    |    |
+| 1 |   1 |   1 |  1  | Aardvark |  3 |  4 |
+| 2 |   4 |   8 | 16  |     Bird |  5 | 12 |
+| 3 |   9 |  27 | 81  |      Cow |  8 | 15 |
+|---+-----+-----+-----+----------+----+----|
+
+Each table can also have a caption, which starts with the =#+caption:= token and a name (=#+name:=). 
+
+#+begin_example
+  #+caption: Example table.
+  #+name: tab:example
+  | Column 1 | Column 2 |
+  |----------+----------|
+  | SATOR    |       12 |
+  | AREPO    |       26 |
+  | TENET    |      878 |
+  | OPERA    |       89 |
+  | ROTAS    |       89 |
+#+end_example
+
+** Table and image properties
+You have already seen the =#+ATTR_ORG:= keyword to set the size of an image inside an Org buffer (section [[#sec:images]]. You can use a similar keyword for both images and tables for each of the export formats. These keywords define the size, placement and decoration for tables and images in the exported document.
+
+- =#+ATTR_ODT:= Office documents
+- =#+ATTR_HTML:= Web pages and ePub documents
+- =#+ATTR_LATEX:= LaTeX documents
+
+The various options for each of these attributes depend on the output format and are explained in the relevant sections below.
+
+** Quotations and other structures
+The best advice to any writer is to use original words when expressing their thoughts. However, there are times when the words of other authors are so powerful that they not only need to be quoted but also inspire and motivate us. The most direct way is obviously using "quotation marks."
+
+Most export formats define a separate typography for quotations, such as indenting the paragraph or using an italic font. You can instruct Org mode to use the quotation structure template. You add a quotation block with =C-c C-, q=.
+
+#+begin_example
+ #+begin_quote
+   Good writing is essentially rewriting (Roald Dahl) 
+ #+end_quote
+#+end_example
+
+Org mode structure templates are bits of predefined text to quickly insert commonly used structures. They streamline your workflow by reducing repetitive typing. You have already seen a structure template for notes in the previous chapter. The structure templates most relevant to this book's topic are notes, quotations, verses, and centred text. These structure templates instruct the export workflow to treat these parts of the text accordingly.
+
+** Macros
+Org mode also has the functionality to use macros in a manuscript. A macro consists of a string of characters between triple curly braces. Org mode expands the macro to the full text during the export process. For example, for this book the macro ={{{ews}}}= is replaced by: "{{{ews}}}". You define a basic macro in the document's front matter:
+
+=#+macro: ews /Emacs Writing Studio/=
+
+Org mode includes a series of built-in macros to add document properties to your manuscript. One example provides dynamic timestamps in the date field. Timestamps in Org mode are static, but you can use an export macro to insert a date dynamically, so you insert the date and/or org time at which the document was exported. Using ={{{time(format)}}}= inserts the current date in the manuscript with the format as described above.
+
+Customise the ~org-export-global-macros~ variable to define macros that apply to all Org mode documents. Each macro requires two entries, which in Emacs-speak is a 'cons-cell'. You enter the name and the template for each macro you want to store globally.
+
+Org mode macros are a versatile toolkit that can help expand commonly repeated passages. Macros can also include variables and Emacs Lisp functions to create dynamic expansions. The Org mode manual provides some more advanced examples of macro expansion. The section about HTML export provides more information about macros.
+
+** Excluding content from export
+Not everything you write should be shared with the world. Org mode excludes any comments from the final format as discussed in section [[#sec:notes]]. The /Emacs Writing Studio/ configuration also doesn't export drawers, so your notes remain private.
+
+Furthermore, you can exclude a section and associated subsections (the subtree) of your writing from export by adding the =:noexport:= tag to a heading with =C-c C-q= (~org-set-tags-command~). You enter the tag name in the minibuffer and can use completion to find tags already used in the current buffer. The tag between two colons appears on the right side of the heading name.
+
+** Exporting citations
+:NOTES:
+- [X] https://blog.tecosaur.com/tmio/2021-07-31-citations.html
+:END:
+:PROPERTIES:
+:CUSTOM_ID: sec:citation-export
+:END:
+Org mode has a built-in citation manager that can use BibTeX / BibLaTeX or CSL bibliography files to reference bibliographic items such as articles and books. The basics are straightforward and work without configuration or external software.
+
+You already know how to create a global and local bibliography, and you also know how to insert citations into Org mode buffers (sections [[#chap:inspiration]] and [[#chap:production]]). This section explains how Org mode converts constructs such as =[@cite:wittgenstein_1922]= to a formatted citation, for example "(Wittgenstein, 1922)".
+
+All you need to export citations is a global or local bibliography, one or more citations and a list of referenced literature (the bibliography), as in this example:
+
+#+begin_example
+  #+bibliography: references.bib
+  
+  "The world is everything that is the case" [cite:@wittgenstein_1922].
+  
+  #+print_bibliography:
+#+end_example
+
+You need a processor to convert a citation in an Org file to a formatted citation in the exported version. Org mode uses a basic export processor by default, which is fine for simple projects. You can use this processor for all export formats. Other processors provide more flexible citation management, discussed in the sections [[#sec:csl]] and [[#sec:bibtex]].
+
+The basic citation processor can be configured with a keyword in your document's metadata. This keyword specifies the processor (basic), followed by a bibliography style and a citation style:
+
+=#+cite_export: basic [bibliography style] [citation style]=
+
+Org mode converts the citations to formatted text during the export process and adds a list of references. To include a list of references, add =#+print_bibliography:= at the location where it needs to appear. The list of references does not include a heading when using the basic engine. The second part of the =#+cite_export:= keyword defines one of three options:
+
+- =author-year=: Default mode.
+- =numeric=: Vancouver system with numbered entries.
+- =plain=: Same as the default, but only author family names.
+
+The basic export processor can convert citations to different styles. When no citation style is provided, the default uses the author(s) and year(s) between parenthesis, such as "(Toulmin, Stephen, 2003)". There are two ways to define the style of citations: the third part of the =#+cite_export:= keyword, which you can override for individual entries. The following citation styles are available:
+
+- =author= (=/a=): Only author(s) "Toulmin, Stephen"
+- =noauthor= (=/na=): No authors "(2003)"
+- =text= (=/t=): Inline text citation "Toulmin, Stephen (2003)"
+- =nocite= (=/n=): No citation, but add an entry to the list of references.
+- =note= (=/ft=): Citation as footnote.
+- =numeric= (=/nb=): Numbered references between parenthesis (Vancouver system).
+
+You can override the default by adding a style marker before the citations (listed in parentheses above). For example =[cite:/t@rorty_1979]= results in "Rorty (1979)".
+
+Another configuration option is available by adding a variant that determines whether to remove parenthesis (=/b=) or capitalise the first letter (=/c=). You add the variant after the style. For example, =[cite/ft/b:@rorty_1979]= results in a footnote without the year in parenthesis: "Rorty, 1979." Not all combinations of styles and variants make sense. When you issue an impossible combination, Org mode will ignore it.
+
+Note that some combinations of bibliography and citation styles don't make sense. For example, the numeric bibliography and footnote citation styles don't go very well together.
+
+Org mode can also include prefixes and suffixes to citations. For example =[cite: see @rorty_1979 p.12]= results in "(See Rorty 1979 p.12). There is also a global prefix and suffix when using more than one citation. So, a citation with all the trimmings could look like:
+
+=[@cite/s/v: global-prefix; prefix @key1 suffix; prefix @key2 suffix; ...;  global-suffix]=
+
+* Office Documents
+:PROPERTIES:
+:CUSTOM_ID: sec:odt
+:END:
+The export function in Org Mode can create documents for word processors, such as LibreOffice Writer, Apple Pages or MS Word. Exporting to a word processor format is useful when writing for corporate clients or collaborating with coauthors or an editor. The Org mode export process results in an OpenDocument Text format (ODT). An ODT file is a compressed version of a collection of XML files and embedded images, which requires the Zip program to be available.
+
+If you have LibreOffice installed, you can also create a =docx= file to make it easier for MS Word users to share the joy of reading your writing. When you set this option, the export process will result in both an =ODT= and a =DOCx= file. You can change the output format by customising the ~org-odt-preferred-output-format~ variable. You can customise this variable to instruct LibreOffice to generate a PDF file.
+
+** Document properties
+The ODT export tool has some additional front matter keywords to customise the output:
+
+- =#+subtitle:= The document subtitle.
+- =#+description:= File description.
+- =#+keywords=: The exported file(s) keywords.
+
+** Images and tables
+To control how to export tables and images to an ODT file, use the =#+attr_ODT:= line just above the item. Various properties to size and place images are available:
+
+- =:width= and =:height= control the size of an image in centimetres. You can use either only width or height or both.
+- =:scale= defines the relative width of the source image.
+- =:anchor= anchors the image =as-char=,  to a =paragraph= or to a  =page=.
+
+For example, an image with the following properties becomes ten centimetres wide and is anchored as a character:
+
+=#+attr_odt: :width 10 :anchor as-char=
+
+When anchoring an image as a character (=as-char=), it is placed in the document like any other character. The image moves with the text as you add or delete text before the image. An image anchored to a paragraph moves with the paragraph. When anchoring an image to a page, it keeps the same position relative to the page margins and does not move. This method is useful when publishing layout-intensive documents such as newsletters.
+
+The ODT export engine first determines the image size in centimetres based on the abovementioned properties. The source image is embedded into the ODT document at a resolution of 96 dots per inch (DPI). You can customise the ~org-odt-pixels-per-inch~ variable to use a different resolution. One has to wonder why the sizing of images is in centimetres, and the resolution uses imperial measurements, but alas, that is the way it works.
+
+Org mode can export tables to ODT format. By default, tables have a top and bottom frame and horizontal and vertical lines as defined in the source. The =:rel-width= property controls the width of a table in percent of the text width. Any column sizes specified in the table will be relative to the total width (see section [[#sec:tables]]). The following property line above a table would export it at a relative width of 75% of the text width:
+
+=#+attr_odt: :rel-width 75=
+
+Captions and labels for images and tables are rendered with a label, such as "Figure 2: Phylogenetic tree". The label is customisable through the ~org-odt-category-map-alist~ variable, which does require some Emacs Lisp skills.
+
+** Mathematics
+The ODT exporter supports mathematical expressions written in LaTeX, with external software. The Org export to ODT ignores LaTeX formulas, but there is a workaround. The easiest method is to convert the mathematics into an image file. Add this keyword to your front matter: =#+options: tex:dvipng=. This method requires either the dvipng or the ImageMagick program. You can replace =tex:dvipng= to =tex:imagemagick= to change the export method.
+
+ODT documents do have their own formula format (MathML), which Org mode can export to. MathML expresses mathematical formulas in an XML-based notation. However, this option requires some advanced configuration and a MathML converter. The Org mode manual provides more detailed guidance on using MathML.
+
+** Style template
+Controlling the typography and layout of the output requires an OpenDocument Text Template (=ott=) file. These files hold settings to generate new documents. These settings include typography layout and other artefacts. You specify the relevant template in the frontmatter of the current buffer with the =#+odt_styles_file:= keyword, followed by the path to a style file (either =ott= or =odt= format). To use the same template for all ODT exports, customise the ~org-odt-styles-file~ variable.
+
+Creating a style file template is straightforward. Create an Org document, add =#+options: H:4 num:t= and export to ODT format with =C-e C-e o o=. The options create four numbers heading levels, so change this as you see fit. Open the exported document with LibreOffice and edit the styles (press =F11=). Org mode uses some particular styles that start with "Org". When the document is styled to your liking, save it as an =ott= file and attach it to your manuscript.
+
+The next time you export the Org document, the output will be in the style defined in the template. Org mode extracts the =styles.xml= file embedded in your template file. You can also use this method for templates with pre-configured content, such as logos or standard text. 
+
+The ODT export process relies on specific templates and style names. Using third-party styles can lead to mismatches when they use different names for styles. Please note that you can only create templates with LibreOffice. Unfortunately, commercial word processors are incompatible with the open ODT format.
+
+You can fine-tune how Org exports to OpenOffice at a detailed level. For a thorough discussion on Open Document export, read the /OpenDocument Text Export/ section of the Org mode manual: =C-h R org RET g open=.
+
+** Citation style language
+:PROPERTIES:
+:CUSTOM_ID: sec:csl
+:END:
+The primary citation processor works perfectly fine when exporting to a =ODT= format, but it has limited ability to fine-tune your citations or meet the expectations of your university or publisher. Using the Citation Style Language (CSL) provides extensive options to style your citations. CSL was created by Bruce D'Arcus, who also developed the Citar package described in section [[#sec:citar]]. You can use the CSL citation processor for all export formats.
+
+The CSL engine relies on a file that defines the output. You can find these through the =citationstyles.org= website. Many thousands of varieties are available in CSL for specific journals or universities. Download the style files relevant to your writing and store them for future reference.
+
+By default, the CSL processor renders citations in Chicago author-date format. You can use another style file by specifying it within the document by adding the file name to =#+cite_export:= keyword, for example:
+
+=#+cite_export: csl /path/to/style-file.csl=.
+
+If you keep a collection of CSL files in the same folder, then you can configure the ~org-cite-csl-styles-dir~ variable to ensure that Org mode finds them. In this case, you only have to specify the file name in the front matter.
+
+The CSL processor supports the following citation styles, some of which are the same as the basic processor discussed above. The specified CSL file defines the default style of citations.
+
+- =author= (=/a=): Author only.
+- =noauthor= (=/na=): No author(s).
+- =text= (=/t=): In-line citation.
+- =nocite= (=/n=): Note cited but listed in the references.
+- =year= (=/y=): Only the year
+- =title= (=/ti=): Title of the entry.
+- =bibentry= (=/b=): The full citation as listed in the bibliography. 
+
+CSL provides functionality to add a filtered list of references by keyword or publication type. You can combine this with the =nocite= option to create a themed bibliography. Using =*= as a key in a =nocite= citation includes all available items. The example below exports all books in the global and local bibliography with "Emacs" or "LaTeX" as a keyword. Note that the keyword is case-sensitive.
+
+#+begin_example
+  [cite/n:@*]
+  #+print_bibliography: :type book :keyword Emacs,LaTeX
+#+end_example
+
+* Websites
+The HyperText Markup Language (HTML) is the engine that drives the World Wide Web. The example below shows a simple file with HTML markup surrounded by angled braces (less- and greater than symbols). Indentation is not strictly required, but it helps with understanding the document's structure, also called the DOM (Document Object Model).
+
+#+begin_example
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTML Example</title>
+  </head>
+  <body>
+    <div>
+        <p>Hello world!</p>
+    </div>
+  </body>
+</html>
+#+end_example
+
+Emacs includes a built-in major mode for editing HTML files. However, Org mode has perfect export capabilities for HTML, so you can take advantage of the lightweight markup without worrying about technical syntax.
+
+Exporting Org mode to HTML is used to publish websites and to create ebooks in ePub format, outlined in section [[#sec:epub]].
+
+** Document properties
+The HTML export engine allows you to set a wide range of document properties in addition to the ones already discussed. These configurations fine-tune the output of the HTML code, which requires in-depth knowledge of coding web pages and is thus for advanced usage. You can preview all available HTML settings with =C-c C-e #= and selecting =html=.
+
+The default export adds a postamble to the page with some metadata. You can negate this behaviour by adding =html-postamble:nil= to the options keyword in the front matter.
+
+** Images and tables
+Org mode provides a series of attributes to define how images and tables are exported. These configurations translate directly to HTML attributes. The =#+ATTR_HTML:= keyword defines the attributes for both images and tables.
+
+- =:alt=  provides alternative information for an image if a user cannot view it (for example, because of a slow connection, a technical error, or if the user uses a screen reader).
+- =:title= for the image title. The information is often shown as a tooltip text when the mouse moves over the element.
+- =:align= left, centre or right.
+- =:width= and =:height= to set the image size (in pixels or percentage)
+
+Images in Org mode can also be links when the description of the link is itself an image, either a local file or weblink. For example, to insert a thumbnail that hyperlinks to its high-resolution version, use something like this: =[[file:highres.jpg][file:thumb.jpg]]=.
+
+Tables are also modified by the =#+ATTR_HTML:= keyword which provides three attributes:
+
+- =:border= indicates the width of the border around the table.
+- =:rules= set to =all= to draw all table lines.
+- =:frame= specifies the visibility of outside borders. The default behaviour is no outside border lines. Use =border= to show all border lines. Read HTML documentation for more detailed settings.
+- =:cellspacing= and =:cellpadding= adjust the padding inside the cells and the space between the cells.
+
+A CSS file provides many more options for designing tables in HTML export, which is outside the scope of this book.
+
+** Mathematics
+When exporting an org mode file to HTML it includes a reference to MathJax, which is a JavaScript library that displays mathematical notation in web browsers. 
+
+** Style sheets
+While the HTML file contains the content and the structure, the Cascading Style Sheet (CSS) file determines the layout and typography. The default export engine includes a basic style sheet, that you can replace with your own in the front matter. The =#+HTML_HEAD:= keyword lets you add lines to the document preamble.
+
+#+begin_example
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style1.css" />
+,#+HTML_HEAD_EXTRA: <link rel="alternate stylesheet" type="text/css" href="style2.css" />
+#+end_example
+
+** Citations
+Citations in HTML can use both the basic and CSL processor described in sections [[#sec:citation-export]] and [[#sec:csl]].
+
+** Inserting bespoke HTML
+If you know how to write HTML, you can insert it directly into an Org mode file. This technique can add online forms and embed multimedia or non-standard typography.
+
+Insert an HTML structure template with =C-c C-, h= and add your bespoke code. All lines between the beginning and end markers are included verbatim in your webpage.
+
+#+begin_example
+,#+begin_export html
+<some html code/>
+,#+end_export
+#+end_example
+
+These HTML blocks are only exported when the output format matches. If you prepare a document in multiple formats, you must include an alternative LaTeX or ODT variant.
+
+Some HTML snippets might appear more than once in your code. Most web page editors provide shortcodes, short pieces of text that insert complex HTML. Org mode macros are ideal to use as HTML shortcodes. You can use them for embedding complex HTML, such as forms and multimedia, or simple applications, such as changing the background colour for selected words. The example below creates a macro that expands to a basic embedded YouTube clip using its identification code. The =$1= part of the macro represents the first parameter. Any subsequent parameter will be =$2= and so on.
+
+#+begin_example
+#+MACRO: youtube <iframe src="https://www.youtube.com/embed/$1"></iframe> 
+#+end_example
+
+You can use this macro anywhere on your webpage by adding something like ={{{youtube(jNQXAC9IVRw)}}}=. This example embeds the first YouTube video ever uploaded by Jawed, called /Me at the Zoo/, which renders as:
+
+#+begin_example
+<iframe src="https://www.youtube.com/embed/jNQXAC9IVRw"></iframe> 
+#+end_example
+
+The following example creates a macro to change the style inside a paragraph by changing the text colour. Macros can include expansions for more than one format. The example below shows how to achieve the same effect in HTML and LaTeX. The alternative macro expansions are surrounded by double ampersand symbols. Using this method, you can define macros for different export formats.
+
+#+begin_example
+,#+MACRO: hl @@html:<span style="text-color: $1;">$2</span>@@@@latex: \textcolor{$1}{$2}@@
+#+end_example
+
+You deploy this macro like this ={{{hl(red, This text is red.)}}}=. When exporting this line to both HTML and LaTeX will produce 
+
+** Publishing a project
+Org includes a publishing management system that allows you to configure automatic HTML conversion of projects composed of interlinked Org files. Configuring the publisher requires customising the ~org-publish-project-alist~ variable.
+
+An association list (alist) is a variable that contains pairs of keys and values. The keys are a series of properties that can be configured. The key value in the customisation screen is the name of the project. The value field contains the project settings. This field is a collection of pairs of properties and values. The minimum configuration to get you started with building a website or blog is:
+
+#+begin_example
+(:base-directory "<path-to-org-files>"
+ :publishing-function org-html-publish-to-html
+ :publishing-directory "<path-to-html-files>")
+#+end_example
+
+This creates a website from the Org files in the =<path-to-org-files= folder and saves the exported files to =<path-to-html-files>=. Org provides many options to finetune your project, as discussed in the manual in great detail.
+
+* LaTeX and PDF
+:NOTES:
+- [ ] https://www.youtube.com/watch?v=9eLjt5Lrocw
+:END:
+LaTeX (pronounced "LAH-tek") is a modified version of an older program called TeX, first released by computer wizard Donald Knuth in 1978. Knuth developed this tool because he was unhappy with the way his publisher typeset his books. The original TeX language is complex, so Leslie Lamport developed the LaTeX variety, which is a collection of TeX macros [cite:@lamport_1994_latex].
+
+While Latex take a while to learn, the results are professional-looking documents. This tool is widely used in academia and technical fields. The output of LaTeX documents is optimised for printed works, so it is also great for writing non-technical books. The paperback version of this book is created with Org mode and exported to PDF with LaTeX.
+
+You don’t necessarily need any knowledge of LaTeX to export to PDF, but it will certainly help to fine-tune the design of your publication. The basic syntax of LaTeX is easy to explain. 
+
+#+begin_example
+  \documentclass{article}
+  \usepackage{times}
+  \begin{document}
+  \title{Lorem Ipsum}
+  \author{Peter Prevos}
+  \date{July 2024}
+  \maketitle
+  \section{Nunc eleifend}
+  Nunc aliquet, augue nec adipiscing interdum.
+  \end{document}
+#+end_example
+
+The area between =\documentclass{...}= and =\begin{document}= is the /preamble/ which contains commands that affect the entire document. The text of the document is enclosed between the =\begin{document}= and =\end{document}= commands after the preamble.
+
+The first line defines the type of document, or class in LaTeX terms. The default class used by Org mode is an article. The document class defines the design and typography of the final output. LaTeX developers and publishing companies have drafted a large number of document classes for many types of publications. Some of the most default document classes are:
+
+- =article=: Scientific journal articles
+- =report=: Small book or thesis
+- =book=: Writing long form books
+
+Each document class has configurable options such as the standard font and paper sizes, placed between square brackets. For example =\documentclass[11pt, b5paper]{book}= defines the book class with 11 point fonts and B5 paper size (176 \times 250mm).
+
+The next part of a LaTeX document initiated the packages. LaTeX is extendible with packages just like Emacs. These packages enhance the design of you document. In this example, the =\usepackage{times}= command instructs LaTeX to use the Times new Roman font.
+
+The next lines in the example define the title and author and date. this part is called the top matter in LaTeX terminology. The top matter closes with the =\maketitle= command, which tells LaTeX to typeset the title block.
+
+The actual manuscript starts after the =\maketitle= command. The example defines a section header with the =\section{}= command. Standard paragraphs don't need any LaTeX syntax. 
+
+Writing documents directly in LaTeX can be confusing because you need to know its markup language, and your text is littered with backslashes, curly braces, and other syntactical distractions. Being productive as a writer requires focusing on the text content instead of how it looks. The AUCTeX Emacs package assists with writing and formatting LaTeX files. This package is not part of /Emacs Writing Studio/ because Org mode has perfect export capabilities for LaTeX, so you can take advantage of the lightweight markup of Org mode. Why learn a whole new syntax if you can get away with using what you already know.
+
+To enable exporting Org mode files to PDF, you need to have LaTeX installed on your system. How to install LaTeX depends on your operating system, and your favourite search engine will point you in the right direction.
+
+Keying =C-c C-e= to open the export dispatch, then =l p= creates and opens the PDF version of the current Org mode buffer. Other options are available to export the buffer to LaTeX or to save a PDF file without opening it.
+
+To make the magic work, Org Mode converts your file to a =tex= file, after which the LaTeX software converts it to PDF (figure [[#fig:export]]). The system works out of the box without any configuration. With some additional tinkering you can produce PDF files that are perfect for producing printed books or write articles that meet your publisher's requirements.
+
+** Document properties
+
+** Images and tables
+Org mode converts images and tables to LaTeX floats. You can add specific attributes to these floats by using =#+attr_latex:=, as shown in the image example below:
+
+#+begin_src org :tangle no
+  ,#+caption: This is an example image caption.
+  ,#+attr_latex: :width 5cm :options angle=90 :placement h
+  [[directory/filename.png]]
+#+end_src
+
+Various parameters are available to determine how your table or image looks in the final output.
+
+** Mathematics
+
+** Document classes
+The default document class for Org mode export is the article class. This class has wide margins which looks strange at first. In actuality, it is not the margins that are too large, but the paper size. The optimum length for a line of published text is between 60 and 75 characters. LaTeX is design to produce documents to best practice in typography. But you are not stuck with the LaTeX defaults and Org mode provides three mechanisms to configure the LaTeX output:
+
+1. In the Org file front matter, using ~#+latex_header:~.
+2. Configuring the ~org-format-latex-header~ variable.
+3. Configure the ~org-latex-classes~ variable.
+
+The Org mode front matter can do a lot of the work to fine-tune the output. For example, a quick fix for these wide margins is to use two columns by adding the following line to the front matter: =#+latex_class_options: [twocolumn]=
+
+The example below specifies the book document class with A4 paper size. This example also specifies the Times fonts package. The last line adds additional lines to the preamble, in this case activating the TikZ package for technical and scientific illustrations.
+
+#+begin_src org :tangle no
+  ,#+latex_class: book
+  ,#+latex_class_options: [a4paper]
+  ,#+latex_header: \usepackage{times}
+  ,#+latex_header_extra:\usepackage{tikz}
+#+end_src
+
+Using the front matter means you need to add the relevant configuration lines for every file. Note that if you use linked documents (section [[#sec:include]]) then you only need to define the relevant packages in the mother document.
+
+Org mode adds a list of default and user-defined LaTeX packages to the export, defined by the ~org-format-latex-header~ variable. This header applies to every exported document. Read the documentation of this variable for details. 
+
+Lastly you can define header configurations by changing the =org-latex-classes= association list. This list can contain a collection of templates you use for the various projects you work on.
+
+The example below adds the template for the American Psychological Association (APA) journals. This list's documentation provides all the details you need to configure packages and classes for your exports. The ~with-eval-after-load~ function ensures that this variable is only set once the LaTeX export function is loaded by Emacs. Note the double backslash instead of the single one in regular LaTeX syntax for compatibility with Emacs Lisp. 
+
+#+begin_src elisp
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+                 '("apa6"
+                   "\\documentclass[a4paper, jou, 11pt]{apa6}
+                    \\usepackage[nodoi]{apacite}
+                    \\usepackage{graphicx}
+                    \\usepackage[T1]{fontenc}
+                    \\usepackage{times}"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}"))))
+#+end_src
+
+The last part of this association list specifies the mapping between Org mode and LaTeX headers. In this case, the highest level is associated with the section header, the second level with a subsection, and so on.
+
+You can call this particular class by adding =#+latex_class: apa6= to your file header. This mechanism empowers you to define bespoke LaTeX classes to create a library of export options.
+
+The EWS init file contains the configuration that was used to generate the paperback version of this book.
+
+These three mechanisms allow fine-grained control over how your Org mode document is exported to LaTeX and PDF. The /Emacs Writing Studio/ configuration only uses the default settings for these variables because the possible use cases are too numerous to define a sensible default other than what is already available.
+
+Org mode converts headers to relevant LaTeX headers, and text becomes a paragraph. The relationship between the heading level in your Org file and LaTeX depends on how you configure the document class. [explain]
+
+** Citations
+:PROPERTIES:
+:CUSTOM_ID: sec:bibtex
+:END:
+The last citation processor available in Or mode links directly to LaTeX.
+
+** LaTeX snippets
+You can write simple LaTeX commands directly into your org file. For example, =\newpage= will add a page break. You can also place equations using dollar signs, for instance =$e^{i\pi} + 1 = 0$= results in $e^{i\pi} + 1 = 0$. Section [[#sec:formulas]] explains this topic in more detail.
+
+Furthermore you can simply insert LaTeX commands into your text. They will be exported as-is into the TeX file. For example. to create a front and back matter, use the ~\frontmatter~ and ~\backmatter~ LaTeX commands in your Org file at the appropriate locations.
+
+This method works perfectly but is not ideal when you need to export the file to multiple formats. You don't want these LaTeX commands littering your other outputs. Ideally you include these commands in a structure template. Press =C-c C-, l= to insert a LaTeX source block:
+
+#+begin_src latex :tangle no :eval no
+  ,#+begin_export latex
+  \frontmatter
+  ,#+end_export
+#+end_src
+
+* Ebooks
+:PROPERTIES:
+:CUSTOM_ID: sec:epub
+:END:
+Most ebook publishers use the ePub format for distribution. The ePub format is a compressed file with the contents stored as a website optimised for an e-reader. Mark Meyer's =ox-epub= package adds this functionality to the Org export dispatcher. This package uses the built-in Org to HTML export to create the ebook, so you can use any of its features described above to fine-tune the output.
+
+There are some specific export options for this format beyond the one's already discussed, which you can add with =C-c e # epub=:
+
+- =#+uid:= a unique ID of the document, otherwise known as URI, could be a website address or an ISBN. This property is compulsory.
+- =#+publisher=: Name of the book publisher.
+- =#+license=: Copyright or copyleft license.
+- =#+epubstyle=: The CSS file used for export.
+- =#+epubcover=: The image of the book cover.
+
+The default configuration adds a postamble to the bottom of the last page with a timestamp, author and a HTML validation service. Adding =#+options: html-postamble:nil= to the Org file header removes these from your ebook.
+
+The =ox-epub= package does not convert Org mode timestamps, such as =[2024-07-08 Mon]=, to a date format that complies with the ePub standard. You can correct this by removing the square brackets and the name of the day and time from the timestamp. Alternatively use the time macro to set a date format without the square brackets (={{{time(%d %B %Y)}}}=).
+
+The export process for ePub breaks when any image files are missing. While you can export to HTML and PDF without any errors, your ePub will not render if any linked images are missing. 
+
+When including images, it is better to only use open image formats such as =.png=. Some ebook readers cannot display JPG files and other proprietary formats. The ebook will look fine on your computer but might not pass any checks by a publisher.
+
+For the cover image, Amazon recommends that ideal dimensions for cover files are 2,560 x 1,600 pixels, or any other size with an aspect ratio of 1 to 1.6.
+
+* Further Study
+The document repository for this book contains some example files that include most of the options described in this book.
+
+The export menu also provides an option to export to Org mode. This option is useful to merge a set of documents linked with =#+INCLUDE:= keywords, as explained in section [[#sec:include]].
+
+You will notice that Org mode provides a range of export formats not described in this book. The principles for using any of these formats are the same as described in this chapter. The Org mode manual discusses all functionality available for exporting, which you can find with =C-h R org RET g export RET=.
+

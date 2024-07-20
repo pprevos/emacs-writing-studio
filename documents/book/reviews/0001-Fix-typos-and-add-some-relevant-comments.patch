@@ -1,0 +1,527 @@
+From dc38045f8002319c945cce00f37353ee16eeb5f0 Mon Sep 17 00:00:00 2001
+Message-Id: <dc38045f8002319c945cce00f37353ee16eeb5f0.1714636022.git.info@protesilaos.com>
+From: Protesilaos Stavrou <info@protesilaos.com>
+Date: Thu, 2 May 2024 10:46:41 +0300
+Subject: [PATCH] Fix typos and add some relevant comments
+
+---
+ documents/ews-book/00-ii-preface.org      |  4 +--
+ documents/ews-book/01-why-emacs.org       | 15 +++++-----
+ documents/ews-book/02-getting-started.org | 32 +++++++++++---------
+ documents/ews-book/03-using-ews.org       | 26 ++++++++--------
+ documents/ews-book/04-inspiration.org     |  8 ++---
+ documents/ews-book/05-ideation.org        | 36 +++++++++++++++--------
+ 6 files changed, 70 insertions(+), 51 deletions(-)
+
+diff --git a/documents/ews-book/00-ii-preface.org b/documents/ews-book/00-ii-preface.org
+index c9323b6..4cd74dc 100644
+--- a/documents/ews-book/00-ii-preface.org
++++ b/documents/ews-book/00-ii-preface.org
+@@ -10,7 +10,7 @@ #+title: Preface
+ 
+ Computers have replaced mechanical typewriters. I was very excited when I wrote my first document on a computer. There was no more need for correction fluid 
+ 
+-I used to hop from application to application—jumping from the action list to my schedule, onward to the word processor, spreadsheet, PDF reader, and so on. A had to manage a complex web of software tools to work on a single project. Wouldn't it be nice if there was one program that could help you with almost all your tasks?
++I used to hop from application to application—jumping from the action list to my schedule, onward to the word processor, spreadsheet, PDF reader, and so on. I had to manage a complex web of software tools to work on a single project. Wouldn't it be nice if there was one program that could help you with almost all your tasks?
+ 
+ 
+ This book describes
+@@ -24,7 +24,7 @@ #+title: Preface
+ * Acknowledgements
+ A full list of acknowledgements for an free software project such as Emacs would consist of a huge list of names. Emacs can only exist because of the hundreds if not thousands of volunteers who develop and maintain the code of the core system and the many packages.
+ 
+-My inspiration for writing this book came from the excellent work of people like Protesoleas (Prot) Stavrou, *** Wilson from System Crafters, *** and many other people who helped me flatten the learning curve of my Emacs journey.
++My inspiration for writing this book came from the excellent work of people like Protesilaos (Prot) Stavrou, *** Wilson from System Crafters, *** and many other people who helped me flatten the learning curve of my Emacs journey.
+ 
+ Arjan Zuidhof
+ 
+diff --git a/documents/ews-book/01-why-emacs.org b/documents/ews-book/01-why-emacs.org
+index 96a8cb5..9e6c9d0 100644
+--- a/documents/ews-book/01-why-emacs.org
++++ b/documents/ews-book/01-why-emacs.org
+@@ -9,7 +9,7 @@ #+title: Why Use Emacs
+ 
+ Imagine needing a different tool for every step of your writing project: one for brainstorming ideas, another for taking notes, yet another for writing the actual book. Your information is scattered in many places and stored in various formats that are incompatible with other programs. You spend a lot of time switching between programs, using different methods to achieve the same goal. Also finding the information you need can be problematic as it is scattered across your drive. Unfortunately, that's how many people manage their workflows. What if you could do this differently and use the same program to create written works from ideation to publication? This book introduces Emacs, a powerful tool that can handle everything from sparking your initial ideas to publishing your finished article, book or website. Emacs lets you ditch the juggling act and focus on your writing.
+ 
+-This book is for authors frustrated by commercial software and are looking for a more efficient workflow and flexibility in their computing needs. This book covers everything you need to know to do research, write and publish electronically or for print. Emacs is originally developed for software developers, but you don't need to be a computer wiz to use it as an author. This book provides a gentle introduction to flatten the learning curve to get started. Most existing Emacs documentation is somewhat technical and assumes prior knowledge. Technical documentation typically delves into the depth of every aspect of the system, which his daunting for new users. This books uses a different approach and peels Emacs like an onion, revealing one aspect of this software at a time. Each chapter adds more detail and complexity, following the typical workflow for an author. This book does not require you to write any computer code because {{{ews}}} is configured to the most common needs of authors.
++This book is for authors frustrated by commercial software and are looking for a more efficient workflow and flexibility in their computing needs. This book covers everything you need to know to do research, write and publish electronically or for print. Emacs is originally developed for software developers, but you don't need to be a computer wiz to use it as an author. This book provides a gentle introduction to flatten the learning curve to get started. Most existing Emacs documentation is somewhat technical and assumes prior knowledge. Technical documentation typically delves into the depth of every aspect of the system, which is daunting for new users. This books uses a different approach and peels Emacs like an onion, revealing one aspect of this software at a time. Each chapter adds more detail and complexity, following the typical workflow for an author. This book does not require you to write any computer code because {{{ews}}} is configured to the most common needs of authors.
+ 
+ #+begin_quote
+ Welcome to the Emacs computing system, the Swiss army chainsaw of productivity.
+@@ -29,7 +29,7 @@ * What is Emacs?
+ Emacs is a text editor, but this does not make sense for authors. A text editor is a tool for developing software. From an author's perspective, Emacs is a /text processor/ because editing is only the last step in writing an article or book. A text editor is a tool for software developers to write code, and a text processor is a tool for authors to write prose. {{{ews}}} (EWS) is a bespoke configuration of Emacs that turns it into a tool for authors and converts a text editor to a text processor.
+ 
+ * Why use Emacs?
+-Authors jot down notes in a research tool, meticulously build bibliographies in a database. Then, they write in a familiar word processor. To stay on top of your deadlines, they juggle a productivity tool for managing projects. Finally, after hours of focused work, the researcher might unwind with a quick game of Tetris to take a well-deserved break from the application circus.
++Authors jot down notes in a research tool, meticulously build bibliographies in a database. Then, they write in a familiar word processor. To stay on top of their deadlines, they juggle a productivity tool for managing projects. Finally, after hours of focused work, the researcher might unwind with a quick game of Tetris to take a well-deserved break from the application circus.
+ 
+ The problem with this perhaps familiar scene is that each program requires you to learn a new set of skills, navigate a distinct internal logic, and bend to its preordained workflow. Most software is inflexible, forcing you to adapt to the developer's vision of how you should work, besides perhaps some configuration options.
+ 
+@@ -39,7 +39,7 @@ * Why use Emacs?
+ 
+ Another advantage is the longevity of this tool. How you use Emacs will also be the way you use Emacs in decades to come. Reading the 1981 Emacs manual is almost like reading the most recent version, as the underlying basic functionality has changed only slightly [cite:@stallman_1981_manual].
+ 
+-Many writers have lamented the constraints of commercial word processors when tackling large documents. Working with commercial word processor software can be a frustrating experience. These programs were first developed when paper memos and reports ruled the world, and have changed little since. Word processors combine content, layout and typography in one file, focusing on printed pieces of paper. Emacs breaks free from this paradigm by separating the content from the design. This liberating approach allows you to focus on crafting your ideas without getting bogged down in the design of the end product. As an added benefit Emacs an transform the same text file effortlessly into a print-ready PDF, a website, or an ebook.
++Many writers have lamented the constraints of commercial word processors when tackling large documents. Working with commercial word processor software can be a frustrating experience. These programs were first developed when paper memos and reports ruled the world, and have changed little since. Word processors combine content, layout and typography in one file, focusing on printed pieces of paper. Emacs breaks free from this paradigm by separating the content from the design. This liberating approach allows you to focus on crafting your ideas without getting bogged down in the design of the end product. As an added benefit Emacs can transform the same text file effortlessly into a print-ready PDF, a website, or an ebook.
+ 
+ Emacs empowers you to streamline your workflow, ditch the software juggling act, and focus on what truly matters: your writing.
+ 
+@@ -122,9 +122,10 @@ * The Learning Curve
+ 
+ Emacs' methods and vocabulary seem foreign compared to other contemporary software. The main reason for these differences is that the development of Emacs started in 1974, a time when computing was notably different to our current experience. The Emacs vocabulary is vestigial, a remnant of an earlier epoch in the evolution of computing. For example, opening a file is ‘visiting a file’. Pasting a text is ’yanking’, and cutting it is the same as 'killing'. Perhaps the Emacs terminology is more poetic than the modern handicraft terms, such as cutting, pasting, and moving files between folders as if they were pieces of paper. These differences are not only part of Emacs' charm, but also of its power. You will find that the Emacs equivalent of these familiar software tasks more potent that what is common in modern software.
+ 
+-After you master the techniques describe in this book and start developing your personal EWS. Learning Elisp to configure the software to your wishes might sound daunting, but you can simply copy and paste (kill and yank) examples from the internet. Just remember that the steeper the learning curve, the bigger the reward.
++# PROT: The first sentence seems incomplete.
++After you master the techniques described in this book and start developing your personal EWS. Learning Elisp to configure the software to your wishes might sound daunting, but you can simply copy and paste (kill and yank) examples from the internet. Just remember that the steeper the learning curve, the bigger the reward.
+ 
+-EWS provides authors with a fine-tuned configuration to convert vanilla Emacs into a specialised research, writing, and publication engine. This book focuses on using this configuration instead of delving deeply into the technical details. The Appendix to  this book describes the full configuration for readers interested in venturing into the depths of Emacs Lisp.
++EWS provides authors with a fine-tuned configuration to convert vanilla Emacs into a specialised research, writing, and publication engine. This book focuses on using this configuration instead of delving deeply into the technical details. The Appendix to this book describes the full configuration for readers interested in venturing into the depths of Emacs Lisp.
+ 
+ * Advantages and Limitations of Emacs
+ In summary, these are some of the significant advantages of using Emacs to create written content:
+@@ -148,7 +149,7 @@ * How to Read this Book
+ 
+ The next chapter explains the principles of using an unconfigured vanilla GNU Emacs system to get you started on the learning curve. Chapter three takes you through the principles of using EWS and how it is different from an unconfigured Emacs experience. The EWS configuration changes how Emacs looks and feels and adds enhancements to help you find the information you need. EWS also uses a series of external packages to help authors, such as the Citar bibliography tool and Denote note-taking plugin. The guiding principle of EWS is to stay as close to the vanilla Emacs experience as is humanly bearable.
+ 
+-The remainder of the book follows the EWS workflow, which follows the typical workflow for a writing project. Chapters four to eight describe each aspect of this workflow, taking you from research to writing and to publication. Chapter eight covers administrative tasks such as managing projects and your file system.
++The remainder of the book follows the EWS workflow, which covers the typical workflow for a writing project. Chapters four to eight describe each aspect of this workflow, taking you from research to writing and to publication. Chapter eight covers administrative tasks such as managing projects and your file system.
+ 
+ 4. [@4] /Inspiration/: Reading, Listening and Watching
+ 5. /Ideation/: Recording and Managing Ideas
+@@ -158,7 +159,7 @@ * How to Read this Book
+ 
+ The final chapter provides some advice on how to learn even more and become an Emacs Ninja. The appendix to this book contains the annotated EWS configuration with some guidance on how to read it and make changes.
+ 
+-The best way to read this book is by sitting in front of your computer and try things out. Experiment different options, create some files and play around. Don't worry about breaking things, just restart Emacs and have another go. Playing with something is the best way to learn anything, so boot up your computer and get ready for an adventure.
++The best way to read this book is by sitting in front of your computer and trying things out. Experiment with different options, create some files and play around. Don't worry about breaking things, just restart Emacs and have another go. Playing with something is the best way to learn anything, so boot up your computer and get ready for an adventure.
+ 
+ [fn:1-1] Free Software Foundation. What is Free Software? https://www.gnu.org/philosophy/free-sw.en.html
+ [fn:1-2] Malleable Systems Collective, https://malleable.systems/
+diff --git a/documents/ews-book/02-getting-started.org b/documents/ews-book/02-getting-started.org
+index 30c5e34..08cbcb2 100644
+--- a/documents/ews-book/02-getting-started.org
++++ b/documents/ews-book/02-getting-started.org
+@@ -40,9 +40,9 @@ * Working with the Keyboard
+ 
+ The modifier keys on modern PC or Apple keyboards are Shift (and Caps Lock), Control, Alt / Option, and Windows / Command. Chromebook computers have the same modifier keys but there is no equivalent to the Windows/Command key. Some smaller keyboards also have additional modifier keys, such as =Fn=, to expand the available options. Modifier keys have no effect when pressed by themselves. As the name suggests, these keys modify other keys when pressed simultaneously.
+ 
+-Emacs documentation uses a special notation for modifier keys. Some of the Emacs terminology for these keys stems from a time when the current standard keyboard layout did not yet exist. What we now call the Alt key used to be the /Meta/ key. The Windows key on PC keyboards or Command on Apple systems maps to the Super key, which was available on some keyboards in the 1980s. Your operating system uses this key, so vanilla Emacs does not use it. There is also the /Hyper/ modifier key, which no longer exists on modern keyboards, so it unused but still available as a modifier key in Emacs.
++Emacs documentation uses a special notation for modifier keys. Some of the Emacs terminology for these keys stems from a time when the current standard keyboard layout did not yet exist. What we now call the Alt key used to be the /Meta/ key. The Windows key on PC keyboards or Command on Apple systems maps to the Super key, which was available on some keyboards in the 1980s. Your operating system uses this key, so vanilla Emacs does not use it. There is also the /Hyper/ modifier key, which no longer exists on modern keyboards, so it is unused but still available as a modifier key in Emacs.
+ 
+-Emacs documentation and this book abbreviate key sequences. For example, =C-a= stands for pressing the Control and =a= keys at the same time. The dash indicates that the first key modifies the second key, while a space between keys indicates that they are typed consecutively. Actual spaces are shows and =<space>=. Each modifier key has its own letter, as shown in table [[tab:modifier-keys]]. You can combine modifier keys, occasionally leading to awkward combinations, such as =C-M-S a= (Control, Alt and Shift =a=), which requires the nimble fingers of a sleight-of-hand artist to execute smoothly. The shift modifier is mostly not indicated because =C-M A= is the same as =C-M-S a=. The escape key can also act as a modifier key. Pressing escape once is the same as holding the meta key. So =ESC x= is the same as =M-x=.
++Emacs documentation and this book abbreviate key sequences. For example, =C-a= stands for pressing the Control and =a= keys at the same time. The dash indicates that the first key modifies the second key, while a space between keys indicates that they are typed consecutively. Actual spaces are shows and =<space>=. Each modifier key has its own letter, as shown in table [[tab:modifier-keys]]. You can combine modifier keys, occasionally leading to awkward combinations, such as =C-M-S-a= (Control, Alt and Shift =a=), which requires the nimble fingers of a sleight-of-hand artist to execute smoothly. The shift modifier is mostly not indicated because =C-M-A= is the same as =C-M-S-a=. The escape key can also act as a modifier key. Pressing escape once is the same as holding the meta key. So =ESC x= is the same as =M-x=.
+ 
+ #+caption: Emacs modifier keys.
+ #+name: tab:modifier-keys
+@@ -56,7 +56,7 @@ * Working with the Keyboard
+ 
+ The most critical shortcut with a modifier key is =C-g= (~keyboard-quit~), which cancels a partially typed command. Unlike the triple escape key, this command can also quit running functions.
+ 
+-All keystrokes in Emacs execute a function, which means they perform a task. Functions that are visible to the user are called commands and this book with use these words interchangeably. Most technical books display the names of functions in ~typewriter-font~ to distinguish them from normal text. Emacs functions are always written with dashes instead of spaces between words, which hackers sometimes refer to as kebab-case. Not all functions have a keyboard shortcut, but when a shortcut is available, it is also shown in typewriter text. Knowing the names of functions and the keyboard shortcut helps to better understand how Emacs works. You also need to know the function name because keyboard shortcuts can change as they are fully configurable.
++All keystrokes in Emacs execute a function, which means they perform a task. Functions that are visible to the user are called commands and this book will use these words interchangeably. Most technical books display the names of functions in ~typewriter-font~ to distinguish them from normal text. Emacs functions are always written with dashes instead of spaces between words, which hackers sometimes refer to as kebab-case. Not all functions have a keyboard shortcut, but when a shortcut is available, it is also shown in typewriter text. Knowing the names of functions and the keyboard shortcut helps to better understand how Emacs works. You also need to know the function name because keyboard shortcuts can change as they are fully configurable.
+ 
+ But wait, there is more. Emacs also uses prefix keys. When you press these, the system will wait for further input. For example, =C-x C-f= means that you first press Control and =x= and then Control and =f=, the default sequence for finding (opening or creating) a file with the ~find-file~ function. After pressing a prefix key, Emacs displays it in the echo area, awaiting further input. The length of key sequences is theoretically unlimited, but they are usually nor more than three or four keys in practice, for example =C-c w s d=. Some packages also use prefix keys. {{{ews}}} (EWS) uses =C-c w= as a prefix to store all its keybindings. This means that you can group key bindings for easy memorisation. The standard prefix keys are:
+ 
+@@ -94,13 +94,13 @@ * Issuing Commands
+ The remainder of this book only mentions the names of commands without adding the =M-x= and =RET= parts. So when the text suggest to use a function or command called ~example-function-or-command~, you do so with =M-x example-function-or-command RET=. Any available keyboard shortcuts are also indicated, in which case you can use the short way to access the function.
+ 
+ * Major and Minor Modes
+-Emacs is a versatile tool that accomplishes specialised tasks through editing modes that usefully alter it's basic behaviour. An editing mode provides major and minor modes. A major mode is like opening an app within the Emacs environment, just like you open an app on your phone. For example, Org mode provides a task management system and publication tools. Artist mode is a quirky tool in Emacs that allows you to create plain text drawings with the mouse and keyboard. go ahead and try, issue the ~artist-mode~ command and drawing with the mouse. A new /Artist/ item will become available in the menu bar to provide some options.
++Emacs is a versatile tool that accomplishes specialised tasks through editing modes that usefully alter it's basic behaviour. An editing mode provides major and minor modes. A major mode is like opening an app within the Emacs environment, just like you open an app on your phone. For example, Org mode provides a task management system and publication tools. Artist mode is a quirky tool in Emacs that allows you to create plain text drawings with the mouse and keyboard. Go ahead and try, issue the ~artist-mode~ command and start drawing with the mouse. A new /Artist/ item will become available in the menu bar to provide some options.
+ 
+ A major mode determines the core functionality for an open buffer. A buffer is the part of the memory that holds the text of a file you just opened, or other content. More about buffers in section [[#sec:windows]]. Each buffer has at least one major mode, and each major mode has its own functionality with specific key bindings and drop-down menus. All major modes share the same underlying Emacs functionality, such as copying and pasting (killing and yanking) and opening files, but they add specialised tasks, for example exporting to a PDF file.
+ 
+ Minor modes provide further functionality, such as spell-checking, text completion or displaying line numbers. A minor mode is an auxiliary program that enhances the functionality of a major mode. While each buffer has only one major mode, a buffer can have many active minor modes. A minor mode can also apply to the whole Emacs session.
+ 
+-Emacs automatically selects the relevant major mode using the file's extension and displays it in the mode line below the window. Minor modes have to be explicitly enabled, either globally or hooked to a specific major mode.
++Emacs automatically selects the relevant major mode using the file's extension and displays its name in the mode line below the window. Minor modes have to be explicitly enabled, either globally or hooked to a specific major mode.
+ 
+ The available keyboard shortcuts (the keymaps) and drop-down menus depend on the major and minor modes that are active at the time. Some keymaps are global and apply to the whole of Emacs. Other maps are specific to a mode. Unless a mode overrides it, some shortcuts remain the same for all modes (such as =M-u=, which converts a word to uppercase). Packages can change or add shortcuts, depending on the required functionality. So, a shortcut like =C-c C-c= is used by different modes for different actions, depending on the context in which it is used. 
+ 
+@@ -109,9 +109,9 @@ * Opening Files
+ 
+ Emacs asks you to select a file or folder in the minibuffer. Typing the complete path to the file you seek would be tedious, so Emacs assists with auto completion, explained in section [[#sec:commands]]. Please note that a file path in Emacs is separated by forward slashes and not by backslashes, as is the case in Windows (=C:/Users/Wittgenstein/= and not =C:\Users\Wittgenstein\=).
+ 
+-When finding a file, Emacs starts in the folder of the currently active buffer. You can simply remove the text before the cursor to move to higher levels in the directory tree. If you like to find a file in your home directory, ignore the text in the minibuffer and type a tilde followed by forward slash (=~/=) and =TAB=. To start searching in the root folder or your drive, type two forward slashes (=//=). On Windows computer the best method is to type the drive letter, followed by a colon and a slash (=c:/=). When you hit the =TAB= button twice, all the available files and folders appear in the minibuffer.
++When finding a file, Emacs starts in the folder of the currently active buffer. You can simply remove the text before the cursor to move to higher levels in the directory tree. If you like to find a file in your home directory, ignore the text in the minibuffer and type a tilde followed by forward slash (=~/=) and =TAB=. To start searching in the root folder or your drive, type two forward slashes (=//=). On a Windows computer the best method is to type the drive letter, followed by a colon and a slash (=c:/=). When you hit the =TAB= button twice, all the available files and folders appear in the minibuffer.
+ 
+-Create a file with a =.txt= extension to get some practice and start writing into the buffer. After you have added some text, you might wat the save your work to the file. The contents of the file stays the same until you save the buffer. After you complete your edits, =C-x C-s= saves your buffer to its associated file. To save a buffer under a new name, you can use =C-x C-w= (table [[tab:files]]). You can see whether a buffer is different from the associated file in the mode line at the bottom. If it contains two asterisks at the start, then you file needs saving. two dashes, means that the content of the file is the same as the buffer.
++Create a file with a =.txt= extension to get some practice and start writing into the buffer. After you have added some text, you might wat the save your work to the file. The contents of the file stay the same until you save the buffer. After you complete your edits, =C-x C-s= saves your buffer to its associated file. To save a buffer under a new name, you can use =C-x C-w= (table [[tab:files]]). You can see whether a buffer is different from the associated file in the mode line at the bottom. If it contains two asterisks at the start, then your file needs saving. Two dashes means that the content of the file is the same as the buffer.
+ 
+ #+caption: Most commonly used file functions.
+ #+name: tab:files
+@@ -140,7 +140,7 @@ * Buffers, Frames and Windows
+ 
+ By default, a frame has one window. You can split the current window horizontally or vertically by pressing =C-x 2= or =C-x 3= (~split-window-below~ and ~split-window-right~). The =C-x 0= shortcut (~delete-window~) removes your current window but the buffer stays in memory, and =C-x 1= removes all other windows (~delete-other-windows~), so you work in the full frame again. To move between windows, use the =C-x o= shortcut (~other-window~). This function cycles through the available windows.
+ 
+-When splitting a window vertically, the same buffer appears twice. Each window can have its own cursor position so you can easily refer to other parts of your writing without jumping around and loose focus. Activating follow mode with ~follow-mode~ flows the text of the buffer so the two or more windows become columns of the same document. When the cursors moves below the bottom of the left window, it appears again in the right window, so all windows share one cursor. To deactivate follow mode, run the same function again.
++When splitting a window vertically, the same buffer appears twice. Each window can have its own cursor position so you can easily refer to other parts of your writing without jumping around and losing focus. Activating follow mode with ~follow-mode~ flows the text of the buffer so the two or more windows become columns of the same document. When the cursor moves below the bottom of the left window, it appears again in the right window, so all windows share one cursor. To deactivate follow mode, run the same function again.
+ 
+ #+caption: Buffer and window functions.
+ #+name: tab:buffers-windows
+@@ -221,7 +221,7 @@ ** Copy and Paste Text
+ 
+ To select (mark in Emacs speak) a piece of text, you first set a mark with =C-space= and then move to the end of the section to highlight the desired section. To select a complete paragraph, use the =M-h= key. In a plain text context, a paragraph is a line of text separated by blank lines. Repeatedly pressing =M-h= will select subsequent sections. Using =C-x h= selects all text in a buffer, and =C-g= cancels the selection. Once the text is marked, you can act on it by deleting, copying, or moving it.
+ 
+-In some modes you can select with shift and arrow keys, but it is disabled in some modes because these key combinations are used for other functionality. Shift-selection also behaves differently with respect the mark ring described in the previous section.
++In some modes you can select with shift and arrow keys, but it is disabled in some modes because these key combinations are used for other functionality. Shift-selection also behaves differently with respect to the mark ring described in the previous section.
+ 
+ In modern computing language, copying and pasting are handicraft analogues for moving text from one place to another. Emacs terminology is more evocative. Copying a text is the same as saving it to the 'kill-ring' and yanking a text retrieves it from that seemingly bleak location. While the clipboard in most systems only retains the last entry, the kill ring provides access to your 'killing spree'. In other words, Emacs stores a history of all text you copy and cut from a buffer to the kill ring. The length of this history is stored in ~kill-ring-max~, which is sixty entries by default. Once the kill ring is full, the oldest item vanishes.
+ 
+@@ -236,13 +236,15 @@ ** Copy and Paste Text
+ | =C-y=       | ~yank~           | Paste the most recent kill ring entry to the buffer          |
+ | =M-y=       | ~yank-pop~       | Replace previously yanked text with the next kill ring entry |
+ 
++# PROT: Note that when M-y is called on its own, it provides minibuffer completion. This can be better than doing something like C-y M-y M-y M-y M-y.
++
+ ** Correcting Mistakes
+ :PROPERTIES:
+ :CUSTOM_ID: sec:mistakes
+ :END:
+ An ancient Roman proverb tells us that it is human to make mistakes, but to keep making them is diabolical. Emacs does not care about these sensibilities and provides ample options to let you correct your digressions.
+ 
+-The most convenient aspect of writing on an electric screen is that it is easy to change your mind or correct a mistake without resorting to correction fluids or other archaic methods. A series of editing commands are available to modify text and fix your typos (Table [[tab:deletion]]). Commands that start with =kill-= store the deleted text on the kill ring so you can yank the deleted text back into the buffer if needed.
++The most convenient aspect of writing on an electric screen is that it is easy to change your mind or correct a mistake without resorting to correction fluids or other archaic methods. A series of editing commands are available to modify text and fix your typos (Table [[tab:deletion]]). Commands that start with =kill-= store the deleted text to the kill ring so you can yank the deleted text back into the buffer if needed.
+ 
+ #+caption: Emacs deletion commands.
+ #+name: tab:deletion
+@@ -256,7 +258,7 @@ ** Correcting Mistakes
+ 
+ Besides removing unwanted characters, you can also swap them with a series of transposing commands. When you accidentally reverse two letters in a word, you can switch their order with the ~transpose-char~ command with the cursor between them (=C-t=). Swapping words is quickly done with the ~transpose-words~ (=M-t=) command.
+ 
+-Emacs can assist you when you make a mistake when capitalising a word. The three commands below change the word under the cursor from its position. If you are in the middle of a word, move first to the start. Adding a negative argument (~M--~, ALT and the minus key) before these commands modifies the letters before the cursor. This addition is valuable when you have just finished typing a word and realise it needs to start with a capital letter. Typing =M-- M-c= fixes it for you without jumping around the text or grabbing a mouse. Using any of these commands in succession converts a sequence of words in a sentence.
++Emacs can assist you if you make a mistake when capitalising a word. The three commands below change the word under the cursor from its position. If you are in the middle of a word, move first to the start. Adding a negative argument (~M--~, ALT and the minus key) before these commands modifies the letters before the cursor. This addition is valuable when you have just finished typing a word and realise it needs to start with a capital letter. Typing =M-- M-c= fixes it for you without jumping around the text or grabbing a mouse. Using any of these commands in succession converts a sequence of words in a sentence.
+ 
+ - =M-l=: Convert following word to lower case (~downcase-word~).
+ - =M-u=: Convert following word to upper case (~upcase-word~).
+@@ -290,6 +292,8 @@ ** Correcting Mistakes
+ 
+ Another feature of the Emacs undo system is that it can apply only to a selected region. Lets say that you have just completed the first chapter and have started writing the chapter two. You then realise that you need to undo some of the edits in the chapter one. If you use the undo function, it will first undo all your work on chapter two before changing the first chapter. You can solve this problem by selecting the relevant region of text in chapter one and then issue the ~undo~ command over just that region.
+ 
++# PROT: Consider the vundo package which visualises the undo. It does not work with the region, as regular undo does, though it still is helpful for some people to make better sense of this mechanism. Maybe the region-based undo should be added to vundo, at which point it becomes a drop-in replacement for the defaults.
++
+ ** Languages Other than English
+ For the majority of the world, English is not their first language. When you set the keyboard settings in your operating system to another language, Emacs can get confused when using modifier keys. Typing =M-x= on a Ukrainian computer results in =M-џ=, which Emacs cannot compute.
+ 
+@@ -323,7 +327,7 @@ * Configuring Emacs
+ 
+ Emacs does not have the limitations that are common to most software. You undertake almost every task in one program, and nearly everything in the system is configurable. This article explains how to configure Emacs to create a fully personalised productivity suite. Please note that this configuration assumes that you are using the latest version of Emacs, which at the time of writing is 29.3.
+ 
+-Some Emacs users use pre-configured systems, such as Doom Emacs, Spacemacs, or other starter kits. While these configurations are helpful, they sometimes provide everything but the kitchen sink'. On the other side of the spectrum, you can configure your system from scratch, which can become a productivity sink as you wade your way through a myriad of options. The EWS configuration is a starter kit with a minimum configuration to get you started as an author. The basic idea is to use this configuration as box of building block to modify to meet your preferences. But before installing the EWS configuration, let's first introduce the principles of configuring Emacs.
++Some Emacs users use pre-configured systems, such as Doom Emacs, Spacemacs, or other starter kits. While these configurations are helpful, they sometimes provide everything but the kitchen sink. On the other side of the spectrum, you can configure your system from scratch, which can become a productivity sink as you wade your way through a myriad of options. The EWS configuration is a starter kit with a minimum configuration to get you started as an author. The basic idea is to use this configuration as a box of building block to modify to meet your preferences. But before installing the EWS configuration, let's first introduce the principles of configuring Emacs.
+ 
+ ** Emacs Lisp
+ Commercial software provides graphical menus to define how it operates. For example, in Figure [[fig:graphical-config]], you might tick a box, select an item in a list, or enter a value in a text box to configure the program according to your wishes.
+@@ -359,7 +363,7 @@ ** Emacs Lisp
+ #+end_src
+ 
+ ** The Initialisation File
+-When you start Emacs, it loads the initialisation file, or init file in short. This file contains Lisp code that loads additional packages and configurations when Emacs starts. You can run Emacs without an init file as show in the previous chapter, but you will undoubtedly want to modify the defaults. The first time you start Emacs, it will create the configuration folder which is where the init file lives. This folder also contains the packages you need to personalise your system. Emacs looks for a file called =.emacs=, =.emacs.el= or =init.el=. The dot in front of the file means that it is hidden from view to prevent clutter in your directories. Most Emacs documentation talks about your =.emacs= file.
++When you start Emacs, it loads the initialisation file, or init file in short. This file contains Lisp code that loads additional packages and configurations when Emacs starts. You can run Emacs without an init file as shown in the previous chapter, but you will undoubtedly want to modify the defaults. The first time you start Emacs, it will create the configuration folder which is where the init file lives. This folder also contains the packages you need to personalise your system. Emacs looks for a file called =.emacs=, =.emacs.el= or =init.el=. The dot in front of the file means that it is hidden from view to prevent clutter in your directories. Most Emacs documentation talks about your =.emacs= file.
+ 
+ ** Customisation System
+ :PROPERTIES:
+@@ -388,7 +392,7 @@ ** Emacs Packages
+ * Exiting Emacs
+ Working with Emacs is so much fun you might never wan to shut it down. But all good things come to a temporary end, so we might need to shutdown (kill) Emacs occasionally. The =C-x C-c= shortcut  (~save-buffers-kill-terminal~) kills the Emacs session, but not before checking for unsaved buffers. There are a few options to ensure you don't lose anything when you have unsaved buffers.
+ 
+-This function displays any unsaved files in the echo area and provides options for dealing with each or all of them. You can answer =y= or =SPC= to save the file mentioned in the echo area or =n= / =DEL= to abandon it. Keying =C-r= lets you look at the buffer in question before deciding. The safest option is to key =!= and save all buffers that have changes without any further questions. Use the trusted =C-g= chord to exit this function without exiting Emacs or loosing any text. Don't stress if you can't remember all this. Using =C-h= displays a help message describing these options.
++This function displays any unsaved files in the echo area and provides options for dealing with each or all of them. You can answer =y= or =SPC= to save the file mentioned in the echo area or =n= / =DEL= to abandon it. Keying =C-r= lets you look at the buffer in question before deciding. The safest option is to key =!= and save all buffers that have changes without any further questions. Use the trusted =C-g= chord to exit this function without exiting Emacs or losing any text. Don't stress if you can't remember all this. Using =C-h= displays a help message describing these options.
+ 
+ Alternatively you can issue the ~restart-emacs~ command to reboot your configuration.
+ 
+diff --git a/documents/ews-book/03-using-ews.org b/documents/ews-book/03-using-ews.org
+index 3585127..5313c8d 100644
+--- a/documents/ews-book/03-using-ews.org
++++ b/documents/ews-book/03-using-ews.org
+@@ -17,15 +17,15 @@ #+title: Using Emacs Writing Studio
+ * Installing /Emacs Writing Studio/
+ You don't have to learn to program in Elisp to use Emacs. You can start with the /Emacs Writing Studio/ configuration to get you going. The next step is to install EWS and start using it. The remainder of the book does not explain any methods to configure Emacs but explains how to use the functionality in EWS to research, write and publish articles, books and websites. The Appendix to this book provides a detailed explanation of the EWS configuration.
+ 
+-To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository (=github.com/pprevos/emacs-writing-studio=) and save them in the configuration folder. The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=. Copy the bot files from the EWS repository to this directory. EWS will activate after you evaluate the ~restart-emacs~ function or the next time you start the program.
++To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository (=github.com/pprevos/emacs-writing-studio=) and save them in the configuration folder. The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=. Copy the files from the EWS repository to this directory. EWS will activate after you evaluate the ~restart-emacs~ function or the next time you start the program.
+ 
+ If you an experienced Emacs user, then you can try the EWS configuration by creating a separate folder for the init file and start Emacs with =emacs --init-directory <folder-path>=. That way you can try EWS without clobbering your existing configuration.
+ 
+ The EWS configuration also installs a package from GitHub with some bespoke variables and additional functionality. All such variables and functions start with ~ews-~. You will need to configure these variables to prevent errors as you work through this book.
+ 
+-Emacs can also in integrate with various other free software to extend its functionality. Some of the features provided by EWS requite you to install additional software that Emacs will control. You don't need to know how these packages work as Emacs will control them for you. Each chapter in this book outlines which software is required for which purpose.
++Emacs can also integrate with various other free software to extend its functionality. Some of the features provided by EWS requite you to install additional software that Emacs will control. You don't need to know how these packages work as Emacs will control them for you. Each chapter in this book outlines which software is required for which purpose.
+ 
+-The ~ews-missing-executables~ function checks if external software is available on your system. Emacs writes a message in the minibuffer if any of the recommended tools is missing. You can jump to the =*Messages*= buffer with =C-h e= to review the output. If packages are missing, then Emacs will function normally, but some features might be unavailable. The relevant chapters in this book provide more details which software is required and the tasks it undertakes.
++The ~ews-missing-executables~ function checks if external software is available on your system. Emacs writes a message in the minibuffer if any of the recommended tools is missing. You can jump to the =*Messages*= buffer with =C-h e= to review the output. If packages are missing, then Emacs will function normally, but some features will be unavailable. The relevant chapters in this book provide more details which software is required and the tasks it undertakes.
+ 
+ This book was written and published with the configuration it describes, so it is fully tested to real-life conditions. The GitHub repository for EWS also contains the =documents= folder which contains the Org mode files for this book. You can download these files to see an example of a book written in Emacs.
+ 
+@@ -41,7 +41,7 @@ ** Themes
+ 
+ Two basic classes of themes exist for text processors: light and dark. Light backgrounds, common with most modern word processing software, can cause asthenopia (eye strain) after you stare at the screen for a while. Dark colour schemes increase visual acuity and reduce visual fatigue, especially in low-light physical environments with complex backgrounds [cite:@kim_2019_dark]. Many text processor users prefer dark themes. Light themes are not bad intrinsically as they are effective when you work in a brightly lit room.
+ 
+-The EWS configuration installs and activates the most recent version of Prot's Modus themes. The Modus themes have two primary versions: the =modus-operandi= theme is the primary light theme, while the =modus-vivendi= theme is its dark counterpart. The primary Modus themes maximise contrast between background and foreground following the Web Content Accessibility Guidelines (WCAG). The Modus themes comply with the triple-A standard of the WCAG, which specifies a contrast ratio between background and foreground of 7:1. This high contrast ratio is legible for people with moderately low vision. Each of the primary themes has three modified versions: two versions for red-green and blue-yellow colour blindness (deuteranopia and tritanopia) and a more colourful variety (tinted).
++The EWS configuration installs and activates the most recent version of Prot's Modus themes. The Modus themes have two primary versions: the =modus-operandi= theme is the primary light theme, while the =modus-vivendi= theme is its dark counterpart. The primary Modus themes maximise contrast between background and foreground following the Web Content Accessibility Guidelines (WCAG). The Modus themes comply with the triple-A standard of the WCAG, which specifies a minimum contrast ratio between background and foreground of 7:1. This high contrast ratio is legible for people with moderately low vision. Each of the primary themes has three modified versions: two versions for red-green and blue-yellow colour blindness (deuteranopia and tritanopia) and a more colourful variety (tinted).
+ 
+ /Emacs Writing Studio/ uses the tinted versions as default. These versions have a slightly lower contrast ratio and are suitable for people with normal vision. The Modus themes do not prescribe keyboard shortcuts, so EWS defines some. The =C-c w t t= shortcut toggles between the light and dark side (insert Star Wars pun here). Using =C-c w t s= provides a selection menu of all Modus themes. /Emacs Writing Studio/ uses =C-c w= as its default prefix key for its specific functionality, where the =w= is a mnemonic for writing and =t= for theme.
+ 
+@@ -68,7 +68,7 @@ ** Setting Fonts
+ - =font=: The name of the font
+ - =height=: The font height as an integer in units of 1/10 point.
+ 
+-You can use the customisation menu by evoking ~customise-face~ and selecting =default=, =fixed-pitch= or =variable-pitch= and entering the font name in the /Font Family/ box. Click /Apply and Save/ for each font. This action saves the font settings to the =custom.el= file, which Emacs evaluates at the beginning of the startup sequence. Please note that anything you customise this way overrides any theme settings, so ideally, only customise font family and size.
++You can use the customisation menu by evoking ~customize-face~ and selecting =default=, =fixed-pitch= or =variable-pitch= and entering the font name in the /Font Family/ box. Click /Apply and Save/ for each font. This action saves the font settings to the =custom.el= file, which Emacs evaluates at the beginning of the startup sequence. Please note that anything you customise this way overrides any theme settings, so ideally, only customise font family and size.
+ 
+ To see which fonts are available, you use the graphical window by running ~menu-set-font~. When you use the GUI to set the default font, the change is immediate but transient. Use ~menu-bar-options-save~ to save your default font and size to the =custom.el= file.
+ 
+@@ -87,7 +87,7 @@ * Minibuffer Completion
+ 
+ The Vertico package uses incremental search, meaning the list of candidates is shortened to match your entry as soon as you type one or more characters. For example, when opening a file with =C-c C-f=, you can start typing any part of the filename to locate the file you seek. Use =C-backspace= keys to move to a higher directory.
+ 
+-The Savehist package remembers your selections and saves your minibuffer history when exiting Emacs. This package ensures that your most popular choices remain on top for further convenience. To further refine our ability to find completion candidates, the orderless package enhances Vertico and matches patterns, irrespective of the order in which they are typed. For example, typing =emacs writing TAB= provides the same results as =writing emacs TAB=. 
++The Savehist package remembers your selections and saves your minibuffer history when exiting Emacs. This package ensures that your most popular choices remain on top for further convenience. To further refine our ability to find completion candidates, the Orderless package enhances Vertico and matches patterns, irrespective of the order in which they are typed. For example, typing =emacs writing TAB= provides the same results as =writing emacs TAB=. 
+ 
+ Emacs is a self-documenting computing environment, meaning every function and variable includes a text describing what it does. The Marginalia package displays the first line of these texts next to your completion candidates. This package also shows available keyboard shortcuts for relevant completion candidates (Figure [[fig:vertico]]). When you type =M-x=, you will see a list of functions and a brief description of what they do and whether there is a keyboard shortcut to access it.
+ 
+@@ -100,7 +100,7 @@ * Minibuffer Completion
+ ** Keyboard Shortcuts
+ Completion shortens the amount of text you must type and is ideal for discovering functionality you did not yet realise existed. However, as explained in the previous chapter, we usually don’t type function names but use keyboard shortcuts.
+ 
+-Remembering which keyboard shortcut you need takes some effort. The Which-Key package by Justin Burkett is not so much a completion system but a great help when trying to remember which keyboard shortcut to use. This package provides a minor mode that displays the keybindings following the currently-entered incomplete command (a prefix) in a popup.
++Remembering which keyboard shortcut you need takes some effort. The Which-Key package by Justin Burkett is not so much a completion system but a great help when trying to remember which keyboard shortcut to use. This package provides a minor mode that displays the keybindings following the currently entered incomplete command (a prefix) in a popup.
+ 
+ Many keyboard shortcuts have multiple parts, such as =C-x C-f=. The which-key package shows a popup menu that lists all the available options. When, for example, you press =C-x=, the menu will list all follow-up keys and the function they are bound to. Where it says =prefix= in the popup, this means that there is a deeper level. So, by pressing =C-c w=, the EWS prefix, you see a list of the available sub-menus and functions.
+ 
+@@ -114,7 +114,7 @@ * Introducing Org Mode
+ :PROPERTIES:
+ :CUSTOM_ID: sec:org-mode
+ :END:
+-The previous chapter explained how to write a plain text file. Now, we add a new layer of complexity by introducing Org mode, a powerful major mode that comes with Emacs by default. This software was initially developed in 2003 by Carsten Dominik, professor of astronomy at the University of Amsterdam. Since then, countless other developers have continued to advance Org mode. Many people use Emacs because of Org mode as it is a perfect environment for writing. 
++The previous chapter explained how to write a plain text file. Now, we add a new layer of complexity by introducing Org mode, a powerful major mode that comes with Emacs by default. This software was initially developed in 2003 by Carsten Dominik, professor of astronomy at the University of Amsterdam. Since then, countless other developers have continued to advance Org mode. Many people use Emacs because of Org mode is a perfect environment for writing. 
+ 
+ You can use Org mode to publish websites, articles and books, keep a diary, write research notes, manage your actions, and more. And on top of all that, it is intuitive to use. This section shows you the basics of writing prose in Org mode. The remainder of the book explains the more specialised functionality of this extensive package.
+ 
+@@ -134,7 +134,7 @@ ** Document Structure
+ :PROPERTIES:
+ :CUSTOM_ID: sec:org-structure
+ :END:
+-One of the unofficial rules of writing is to define the structure before writing the content. Books have chapters, sections and paragraphs; articles have headings; poems have verses; and so on. Almost all forms of writing have a hierarchy. Org mode has a flexible set of commands to quickly define the structure of your writing project. Defining headings is as easy as string a line with an asterisk followed by a space. To create deeper levels, add more stars:
++One of the unofficial rules of writing is to define the structure before writing the content. Books have chapters, sections and paragraphs; articles have headings; poems have verses; and so on. Almost all forms of writing have a hierarchy. Org mode has a flexible set of commands to quickly define the structure of your writing project. Defining headings is as easy as starting a line with an asterisk followed by a space. To create deeper levels, add more stars:
+ 
+ #+begin_example
+   * Heading 1
+@@ -187,7 +187,7 @@ ** Text Formatting
+ The EWS configuration hides these markers. The only problem with hiding emphasis markers that way is that rich text becomes hard to edit because it is unclear whether your cursor is on the marker or the first or last character. EWS therefore uses the Org-Appear package by Alice Hacker, which displays the rich text markers while the cursor is on a the word but hides them otherwise.
+ 
+ ** Lists
+-Writing lots of prose in long paragraphs can make content hard to understand, so non-fiction authors use lists to create clarity in writing. Writing lists in Org mode could not be easier. Start a line with a dash and complete the entry with =M-RET= to create the next entry. Using the Alt and left or right arrow keys changes the depth of the item. The Alt key with the up and down arrows moves the line up or down in the hierarchy. You can change the list prefix with the =SHIFT= and left/right arrow keys. The default options are:  =-=, =+=, =1.= or =1)=. You can convert a paragraph to a list with =C-c -= (~org-toggle-item~). Repeatedly using this command change the bullet type, just like shift and the arrow keys. To demote a list item back to a paragraph, simply remove the list characters.
++Writing lots of prose in long paragraphs can make content hard to understand, so non-fiction authors use lists to create clarity in writing. Writing lists in Org mode could not be easier. Start a line with a dash and complete the entry with =M-RET= to create the next entry. Using the Alt and left or right arrow keys changes the depth of the item. The Alt key with the up and down arrows moves the line up or down in the hierarchy. You can change the list prefix with the =SHIFT= and left/right arrow keys. The default options are:  =-=, =+=, =1.= or =1)=. You can convert a paragraph to a list with =C-c -= (~org-toggle-item~). Repeatedly using this command changes the bullet type, just like shift and the arrow keys. To demote a list item back to a paragraph, simply remove the list characters.
+ 
+ #+begin_example
+   - Item
+@@ -268,6 +268,8 @@ ** Mathematical Notation
+ 
+ Pretty entities (more precisely UTF-8 characters) in Org mode relate to special symbols, such as superscript and subscript (=x^{2}= or =x_{2}=) and other characters, such as =\pi=, which display as x², x₂ and π. Org mode also understands other LaTeX characters, such as Greek letters (=\alpha= to =\omega=), superscripts and subscripts. You can write these plainly inside an Org buffer. EWS converts these to their 'pretty' version by default. The underlying text remains the same. You can switch this behaviour on and off with the =C-c C-x \= keys (~org-toggle-pretty-entities~). By default, Org mode does not require curly braces for sub- and superscripts. But this can cause confusion if you like to write something using 'snake_case'. The EWS configuration limits applying sub- and superscripts to characters between curly braces.
+ 
++# PROT: This does not seem right: "while a formal with double dollar signs".
++
+ For more complex formulas you need to use the full LaTeX formula notation. A formula is surrounded by one or two dollar signs. A single dollar sign indicates an inline formula, while a formal with double dollar signs the formula has its own paragraph. To give you a taste of what LaTeX formulas look like, this is Ramanujan's formula for \pi, both graphically and in LaTeX notation. A full explanation of LaTeX formula notation is outside the scope of this book. You can reverse-engineer this example as it contains what you need for 80% of mathematical formulas. 
+ 
+ $$\frac{1}{\pi} = \frac{\sqrt{8}}{9801} \sum_{n=0}^{\infty}\frac{(4n)!}{(n!)^4}\times\frac
+@@ -279,7 +281,7 @@ ** Mathematical Notation
+ \frac{26390n + 1103}{396^{4n}}$$
+ #+end_example
+ 
+-If you the pretty entities functionality is enabled, then some LaTeX symbols are converted to mathematical notation, so you might want to disable this when writing mathematical expressions with =C-c C-x \=.
++If the pretty entities functionality is enabled, then some LaTeX symbols are converted to mathematical notation, so you might want to disable this when writing mathematical expressions with =C-c C-x \=.
+ 
+ Org mode can preview LaTeX fragments as images if the =dvipng= program is available. To preview the fragment under the cursor, press =C-c C-x C-l= (~org-latex-preview~). This process converts LaTeX formulas to an SVG file stored in a subdirectory named =ltximg=. 
+ 
+@@ -288,7 +290,7 @@ ** Mathematical Notation
+ ** Ricing Org Mode
+ Ricing is slang term among software developers referring to heavily customising the appearance of their editor. This prettification could involve themes, fonts, and other visual tweaks to create a unique style. Vanilla Emacs is an ugly duckling that can be configured into a beautiful swan. The EWS configuration file contains some modifications to the user interface.
+ 
+-The main difference between a plain text processor and a WYSIWYG word processor is that in Emacs the design of the text (font, colour and so on) communicates meaning and rather than design. Your Emacs theme sets the colours and perhaps also fonts for your document. The purpose this styling is to help you navigate the document. The way your document looks in the buffer is not what it looks like when exported to the final product.
++The main difference between a plain text processor and a WYSIWYG word processor is that in Emacs the design of the text (font, colour and so on) communicates meaning rather than design. Your Emacs theme sets the colours and perhaps also fonts for your document. The purpose of this styling is to help you navigate the document. The way your document looks in the buffer is not what it looks like when exported to the final product.
+ 
+ The active theme and various configurations and packages define the display of an Org mode buffer. Emacs defines how a buffer looks through =font-lock-mode=. Font locking assigns faces to (or 'fontifies' in Emacs speak) various parts of your text using logical rules. Evaluating =font-lock-mode= toggles between the fully configured version of your Org mode file and the plain text version. Run this function on an existing Org mode file to see the difference between pure plain text and a fontified text. To take it a step further, you can open an Org mode file and run ~text-mode~ to disable all Org mode functionality and see the file in its raw beauty. To jump back to safety, simply run ~org-mode~ to restore the file.
+ 
+diff --git a/documents/ews-book/04-inspiration.org b/documents/ews-book/04-inspiration.org
+index b4c1e5e..0867034 100644
+--- a/documents/ews-book/04-inspiration.org
++++ b/documents/ews-book/04-inspiration.org
+@@ -24,14 +24,14 @@ #+title: Inspiration: Reading, Listening and Watching
+ 
+ Therefore, the first step in /Emacs Writing Studio/ workflow (EWS) is consuming information created by other people, either by reading, listening or watching content. The thoughts and ideas of other people are the foundation upon which authors build their works. In 1675, Sir Isaac Newton wrote a letter to Robert Hooke in which he penned the now-famous phrase, "If I have seen further, it is by standing on the shoulders of Giants". This quote is perhaps a cliché, but it still holds true, even in the age of generative AI. Depending on other creators' works is essential not only in academic writing with its strict conventions on referencing. All authors need to read to be able to write. 
+ 
+-Even though Emacs is a text processor, it can evoke other software to display ebooks. Besides being malleable software, Emacs is also an interface to other software. This means that we can use Emacs for tasks beside writing and editing text. You can as such also use Emacs to listen to music or podcasts, and watch videos, but only with the assistance from some additional software. Keeping track of your collection of physical and electronic literature collection is another important task of a scholar. Emacs can also assist with creating a searchable bibliography for easy access to your resources using BibTeX files. You can access electronic files and hyperlinks from this bibliography and attach notes to each item. This chapter explains how to use Emacs to read electronic documents in the most common open formats, surf the web, and consume multimedia files. This chapter also explains how to create a plain text database to manage your collections of electronic books.
++Even though Emacs is a text processor, it can invoke other software to display ebooks. Besides being malleable software, Emacs is also an interface to other software. This means that we can use Emacs for tasks beside writing and editing text. You can as such also use Emacs to listen to music or podcasts, and watch videos, but only with the assistance from some additional software. Keeping track of your collection of physical and electronic literature collection is another important task of a scholar. Emacs can also assist with creating a searchable bibliography for easy access to your resources using BibTeX files. You can access electronic files and hyperlinks from this bibliography and attach notes to each item. This chapter explains how to use Emacs to read electronic documents in the most common open formats, surf the web, and consume multimedia files. This chapter also explains how to create a plain text database to manage your collections of electronic books.
+ 
+ * Reading eBooks
+ In the pre-digital era, people shared information physically, from clay tablets to paper books and other tangible formats. Before the internet the only way to get information was to visit a library and spend hours and days wading through catalogues and books. Digital documents have become the norm in the last two decades and visits to the local library have been replaced by internet searches.
+ 
+ Most ebooks are not distributed in plain text but either PDF, ePUB or DjVu. A wonderful exception is Project Gutenberg (=gutenberg.org=), a vast electronic library of over 70,000 copyright-free eBooks. This library started in 1971 and distributes books in plain text and other open formats.
+ 
+-Emacs can only render ebooks in open formats. An open format, as opposed to a proprietary format, has a publicly available specification so anyone can develop software that can create and read these files. The greatest advantage to an open format for ebooks is that your book can be displayed on any device. The most common proprietary formats such as Apple ibook and any Kindle books cannot be read with Emacs. Proprietary file formats pose a grave risk to cultural continuity. Some governments therefore require open documents formats to enforce digital sovereignty and liberate themselves from the dominance of large internet corporations [cite:@pohle_2020]. 
++Emacs can only render ebooks in open formats. An open format, as opposed to a proprietary format, has a publicly available specification so anyone can develop software that can create and read these files. The greatest advantage to an open format for ebooks is that your book can be displayed on any device. The most common proprietary formats such as Apple ibook and any Kindle books cannot be read with Emacs. Proprietary file formats pose a grave risk to cultural continuity. Some governments therefore require open document formats to enforce digital sovereignty and liberate themselves from the dominance of large internet corporations [cite:@pohle_2020]. 
+ 
+ Emacs needs assistance from external software to display ebooks and word processor documents. The diagram below shows the various external software packages necessary to render pages from the supported file formats. This external software converts each page to a plain text buffer or a PNG image, which Emacs can display. The following external software is required to read the most common ebook formats:
+ 
+@@ -234,7 +234,7 @@ ** Using Citar to Access Bibliographies
+ 
+ Within Org mode, bibliographies can have a global or a local scope. The global bibliography is a set of BibTeX files available from anywhere within Emacs, located in the ~ews-bibtex-directory~. You can also link one or more project-specific local BibTeX files to an Org mode file. This might be useful when working on a project that only references literature relevant to the work at hand. Add a local bibliography to an Org mode file with something like =#+bibliography: ews.bib=.
+ 
+-Citar processes all bibliography files in the global folder and any files referenced in an active Org mode buffer. If you add another global bibliography file, then you need to let Citar know with the  ~ews-bibtex-register~ function (=C-c w b r=). This function registers all bibliography files in the nominated directory for Citar to use and displays them in the echo area. You only use this function to register new files, it is not required when adding new literature to an existing file.
++Citar processes all bibliography files in the global folder and any files referenced in an active Org mode buffer. If you add another global bibliography file, then you need to let Citar know with the ~ews-bibtex-register~ function (=C-c w b r=). This function registers all bibliography files in the nominated directory for Citar to use and displays them in the echo area. You only use this function to register new files, it is not required when adding new literature to an existing file.
+ 
+ You activate Citar with ~citar-open~, which in EWS is bound to =C-c w b o=. A menu pops up in the minibuffer where you can search your collection. The first three columns in the menu indicate which entries include a hyperlink (=L=), one or more attached files (=F=) and an associated note (=N=). The remainder shows the author, year, title, citation key and keywords (Figure [[fig:citar-menu]]).
+ 
+@@ -312,7 +312,7 @@ ** Read RSS and Atom Feeds with Elfeed
+ 
+ The only configuration you need for =elfeed-org= is to customise the name of the Org file(s) you like to use to store your feed links. In EWS, the location of the Elfeed configuration is stored in the ~rmh-elfeed-org-files~ variable, which by default is set to  ="~/Documents/elfeed.org"=.
+ 
+-You need to customise this variable to match the file you like to us for Elfeed and then restart Emacs. To add or remove a feed, edit this file and update the database with ~elfeed-update~. You are now ready to read your RSS feeds.
++You need to customise this variable to match the file you like to use for Elfeed and then restart Emacs. To add or remove a feed, edit this file and update the database with ~elfeed-update~. You are now ready to read your RSS feeds.
+ 
+ #+caption: Elfeed screendump.
+ #+attr_html: :alt Emacs Elfeed screendump :title Emacs Elfeed screendump :width 800
+diff --git a/documents/ews-book/05-ideation.org b/documents/ews-book/05-ideation.org
+index cbe4700..5472674 100755
+--- a/documents/ews-book/05-ideation.org
++++ b/documents/ews-book/05-ideation.org
+@@ -18,7 +18,7 @@ #+title: Ideation: Building Second Brain with Denote
+ 
+ When writing first became common, Greek philosopher Socrates lamented in his dialogue with /Phaedrus/ that written language erodes our memory. Socrates' argument was perhaps correct. However, writing has freed our minds from being a storehouse of factual knowledge to being a creative machine. The development of humanity accelerated when writing allowed people to free their minds from facts and use this brainpower to create new ideas. Productivity guru David Allen expressed it succinctly when he wrote, "The mind is for having ideas, not for holding them" [cite:@allen_2005_gett]. Philosophers refer to Allen's intuition as the /extended mind thesis/, which suggests that the mind does not exclusively reside in the body but extends into the physical world [cite:@clark_1998], which led to the idea of the second brain.
+ 
+-Taking notes to extend the fragility of human memory is as old as the art of writing itself. Since the 1970s, humanity has transitioned from writing words on paper to keeping them in electric storage. In recent years, the need to keep notes has resulted in a cottage industry of blogs, books, YouTube channels and electronic note-taking applications to help people organise their mind and life. Whether Luhmann's /Zettelkasten/, Carroll's /Bullet Journal/, or Forte's /Second Brain/, they all profess to solve personal knowledge management challenges by following a specified method. The best note-taking method is the one you develop yourself and that organically grows in complexity. An electronic second brain doe snot automatically lead to success, your organic brain should dictate the second one and not vice versa [cite:@prot_2024].
++Taking notes to extend the fragility of human memory is as old as the art of writing itself. Since the 1970s, humanity has transitioned from writing words on paper to keeping them in electric storage. In recent years, the need to keep notes has resulted in a cottage industry of blogs, books, YouTube channels and electronic note-taking applications to help people organise their mind and life. Whether Luhmann's /Zettelkasten/, Carroll's /Bullet Journal/, or Forte's /Second Brain/, they all profess to solve personal knowledge management challenges by following a specified method. The best note-taking method is the one you develop yourself and that organically grows in complexity. An electronic second brain does not automatically lead to success, your organic brain should dictate the second one and not vice versa [cite:@prot_2024].
+ 
+ In my three decades working with both paper and digital journals, I've learned that the structure of notes is not the most critical aspect. What truly matters is the authenticity and originality of the recorded thoughts. Even Luhmann, the creator of the Zettelkasten method, saw his system as a "septic tank for ideas" [fn:5-1]. However, we can apply some logic to our workflow to create order in the chaos, and Emacs provides powerful tools to assist.
+ 
+@@ -37,7 +37,7 @@ #+title: Ideation: Building Second Brain with Denote
+ * EDITED Fleeting Notes
+ Fleeting notes capture those unexpected ideas that flit through our minds --- a sudden insight, a movie quote, or a to-do list reminder. These fleeting notes are temporary parking spots for thoughts. They might be ideas for a future project, tasks to complete, or something interesting to revisit later. We need a frictionless capture system, like a trusty paper notebook, a phone app, or even the back of our hand to prevent these from disappearing.
+ 
+-the need to take fleeting notes also arises while using Emacs. You can leverage Org mode's capture feature for this purpose. Imagine writing a book when you suddenly remind yourself that you need to buy some milk; Org mode in Emacs lets you capture this fleeting thought with just a few keystrokes, saving it for later review without derailing your current focus.
++The need to take fleeting notes also arises while using Emacs. You can leverage Org mode's capture feature for this purpose. Imagine writing a book when you suddenly remind yourself that you need to buy some milk; Org mode in Emacs lets you capture this fleeting thought with just a few keystrokes, saving it for later review without derailing your current focus.
+ 
+ Capturing a fleeting note with Org mode's capture feature is a simple process. Just press =C-c c= (org-capture), and a selection screen pops up. Select 'Fleeting Note' with =f=, write your thoughts into the popup buffer, and press =C-c C-c= to save the note under the 'Notes' heading in your inbox as a list item. The capture system adds new fleeting notes below the previous ones. If you decide it was not worth storing this thought after all, press =C-c C-k= to cancel the input. Once you're done, Org mode returns to where you left off, and you can happily proceed with your work with minimal disturbance. The capture menu also has an option to add an item to your todo list, which is stored in the same file, but under a different heading. Chapter [[chap:management]] discusses how to manage projects and action lists in Org mode.
+ 
+@@ -87,7 +87,7 @@ * EDITED Permanent Notes
+ * EDITED The Denote Package
+ Most note-taking systems use separate files for linked individual notes to create a network of ideas. Emacs users have developed a slew of packages to write and manage collections of notes. EWS uses the Denote package. This package does not enforce any methodology or workflow, and it can process both written notes in plain text and binary files, such as photographs, PDF files, or anything else you would like to archive.
+ 
+-The Denote package categorises your files using keywords. There is also an option to add a signature, which designates a sematic order for notes. Notes can also link to each other to form a network of thoughts. With these three mechanisms, you can use Denote to create an organic digital garden or implement a formal system, such as Zettelkasten, Johnny Decimal, PARA or methods that don't even exist yet.
++The Denote package categorises your files using keywords. There is also an option to add a signature, which can designate a sematic order for notes. Notes can also link to each other to form a network of thoughts. With these three mechanisms, you can use Denote to create an organic digital garden or implement a formal system, such as Zettelkasten, Johnny Decimal, PARA or methods that don't even exist yet.
+ 
+ The driving force of the Denote package is its file naming convention. This approach embeds metadata in the filename, so there is no need for a database or any other external dependency to navigate your jungle of notes. The Denote file naming convention has five parts (all in lowercase by default), of which only the ID and file extensions are compulsory. An example of a fully formatted Denote file is.
+ 
+@@ -105,7 +105,7 @@ * EDITED The Denote Package
+ 
+ The file naming convention in Denote places some limitations. The Denote signature can only contain letters, numbers and the equals sign to maintain the integrity of the system. The title only letter, numbers and dashes. Keywords can only contain letters and numbers. Denote cleans (sluggifies) file names to enforce compliance with the convention.
+ 
+-Denote stored new notes in the same folder, signified by the ~denote-directory~ variable, which defaults to =~/Documents/notes=. You can customise this variable to suit your needs and restart Emacs. Denote can store notes in subdirectories within this primary location, but there is no need to do so. When subdirectories categorise files, a part of the metadata for that file disappears as soon as you move the file to another location. Also, a file can only reside in one directory.
++Denote stores new notes in the same folder, signified by the ~denote-directory~ variable, which defaults to =~/Documents/notes=. You can customise this variable to suit your needs and restart Emacs. Denote can store notes in subdirectories within this primary location, but there is no need to do so. When subdirectories categorise files, a part of the metadata for that file disappears as soon as you move the file to another location. Also, a file can only reside in one directory.
+ 
+ Modern operating systems can effortlessly manage tens of thousands of files in one directory, so there is no need to use subdirectories. Instead of subdirectories you can use file tags, which makes it easy to view files that logically belong in the same group. File tags are more flexible than subdirectories because each file can have more than one tag, but can only live in one directory.
+ 
+@@ -133,6 +133,9 @@ * EDITED The Denote Package
+ The first type of note can be anything you want it to be, so there is nothing particular to discuss. The other permanent note types are discussed in the next four sections.
+ 
+ ** EDITED Keep a Journal or Diary
++
++# PROT: Check the denote-journal-extras.el, as it can do some of this out-of-the-box. This is fine though.
++
+ You can use Denote for personal reflection, to create a journal or a laboratory logbook, to add meeting notes, or to record any other notes related to an event. Writing a journal with Denote is easy because the identifier for each note indicates the date and time you created it. Adding a standard tag, such as =_journal=, makes your journal entries easy to distinguish from other notes.
+ 
+ If you create a note for an entry in the past, use the ~denote-date~ function (=C-c w d d=). You enter the date in Year-Month-Day (ISO 8601) notation like =2023-09-06=. Optionally, you can add a specific time in 24-hour notation, for example =2023-09-6 20:30=. Denote uses the present date or time if no date and/or time is provided. It makes sense to tag each journal entry with a standard keyword, e.g. =_journal=, or whatever makes sense in your native language for easy reference.
+@@ -178,13 +181,14 @@ ** EDITED Attachments
+ :PROPERTIES:
+ :CUSTOM_ID: sec:attachments
+ :END:
+-Denote's reliance on a filename to store metadata allows you to manage files other than the three types specified by Denote, which we can call attachments. An attachment in a file with a compatible filename, except those files that Denote creates. Denote recognises any file stored in the Denote directory that follows the it's file naming convention, which can be linked inside a Denote note.
++Denote's reliance on a filename to store metadata allows you to manage files other than the three plain text types specified by Denote, which we can call attachments. An attachment is a file with a compatible filename, except those files that Denote creates. Denote recognises any file stored in the Denote directory that follows its file naming convention, which can be linked inside a Denote note.
+ 
+ Your digital notes garden can be much more than just text. You can manage your photographs with Denote and store an archive of PDF files, such as bank statements, course certificates, or scans of your paper archive. Extending Denote with attachments converts your list of notes to a complete personal knowledge management system with easy heuristics to find your documents and link them to notes.
+ 
+ There are numerous use cases for extending Denote to binary files. I personally save my photographs and videos in the Denote file format. I also store PDF files, such as scanned paper documents or files I receive in this format, such as invoices. You can also link to individual attachments inside a Denote file in the same way you link your notes. However, it is not possible to link back from an attachment to a note using Denote, as these files are not notes.
+ 
+-The first step to register an attachment in Denote is to ensure it has a compliant and correct name. You can either rename a file manually or use the denote-rename-file function (=C-c w d r=) within the Dired file manager (section [[#sec:dired]]). This function uses the filename as a default title, which you can modify as needed and you can add relevant keywords. The last modified timestamp of the file will serve as its identifier.
++# PROT: You may also want to mention denote-dired-rename-files
++The first step to register an attachment in Denote is to ensure it has a compliant and correct name. You can either rename a file manually or use the ~denote-rename-file~ function (=C-c w d r=) within the Dired file manager (section [[#sec:dired]]). This function uses the filename as a default title, which you can modify as needed and you can add relevant keywords. The last modified timestamp of the file will serve as its identifier.
+ 
+ However, the creation date on the file system is not always the actual creation date. When working with attachments, there are three options for a valid timestamp, the date and time when the:
+ 
+@@ -192,7 +196,9 @@ ** EDITED Attachments
+ - Electronic file was born (first creation date)
+ - Electronic file was created on the file system (Denote default)
+ 
+-Using the universal argument =C-u= instructs denote-rename-file to ask the user to enter a date and/or time for the attachment. So, in Emacs Writing Studio, use =C-u C-c d r= to rename a file from Dired and manually provide a timestamp. You must enter the timestamp in ISO 8601 format, for example: =2023-11-04 12:32:45=. you can also enter it as a Denote timestamp: =20231104T113245=.
++# PROT: The C-u does not work anymore. We have changed it to instead conform with the value of the denote-prompts. This makes it easier to define a convenience wrapper command that 'let' binds the value of the denote-prompts to append the date: we have the denote--add-prompts for that, which we can make public. We can discuss this if you want.
++
++Using the universal argument =C-u= instructs ~denote-rename-file~ to ask the user to enter a date and/or time for the attachment. So, in Emacs Writing Studio, use =C-u C-c d r= to rename a file from Dired and manually provide a timestamp. You must enter the timestamp in ISO 8601 format, for example: =2023-11-04 12:32:45=. you can also enter it as a Denote timestamp: =20231104T113245=.
+ 
+ The first scenario mainly relates to historical documents. Over the years, I have gradually digitised my paper archives. The earliest identifier timestamp in my Denote library is =13700623T120000=, a scan of a medieval document that holds the mortgage of my birth house. The original creation date of the document (when it was scanned) is in 2021, and the date on my file system is sometime in 2023. The Denote renaming function uses the file system date, which is not ideal. This document requires manually entering a timestamp that places the document in the distant past.
+ 
+@@ -202,11 +208,14 @@ ** EDITED Meta Notes
+ :PROPERTIES:
+ :CUSTOM_ID: sec:meta
+ :END:
++
++# PROT: Is "These blocks, also known as meta notes" what you meant to write?
++
+ Meta notes, the last type of permanent note, serve as a gateway to other notes on a similar topic. Dynamic blocks, a versatile feature in Org mode, excel at aggregating your thoughts and linking to relevant notes. These blocks, also known as meta notes, provide a seamless entry point to your note collection and serve as a starting point for your writing projects. A meta note could contain a list of all notes within a category or an ordered list of notes that match part of a signature.
+ 
+ Let's say that you are working on a project to write a paper about the /Daimonion/ (prophetic monitor) that spoke to the ancient Greek philosopher Socrates. You read the literature and create a bunch of permanent and bibliographic notes that use the =_daimonion= keyword. When it is time to gather your thoughts into an integrated view, you can create a new note that links to all your relevant notes.
+ 
+-In Org mode, a dynamic block is a section in your document that can be updated using a function. Denote offers functions to add dynamic lists of links to other documents, which are incredibly handy as they always reflect the latest version of your note collection. To use this feature, simply invoke the denote-org-extras-dblock-insert-links function  (=C-c w d D=), and provide a search string that matches the notes you want to list (in this case, it's =_daimonion=). Denote will insert a block in your note that lists all notes matching this search criterion. The dynamic block is enclosed between two lines: =#+BEGIN:= and =#+END:=. If you add new notes with the Daimonion tag, simply place the cursor on the beginning or end lines and use =C-c C-c= to update the list. To modify the search criteria, edit the text between the quotation marks after the =:regexp= part of the first line and update the dynamic block.
++In Org mode, a dynamic block is a section in your document that can be updated using a function. Denote offers functions to add dynamic lists of links to other documents, which are incredibly handy as they always reflect the latest version of your note collection. To use this feature, simply invoke the ~denote-org-extras-dblock-insert-links~ function  (=C-c w d D=), and provide a search string that matches the notes you want to list (in this case, it's =_daimonion=). Denote will insert a block in your note that lists all notes matching this search criterion. The dynamic block is enclosed between two lines: =#+BEGIN:= and =#+END:=. If you add new notes with the Daimonion tag, simply place the cursor on the beginning or end lines and use =C-c C-c= to update the list. To modify the search criteria, edit the text between the quotation marks after the =:regexp= part of the first line and update the dynamic block.
+ 
+ #+begin_example
+  #+BEGIN: denote-links :regexp "_daimonion"
+@@ -221,10 +230,11 @@ ** EDITED Meta Notes
+ ** EDITED Linking Notes
+ The Denote signature and keyword offer a unique way to categorise and rank notes, ordering and grouping similar ideas. Additionally, Org mode can also become a personal wiki by linking notes. While the term 'personal wiki' may seem contradictory, given that wikis are by definition collaborative, the power of linking notes allows for the creation of an interconnected web of ideas.
+ 
+-Org mode features a versatile system of links. In the previous chapter, we explored how to add hyperlinks to the World Wide Web and links to images (section [[#sec:rss]] and chapter [[#chap:ews]]). Org mode can recognise various types of hyperlinks, including links to other files, internal links, and other special formats. To create a hyperlink from an Org mode file to another file use =C-u C-c C-l=, navigate to the target file and enter a description. The link is now active and You can follow it with ~org-open-at-point~, bound to =C-c C-o=. Linking to other documents is a great way to structure your file system, but this method has a problem because the link breaks as soon as the target file changes name or location.
++Org mode features a versatile system of links. In the previous chapter, we explored how to add hyperlinks to the World Wide Web and links to images (section [[#sec:rss]] and chapter [[#chap:ews]]). Org mode can recognise various types of hyperlinks, including links to other files, internal links, and other special formats. To create a hyperlink from an Org mode file to another file use =C-u C-c C-l=, navigate to the target file and enter a description. The link is now active and you can follow it with ~org-open-at-point~, bound to =C-c C-o=. Linking to other documents is a great way to structure your file system, but this method has a problem because the link breaks as soon as the target file changes name or location.
+ 
+ Denote enhances Org mode's functionality by creating stable links between notes. A denote link only stores the identifier of the target file, so the signature, name and keywords can change freely without the risk of creating dead links. You can link notes and attachments with the ~denote-link-or-create~ function (=C-c w d i=). This command lists all available notes using the minibuffer completion system, from which you can select one and hit enter. To modify the link's label, press =C-c C-l= (~org-insert-link~) while the cursors is on the link and follow the prompts. The source of a Denote link looks something like this: =[[denote:20210208T150244][Description]]=.
+ 
++# PROT: Good idea! Another option is to use a different colour, like the green-cooler from the modus-themes.
+ If you enter a name for a note that does not yet exist, Denote will first let you create a new note and then link to it. Denote links are indicated with italics in EWS to distinguish them from links to other resources, such as websites.
+ 
+ You can jump to any linked note without having the cursor on it with ~denote-link-find-file~ (=C-c w d l=). This function shows all notes linked from the open note in the minibuffer where you can select the one you like to jump to. To find out which notes link to the one you are currently reading, use the ~denote-find-backlink~ function (=C-c w d b=). 
+@@ -234,6 +244,8 @@ ** EDITED Finding Notes and Attachments
+ 
+ If, for example, you like to filter notes tagged as 'economics', type =C-x C-f=, move to your notes folder, and type =_economics=. Minibuffer completion narrows the available options. If you need a note with economics in the title but not as a tag, use =-economics=. If you type =economics= without a prefix, then you see all posts with the search term in the signature, title or as a tag. You can also introduce regular expressions (section [[#sec:meta]]) to increase your search power. As the minibuffer completion uses the Orderless package, a space effectively acts as an AND expression. So using =^2022 ===9a _art= searches for all notes with a file name that starts with (=^=) 2022 and include a signature that starts with 9a (==9a=) and have the =_art= file tag.
+ 
++# PROT: Depending on when you will publish this, I have consult-denote coming up: https://github.com/protesilaos/consult-denote. It stays closer to the Denote paradigm, in terms of not trying to modify how the files are presented (that is a slow operation), but otherwise gives you the Consult preview functionality.
++
+ The Consult-Notes package by Colin McLear merges the capabilities of Denote and Daniel Mendler's Consult package to help you find notes without remembering which directory they live in. This package also provides facilities to search through the content of your notes, with assistance from external software.
+ 
+ To find a note by any part of its filename, use the ~consult-notes~ function bound to =C-c w f=. You can use all the above methods to narrow your quest for the perfect note. The Consult package provides live previews of the files that match the search. These previews display the files in their raw form, without any image previews, font enhancements and so on, so previews load quickly.
+@@ -249,7 +261,7 @@ ** EDITED Finding Notes and Attachments
+ * EDITED Managing Your Digital Garden
+ Your collection of notes needs regular maintenance as ideas and structures of thought evolve over time. The names, keywords and signatures of notes can change over time as your digital garden grows and blossoms. 
+ 
+-Denote Org mode files hold metadata in both the file name and the file's front matter. ideally you like the file's name and the front matter to be in sync.  You can also change the title and the keywords by simply editing the text. For more convenience, use the ~denote-keyword-add~ (=C-c w d k=) and ~denote-keyword-remove~ (=C-c w d K=) functions to change tags with minibuffer completion. These last two functions will also rename the file. Using ~denote-rename-file-using-front-matter~ (=C-c w d R=) changes the filename using the data in the front matter. This function leaves the identifier unchanged, even when edited in the front matter.
++Denote Org mode files hold metadata in both the file name and the file's front matter. Ideally you like the file's name and the front matter to be in sync.  You can also change the title and the keywords by simply editing the text. For more convenience, use the ~denote-keyword-add~ (=C-c w d k=) and ~denote-keyword-remove~ (=C-c w d K=) functions to change tags with minibuffer completion. These last two functions will also rename the file. Using ~denote-rename-file-using-front-matter~ (=C-c w d R=) changes the filename using the data in the front matter. This function leaves the identifier unchanged, even when edited in the front matter.
+ 
+ The Denote-Explore package provides convenience functions to manage your collection of Denote files. You can find the shortcuts for the Denote-Explore package with the =C-c w x= prefix. This package provides four types of commands:
+ 
+@@ -448,7 +460,7 @@ ** EDITED Visualising Denote Networks
+ It might seem that adding more connections between your notes improves them, but this is not necessarily the case. The extreme case is a complete network where every file links to every other file. This situation lacks any interesting structure and wouldn't be very useful for analyses. So, be mindful of your approach to linking notes and attachments.
+ 
+ * Implementing Note-Taking Systems
+-The Denote package is flexible and malleable, so you can use it to implement any published note-taking methodology. This section provides some suggestions on how to implement each of these methods. EWS does not promote any note-taking systems. This section only demonstrates how you could implement them. Try mot to get distracted by 'shiny-object syndrome' and focus on what is useful (writing), rather than chasing the latest ideas. The ideal method is one that you grow organically based on your needs. The power of the Denote file naming convention and regular expressions basically provide everything you need at your fingertips. 
++The Denote package is flexible and malleable, so you can use it to implement any published note-taking methodology. This section provides some suggestions on how to implement each of these methods. EWS does not promote any note-taking systems. This section only demonstrates how you could implement them. Try not to get distracted by 'shiny-object syndrome' and focus on what is useful (writing), rather than chasing the latest ideas. The ideal method is one that you grow organically based on your needs. The power of the Denote file naming convention and regular expressions basically provide everything you need at your fingertips. 
+ 
+ ** EDITED PARA
+ Tiago Forte has developed the PARA method to organise your digital life [cite:@forte_2022_buil]. In his system, all digital assets form part of one of four folders:
+@@ -506,4 +518,4 @@ * Learn More
+ 
+ The extensive Denote manual describes its full functionality in great detail, with lots of options to configure how it works. The Citar-Denote and Denote-Explore packages also provide manuals through the info system. You can access these three manuals with =C-h R denote= and select the relevant package.
+ 
+-Now that you have collected a lot of notes, it is time to start a writing project. The next chapter shows how to work on a large writing project using Org mode.
++Now that you have collected a lot of notes, it is time to start writing project. The next chapter shows how to work on a large writing project using Org mode.
+-- 
+2.39.2
+

@@ -1,0 +1,166 @@
+#+title:        Emacs Writing Studio
+#+subtitle:     A Practical Guide to Plain Text Writing and Publishing
+#+author:       Peter Prevos
+#+startup:      num content
+#+options:      html-postamble:nil tex:dvipng
+#+bibliography: ../library/emacs-writing-studio.bib
+#+latex_class:  crc
+#+uid:          https://lucidmanager.org/tags/emacs
+#+epubcover:    images/ews-cover.jpg
+#+macro:        ews /Emacs Writing Studio/
+#+publisher:    Third Hemisphere Publishing
+#+subject:      Emacs, writing, publishing
+#+description:  Emacs Writing Studio is a guide for authors who like to research, write and publish with plain text in Emacs.
+#+license:      This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Australia License.
+
+# Front Matter ePub
+#+begin_export html
+<!-- Front Mater ebook -->
+<div id="frontmatter" class="outline-2">
+<h3 style="text-align:center">Preview Copy --- not for distribution</h3>
+<p>&nbsp;</p>
+<h3 style="text-align:center">Peter Prevos</h3>
+<p>&nbsp;</p>
+<img src="ews-cover.jpg" align="center" alt="Emacs Writing Studio" title="Emacs Writing Studio" />
+<p>&nbsp;</p>
+<h3 style="text-align:center">Third Hemisphere Publishing</h3>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 style="text-align:center">&#169; Peter Prevos (2024)</h3>
+<p>&nbsp;</p>
+<p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Australia License. You are free to share to copy, distribute and transmit the work under the following conditions:</p>
+<ul>
+<li>You must attribute the work in the manner specified by the author (but not in any way that suggests that they endorse you or your use of the work).</li>
+<li>If you alter, transform, or build upon this work, you may distributecthe resulting work only under the same or similar license to this one.</li>
+</ul>
+<p>Written in Emacs <a href="https://orgmode.org/">Org Mode</a>.</p>
+</div>
+#+end_export
+
+# Front Matter PDF
+#+begin_export latex
+\frontmatter
+\title{\textbf{\Huge{}Emacs Writing Studio}\vspace{2cm}\\
+\textbf{A Treatise on Geometric Vanishes}\vspace{4cm}}
+\author{Peter Prevos\vspace{3cm}}
+\date{}
+\maketitle
+\begin{center}
+\setlength{\unitlength}{1mm}
+\includegraphics[height=18mm]{images/logo512.png}
+\begin{picture}(20, 18)
+\put(3,4){\shortstack[l]{Third\\Hemisphere\\Publishing}}
+\end{picture}
+\par\end{center}
+\thispagestyle{empty}
+\pagebreak{}
+\thispagestyle{empty}
+\noindent\begin{minipage}[t]{1\columnwidth}
+\begin{center}
+\ccLogo{}{\footnotesize{} Peter Prevos (2024)}
+\par\end{center}{\footnotesize \par}
+\begin{center}
+\emph{\footnotesize{}Magic Perspectives}{\footnotesize{}, Kangaroo Flat, Australia}\\
+{\footnotesize{}\href{https://magicperspectives.net}{magicperspectives.net}}
+\par\end{center}{\footnotesize \par}
+\begin{center}
+{\footnotesize{}This work is licensed under a Creative Commons }\emph{\footnotesize{}Attribution-Share Alike}{\footnotesize{} 3.0 Australia License. You are free to share\textemdash to copy, distribute and transmit the work under the following conditions: }
+\par\end{center}{\footnotesize \par}
+\begin{center}
+\ccAttribution{\footnotesize{} }\emph{\footnotesize{}Attribution}{\footnotesize{}:
+You must attribute the work in the manner specified by the author (but not in any way that suggests that they endorse you or your use of the work).}
+\par\end{center}{\footnotesize \par}
+\begin{center}
+\ccShareAlike{\footnotesize{} }\emph{\footnotesize{}Share Alike}{\footnotesize{}:
+If you alter, transform, or build upon this work, you may distributecthe resulting work only under the same or similar license to this one.}
+\par\end{center}{\footnotesize \par}
+\begin{center}
+{\footnotesize{}Written in Emacs \href{https://orgmode.org/}{Org Mode}. \\ Typeset in \LaTeX.}\\
+{\footnotesize{}Cover design by Angie at }\emph{\footnotesize{}pro\_ebookcovers}{\footnotesize{}.}\\
+\vspace{2em}
+{\footnotesize{}\href{https://peterprevos.com}{peterprevos.com}}
+\par\end{center}{\footnotesize \par}
+\end{minipage}
+\newpage{}
+\setcounter{page}{5}
+\tableofcontents
+#+end_export
+
+* Foreword
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+:NOTES:
+- [X] By Prot (500-1000 w)
+:END:
+#+include: "00-i-foreword.org" :lines "2-"
+
+* Preface
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+#+include: "00-ii-preface.org" :lines "2-"
+
+#+begin_export latex
+\mainmatter
+#+end_export
+
+* Introduction
+#+include: "01-why-emacs.org" :lines "2-"
+
+* Getting Started with Emacs
+:PROPERTIES:
+:CUSTOM_ID: chap:vanilla
+:END:
+#+include: "02-getting-started.org"  :lines "2-"
+
+* Using Emacs Writing Studio
+:PROPERTIES:
+:CUSTOM_ID: chap:ews
+:END:
+#+include: "03-using-ews.org" :lines "2-"
+
+* Inspiration: Read, Listen and Watch
+:PROPERTIES:
+:CUSTOM_ID: chap:inspiration
+:END:
+#+include: "04-inspiration.org" :lines "2-"
+
+* Ideation: Record and Manage Ideas
+:PROPERTIES:
+:CUSTOM_ID: chap:ideation
+:END:
+#+include: "05-ideation.org" :lines "2-"
+
+* Production: Prepare a Manuscript
+:PROPERTIES:
+:CUSTOM_ID: chap:production
+:END:
+#+include: "06-production.org" :lines "2-"
+
+* Publication: Share with the World
+:PROPERTIES:
+:CUSTOM_ID: chap:publication
+:END:
+#+include: "07-publication.org" :lines "2-"
+
+* Administration: Manage Your Projects
+:PROPERTIES:
+:CUSTOM_ID: chap:admin
+:END:
+#+include: "08-administration.org" :lines "2-"
+
+* Become an Emacs Ninja
+:PROPERTIES:
+:CUSTOM_ID: chap:ninja
+:END:
+#+include: "09-ninja.org" :lines "2-"
+
+#+begin_export latex
+\backmatter
+#+end_export
+
+* Appendix
+#+include: "99-appendix.org" :lines "2-"
+
+#+print_bibliography:
