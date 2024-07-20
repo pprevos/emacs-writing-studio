@@ -153,7 +153,7 @@ The Emacs manual provides extensive documentation about using and configuring ab
 
 Its primary purpose is to focus the viewer's attention on the layout, typography, and visual elements rather than the content itself. This package helps you to design a layout without being distracted by the meaning of the text. The next chapter discusses document typography and layout in more detail.
 
-EWS includes a package to generate /Lorem Ipsum/ sentences and paragraphs, which you can access with the =C-c w i= prefix key. To insert multiple elements use a numeric prefix, for example =M-6 C-c w i s= inserts six random sentences.
+EWS includes a package to generate /Lorem Ipsum/ sentences and paragraphs, which you can access with the =C-c w i= prefix key. To insert multiple elements, use a numeric prefix, for example =M-6 C-c w i s= inserts six random sentences.
 
 ** EDITED Converting Text Casing
 Emacs has built-in functions to convert words and regions to lower and upper case (section [[#sec:mistakes]]). When writing prose, we sometimes require book titles, chapters, and other headings.
@@ -161,6 +161,8 @@ Emacs has built-in functions to convert words and regions to lower and upper cas
 The Titlecase package by Case Duckworth provides title-casing for English prose. The ~titlecase-dwim~ function converts the selected region or the current line. You can set the casing convention by customising the ~titlecase-style~ variable to your preferred method. The customisation menu provides a drop-down box with available options.
 
 EWS includes a convenience function (~ews-org-headings-titlecase~) that cycles through all headings in the current Org buffer and capitalises them. When using this function with the universal argument (=C-u=), the headings become sentence case, which only capitalises the first word.
+
+By default this function converts all headings to the desired case. When you configure the ~ews-org-heading-level-capitalise~ variable you can either choose to convert only headings to a certain level by adding a number or keep the default of converting all headings.
 
 Unfortunately, due to the whimsies of written English, it is impossible to capitalise titles perfectly. So, never trust a computer and proofread your titles before publishing.
 
