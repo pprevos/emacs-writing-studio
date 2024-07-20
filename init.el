@@ -281,6 +281,11 @@
   (org-modern-statistics nil)
   (org-modern-progress nil))
 
+(use-package consult
+  :bind
+  (("C-c w h" . consult-org-heading)
+   ("C-c w g" . consult-grep)))
+
 ;; INSPIRATION
 
 ;; Doc-View
@@ -360,9 +365,7 @@
   (elfeed-org)
   :custom
   (rmh-elfeed-org-files
-   (list (concat (file-name-as-directory
-              (getenv "HOME"))
-                 "Documents/elfeed.org"))))
+   (list (concat (file-name-as-directory (getenv "HOME")) "elfeed.org"))))
 
 ;; Easy insertion of weblinks
 
@@ -439,26 +442,20 @@
    ("C-c w d h" . denote-org-extras-link-to-heading)
    ("C-c w d i" . denote-link-or-create)
    ("C-c w d I" . denote-org-extras-dblock-insert-links)
-   ("C-c w d k" . denote-keywords-add)
-   ("C-c w d K" . denote-keywords-remove)
+   ("C-c w d k" . denote-rename-file-keywords)
    ("C-c w d l" . denote-link-find-file)
    ("C-c w d n" . denote)
    ("C-c w d r" . denote-rename-file)
    ("C-c w d R" . denote-rename-file-using-front-matter)))
 
-;; Consult-Denote for easy access
+;; Consult-Notes for easy access to notes
 
-(use-package consult-denote
-  :custom
-  (consult-denote-find-command
-   #'(lambda() (find-file (consult-denote-file-prompt))))
-  :config
-  (consult-denote-mode)
+(use-package consult-notes
   :bind
-  (("C-c w h" . consult-org-heading)
-   ("C-c w f" . consult-denote-find)
-   ("C-c w g" . consult-denote-grep)
-   ("C-x b"   . consult-buffer)))
+  (("C-c w f"   . consult-notes)
+   ("C-c w d g" . consult-notes-search-in-all-notes))
+  :init
+  (consult-notes-denote-mode))
 
 ;; Citar-Denote to manage literature notes
 
@@ -532,11 +529,7 @@
 (require 'oc-natbib)
 (require 'oc-csl)
 
-(setq org-cite-csl-styles-dir ews-bibtex-directory
-      org-cite-export-processors
-      '((latex natbib "apalike2" "authoryear")
-        (t     csl    "apa6.csl"))
-      org-cite-global-bibliography ews-bibtex-files
+(setq org-cite-global-bibliography ews-bibtex-files
       org-cite-insert-processor 'citar
       org-cite-follow-processor 'citar
       org-cite-activate-processor 'citar)
@@ -672,8 +665,6 @@
 (use-package org
   :custom
   (org-log-into-drawer t)
-  (org-enforce-todo-checkbox-dependencies t)
-  (org-enforce-todo-dependencies t)
   :bind
   (("C-c a" . org-agenda)))
 
@@ -728,3 +719,5 @@
   (bookmark-save-flag 1)
   :bind
   ("C-x r D" . bookmark-delete))
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
