@@ -22,7 +22,7 @@ This chapter explains how to use the Org mode and the Denote package and some of
 
 This first part of this chapter explains how to use Org mode as a frictionless note-taking tool, using a single file to capture your thoughts. The remainder of the chapter describes the Denote package by Protesilaos (Prot) Stavrou. This package provides flexibility in managing an extensive collection of textual notes and other file types to develop an interconnected second brain, using your chosen workflow.
 
-* Thoughts on Taking Notes
+* Thoughts on taking notes
 :PROPERTIES:
 :WORDCOUNT: 816
 :END:
@@ -46,7 +46,7 @@ The practical reality of taking notes is that we can distinguish between two cat
 
 [fn:5-1] Niklas Luhmann-Archive, ZK II Zettel 9/8a2 (=niklas-luhmann-archiv.de=).
 
-* EDITED Fleeting Notes
+* EDITED Fleeting notes
 :PROPERTIES:
 :WORDCOUNT: 513
 :CUSTOM_ID: sec:fleeting
@@ -63,7 +63,7 @@ As you create more fleeting notes, your inbox steadily fills with random musings
 
 The Org mode capture functionality is a versatile system that allows you to craft templates for different types of notes. You can develop bespoke templates that capture information into various files and include metadata, such as timestamps and other properties. The Appendix explains how to modify the capture system to meet your needs.
 
-* EDITED Permanent Notes
+* EDITED Permanent notes
 :PROPERTIES:
 :WORDCOUNT: 1405
 :END:
@@ -121,7 +121,7 @@ The random string of number is a Universally Unique Identifier (UUI), which crea
 
 Using one large file for your notes is a great way to commit your thoughts to Emacs. However, the file can become unwieldy after a while, and if you get really productive, a large file can slow down the system. The next section shows how to use the Denote package to write your notes as a collection of interconnected notes.
 
-* EDITED Writing Notes with Denote
+* EDITED Writing notes with denote
 :PROPERTIES:
 :WORDCOUNT: 4470
 :CUSTOM_ID: sec:denote
@@ -177,14 +177,14 @@ Not all permanent notes are created equal and the relevant workflow within Denot
 
 The first type of note can be anything you want it to be, so there is nothing particular to discuss. The other permanent note types are discussed in the next four sections.
 
-** EDITED Keep a Journal or Diary
+** EDITED Keep a journal or diary
 You can use Denote for personal reflection, to create a journal, a laboratory logbook, to add meeting notes, or to record any other notes related to an event. Writing a journal with Denote is easy because the identifier for each note indicates the date and time you created it. Adding a standard tag, such as =_journal=, makes your journal entries easy to distinguish from other notes, or whatever makes sense in your native language.
 
 If you create a note for an entry in the past, use the ~denote-date~ function (=C-c w d d=). You enter the date in Year-Month-Day (ISO 8601) notation like =2023-09-06=. Optionally, you can add a specific time in 24-hour notation, for example =2023-09-6 20:30=. Denote uses the present date or time if no date and/or time is provided. 
 
 Denote also comes with a collection of special functions for journaling, which you can read about in the package's manual (=C-h R denote RET g jour RET=).
 
-** EDITED Literature Notes
+** EDITED Literature notes
 :PROPERTIES:
 :WORDCOUNT: 971
 :END:
@@ -247,7 +247,7 @@ The second scenario mainly occurs with photographs. The timestamp on the file sy
 
 Chapter [[#chap:admin]] how to manage your files in more detail, including using special packages and Denote to manage your photograph collection.
 
-** EDITED Meta Notes
+** EDITED Meta notes
 :PROPERTIES:
 :CUSTOM_ID: sec:meta
 :WORDCOUNT: 467
@@ -270,7 +270,7 @@ Denote will insert a block in your note that lists all notes matching this searc
 
 A regular expression is an advanced search term much like using wildcard in filename but with much greater power. This approach could, for example, collate your journal notes for a particular month. Using the regular expression =^202309.*_journal= lists all journal entries for September 2023. This regular expression lists filenames that start with =202309= and include the =_journal= keyword. The tilde (=^=) denotes that you are searching at the start of the filename. The =.*= in the middle of the regular expression indicates that any character (=.=) can appear multiple times (=*=). Regular expressions are a powerful tool for searching, but detailed discussion is outside the scope of this book.
 
-** EDITED Linking Notes
+** EDITED Linking notes
 :PROPERTIES:
 :WORDCOUNT: 508
 :END:
@@ -292,7 +292,7 @@ Denote can also create links to headings inside of other Org mode notes. The ~de
 
 You don't need to search through a document to find relevant links. Jump to any linked note without placing the cursor on it with ~denote-link-find-file~ (=C-c w d l=). This function shows all notes linked from the open note in the minibuffer where you can select the one you like to jump to. To find out which notes link to the one you are currently reading, use the ~denote-find-backlink~ function (=C-c w d b=). 
 
-** EDITED Finding Notes and Attachments
+** EDITED Finding notes and attachments
 :PROPERTIES:
 :WORDCOUNT: 593
 :END:
@@ -308,13 +308,13 @@ Searching for titles, tags, and other metadata is a powerful way to access your 
 
 The search is incremental, just like minibuffer completion. As you type your search criterion, a list of results appears. The results show the filename and the matching lines within each file. The search term starts with a hashtag; when you type another such symbol, for example, =#topology# ball=, the next part will be searched within the results. So this example will find all notes with the word topology and withing  these the ones with the orwd "ball".
 
-* Note-Taking Systems with Denote
+* Note-taking systems with denote
 :PROPERTIES:
 :WORDCOUNT: 1304
 :END:
 The Denote package is flexible and malleable, so you can use it to implement any published note-taking methodology. This section provides some suggestions on how to implement each of these methods. EWS does not promote any note-taking systems. This section only demonstrates how you could implement them. Try not to get distracted by 'shiny-object syndrome' and focus on what is useful (writing), rather than chasing the latest ideas. The ideal method is one that you grow organically based on your needs. The power of the Denote file naming convention and regular expressions basically provide everything you need at your fingertips. 
 
-** EDITED PARA
+** EDITED Para
 :PROPERTIES:
 :WORDCOUNT: 1195
 :END:
@@ -376,7 +376,7 @@ The notes are ordered to form a coherent idea, which is the main reason Luhmann 
 
 You can easily implement the Zettelkasten method with Denote. The individual files are the 'Zettels', and your Denote directory is the 'Kasten'. Just like before, the signature can contain the reference number. You cannot precisely copy Luhmann's syntax because he uses characters in his signatures that you cannot use in filenames. In example list above, the last category would have =76=5=a= as a signature and individual notes would be something like =76=5=a1=.
 
-* EDITED Managing Your Digital Garden
+* EDITED Managing your digital garden
 :PROPERTIES:
 :WORDCOUNT: 1107
 :END:
@@ -391,7 +391,7 @@ The Denote-Explore package provides convenience functions to manage your collect
 3. /Janitor/: Manage your denote collection.
 4. /Visualisations/: Visualise your Denote files as a network.
 
-** EDITED Summary Statistics
+** EDITED Summary statistics
 :PROPERTIES:
 :WORDCOUNT: 882
 :END:
@@ -405,7 +405,7 @@ After a day of working hard in your digital knowledge garden, you might like to 
 #+attr_latex: :width 0.6\textwidth
 [[file:images/denote-keywords-barchart.png]]
 
-** EDITED Random Walks
+** EDITED Random walks
 :PROPERTIES:
 :CUSTOM_ID: sec:walk
 :WORDCOUNT: 745
@@ -421,7 +421,7 @@ The default state is that these three functions jump to any Denote text file (pl
 
 When jumping to a random file with the same keyword(s), you can choose between one or more keywords from the current buffer. When the current buffer is not a Denote file, choose any available keyword(s) in your Denote collection. The asterisk symbol =*= selects all keywords in the completion list.
 
-** EDITED The Janitor
+** EDITED The janitor
 :PROPERTIES:
 :WORDCOUNT: 495
 :END:
@@ -439,7 +439,7 @@ You can remove or rename keywords with ~denote-explore-rename-keyword~. Select o
 
 Denote stores the metadata for each note in the filename using its ingenious file naming convention. Some of this metadata is copied to the front matter of a note, which can lead to differences between the two metadata sources. The ~denote-explore-sync-metadata~ function checks all notes and asks the user to rename any file where these two data sets are mismatched. The front matter data is the source of truth. This function also enforces the alphabetisation of keywords, which assists with finding notes.
 
-* EDITED Visualising Denote Networks
+* EDITED Visualising notes as networks
 :PROPERTIES:
 :WORDCOUNT: 1440
 :END:
@@ -594,7 +594,7 @@ You can regenerate the same network after you make changes to notes. The ~denote
 
 It might seem that adding more connections between your notes improves them, but this is not necessarily the case. The extreme case is a complete network where every file links to every other file. This situation lacks any interesting structure and wouldn't be very useful for analyses. So, be mindful of your approach to linking notes and attachments.
 
-* Learn More
+* Learn more
 :PROPERTIES:
 :WORDCOUNT: 118
 :END:

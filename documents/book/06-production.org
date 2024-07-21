@@ -36,12 +36,12 @@ Chapter [[#chap:vanilla]] laid the groundwork for writing plain text documents, 
 
 The last section of this chapter introduces other text modes that might be of interest to authors, such as Markdown for technical documentation and the specialised Fountain mode to for film and theatre scripts.
 
-* EDITED Adding Notes, Citations and References
+* EDITED Adding notes, citations and references
 A typical writing project contains more than the words of the manuscript. Org mode uses some smart plain text constructs to add comments, citations and cross-references to enhance your manuscript. We have already discussed some of the metadata in the front matter of an Org mode file, such as =#+title:=. Org mode also has a syntax to include images, tables and drawers, explained in the previous chapters.
 
 This section adds some more Org mode functionality to your toolkit to prepare your manuscript for publication. Org mode has provisions to add notes to a document, which are ignored in the final product. This section also explains how to add citations from your bibliography and cross references to other sections, tables and other parts of your document.
 
-** EDITED Adding Document Notes
+** EDITED Adding document notes
 :PROPERTIES:
 :CUSTOM_ID: sec:notes
 :END:
@@ -77,7 +77,7 @@ A bespoke {{{ews}}} (EWS) function (~ews-org-insert-notes-drawer~) generates a n
 
 These notes drawers are useful to add a checklist of actions to be taken to completes chapter of your manuscript. Chapter's [[chap:admin]] explains how to create a checklist to track the progress of your to-do list.
 
-** EDITED Adding Citations
+** EDITED Adding citations
 :PROPERTIES:
 :CUSTOM_ID: sec:citations
 :END:
@@ -97,7 +97,7 @@ The Citar menu indicates whether an entry is cited in your current file with a =
 
 Org mode citations are merely links to the cited reference. Section [[#sec:citation-export]] of the next chapter discusses how Org mode's citation management system exports them and how to format them.
 
-** EDITED Captions and Cross References
+** EDITED Captions and cross references
 When reading a comprehensive document like this book, leveraging internal links enhances the readability of the text. This feature in Org mode empowers you to guide your reader to specific sections, figures, or other parts of the manuscript, making your writing more easier navigate.
 
 Referencing figures and tables in Org mode is a breeze. Simply assign a name to the item using the =#+NAME:= keyword below the caption, for instance: =#+NAME: fig:example=. When you want to refer to this item, enclose the name in double square brackets (=[[fig:example]]=). Org mode will automatically create a link to the location of the image or table, as explained in section [[#sec:links]].
@@ -108,10 +108,10 @@ The name of internal links can be anything you like, as long as the names are un
 
 Internal links are active inside an Org mode document, and you follow them with a mouse click or =C-c C-o= (~org-open-at-point~). Org mode exports cross-references links as links within the final document, discussed in [[#chap:publication]].
 
-* EDITED Productivity Tools
+* EDITED Productivity tools
 Emacs can help you maximise productivity and maintain quality with various tools, such as text completion to streamline your writing processes. Writing demands undivided attention, so Emacs also provides a serene environment away from the distractions of graphical software. Lastly, Emacs also offers facilities to integrate with grammar tools and a thesaurus to enhance the quality of your writing.
 
-** EDITED Expanding Abbreviations
+** EDITED Expanding abbreviations
 Formal writing by governments and businesses is littered with abbreviations and acronyms. Abbreviations are not a modern problem and have been popular since the start of writing. Roman stone inscriptions are mostly abbreviations, making it hard to read even if you understand Latin. Roman writers abbreviated words because it saved a lot of effort chiselling the text into marble. However, in the age of electronic writing, we no longer need abbreviations, as the effort to write complete words is negligible. Electronic writing systems can automatically expand abbreviations into their full context, making a text easier to read.
 
 An Emacs 'abbrev' is a predefined snippet of character that expands into something else. Technical writing is often formulaic, so an academic might want to automatically replace "stbl" with "shown in table" [cite:@fox_2015_creat]. Abbreviations can help authors in all genres. For example, a fairytale writer might define "ouat" to expand into "once upon a time." 
@@ -148,32 +148,32 @@ When you save the file you are working on, and the current abbreviations table i
 
 The Emacs manual provides extensive documentation about using and configuring abbreviations, including some advanced functionality (=C-h r g abbrev RET=).
 
-** Placeholder Text
+** Placeholder text
 /Lorem Ipsum/ is a pseudo-Latin placeholder text used in web design, typography, and printing to demonstrate how a page will look in the final product. The originates in a work by the Roman statesman and philosopher Cicero's treatise /De Finibus Bonorum et Malorum/ (The Extremes of Good and Evil), from 45 BCE. The first two words (/lorem ipsum/) are a truncation of /dolorem ipsum/ ("pain itself"). 
 
 Its primary purpose is to focus the viewer's attention on the layout, typography, and visual elements rather than the content itself. This package helps you to design a layout without being distracted by the meaning of the text. The next chapter discusses document typography and layout in more detail.
 
 EWS includes a package to generate /Lorem Ipsum/ sentences and paragraphs, which you can access with the =C-c w i= prefix key. To insert multiple elements, use a numeric prefix, for example =M-6 C-c w i s= inserts six random sentences.
 
-** EDITED Converting Text Casing
+** EDITED Converting text casing
 Emacs has built-in functions to convert words and regions to lower and upper case (section [[#sec:mistakes]]). When writing prose, we sometimes require book titles, chapters, and other headings.
 
 The Titlecase package by Case Duckworth provides title-casing for English prose. The ~titlecase-dwim~ function converts the selected region or the current line. You can set the casing convention by customising the ~titlecase-style~ variable to your preferred method. The customisation menu provides a drop-down box with available options.
 
 EWS includes a convenience function (~ews-org-headings-titlecase~) that cycles through all headings in the current Org buffer and capitalises them. When using this function with the universal argument (=C-u=), the headings become sentence case, which only capitalises the first word.
 
-By default this function converts all headings to the desired case. When you configure the ~ews-org-heading-level-capitalise~ variable you can either choose to convert only headings to a certain level by adding a number or keep the default of converting all headings.
+By default this function converts all headings to the desired case. When you configure the ~ews-org-heading-level-capitalise~ variable you can either choose to convert only headings to a certain level by adding a number or keep the default of converting all headings. So when, for example, you set this variable to one, only the top level headings are capitalised while lower level headings don't change.
 
 Unfortunately, due to the whimsies of written English, it is impossible to capitalise titles perfectly. So, never trust a computer and proofread your titles before publishing.
 
-** EDITED A Clean Writing Interface
+** EDITED A clean writing interface
 Writing creative prose takes total concentration, and distractions are the author's natural enemy. While your computer is the most essential writing tool, it can also be distracting. Most writing software is littered with icons and options to change the document’s design. Distraction-free writing tools remove these diversions from the screen, making the computer more like a mechanical typewriter that lets the author focus on content over form.
 
 Olivetti is an Emacs minor mode that facilitates distraction-free writing. The name Olivetti derives from the famous Italian typewriter brand. You activate Olivetti mode with =M-x olivetti-mode=. This minor mode reduces the width of the text to seventy characters and centres the text in the middle of the window. The width of the text is changeable with the =olivetti-set-with= command (=C-c \=).
 
 EWS simplifies the use of Olivetti mode with its user-friendly function (=C-c w o=). This command not only activates Olivetti mode (~ews-distraction-free~), but also stores your current window configuration and cursor position. It enhances your writing environment by increasing the text size and creating a focused screen. Reactivating the function restores your previous window and cursor settings, making it a breeze to switch between distraction-free and regular writing modes.
 
-** EDITED Quality Assurance
+** EDITED Quality assurance
 While automated spellchecking is a wonderful tool to ensure your writing is syntactically correct, sometimes you must look up words in a dictionary to get more context. Emacs has a built-in dictionary search function that connects to an online source. The default for EWS is the /Collaborative International Dictionary of English/ (CIDE), derived from the 1913 Webster's Dictionary. It is proofread and supplemented by volunteers from around the world. This dictionary is also available through the =dict.org= website.
 
 To look up the word the cursor is currently on, use ~dictionary-lookup-definition~ (=C-c w s d=). A dictionary screen pops up that provides the relevant definitions. You can scroll through the window as with any other buffer. The dictionary buffer contains links to other defined words, which you follow with the Enter key. Using the =n= / =p= keys, jump between hyperlinks. To look up a new word, type =m= or click on the =[Search Definition]= button on top of the window. 
@@ -198,10 +198,10 @@ $$206.835 - 1.015 \left( \frac{\text{words}}{\text{sentences}} \right)-84.6\left
 
 This test confirms what we intuitively know. Texts with long sentences (words per sentence) and long words (syllables per word) are more challenging to read. The lower the readability score, the easier a text is to understand. For reference, the readability index or /Reader's Digest/ is about 65, /Time Magazine/ scores about 52. The /Harvard Law Review/ has a general readability score in the low 30s [cite:@lipovetsky_2023]. This chapter's Flesch-Kincaid reading ease score is about 70. These types of tests are an approximate science so don't take it as gospel. Counting words and sentences depends on some assumptions on what constitutes a word or a sentence (see section [[#sec:count]]).
 
-* EDITED Manage the Writing Project
+* EDITED Manage the writing project
 A writing project is about more than just smashing as many words as possible into a document. Some functionality is available in Org mode to manage your project by splitting it over several files, managing word counts, and track the overall progress of your manuscript.
 
-** EDITED Writing Large Projects
+** EDITED Writing large projects
 :PROPERTIES:
 :CUSTOM_ID: sec:include
 :END:
@@ -217,7 +217,7 @@ This method allows you to work on a book or dissertation and store each chapter 
 
 There are two issues you need to be mindful off when using multiple files in a project. You can add cross references to other files, but these links will not be functional until you export the project to a single file or website. Secondly, when you rely on a local bibliography, you need to ensure that it is referenced in all individual files, as properties are not inherited by referenced files.
 
-** EDITED Counting Words
+** EDITED Counting words
 Counting words is a standard activity for any author. I aim to write between 5,000 and 10,000 words for each chapter in this book. To count the number of words in a highlighted part of the active buffer, use =M-== (~count-words-region~). This function displays the number of lines, sentences, words, and characters in the echo area.
 
 Adding the universal argument counts the words in the whole buffer (=C-u M-==). The ~count-words~ function, which has no default keyboard shortcut, tallies all words in the buffer or the marked region. A line in this context is a logical line, which is the same as a paragraph when using Visual Line mode.
@@ -250,7 +250,7 @@ The headlines become read-only and contain the properties defined as columns. Yo
 
 Navigate through the table with the arrow keys. You can edit a property with the =e= key. Change the content in the minibuffer and hit Enter. The =g= key resets the columns. Place the cursor on a column overlay to remove the overlay and press =q=.
 
-** EDITED Tracking the Status of Your Writing
+** EDITED Tracking the status of your writing
 The typical writing workflow goes through various stages, from early drafts to edited versions and completed texts. As you work on various parts of your writing project, it might be good to know the status of each chapter. Org mode includes an extensive system to manage projects, which you can deploy to keep track of progress in your document. This section is only a brief introduction to this functionality. Chapter [[#chap:admin]] explains project management in more detail.
 
 Each heading in Org mode can have a status token, such as =TODO=, =DRAFT= or =EDITED=, or whatever workflow you prefer. You add a status token with the shift and left/right arrow keys when the cursor is on a heading. You can also use the =C-c C-t= shortcut (org-todo). By default, the system only recognises the =TODO= and =DONE= status. However, Org mode allows you to add additional workflow states, giving you the flexibility to adapt the system to your specific needs. The example below instructs Org mode to cycle through these four status tokens, but only in this file. The tokens before the vertical line (pipe symbol) are in progress and usually marked in red. Items after the vertical line are completed and marked in green.
@@ -261,15 +261,15 @@ Each heading in Org mode can have a status token, such as =TODO=, =DRAFT= or =ED
 
 If you would like to add the status of your heading to the summary table discussed in the previous section, then add =%20TODO(Status)= or something similar to the column definition in the front matter.
 
-* EDITED Control Versions and Collaborate
+* EDITED Control versions and collaborate
 It's not uncommon to revise the flow or structure of your text during the writing process. To ensure you retain valuable information, it's important to understand how Emacs manages different versions of a buffer or a file. Writing may seem like a solitary activity, but more often than not, you collaborate with other authors and editors. In such scenarios, managing the version control also plays a pivotal role in maintaining the collaborative spirit.
 
 While Emacs may not boast the flashy cloud collaboration systems found in office software, it offers various methods to control your files' versions. At the lowest level, we have the version in the current buffer and the one saved to disk. The undo system meticulously tracks all changes within the current buffer at a more granular level. Another method involves using the built-in backup system, which saves older versions of files, preserving your manuscript's evolution. For more advanced needs, Emacs also interfaces with version control software that allows you to formally register files, which is useful when collaborating with other authors or an editor.
 
-** EDITED Reverting the Current Buffer
+** EDITED Reverting the current buffer
 There are always at least two versions of a text you are working on. The last saved version and the current buffer. You can discard all the changes since the buffer was last saved with the ~revert-buffer~ command, which reloads the file from the disk, erasing all edits since the last saving of the file. Use this is a nuclear option with care. Reverting a buffer only applies when you made colossal mistakes or updated the file outside your current Emacs session.
 
-** EDITED The Undo Tree
+** EDITED The undo tree
 Section [[#sec:mistakes]] discussed correcting mistakes using Emacs' powerful undo system. However, after repeatedly issuing undo and redo commands, it is easy to get lost in the previous states of the document. The Undo Tree package by Toby Cubitt helps you keep track of your changes by visualising them as a tree, creating a writing time-machine.
 
 The ~undo-tree-visualise~ (=C-c w u=) command visualises the various edits in your file as a tree. This function lets you walk through previous versions of your text with the arrow keys. The current buffer changes as you wander through history, where =x= marks the spot of the selected step. Use =q= to select the chosen edit and continue writing. The =C-q= keys jump out of the undo tree without making changes.
@@ -291,7 +291,7 @@ In most cases, the tree is simply a straight line. Still, the document forms par
 
 This package provides an intuitive way to manage the various states your document has gone through since you opened the file. The detailed manual for the Undo Tree package provides more detailed scenarios, which can be read by typing ~describe-package~ (=C-h P=) and selecting ~undo-tree~.
 
-** EDITED Automated Backups
+** EDITED Automated backups
 Rewriting a file destroys its previous contents, which sometimes means losing hours of writing within a split second. To prevent such disasters, Emacs can keep a backup of every file.
 
 Emacs backs up a file the first time you add content to a it. The first backup of any new file is therefore an empty file. No matter how often you save the file in the current session, its backup remains unchanged until you kill the buffer and revisit the file. So, backup files contain the versions just before starting a new writing session. This backup will be the same as the current file until the next time save you save the buffer. The saved version will become a backup file if you save the buffer with a prefix argument (=C-u C-x C-s=). The backup version 
@@ -341,7 +341,7 @@ These mechanisms provide fine-tuned version control that minimises the risk of l
 #+RESULTS:
 [[file:images/backups.png]]
 
-** EDITED Comparing File Versions
+** EDITED Comparing file versions
 As your writing project progresses, you might end up with different versions of the same file, either through your own doing, by an editor or by another collaborator. This situation might raise a problem as you are unsure which file is the most recent version, or you may need to create a new version containing all the latest changes.
 
 The ~ediff~ command helps you solve this problem. It provides a rich interface to compare two or three files and manage changes. Ediff visualises differences between files and lets you select the parts of each file you like to merge into the main version.
@@ -358,7 +358,7 @@ Ediff is useful when you work with an editor (I mean a person who edits a text, 
 
 Ediff has a lot of functionality outside the scope of this book. Type the question mark when the cursor is in the control panel for a list of options. To compare three files (A, B and C), use ~ediff3~. The ~ediff-backup~ command compares a file with its latest backup. You can read the Ediff manual for a comprehensive description with ~ediff-documentation~ or =C-h R ediff=.
 
-** EDITED Version Control
+** EDITED Version control
 The traditional method of version control, often used by authors, involves changing the filename to distinguish between different versions of their writing. For instance, you might have a file named =article-draft.org= and another named =article-final-draft.org=. While this approach can be practical when all collaborators follow the same process, it can become cumbersome and confusing. With the power of Ediff, you can easily track changes between files, but this approach is cumbersome.
 
 Using file name versions litters the project directory with multiple versions of your files. The Emacs backup system prevents the need to keep multiple versions of the same file. However, the backup system provides limited active control over the stored versions.
@@ -415,7 +415,7 @@ The ~vc-dir~ command (=C-x v d=) lists the status of all files in the current di
 
 Version control has much more functionality, and a full explanation is outside this book's scope, such as creating separate branches of your work and synchronising the repo with an online version to share it with collaborators. You can find the Emacs manual chapter about version control with =C-h r g ver RET=. The manual is written with software development in mind, so please use your imagination to see how it applies to writing prose.
 
-** EDITED Collaborating with Other Authors and Editors
+** EDITED Collaborating with other authors and editors
 Unfortunately, writing in plain text with advanced version control systems is not the most common way to collaborate in writing projects. This raises the question of how you collaborate with coauthors or editors. There are three options, collaborator(s) either:
 
 1. Neither use a VCS or plain text files
@@ -432,7 +432,7 @@ When all collaborators use a VCS and can write in Org mode, either in Emacs or w
 
 Another collaboration method is to share the project folder with a sharing system, such as NextCloud (an open-source version of Dropbox and OneDrive). This method has the risk that you both open the same file simultaneously. Emacs can lock a file for opening by another user, but the EWS configuration disables lock files. To use a shared folder, you must customise the ~create-lockfiles~ variable. If this is set to =t=, then a file can only be opened by one user simultaneously. It achieves this by storing a file that locks it from changes by other users. When another user opens a locked file, Emacs provides a warning and some options to ignore the warning.
 
-* EDITED Other Text Modes
+* EDITED Other text modes
 :PROPERTIES:
 :CUSTOM_ID: sec:text-modes
 :END:

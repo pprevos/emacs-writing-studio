@@ -10,7 +10,7 @@ This appendix presents and explains the /Emacs Writing Studio/ configuration. Th
 - Centred around Org mode
 - No configuration for writing code
 
-  I learned writing computer code by typing long listings of Atari BASIC code and slowly but surely understood its syntax and logic. This method is also a great starting point to learn Emacs Lisp. The purpose of this configuration is for you as a starting point. Feel free to modify anything in the {{{ews}}} (EWS) initialisation file and study its effects.
+I learned writing computer code by typing long listings of Atari BASIC code and slowly but surely understood its syntax and logic. This method is also a great starting point to learn Emacs Lisp. The purpose of this configuration is for you as a starting point. Feel free to modify anything in the {{{ews}}} (EWS) initialisation file and study its effects.
   
 #+begin_src elisp :exports none
   ;;; init.el --- Emacs Writing Studio init -*- lexical-binding: t; -*-
@@ -1160,15 +1160,11 @@ The function to save the recent files runs every five minutes, instead of only w
   (use-package recentf
     :config
     (recentf-mode t)
-    (run-at-time nil (* 5 60)
-                 (lambda () (let ((save-silently t))
-                              (recentf-save-list))))
     :custom
     (recentf-max-saved-items 50)
     :bind
     (("C-c w r" . recentf-open)))
-
-  #+end_src
+#+end_src
   
 #+begin_src elisp :exports none
   ;; Bookmarks

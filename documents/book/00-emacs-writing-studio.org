@@ -17,17 +17,16 @@
 #+begin_export html
 <!-- Front Mater ebook -->
 <div id="frontmatter" class="outline-2">
-<h3 style="text-align:center">Preview Copy --- not for distribution</h3>
+<h3 style="text-align:center">Preview Copy --- not for distribution</h3> 
 <p>&nbsp;</p>
-<h3 style="text-align:center">Peter Prevos</h3>
-<p>&nbsp;</p>
-<img src="ews-cover.jpg" align="center" alt="Emacs Writing Studio" title="Emacs Writing Studio" />
+<img src="cover.jpg" align="center" width="100%" alt="Emacs Writing Studio" title="Emacs Writing Studio" />
 <p>&nbsp;</p>
 <h3 style="text-align:center">Third Hemisphere Publishing</h3>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3 style="text-align:center">&#169; Peter Prevos (2024)</h3>
 <p>&nbsp;</p>
+<p>Copyright:</p>
 <p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Australia License. You are free to share to copy, distribute and transmit the work under the following conditions:</p>
 <ul>
 <li>You must attribute the work in the manner specified by the author (but not in any way that suggests that they endorse you or your use of the work).</li>

@@ -17,7 +17,7 @@ EWS uses a minimalist interface without any typical graphical software elements.
 
 The EWS configuration is an opinionated set of choices that might not suit everybody. Within the Emacs world, there is occasionally some discussion about what constitutes a sensible default configuration. No matter how interesting these debates might be, such a default does not exist. One person's sensible default is another person's computing nightmare, so feel free to change anything in EWS to suit your ideal workflow. The Appendix contains the complete annotated configuration and suggestions for making changes.
 
-* Installing /Emacs Writing Studio/
+* Installing Emacs writing studio
 You don't have to learn to program in Elisp to use Emacs. You can start with the /Emacs Writing Studio/ configuration to get you going. But first you need to install EWS and some additional software. The remainder of the book does not explain any methods to configure Emacs but explains how to use the EWS functionality to research, write and publish manuscripts.
 
 To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository (=github.com/pprevos/emacs-writing-studio=) and save them in the configuration folder. The =init.e= file contains the EWS configuration and the =ews.el= file contains a collection of bespoke functions.
@@ -30,7 +30,7 @@ The ~ews-missing-executables~ function checks if external software is available 
 
 This book was written and published with the configuration it describes, so it is fully tested in real-life conditions. The GitHub repository for EWS also contains the =documents= folder which contains the Org mode source files for this book. You can download these files as an example of a book researched, written and published with Emacs.
 
-* Minimalist Interface
+* Minimalist interface
 Emacs is a place of rest and contemplation away from the cacophony of contemporary software filled with buttons and functionality you don't need. The EWS configuration removes the toolbar, menu bar and scroll bars. While drop-down menus are a valuable tool to discover functionality, there is no need to constantly keep them on the screen. You can access the menu with =F10= (~menu-bar-open~) and select menu options with the arrow keys and =RET= to choose an item. You exit the menu with =C-g= (~keyboard-quit~). But after using Emacs for a while, you'll quickly build muscle memory and revert to keyboard shortcuts. Note that the menu items show the relevant keyboard shortcuts when available. If you insist of keep using the graphical menu, icons and scroll bars, then customise the following variables. In EWS the ~customize-variable~ function is bound to =C-c w v=:
 
 - ~tool-bar-mode~
@@ -52,7 +52,7 @@ The Modus Themes package includes an extensive manual that explains in detail ho
 
 Emacs users have developed a ragtag collection of themes. To pick your favourite, you can browse the Emacs Themes Gallery (=emacsthemes.com=). If the theme is available in the ELPA or MELPA package repositories, you can install it as explained in the Appendix.
 
-** Setting Fonts
+** Setting fonts
 The default font in Emacs is a fixed-pitch (mono-spaced) font designed for writing code. In a fixed-pitch font, all characters have the same width. An =i= or an =w= will use the same amount of space, just like mechanical typewriters. This type of letter is ideal when writing code or tables because it helps to align the text.
 
 - =Fixed pitch font=
@@ -75,7 +75,7 @@ You can use the customisation menu by evoking ~customize-face~ and selecting =de
 
 To see which fonts are available, you use the graphical window by running ~menu-set-font~. When you use the GUI to set the default font, the change is immediate but transient. Use ~menu-bar-options-save~ to save your default font and size to the =custom.el= file.
 
-* Minibuffer Completion
+* Minibuffer completion
 Even with the advent of speech-to-text software, the keyboard is still the most common method to convert thoughts to text. While computers might one day even read our minds, there is something to be said about using your fingers to do the talking. Who would want their 'ums' and 'ahs' or their uncensored stream of consciousness committed to text? Writing is as much about thinking and crafting a stream of words as it is about maximising keystrokes per minute.
 
 Completion systems are like predictive text on a mobile phone. You start typing some characters, and the computer lets you complete your choice. Emacs has an extendable completion system that helps you complete long words, find files, remember function names and other menial tasks. This article explains the basic minibuffer completion engine and introduces some packages extending this functionality. Emacs has three types of completion systems:
@@ -100,7 +100,7 @@ Emacs is a self-documenting computing environment, meaning every function and va
 #+attr_latex: :width \textwidth
 [[file:images/mini-buffer-completion.jpg]]
 
-** Keyboard Shortcuts
+** Keyboard shortcuts
 Completion shortens the amount of text you must type and is ideal for discovering functionality you did not yet realise existed. However, as explained in the previous chapter, we usually don’t type function names but use keyboard shortcuts.
 
 Remembering which keyboard shortcut you need takes some effort. The Which-Key package by Justin Burkett is not so much a completion system but a great help when trying to remember which keyboard shortcut to use. This package provides a minor mode that displays the keybindings following the currently entered incomplete command (a prefix) in a popup.
@@ -115,7 +115,7 @@ EWS introduces a series of keyboard shortcuts that all start with the =C-c w= pr
 #+attr_html: :alt Which-Key popup window for Emacs Writing Studio :title Which-Key popup window for Emacs Writing Studio :width 100%
 [[file:images/which-key-popup-screen.jpg]]
 
-* Introducing Org Mode
+* Introducing Org mode
 :PROPERTIES:
 :CUSTOM_ID: sec:org-mode
 :END:
@@ -135,7 +135,7 @@ Each Org document starts with a header that contains metadata and settings relev
 
 This section only provides a short introduction to using Org mode to write prose. Subsequent chapters explain more specialised functionality in Org mode, such as managing projects and exporting. The extensive Org mode manual is available in the info system with =C-h R org=.
 
-** Document Structure
+** Document structure
 :PROPERTIES:
 :CUSTOM_ID: sec:org-structure
 :END:
@@ -189,7 +189,7 @@ Org mode also provides a set of commands to make it easier to jump between headi
 | =C-c C-f=              | ~org-forward-heading-same-level~  | Move next at the same level     |
 | =C-c C-b=              | ~org-backward-heading-same-level~ | Move previous at the same level |
 
-** Text Formatting
+** Text formatting
 Writing all words in the same style can be boring and some text needs some emphasis. To change how Org Mode displays text, you surround it with special characters: =/italic/=, =*bold*=, =_underline_=, =+strikethrough+= and ==verbatim==. In Vanilla Emacs, these markers remain visible but disappear when exporting the document to its published format.
 
 The EWS configuration hides these markers. The only problem with hiding emphasis markers that way is that rich text becomes hard to edit because it is unclear whether your cursor is on the marker or the first or last character. EWS therefore uses the Org-Appear package by Alice Hacker. This tool displays the rich text markers while the cursor is on a word but hides them otherwise, resulting in a less cluttered screen.
@@ -319,7 +319,7 @@ Org mode can only handle simple tables without spanning information over multipl
 +------------+-----------+----------+----------+-------------+
 #+end_example
 
-** Inserting Special Characters
+** Inserting special characters
 :PROPERTIES:
 :CUSTOM_ID: sec:pretty
 :END:
@@ -340,7 +340,7 @@ To write super- and subscripts, use the caret and underscore notation, such as =
 | \dots      | =\dots=      |
 | \EUR       | =\EUR=     |
 
-** Mathematical Notation
+** Mathematical notation
 :PROPERTIES:
 :CUSTOM_ID: sec:formulas
 :END:
@@ -361,7 +361,7 @@ Org mode can preview LaTeX fragments as images if the =dvipng= program is availa
 
 The Org-Fragtog package by Benjamin Levy provides convenient functionality to toggle between the plain text LaTeX fragments and the image preview. When the cursor is inside a formula, Emacs shows the plain text, and when outside a formula, it shows the graphical version, preventing the need for manual switching between the two.
 
-** Ricing Org Mode
+** Ricing Org mode
 :PROPERTIES:
 :CUSTOM_ID: sec:rice
 :END:
@@ -373,7 +373,7 @@ The active theme and various configurations and packages define the display of a
 
 EWS uses parts of Daniel Mendler's Org-Modern package. This package implements a modern style for your Org buffers using font locking and text properties. However, some of the styling is not implemented because for beginning users it is perhaps better to see the full syntax. The appendix explains how to configure this package.
 
-* Checking Spelling
+* Checking spelling
 Writing with a spellchecker has become the ultimate security blanket for authors. Without the squiggly red line, my writing would be littered with typos. The combined Ispell and Flyspell Emacs packages provide an interface to the Hunspell spell-checking software, so you must ensure that it is available on your computer, including at least one dictionary. The EWS configuration enables the Flyspell minor mode (spelling on-the-fly) for all text modes.
 
 There are basically two ways to correct your writing. Either just keep the juices flowing and check the complete text when your complete the session, or fix typos as detected.
@@ -388,7 +388,7 @@ The Hunspell software has access to a wide collection of dictionaries, including
 
 If you write in more than one language then you can add multiple dictionaries by adding them to the ~ews-ispell-dictionary~ variable in a comma-separated string. For example, to accept both Australian-English and Dutch words customise this variable to ="en_AU,nl_nl"= and restart Emacs (~restart-emacs~).
 
-* The {{{ews}}} Workflow
+* The {{{ews}}} workflow
 The process of writing can be chaotic as it involves successive iterative cycles. But an orderly pattern emerges when we stand back from details of the daily grind. We read literature and get inspired, develop new ideas, produce new works and publish the results. Even though reality is never as linear as this list suggests, it is a helpful guide to organise the {{{ews}}} workflow and the content of the rest of this book (Figure [[fig:workflow]]).
 
 #+begin_src dot :file images/emacs-workflow.png

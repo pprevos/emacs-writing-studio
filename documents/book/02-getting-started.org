@@ -25,7 +25,7 @@ When the splash screen closes, you enter the ’Scratch Buffer’, which you can
 #+attr_org:   :width 200
 [[file:images/splash-screen.png]]
 
-* Emacs Quickstart Guide
+* Emacs quickstart guide
 :PROPERTIES:
 :CUSTOM_ID: sec:quickstart
 :END:
@@ -45,7 +45,7 @@ The least step is to create the webpage. In the /Org/ menu, select /Export/Publi
 
 Presto, this is the basic workflow for writing and publishing a document in Emacs Org mode. There is obviously a lot more to this, and Emacs has a myriad of plugins and fine-tuning options to help authors.
 
-* Working with the Keyboard
+* Working with the keyboard
 Emacs is by and large a keyboard-driven application. You can use the mouse and the menu bar for occasional tasks, as shown in the previous section, but there is no need to use this peripheral. Although there is no formal agreement on whether using a keyboard or a mouse is most efficient [cite:@tognazzini_1992_tog; @omanson_2010_comp], most Emacs users prefer to keep their hands on the keyboard.
 
 It might seem that clicking on an icon in a menu bar seemingly requires less brain capacity than remembering sequences of keystrokes. However, the practical problem with icon bars is that there is simply insufficient space for icons to cover all available functionality. Also, keyboard shortcuts are easy to remember as they quickly become part of your muscle memory.
@@ -113,7 +113,7 @@ This detailed description of how Emacs uses the keyboard might dazzle you. The c
 #+attr_html:  :title Cover of the 1981 version of the Emacs manual. :width 300
 [[file:images/emacs-manual-1981-cover.png]]
 
-* Issuing Commands
+* Issuing commands
 :PROPERTIES:
 :CUSTOM_ID: sec:commands
 :END:
@@ -127,7 +127,7 @@ To see how this completion works, enter =TAB= after each letter you type into th
 
 The remainder of this book only mentions the names of commands without adding the =M-x= and =RET= parts. When the text suggest to use a function or command called ~example-command~, you do so with =M-x example-command RETURN=. Any available keyboard shortcuts are also indicated, in which case you can use the short way to access the function.
 
-* Major and Minor Modes
+* Major and minor modes
 Emacs is a versatile tool that accomplishes specialised tasks through editing modes that alter the basic behaviour. An editing mode can be a major or minor mode. A major mode is like opening an app within the Emacs environment, just like you open an app on your phone. The most popular major mode is Org mode, which provides a writing a and publication system. Org mode is the major mode discussed throughout this book.
 
 A more quirky Emacs mode is Artist mode. This tool lets you to create plain text drawings with the mouse and keyboard. Go ahead and try, issue the ~artist-mode~ command, and start drawing with the mouse. You can find out more about how to use the Artist package with =C-h P artist=.
@@ -142,7 +142,7 @@ As an exercise to understand these principles, open the =test.org= file we creat
 
 The available keyboard shortcuts (the keymaps) and drop-down menus depend on the major and minor modes that are active at the time. Some keymaps are global and apply to the whole of Emacs. Other maps are specific to a mode. Unless a mode overrides it, some shortcuts remain the same for all modes (such as =M-u=, which converts a word to uppercase). Packages can change or add shortcuts, depending on the required functionality. So, a shortcut like =C-c C-c= is used by different modes for different actions, depending on the context in which it is used.
 
-* Opening and Saving Files
+* Opening and saving files
 Opening files in Emacs is called 'visiting a file' and uses the ~find-file~ function (=C-x C-f=). So effectively, finding, opening and visiting a file have the same effect. Emacs opens the file and displays its contents in the buffer, ready for writing and editing. When you type a name that does not yet exist, Emacs creates a new file. If you open a directory, Emacs shows the contents of that folder in the Emacs file manager (The Directory Editor or 'Dired', see chapter [[#chap:admin]]). Alternatively, you can open a file with the toolbar icon or through the menu bar.
 
 Emacs asks you to select a file or folder in the minibuffer. Typing the complete path to the file you seek would be tedious, so Emacs assists with auto completion, explained in section [[#sec:commands]]. Please note that a file path in Emacs is separated by forward slashes and not by backslashes, as is the case in Windows (=C:/Users/Wittgenstein/= and not =C:\Users\Wittgenstein\=).
@@ -159,7 +159,7 @@ Create a new file (=C-x C-f=) to get some practice and start writing into the bu
 | =C-x C-s=   | ~save-buffer~       | Save the current buffer to its file       |
 | =C-x C-w=   | ~write-file~         | Write current buffer to a file (Save as)  |
 
-* Buffers, Frames and Windows
+* Buffers, frames and windows
 :PROPERTIES:
 :CUSTOM_ID: sec:windows
 :END:
@@ -194,7 +194,7 @@ When splitting a window vertically, the same buffer appears twice. Each window c
 | =C-x o=       | ~other-window~         | Move to the next window                  |
 |             | ~follow-mode~          | Show buffer over two or more windows     |
 
-* Finding Help
+* Finding help
 Emacs has an extensive built-in help system with different ways to access information, accessible with the =C-h= prefix key. The complete Emacs manual is available with =C-h r= (~info-emacs-manual~). This manual opens in Info mode, which is a specialised mode for manuals. The full Emacs manual is not bedtime reading but more a pool of knowledge to dip your toe into when the need arises. The =g= key lets you jump to a chapter or section of the text (~Info-goto-node~), using minibuffer completion discussed earlier. For example, =C-h r g help RET= takes you to the section in the manual about the help system.
 
 When reading a manual in the info system, the space bar scrolls the screen up so you can walk through the manual and read it page by page (~Info-scroll-up~). The backspace button or =S-<space>= returns you to the previous screen (~Info-scroll-down~). The manual contains hyperlinks in the table of contents and sprinkled throughout the text. You can click these with the mouse or hit the enter key. To jump to the previous or the next chapter, you can use ~Info-up~ and ~Info-down~ functions bound to =u= and =d=. If you are looking for something specific, then ~Info-search~ (=s=) lets you search for specific terms. As always =q= quits the screen.
@@ -205,7 +205,7 @@ The help system also has other commands to find more specific descriptions. If y
 
 The remainder of the book provides references to the relevant Emacs help system for readers who like to know more details about the system. You don't need to read the manuals because this book contains everything you need to know to get started as an Emacs author. The documentation in the manuals is technical and concise and as such can be difficult to understand for beginners. The references to Emacs documentation are for people interested in knowing more details about how the software works.
 
-* Writing in Emacs
+* Writing in emacs
 :PROPERTIES:
 :CUSTOM_ID: sec:text-mode
 :END:
@@ -213,7 +213,7 @@ You now know enough to start writing more complex documents. Either visit an exi
 
 This section summarises the most common commands for writing text. The Emacs manual provides a detailed description of all functionality relevant for writing human languages (as opposed to computer languages), which you can read with =C-h r g basic= and =C-h r g text=.
 
-** Moving Around in a Buffer
+** Moving around in a buffer
 You might think that all you need to know is using the arrow and page up and down keys, but Emacs has a lot more to offer to let you hop around the manuscript.
 
 Emacs documentation sometimes refers to the cursor as 'point'. The cursor is the character displayed on the screen (a line or a box), and the point indicates where the next typed character will appear. Point is more critical when you write Emacs functions, so this book focuses on the cursor, as that is where the writing action happens.
@@ -243,7 +243,7 @@ You will undoubtedly experience moving from one part of a document to another an
 
 A mark is a bookmark for a position (point) within your text. Setting a mark is like dropping a pin on a map. You can set a mark to remember a place you want to jump to, which is incredibly handy when editing large files. You set a mark with =C-SPC C-SPC= (~set-mark-command~), which stores the cursor's current location in the mark ring. The mark ring is the sequence of marks for the current buffer. You can now move to another part of your document and edit or read what you need. You jump back to the previous mark with =C-u C-SPC=. While =C-SPC= (~set-mark~) stores the current location in the mark ring, adding a universal argument extracts that position and jumps to it. Repeatedly pressing =C-u C-SPC= moves through all the marks stored in the ring. If you get to the first stored value, you return to the last one, hence the name mark ring.
 
-** Search and Replace
+** Search and replace
 :PROPERTIES:
 :CUSTOM_ID: sec:search
 :END:
@@ -255,7 +255,7 @@ The =C-s= shortcut searches incrementally from the cursor. You cycle through the
 
 To search and replace text in a buffer, use =M-%= (~query-replace~). This function highlights all instances of the text to be replaced and provides a range of options at each instance. Type space or =y= to replace the marked match and =delete= or =n= to skip to the next one. The exclamation mark replaces all instances without further confirmation. If something goes wrong, use =u= to undo the most recent change or =U= to undo all changes made in this search. The enter key or =q= quits the replacement process. More options are available, which you can glean by hitting the question mark.
 
-** Copy and Paste Text
+** Copy and paste text
 Writing is fun, but sometimes it is more efficient to copy something you wrote previously or copy a citation from somebody else (referenced of course), or perhaps even text generated with a language model. The system for copying and pasting text works a bit different from modern systems but with a lot more power.
 
 To select (mark in Emacs speak) a piece of text, you first set a mark with =C-space= and then move to the end of the section to highlight the desired section. To select a complete paragraph, use the =M-h= key. In a plain text context, a paragraph is a line of text separated by blank lines. Repeatedly pressing =M-h= selects subsequent sections. Using =C-x h= selects all text in a buffer, and =C-g= cancels the selection. Once the text is marked, you can act on it by deleting, copying, or moving it. In some modes you can select with shift and arrow keys, but it is disabled in some modes because these key combinations activate other functionality. 
@@ -273,7 +273,7 @@ The kill commands copy or move text to the kill ring. The yank commands copies a
 | =C-y=       | ~yank~           | Insert the most recent kill ring entry to the buffer    |
 | =M-y=       | ~yank-pop~       | Replace previously yanked text with the next kill ring entry |
 
-** Correcting Mistakes
+** Correcting mistakes
 :PROPERTIES:
 :CUSTOM_ID: sec:mistakes
 :END:
@@ -328,7 +328,7 @@ For example, type "Socrates", erase it with =M-d=, change it to "Plato", and the
 
 Another feature of the Emacs undo system is that it can apply only to a selected region. Lets say that you have just completed the first chapter and have started writing the chapter two. You then realise that you need to undo some of the edits in the chapter one. If you use the undo function, it will first undo all your work on chapter two before changing the first chapter. You can solve this problem by selecting the relevant region of text in chapter one and then issue the ~undo~ command over just that region.
 
-** Languages Other than English
+** Languages other than english
 For the majority of the world, English is not the first language. When you set the keyboard settings in your operating system to another language, Emacs can get confused when using modifier keys. Typing =M-x= on a Ukrainian computer results in the Cyrillic letter Che instead of an x, which Emacs cannot compute.
 
 Emacs supports a large range of input methods to type the rich variety of languages of the world. To see an overview of the various languages that Emacs supports run ~view-hello-file~ (=C-h h=). An input method either converts keyboard characters to a different one or it converts a sequence of characters into one letter. Using one of the various methods to type Chinese, you start keying and a menu appears in the minibuffer from where you can select the desired character.
@@ -337,7 +337,7 @@ To choose an input method for the current buffer use =C-x <RET> C-\= (~set-input
 
 For more specific information on how to use your keyboard to write another language, use =C-h I= which runs the ~describe-input-method~ function. To view a list of all available input methods run the ~list-input-methods~ command and a new buffer pops up with a long list of the languages of the world. The Emacs manual provides detailed information on the various input methods with =C-h r g input=.
 
-** Modifying the Display
+** Modifying the display
 :PROPERTIES:
 :CUSTOM_ID: sec:display
 :END:
@@ -361,12 +361,12 @@ While using commercial software is like renting a furnished house, using Emacs i
 
 Some Emacs users deploy pre-configured systems, such as Doom Emacs, Spacemacs, SciMax or other starter kits. While these configurations are helpful, they sometimes provide everything but the proverbial kitchen sink. On the other side of the spectrum, you can configure your system from scratch, which can become a productivity sink wading through a myriad of options. The EWS configuration is a minimal starter kit for authors. The basic idea is to use this configuration as building blocks that you can modify to your preferences. But before installing the EWS configuration, let's first introduce the principles of configuring Emacs.
 
-** The Initialisation File
+** The initialisation file
 When you start Emacs, it loads the initialisation file, or init file in short. This file contains Lisp code that loads additional packages and configurations when Emacs starts. You can run Emacs without an init file as shown in the previous chapter, but you will undoubtedly want to modify the defaults.
 
 The first time you start Emacs, it will create the configuration folder which is where the init file lives. This folder also contains the packages you need to personalise your system. Emacs looks for a file called =.emacs=, =.emacs.el= or =init.el=. The dot in front of the file means that it is hidden from view to prevent clutter in your directories. Most Emacs documentation talks about your =.emacs= of init file.
 
-** Emacs Packages
+** Emacs packages
 :PROPERTIES:
 :CUSTOM_ID: sec:packages
 :END:
@@ -410,7 +410,7 @@ This function displays any unsaved files in the echo area and provides options f
 
 Alternatively, you can issue the ~restart-emacs~ command to reboot your configuration.
 
-* Next Steps
+* Next steps
 You now understand the basic principles of writing text in Emacs. The next chapter explains how to install and use the EWS configuration which makes Emacs a bit easier to use and installs a range of specialised packages for authors.
 
 [fn:2-1] GNU Emacs, https://www.gnu.org/software/emacs/.

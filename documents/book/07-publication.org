@@ -9,7 +9,7 @@ Org mode can export your work to PDF for a printed book, a journal article, a we
 
 This chapter guides you to prepare Org mode manuscripts for export and navigating the export process with confidence. The first section delves into the principles of the export process and how Org mode interfaces with other software to create the desired output. The second section provides you with the generic settings that apply to all output formats, equipping you with the practical knowledge to prepare your document for publication. The remainder of this chapter explores the intricacies of the most common export formats and guides you on how to configure Emacs and your manuscript to achieve the desired output.
 
-* Org Mode Export Principles
+* Org mode export principles
 When preparing a document for export, we are doing something that used to be undertaken by a typesetter. The typesetting process defines the sizes of fonts and graphical elements and their placement on the page. In traditional printing, typesetting involved arranging physical movable type to form a page. In electronic publishing, we no longer have to move physical pieces of lead. Typesetting in Org mode starts with adding appropriate metadata to the manuscript, depending on the chosen export format. 
 
 The basic principle of exporting Org mode files to the desired format is that Emacs converts the text and connects it to a document class, CSS style sheet or other type of template. The template defines the typography and layout of the document. You don't need to know CSS/HTML or LaTeX, but it will help fine-tune the output. To manage citations, your text file can also link to a local or global bibliography. When exporting to PDF or a word processor format, the exported file is passed to either LaTeX or LibreOffice to generate the final result. The Zip program is necessary because ePub and office documents are essentially websites packaged into a single file.
@@ -57,10 +57,10 @@ The Org mode document and configuration includes instructions on the layout and 
 
 Exporting an Org mode file to any format starts with the export dispatcher. Activate the export module with the ~org-export-dispatch~ function, which runs with the default =C-c C-e= keyboard shortcut. A new buffer pops up with a large number of options. The first letter you type determines the export format, and subsequent letters the specific options. Using =q= exists the export dispatcher.
 
-* Document Settings
+* Document settings
 Your manuscript can store metadata and configurations to guide the export process. Numerous settings control how Org mode exports your document.
 
-** Document Properties
+** Document properties
 Some generic metadata applies to all formats:
 
 - =#+title:= Document title.
@@ -88,13 +88,13 @@ To a typographer, a simple dash hides a world of complexity. Most electronic wri
 
 This method is only needed when writing text. In mathematical expressions, the display engine automatically uses the correct dash.
 
-** Adding a Table of Contents
+** Adding a table of contents
 Org mode adds a table of contents to every exported manuscript by default. Org mode inserts the table of contents directly above the first headline of the file. You can toggle this behaviour by customising the ~org-export-with-toc~ variable to =nil=. The behaviour for a table of contents can also be modified for each manuscript by adding the =#+options:= keyword to the front matter, for example:
 
 - =#+options: toc:2=: Only include two levels in the table of contents.
 - =#+options: toc:nil=: Don't export a table of contents.
 
-** Numbered Section Settings
+** Numbered section settings
 Numbered sections are standard in business and academic writing. When you add =num= to the startup keyword, Org mode will number every heading (=#+startup: num=). The numbering appears in the Org file. Whether this numbering also appears in the published output depends on the export template for the relevant format.
 
 Org mode puts you in control of the numbering system. Some publications, like the front and back matter of a book or a list of references, don't number all headings. You can exclude individual sections from the numbering system by setting the =:UNNUMBERED:= property for each excluded heading, shown below. This level of control allows you to manage your document structure exactly as you need. To add this property, type =C-c C-x p= (org-set-property) and set the 'unnumbered' property as =t= (true).
@@ -105,8 +105,8 @@ Org mode puts you in control of the numbering system. Some publications, like th
   :END:
 #+end_example
 
-** Tables
-Org mode makes it easy to insert tables, as discussed in section [[#sec:tables]]. Within the source document, tables have vertical lines for every column, and the user can add horizontal lines. However, this is not necessarily how a table looks in the final output.
+** Enhancing tables
+Org makes it easy to insert tables, as discussed in section [[#sec:tables]]. Within the source document, tables have vertical lines for every column, and the user can add horizontal lines. However, this is not necessarily how a table looks in the final output.
 
 Horizontal lines defined in the source appear in the final result, but vertical lines are omitted, in line with the /The Chicago Manual of Style/ [cite:@chicago_2017 section 3.53]. Most publications only allow horizontal lines because data in a table is aligned into columns, so the eyes don't need a vertical line to separate groups.
 
@@ -240,7 +240,7 @@ Org mode can also include prefixes and suffixes to citations. For example =[cite
 
 =[@cite/s/v: global-prefix; prefix @key1 suffix; prefix @key2 suffix; ...;  global-suffix]=
 
-* Office Documents
+* Office documents
 :PROPERTIES:
 :CUSTOM_ID: sec:odt
 :END:
@@ -292,7 +292,7 @@ The ODT export process relies on specific templates and style names. Using third
 
 You can fine-tune how Org exports to OpenOffice at a detailed level. For a thorough discussion on Open Document export, read the /OpenDocument Text Export/ section of the Org mode manual: =C-h R org RET g open=.
 
-** Citation style language
+** Citation Style Language
 :PROPERTIES:
 :CUSTOM_ID: sec:csl
 :END:
@@ -380,7 +380,7 @@ While the HTML file contains the content and the structure, the Cascading Style 
 #+end_example
 
 ** Citations
-Citations in HTML can use both the basic and CSL processor described in sections [[#sec:citation-export]] and [[#sec:csl]].
+The HTML export module can process citations with both the basic and CSL processor described in sections [[#sec:citation-export]] and [[#sec:csl]].
 
 ** Inserting bespoke HTML
 If you know how to write HTML, you can insert it directly into an Org mode file. This technique can add online forms and embed multimedia or non-standard typography.
@@ -428,7 +428,7 @@ An association list (alist) is a variable that contains pairs of keys and values
 
 This creates a website from the Org files in the =<path-to-org-files= folder and saves the exported files to =<path-to-html-files>=. Org provides many options to finetune your project, as discussed in the manual in great detail.
 
-* LaTeX and PDF
+* Latex and PDF
 :NOTES:
 - [ ] https://www.youtube.com/watch?v=9eLjt5Lrocw
 :END:
@@ -545,7 +545,7 @@ Org mode converts headers to relevant LaTeX headers, and text becomes a paragrap
 :END:
 The last citation processor available in Or mode links directly to LaTeX.
 
-** LaTeX snippets
+** Latex snippets
 You can write simple LaTeX commands directly into your org file. For example, =\newpage= will add a page break. You can also place equations using dollar signs, for instance =$e^{i\pi} + 1 = 0$= results in $e^{i\pi} + 1 = 0$. Section [[#sec:formulas]] explains this topic in more detail.
 
 Furthermore you can simply insert LaTeX commands into your text. They will be exported as-is into the TeX file. For example. to create a front and back matter, use the ~\frontmatter~ and ~\backmatter~ LaTeX commands in your Org file at the appropriate locations.
@@ -582,7 +582,7 @@ When including images, it is better to only use open image formats such as =.png
 
 For the cover image, Amazon recommends that ideal dimensions for cover files are 2,560 x 1,600 pixels, or any other size with an aspect ratio of 1 to 1.6.
 
-* Further Study
+* Further study
 The document repository for this book contains some example files that include most of the options described in this book.
 
 The export menu also provides an option to export to Org mode. This option is useful to merge a set of documents linked with =#+INCLUDE:= keywords, as explained in section [[#sec:include]].

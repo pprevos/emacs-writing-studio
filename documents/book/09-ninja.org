@@ -20,13 +20,13 @@ Now that you have reached the end of this book you know enough to start publishi
 
 This book has helped you to take the first step in understanding the basics. This final chapter puts you on a path to becoming an Emacs Ninja by providing some suggestions on deepening your knowledge.
 
-* Understand the Basics
+* Understand the basics
 :PROPERTIES:
 :ID:       17ab7325-01dd-482d-bb1e-8833d806955d
 :END:
 Before digging deeper into the intricacies of Emacs, this section ties-up a few loose ends from the previous chapters.
 
-** Leveraging the Built-In Help System
+** Leveraging the built-in help system
 Emacs is advertised as the "self-documenting text editor", this is a confusing tagline as obviously the program does not document itself. What it does mean is that Emacs documentation is deeply integrated into the system at a low level. Succinct documentation exist for every function, command or variable. On top of this, Emacs ships with extensive manuals. Hints on how to access the Emacs help system are dotted around the text of this book. This section provides a more formal introduction to help you get the most out of this resource.
 
 Emacs documentation exists at four levels:
@@ -34,7 +34,7 @@ Emacs documentation exists at four levels:
 2. Package documentation
 3. Manuals
 
-*** Keystrokes, Commands and Variables
+*** Keystrokes, commands and variables
 Developers of Emacs incorporate documentation of the code they write so that every function, command and variable contains a short explanation. The Emacs ~describe-*~ set of functions uncovers this documentation. Emacs Writing Studio uses the Helpful package by Wilfred Hughes This package adds some more context to the help screen, enhancing the information. EWS overrides the regular keybindings for the help system
 
 - =C-h f=: Help about a function (~helpful-function~)
@@ -46,15 +46,15 @@ The first two functions provide information about a function and a command. A co
 
 Using the help functions in combination with the minibuffer completion is a useful entrance point to discover previously unknown functionality. Basic Emacs commands have very direct names. Commands in packages are named a bit backwards. Most package commands start with the package name and then the actual function name, for example ~denote-explore-count-notes~. This command is defined in the Denote Explore package and it counts the number of notes. Using this naming convention leads to longer command names, but it makes them easier to use and prevent duplication in case another package has a function that undertakes the same task.
 
-*** Package Documentation
+*** Package documentation
 Each package in Emacs has 
 
-*** Emacs Manuals
+*** Emacs manuals
 The Emacs manuals are great, but they are not bedtime reading that you read cover to cover. 
 
 Emacs also comes with complete documentation of the Elisp language (=C-h R elisp=). This manual is great for experienced users wanting to deepen their knowledge. To get started using Emacs Lisp the book /An Introduction to Programming in Emacs Lisp/ by Robert J. Chassell is also included with Emacs. You can access this manual through info mode (=C-h i=) and search for the book title. You can also find PDF versions of these manuals on the GNU website.
 
-** Keyboard Macros
+** Keyboard macros
 Writing and editing can sometimes be a repetitive task. Lets assume that your editor tells you that ...
 
 =F3= starts recording a macro (~kmacro-start-macro-or-insert-counter~).
@@ -67,12 +67,12 @@ Writing and editing can sometimes be a repetitive task. Lets assume that your ed
   - [ ] Email
 :END:
 
-** Learning more about Emacs
+** Learning more about emacs
 This book is not a comprehensive manual of Emacs but an opinionated description of how to achieve a series of tasks. The text in this book is opinionated because it describes only one or two ways of completing each objective. The flexible nature of Emacs provides many ways to achieve the same thing. This freedom is both a strength and a weakness. This book aims to shorten the learning curve as much as possible so that you can become creative and productive. If, after reading this book, you would like to know more, I recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual [cite:@stallman_2023_gnu; @petersen_2022; @cameron_2005_lear].
 
-** Emacs as a Sever
+** Emacs as a sever
 
-* Modify the Init File
+* Modify the init file
 Emacs Writing Studio uses a no-code solution by providing a thoroughly-tested configuration and using the customisation front-end to configure Emacs. There will come a time when you like to change some of the defaults directly inside the init file, which means you need to learn some Emacs Lisp.
 
 The easiest method to learn Lisp to change you init file is by copying the patterns in the EWS configuration. The appendix explains the configuration and provides some detailed guidance on how to modify it. Many Emacs users share their configurations and you should feel free to copy any parts of their configurations. Emacs is free software in the freedom sense of the word, so use this power and learn from fellow users.
@@ -135,12 +135,12 @@ To try this out you can write this function into the scratch buffer. Then you ne
 
 How you use functions is only limited by your imagination. Emacs Writing Studio comes with a set of bespoke functions that enhance some of the basic functionality.  The previous chapters have discussed these functions. To see a list of all available EWS commands use =M-x ^ews=. This sequence shows all commands in the minibuffer completion menu that start with (=^=) EWS.
 
-* Build a Package
+* Build a package
 The next level of sophistication in Emacs is to share your bespoke functions with the world through a package. Most Emacs packages started with a user
 
 
 
-* Help Others
+* Help others
 This book started with a website where I shared my way of using Emacs as an author. This website gained some popularity so I decided to convert it to the book you are now reading.
 
 The EWS project is my way of giving back to the Emacs community and also a way to better understand how the software works. Some cynics suggest that those who can't do teach. However, teaching any subject 
@@ -148,9 +148,9 @@ The EWS project is my way of giving back to the Emacs community and also a way t
 So your task as an Emacs Ninja is to help other people less advanced in their journey. Tell other authors about the freedom that Emacs gives you as an researcher, author, educator or whatever else it is you do. 
 
 * Migrating to Emacs
-Now that you are well on your way in your Emacs journey, you might want to consider converting your old files to Org mode or another plain text format.
+Now that you are well on your way in your Emacs journey, you might want to consider converting your old files to Org or another plain text format. Some great free software tools are available to convert your collection of Word documents to plain text.
 
-The Pandoc program is your friend and can assist with a seamless transition to Emacs. Pandoc (=pandoc.org=) is a universal (pan) document (doc) converter. It can covert almost any file format. The program works in the command line. To convert an MS Word document to org mode and extract any images, use this line in your Linux or macOS shell or Windows Powershell. The first two parameters instruct Pandoc to extract images to the images folder. The =-o= option defines the output file name and format. You can use the same approach with any input format that Pandoc supports, just replace the input filename.
+The Pandoc program is your friend and can assist with a seamless transition to Emacs. Pandoc (=pandoc.org=) is a universal (pan) document (doc) converter that can process almost any file format. To convert an MS Word document to Org and extract any images, use this line in your Linux or macOS shell or Windows Powershell. The first two parameters instruct Pandoc to extract images to the images folder. The =-o= option defines the output file name and format. You can use the same approach with any input format that Pandoc supports, just replace the input filename.
 
 =pandoc --extract-media ./images input.docx -o output.org=
 
@@ -167,6 +167,8 @@ Windows users need to evoke this Powershell script to achieve the same results:
       }
 #+end_src
 
+* Final words
+Welcome to the guild of Emacs users. 
 
 #+begin_export latex
 \backmatter
