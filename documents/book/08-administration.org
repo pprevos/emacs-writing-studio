@@ -2,54 +2,196 @@
 #+bibliography: ../library/emacs-writing-studio.bib
 #+startup:      content
 #+macro:        ews /Emacs Writing Studio/
+#+TODO: TODO(t) NEXT(n) WAIT(w) | DONE(d) CANCELLED(c)
 :NOTES:
-- [ ] [[https://blog.dornea.nu/2023/09/21/emacs-and-the-cybernetic-productivity/][Emacs and the Cybernetic Productivity - blog.dornea.nu]]
-- [ ] [[https://orgmode.org/manual/Moving-subtrees.html][Moving subtrees (The Org Manual)]]
-- [ ] [[https://git.sr.ht/~swflint/third-time][~swflint/third-time - Third Time support for Emacs - sourcehut git]]
+- [-] [[https://blog.dornea.nu/2023/09/21/emacs-and-the-cybernetic-productivity/][Emacs and the Cybernetic Productivity - blog.dornea.nu]]
+- [X] [[https://orgmode.org/manual/Moving-subtrees.html][Moving subtrees (The Org Manual)]]
+- [-] [[https://git.sr.ht/~swflint/third-time][~swflint/third-time - Third Time support for Emacs - sourcehut git]]
 - [ ] [[https://www.youtube.com/watch?v=NkhgIB64zgc][Emacs: Diary and Calendar - YouTube]]
-- [ ] [[https://karl-voit.at/2020/08/14/project-mgt-draft/][A Draft Workflow for Advanced Project Management Using Org Mode and Org Edna]]
-- [ ] Pommodoro
-- [ ] Clear your head
-- [ ] Myth of multitasking
-- [ ] Time poverty
+- [-] [[https://karl-voit.at/2020/08/14/project-mgt-draft/][A Draft Workflow for Advanced Project Management Using Org Mode and Org Edna]]
+- [-] Pommodoro
+- [X] Clear your head
+- [X] Myth of multitasking
+- [-] Time poverty
 - [ ] [[https://datamanagement.hms.harvard.edu/collect/file-naming-conventions][File Naming Conventions | Data Management]]
 :END:
 
-This chapter explains how to use Org mode to manage projects and action lists ,loosly implementing the Getting Things Done method. The following two sections show how to manage files with the directory editor and manage images with 
+The core activity of an author is to research, write, edit and publish their work. But there is more to do. Writing also involves administrative tasks such as keeping deadlines, managing projects and keeping your filing system in order.
+
+This chapter explains how to use Org mode to manage projects and action lists, loosely implementing the Getting Things Done method. The following two sections show how to manage files with the directory editor and manage images with the directory editor. In this chapter you will learn how to:
+
+- Create and manage a list of actions
+- Schedule actions to create an agenda
+- Manage your collection of files with the directory editor
+- Manage your images and photographs
 
 * Getting Things Done
+In our time-poor world, everybody wants to cram more stuff into their day. Judging by the abundant literature, you can become so productive that "getting things done" [cite:@allen_2005_gett] only takes a "four-hour work week" [cite:@ferriss_2011_hour]. We achieve these almost magical powers by learning from the "habits of highly effective people" [cite:@covey_1990_seven] who seem to "eat frogs" for breakfast [cite:@tracy_2016_eat].
+
+Methods to boost personal productivity are plentiful on the internet, and books with well-intentioned advice are readily available in every bookshop. The market is also brimming with software options to implement these systems, from established software giants like Microsoft's OneNote to agile mobile apps like Todoist. This abundance of solutions ensures that you are well-informed and have a wide array of tools to choose from.
+
+All these methods boil down to three basic phases: set a goal, define the actions to achieve that goal, and undertake these actions. These principles might sound simplistic, but they are the basic truth. The plethora of published methods merely discusses different ways to manage these three steps effectively and efficiently.
+
+The Org package not only enables you to write and publish prose, it can also assists in managing actions and projects. Like any other Emacs package, it offers virtually unlimited freedom to implement your preferred productivity method. This freedom empowers you to take control of your tasks and projects and implement the method that best suits your personal circumstances.
+
+This section shows how to use Org to manage your projects and tasks, loosely based on David Allen's /Getting Things Done/ (GTD) method. David Allen describes iterative five steps to becoming more productive [cite:@allen_2005_gett]:
+
+1. /Capture/: Empty your mind and write everything down.
+2. /Clarify/: Determine what to do about your tasks.
+3. /Organise/ Place your tasks where they belong.
+4. /Reflect/: Reflect on your progress.
+5. /Engage/: Take action.
 
 ** /Capture/: Empty your mind
+One of the reasons we are often less productive than we like is that our minds are filled with irrelevant stuff. Creative and productive thoughts are suppressed when your brain is filled with thoughts about what you should do. The other problem with keeping ideas in your head is the risk that they eventually disappear into the fog. I am sure you all recognise the experience of having the most beautiful idea when enjoying your morning shower. Still, half an hour later, you cannot recall your gem.
+
+The first step to getting things done is surprisingly simple: empty your mind. This is not a Buddhist quest for enlightenment but a straightforward technique to help you focus. Open a new Org file and call it something like =todo.org=, or whatever you fancy. You can also use the Inbox as explained in section [[#sec:fleeting]]. 
+
+Write down everything floating around in your head for the next fifteen minutes. Dump the contents of your brain into this virgin Org Mode file. Start every new idea with an asterisk so that they become headlines. Your list will contain a jumble of random things. From minor household tasks to big future projects you want to do one day. Don't filter your thoughts. Just write them down.
+
+Don't multitask. Instead, give this activity your undivided attention. Remember, multitasking is the enemy of productivity because our brains can only focus on one intellectual activity at a time. The fact that magicians can easily fool people illustrates why multitasking is a fool's errand. Perhaps listen to music with the Emacs EMMS package to keep you focused.
+
+Don't worry about when you'll need to do it or in what order it needs to be done; that is a concern for later. Ensure that your mind is empty by the time you complete your list. For most people, fifty actionable items, projects, and fuzzy goals are not uncommon. If you are overwhelmed, don't shoot the messenger, as the list reflects your life. You now have a long list of everything you need to complete. 
+
+#+begin_example
+ * Mow the lawn
+ * Clean up the backyard
+ * Improve my job skills
+ * Learn how to use Emacs
+ * Write an ebook about ... (fill in your speciality)
+ * Empty your e-mail inbox
+ * Prepare presentation for the quarterly meeting next week
+ * And so on, and so on ...
+#+end_example
 
 ** /Clarify/: Describe what it means
+Did you notice that most things on the list above require more work than completing a single action? In GTD-speak, these are projects. A project has a defined outcome and takes more than one action to complete. Other items on your list might be goals. A goal, such as learning a new language, is less defined as a project and is more aspirational than a project. Your list will contain tasks, projects, goals and vague ideas.
+
+Your next task is to clarify what you captured. Firstly, you order the list in an appropriate hierarchy using the =ALT= and arrow keys. =M-up= and =M-down= will move a heading up or down, while =M-right= and =M-left= promotes or demotes your entry. With these four keystrokes, you can organise your list to create some order in the chaos that comes from your mind. So, in our example, the garden becomes a project with two tasks. You can add notes or link images and other documents below any heading to provide some context to the task.
+
+#+begin_example
+,,* Gardening
+,,** Clean up the backyard
+     - Empty Shed
+     - Rubbish tip
+,,** Mow the lawn
+#+end_example
+
+Some items in your list could become part of a checklist to remind yourself of the required steps. Org can create checkbox items anywhere in your document by adding =[ ]= after a list indicator. Using =M-S <RET>= after a tick box item creates a new list item with a tick box. Ticking and un-ticking any item is as simple as hitting =C-c C-c= (~org-toggle-checkbox~). 
+
+You can convert a plain list item to a checkbox item, or vice versa, with =C-u C-c C-c=. Two universal arguments add a horizontal line through the box to indicate that this item is no longer relevant (=C-u C-u C-c C-c=).
+
+If you have a long list, you should have an indicator that shows your progress or lack thereof. You can add a so-called cookie. Add either =[/]= or [0%] in the line above the tick boxes, and Org records your progress the next time an item changes, as shown in the example below.
+
+#+begin_example
+,,* Gardening
+,,** Clean up the backyard [50%]
+     - [X] Empty Shed
+     - [ ] Rubbish tip
+,,** Mow the lawn
+#+end_example
+
+Org lets you easily convert list items to headings and back again. The ~org-ctrl-c-star~ function (=C-c C-*=) converts a paragraph to a heading. If the line contains a checkbox, it becomes a to-do item. Using =C-c C--= (~org-ctrl-c-minus~) converts a paragraph or a heading to a list item.
+
+The problem with most to-do lists is that they can quickly become overwhelming. Most actions don't need to or can't progress immediately. The basic principle of the GTD approach is to have a manageable list of items you like to do one day. Within this methodology, an action is scheduled in your calendar, the next action to be done as soon as possible, or you delegate it. This method ensures that only a subset of activities is in your consciousness and you don't get overwhelmed by your inactivity, as action lists tend to be a promise to our future selves. Let's look at the last two options: next actions and delegation.
+
+Org can associate each headline with a workflow status, indicated at the start of the headline, as shown below.
+
+#+begin_example
+,** TODO Mow the lawn
+#+end_example
+
+By default, there are only two states, =TODO= or =DONE=. However, more than these two is required to enhance your focus because there is no way to distinguish the importance of tasks. Some tasks depend on completing other ones or could be done in the future. You can set different keywords for each Org file in the front matter. The line below defines a workflow with five separate phases.
+
+#+begin_example
+,#+TODO: TODO(t) NEXT(n) WAIT(w) | DONE(d) CANCELLED(c)
+#+end_example
+
+The first state implies that some action needs to be taken in the future (TODO). When a headline is a NEXT action, it should be done as soon as possible. Sometimes, an action cannot be undertaken because you are waiting for somebody else or the task is delegated (WAIT). The statuses after the vertical bar are a completed state, which, in this example, means either  DONE or CANCELLED. You can, of course, change your task workflow to whatever meets your needs. The keywords are commonly written in capitals, but that is optional. 
+
+Org cycles between the available states using the shift and left or right arrow keys. You can also change a state with ~org-todo~ (=C-c C-t=). The letter between parenthesis is the keyboard shortcut for a popup menu when more than two states are available.
+
+Not all actions have to be undertaken as soon as possible. Emacs has a calendar, and Org can schedule tasks and set deadlines. Scheduling a task to a specific date commits your future self to the action on that date. A deadline indicates when a task needs to be completed due to external expectations.
+
+To add a scheduled date, use =C-c C-s= when the cursor is on a headline (~org-schedule~). Emacs will pop up a calendar that you can use to select a date. The shift and arrow buttons move the timestamp by day or week. The =<= and =>= symbols move you a month in time. Press enter when done, and the date appears below the headline. You can add a deadline with the same method but with the =C-c C-d= keystroke (~org-deadline~).
+
+Timestamps use the ISO 8601 format: year, month, day. This format avoids any confusion between American formats and those of the rest of the world and makes it easier to sort dates. Editing a timestamp is easy. Place your cursor on either the year, month, or date and use the arrow keys to move it up or down to modify the timestamp.
+
+#+begin_src org :tangle no
+  ,* TODO Complete Org-Mode article
+  SCHEDULED: <2021-05-08 Sat>
+#+end_src
+
+Tasks can also have a recurring schedule or deadline. For example, your weekly review. When you add =+7d= at the end of the date, Org recalculates the date every time you complete the task and resets the status to =TODO=. You can also use the letters =w=, =m=, and = y= to schedule a job weekly, monthly, or yearly.
+
+In the example below, the seven days are recalculated every time you complete the task. So, whenever you complete this review, the new date will become 7 July, seven days after the scheduled date.
+
+#+begin_example
+,* TODO Weekly review of inbox
+SCHEDULED: <2024-06-30 Sun +7d>
+#+end_example
+
+The above method is acceptable if you complete your tasks near the scheduled date or deadline. For example, when completing the task after 7 July, the new target will be in the past. It is also possible to reschedule a task a defined period after completion using a double plus sign. The example below adds increments of seven days to the scheduled date when the status of the action changes to DONE. For example, suppose we complete this task on 20 July. In that case, the new scheduled date will become Sunday, 21 July, retaining the weekly cadence. So, in this case, the new scheduled date will always be a Sunday.
+
+#+begin_example
+,* TODO Weekly review
+SCHEDULED: <2024-06-30 Sun ++7d>
+#+end_example
+
+Adding =.+= before the recurrence frequency moves the new scheduled date to seven days after the most recent completion. This type of recurrence is ideal when you want to do something every $x$ days, months, or years, regardless of the last time it was completed.
+        
+#+begin_example
+,* TODO Weekly review
+SCHEDULED: <2024-06-30 Sun .+7d>
+#+end_example
+
+Only add a scheduled date if this is the time that you plan to take action. Try to avoid overloading your agenda with self-imposed scheduled tasks. You are better off setting a task as the next action and determining when to do it in your regular reviews. A deadline is only helpful if there is an external expectation that you need to complete something by a specific date, such as getting travel insurance before your flight leaves.
+
+Not meeting a deadline can have consequences, so it might be helpful to be warned beforehand when one is due. The example below sets a deadline for Australia's upcoming total solar eclipse. I want to attend this event, so the =-12m= cookie ensures that this deadline is added to my diary a year before it occurs so I can organise my trip to the central desert. More about the diary in section [[#sec:reflect]].
+
+#+begin_example
+,* Solar Eclipse Central Australia
+SCHEDULED: <2028-07-22 Sat -12m>
+#+end_example
+
+The key to a successful implementation of any productivity method is not to become your own abusive parent. Unless there are external deadlines, everything on my action list is optional. Putting the correct rubbish bin at the curb is not optional because I rely on the truck to pick it up. However, writing a new chapter for this book is optional because there is no external deadline. Use the capabilities of managing your life with Org-mode wisely, and don't become a slave to the list and lose self-esteem because you can't keep up with your expectations.
 
 ** /Organise/: Place it where it belongs
+:PROPERTIES:
+:CUSTOM_ID: sec:organise
+:END:
+The previous two sections discussed establishing the starting point for an action list. You will need to review your system regularly to keep your focus on the relevant actions. Most people review their digital landscape weekly to progress projects.
 
+The diagram in figure [[#fig:gtd]] shows a simple and common workflow you can use to manage your digital life. Anything that rises to your attention goes to the inbox as a fleeting note or new action. Your inbox is not only the Org capture file but can also be your email inbox, a physical inbox or whatever else. As you review each item you ask yourself whether it can be done quickly, if so then just do it. If it is an action that takes a bit more time, then add it to your todo list (next, schedule or delegate), as described in the previous section.
+
+Anything that does not require taking action or completed actions can be archived in your Denote system, as discussed in chapter [[#chap:ideation]], or it can go straight to the digital trash bin. 
 
 #+begin_src dot :file images/todo-workflow.png
   digraph {
-	  graph [dpi=300]
-  node [fontname=Arial fontsize=10]
-  edge [fontname=Arial fontsize=10]
-  inbox [shape=note label="Inbox"  width=1.2]
-  action [shape=diamond label="Take\naction?" width=1.5]
-  two [shape=diamond width=1.2 label="> 2\nminutes?"]
-  archive[shape=diamond width=1.2 label="Archive?"]
-  do [label="Do it!" shape=hexagon width =1.2 style=filled]
-  trash [shape=cylinder label="Trash"]
-  denote [shape=folder label="Add to\nDenote" width=1.2]
-  todo [shape=note label="Add to todo list" width=1.2]
-  inbox -> action
-  action -> two [label=Yes]
-  action -> archive [constraint=FALSE label=No]
-  archive -> trash [label=No constraint=FALSE]
-  two -> do [constraint=FALSE label=No]
-  do -> archive
-  archive -> denote [label=Yes]
-  two -> todo [label=Yes]
-  {rank=same two do}
-  {rank=same action archive trash}
-  {rank=same inbox denote}
+    graph [dpi=300]
+    node [fontname=Arial fontsize=10]
+    edge [fontname=Arial fontsize=10]
+    inbox [shape=note label="Inbox"  width=1.2]
+    action [shape=diamond label="Take\naction?" width=1.5]
+    two [shape=diamond width=1.2 label="< two\nminutes?"  width=1.5]
+    archive[shape=diamond width=1.2 label="Archive?"]
+    do [label="Do it" shape=rect width =1.2 style=filled]
+    trash [shape=cylinder label="Trash"]
+    denote [shape=folder label="Add to\nDenote" width=1.2]
+    todo [shape=note label="Add to todo list: \nNext\nSchedule\nDelegate"]
+
+    inbox -> action
+    action -> two [label=Yes]
+    action -> archive [constraint=FALSE label=No]
+    archive -> trash [label=No constraint=FALSE]
+    two -> do [constraint=FALSE label=No]
+    do -> archive
+    archive -> denote [label=Yes]
+    two -> todo [label=Yes]
+
+    {rank=same two do}
+    {rank=same action archive trash}
+    {rank=same inbox denote}
   }
 #+end_src
 #+caption: Example of a productivity workflow in Emacs.
@@ -59,33 +201,34 @@ This chapter explains how to use Org mode to manage projects and action lists ,l
 #+RESULTS:
 [[file:images/todo-workflow.png]]
 
-
 ** /Reflect/: Monitor progress
-The key of any productivity workflow is to regularly review your list of actions, your priorities and goals and actually do  them. The central tool in Org mode to look at your list of registered actions is the agenda.
+:PROPERTIES:
+:CUSTOM_ID: sec:reflect
+:END:
+The key to any productivity workflow is to regularly review your list of actions, priorities, and goals and actually do them. The central tool in Org for looking at your list of registered actions is the agenda.
 
-The agenda is a time-based summary of the actions in your todo file(s). You first need to add the relevant files to the agenda list. You add the file linked to the current buffer with ~org-agenda-file-to-front~ (=C-c [=). You can add multiple todo files to your agenda list, for example the inbox, a todo file for your personal life and one for your work.  You remove a file from the agenda list with ~org-remove-file~ (=C-c ]=). Once your agenda files are in the list, you can jump to them quickly with =C-'= (~org-cycle-agenda-files~). This command cycles through the registered agenda files.
+The agenda is a time-based summary of the actions in your todo file(s). You first need to add the relevant files to the agenda list. Add the file linked to the current buffer to the agenda with ~org-agenda-file-to-front~ (=C-c [=). You can add multiple todo files to your agenda list, for example, the inbox, a todo file for your personal life, and one for your work. You remove a file from the agenda list with ~org-remove-file~ (=C-c ]=). Once your agenda files are on the list, you can jump to them quickly with =C-'= (~org-cycle-agenda-files~). This command cycles through the registered agenda files to provide quick access.
 
-The agenda function in org mode is highly versatile and configurable. When you evaluate the ~org-agenda~ function with =C-c a=, Org mode provides a menu for t he many types of 
+The agenda function in Org is highly versatile and configurable. When you evaluate the ~org-agenda~ function with =C-c a=, Org provides a menu with various entry points to your action lists.
 
-You can change the status of items from within the agenda or jump to the file that contains the action, so you can ready any context or maintain checklist items.
+The agenda for the current week shows all actions scheduled in the current week that have a deadline for this period. This list also includes any overdue actions and deadlines within the warning period. You can navigate the agenda with the arrow keys, and =TAB= or =RET= will take you to an action so you can edit it. The =v= button lets you generate a diary for the current day, week, fortnight, month, or year.
 
-The agenda starts with a self-explanatory menu screen which you can explore. Org mode has extensive capabilities to configure how the agenda is presented, which are outside the scope of this article.
+The menu also gives access to a list of all todo items. You can filter this list by status to show, for example, only view the next items. Type the number displayed on top of the window and type =r=.
+
+The Org agenda has extensive capabilities to finetune how your information is summarised. You can, for example, define your own menu items to show an agenda for private tasks and one for your work. However, this will require some Emacs Lisp coding, so it is outside the scope of this book. The Org manual has extensive documentation.
 
 ** /Engage/: Take action
-Emacs is a powerful multifunctional tool, but unfortunately, it cannot help you mow the lawn for you, go shopping or do the other tasks on your lists. Emacs can help you with any task that involves creating written content, but it can't mow the lawn for you. In the end, there is no productivity system in the world that does the tasks for you, no matter what the gurus promise. However, bringing order into your tasks keeps you focussed on your goals.
+Emacs is a powerful multifunctional tool that cannot help you mow the lawn, go shopping, or complete any other tasks on your list. However, it's important to remember that no productivity system can do your tasks, no matter what the gurus promise. Yet, bringing order to your life is crucial to keep you focused on your goals.
 
-** Learning more
-Getting Things Done is just one of many methods to manage your busy life. This section shows how to implement the principles of David Allan's GTD method with Org. The beauty of Emacs is that you have the freedom to implement whatever method you prefer, so be creative and use Org to suit your needs.
+Ticking a box or marking an action as done produces a satisfying dopamine hit. After a period of hard work, your to-do list will be filled with information about completed actions and projects. Org has some facilities for archiving these and decluttering old information.
 
-Bavarian Org guru Rainer König has developed a comprehensive series of YouTube videos that explain using Org mode for managing actions and projects in great detail. Ranier has also published a comprehensive course on Udemy, which provides more detail than the freely available videos [cite:@koenig_2020_org].
+The ~org-archive-subtree~ command (=C-c C-x C-s=) moves the content of the cursor subtree to another file. The default filename for the archive is the current file, appended with =_archive=. You can customise the name of the archive with the ~org-archive-location~ variable, which has detailed documentation. The archive command moves the whole subtree and adds properties such as the date it was archived and the original filename and heading.
 
-The key to a successful implementation of any productivity method is not to become you own abusive parent. Unless there are external deadlines, everything on my action list is optional. Putting the correct rubbish bin at the kerb is not optional, because I rely on the truck to pick it up. But actions such as writing a new chapter for this book are optional because there is no external deadline. Use the capabilities of managing your life with Org mode wisely and don't become a slave to the list and then loosing self-esteem because you can't keep up with your own expectations.
-
-* Manage Files
+* Manage files
 :NOTES:
 - [ ] [[https://emacs.stackexchange.com/questions/2433/shrink-zoom-scale-images-in-image-mode][Shrink/Zoom/Scale images in image-mode - Emacs Stack Exchange]]
 - [ ] [[https://idiomdrottning.org/bad-emacs-defaults][Bad Emacs defaults]]
-- [ ] =(= to hide metadata
+- [X] =(= to hide metadata
 - [ ] [[https://www.masteringemacs.org/article/wdired-editable-dired-buffers][WDired: Editable Dired Buffers - Mastering Emacs]]
 :END:
 :PROPERTIES:
@@ -93,7 +236,7 @@ The key to a successful implementation of any productivity method is not to beco
 :END:
 Working with Emacs means that you will need to access, create files and manage files on your drives. Emacs comes shipped with =dired= (pronounced /dir-ed/, from directory editor), a potent file manager. This section explains the basic principles of using Dired and shows how to manage files with Emacs to organise your hard drive. This section also introduces the =image-dired= package which helps you to explore you collections of images and photographs.
 
-** Opening Directories and Files
+** Opening directories and files
 Dired has an illustrious history. The first version of dired was a stand-alone program written circa 1974, so its origins lie even further back in time than Emacs. The software comes packaged with Emacs and it provides a front end to various GNU core utilities to manage files.
 
 You activate the file manager with the ~dired~ function or the =C-x d= shortcut. After selecting the relevant directory in the minibuffer, Emacs creates a buffer with the content of the selected directory. Another useful function is ~dired-jump~ (=C-x C-j=) which opens Dired and jumps to the file linked to the current buffer.
@@ -140,20 +283,11 @@ If your head is buzzing with all the different key bindings, the table lists the
 | =&=     | ~dired-do-async-shell-command~ | Open file with other program             |
 | =enter= | ~dired-find-file~              | Open file                                |
 
-
-
-
-
-
-
-
-
 **  File-naming conventions
 :NOTES:
 - [X] https://xkcd.com/1459/
 - [ ] https://datamanagement.hms.harvard.edu/plan-design/file-naming-conventions
 :END:
-
 Back in the days when offices managed paper archives, they followed strict rules on how to archive documents. Misplacing a piece of paper in an archives stretching meters of shelves meant that you would probably never find that document again. When in the 1980s office workers started to use computers, all such rigour and process was thrown out to the window. The unlimited freedom the computer provides resulted in chaos.
 
 # Change these
@@ -174,10 +308,37 @@ Denote includes a minor mode that formats compliant filenames in the directory e
 #+attr_latex: :width \textwidth
 [[file:images/denote-dired.jpg]]
 
-** 
 
+** Recent files and bookmarks
+Whenever you return to Emacs you might want to open a file you were working on recently. The recent files minor mode (~recentf-mode~) provides a transient list of the files you most recently opened. 
 
-* Viewing and manipulating Images
+This minor mode saves a list of the files with associated open buffers when you exit Emacs to your configuration folder. The ~recentf-edit-list~ function opens this list so you can modify it manually should you need to. By default, the recent files mode stores the last twenty opened files, which you can change by modifying the ~recentf-max-saved-items~ variable, which in EWS is set to fifty.
+
+Recent files are transient as they are continuously updated as you open new files. For a more permanent list of files you like to open, use [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Bookmarks.html][bookmarks]].
+
+You can store a file as a bookmark with =C-x r m= (~bookmark-set~). The bookmark will also store the location of the cursor, so you can maintain multiple bookmarks for a file. The default name for the bookmark is the name of the file. You can also enter a bespoke name in the minibuffer before hitting =ENTER=.
+
+To view a list of all bookmarks in the minibuffer and select the one you like to open, use =C-x r b= (~bookmark-jump~). 
+
+Bookmarks are saved in the =bookmarks= file in your configuration folder every time a new bookmark is created. The ~bookmark-save-flag~ is set to one so that the bookmarks file is saved every time you add a new one. The default value only saves it when you exit Emacs, which mean you could loose bookmarks in the unlikely event of an Emacs or system crash.
+
+If you like to remove  bookmark no longer required then use the ~bookmark-delete~ function, which has no default keybinding but is bound to =C-x r D= in the /Emacs Writing Studio/ configuration.
+
+** Opening files with other software
+
+Emacs is a Swiss-Army chainsaw, but it cannot do everything. Sometimes you might like to open a file in other software, such as your image editor or video player. You can open files with external software by pressing =&= after which dired will ask for the appropriate software. You need to type the name of the executable file of the software you like to use, e.g. =gimp=.
+
+It is sometimes useful to copy the name of a file to the kill ring with the =w= key, so you can use it to rename the file. So to rename a file, copy the name with =w=, rename the file with =R= and paste the existing name with =C-y= and edit the name to your new version.
+
+You can select and deselect files for deletion (killed) with the =d= and =u= buttons. After you selected the files you like to delete, press =x= to execute the deletion. Press capital =D= if you like to remove a single file. When you delete or trash a currently open file, Emacs will also ask you to close the appropriate buffer. By default, Emacs permanently removes files. The /Emacs Writing Studio/ is configured so that files are moved to the recycle bin.
+
+You can select multiple files to work on at the same time by marking them. The =m= button marks a file, and the =u= removes the mark. The capital =U= removes all marks in the buffer. The =t= key reverses your markings, which is helpful when you want to select everything but one or two files.
+
+This method requires you to manually select each file. You can also use regular expressions to select files. Press =% m= to open the regular expression selection prompt. For example, =^2023.*_journal*= selects all Denote files that start with the =2023= and that have the =journal= file tag.  Now press =t= to invert the selection and =k= to remove the selected files from view. This sequence is a useful method to find related files.
+
+After you selected multiple files in this manner, you can use all file commands to act on the selected targets, for example moving all 2023 files with the =_journal= tag to another folder.
+
+* Viewing and manipulating images
 Writing in plain text is great but as the well-worn cliche suggests, an image is worth a thousand words. You have already seen that Org mode can embed images and export these to the desired format. Emacs also has some built-in functionality to help you manage your collection of images.
 
 Image-mode and the Image-Dired packages are bundled with Emacs, but you might need some additional software. Emacs can display images without external software, but it cannot manipulate them. The ImageMagick software suite provides functionality for editing and manipulating images.
@@ -212,10 +373,61 @@ Viewing images individually is great, but wouldn't it be nice if you cold see th
 
 Alternatively, when you are inside a Dired buffer that contains images, mark the images you like to view and generate the thumbnails with =C-t d= (~image-dired-display-thumbs~). If you don't mark any files, the program uses the image under the cursor.
 
+** The image-dired package
+Yet another method of previewing your images is by marking the ones you need and generate inline thumbnails inside the Dired buffer with =C-t C-t= (~image-dired-dired-toggle-marked-thumbs~). The same shortcut also removes the thumbnails.
 
+The active image is marked with a flashing border around the thumbnail and its filename is displayed on the top of the thumbnail window.
 
+You can navigate the thumbnails with the arrow keys. The =<= and =>= keys take you to the start or end of the collection. You can remove a thumbnail from the collection with =C-d=. If you have selected more images than thumbnails that can fit on page, then image-dired tracks your movement, so as your cursor moves up or down, the thumbnails refresh.
 
+To view an image, hit =RET= when the thumbnail is marked. You cycle through the marked images in your collection with the =space= and =backspace= buttons, or =C-<left>= /  =C-<right>=.
 
+But why manually flick through your album if you can let Emacs do this for you? The =S= key starts a slideshow with each image shown five seconds by default. You can configure the delay with the ~image-dired-slideshow-delay~ variable, or drive the slideshow manually with the =space= and =backspace= keys, or =C-<left>= /  =C-<right>=.
 
+The main image display is in image mode, so all the actions described in the previous section apply.
 
+As usual, =q= quits the image or thumbnail window.
+
+The image-dired software can also create a plain text database of images with searchable tags and thumbnail descriptions. 
+
+You tag images directly from a dired buffer. The =C-t t= keystrokes lets you tag the selected files. You can retrieve the tags in a future session using =C-t f= and view the image thumbnails with =C-t d=, as described above. You can tag images from within a thumbnail buffer with the =t t= shortcut. You can also add a comment to the image by pressing =c= in the thumbnail viewer.
+
+The file name, tags and comments show in the mini buffer as you move through the image thumbnails: =directory: filename (tags): comment=.
+
+Emacs stores the metadata in the =image-dired= directory in your configuration folder in the =.image-dired_db= file. This is a plain text file that lists each file name and the tags an comment.
+
+Retrieving tagged files only selects images with tags in the directory of the current dired buffer. It does not work across multiple folders. 
+
+This tagging system is nice, but it creates an integrity vulnerability in that it separates tags and files. When you accidentally remove the database, all metadata is lost. You will also loose access to the metadata when you rename an image.
+
+An alternative method to tag files is to use the Denote file naming convention, which encodes metadata into the name of the file.
+#+begin_export html
+&nbsp;
+#+end_export
+
+Denote is a package to produce and maintain plain text notes, but it can also be used to maintain a collection of binary (non-text) files. When using the [[{{< ref "/productivity/taking-notes-with-emacs-denote.org" >}}][Denote file naming convention]] for your images, you can mark parts of you collection using regular expressions. The Denote file naming convention encodes four bits of metadata about a file into the filename. Only the timestamp is compulsory and serves as a unique identifier:
+
+- Timestamp in ISO 8601 format
+- An alphanumeric signature (starting with double equality sign (~==~)
+- The title in [[https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/][kebab-case]] (starting with double dash ~==~)
+- Keywords in [[https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/][snake_case]] (starting with double underscore =__=)
+
+For example, one photo in my collection is: =19930825T132000--forbidden-city-throne-palace-of-heavenly-purity__china.jpg=. So this photo was taken on 25 August 1993, the title describes the topic of the photograph and 
+
+I can now go into Dired and mark files with regular expressions, searching for each of these fields. For example, using =%m _china= marks photos taken in China, or =%m -city= all images with the word "city" in their title. Using the Dired convention for naming files is not only great for notes, it also helps you manage your photo collection.
+
+The ~denote-rename-file~ function (=C-c w R=) lets you construct a Denote-compliant file name for existing images or other binary files. This function uses the last modified date as the identifier by default. But when you are sorting old collections you might want to add a date that is different to the last modified one. Adding the universal argument (=C-u=) will also ask you to provide a date and time, i.e. (=C-u C-c w R=).
+
+Emacs is a powerful piece of software but it is mostly limited to editing text. To meaningfully work with images, you will need another package. Image-dired lets you open images in external viewers or editors by setting one variable.
+
+Pressing =C-enter= opens the file in an external viewer or editor. You can tell Emacs which external viewer to user by configuring the =image-dired-external-viewer= variable. I linked it to the GIMP (GNU Image Manipulation Program). The content of this variable obviously depends on your system and preferred viewer.
+
+When you are in an image-dired buffer, you open the external viewer with =C-enter=. Confusingly, when you are in a normal dired buffer, this function is bound to =C-t x=. /Emacs Writing Studio/ remaps the keys so that you can use =C-enter= in dired and in image-dired to open an image in your favourite external editor.
+
+* Learning more
+Getting Things Done is just one of many methods to manage your busy life. This section shows how to implement the principles of David Allan's GTD method with Org. The beauty of Emacs is that you have the freedom to implement whatever method you prefer, so be creative and use Org to suit your needs.
+
+The Org manual (=C-h R org=) provides further information about the capabilities of this major mode not discussed in this book, such as setting priorities and time clocking.
+
+Bavarian Org guru Rainer König has developed a comprehensive series of YouTube videos that explain using Org mode for managing actions and projects in great detail. Ranier has also published a comprehensive course on Udemy, which provides more detail than the freely available videos [cite:@koenig_2020_org].
 
