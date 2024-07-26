@@ -394,7 +394,9 @@
 
 (use-package openwith
   :config
-  (openwith-mode t))
+  (openwith-mode t)
+  :custom
+  (openwith-associations nil))
 
 ;; Fleeting notes
 
