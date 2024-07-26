@@ -394,9 +394,7 @@
 
 (use-package openwith
   :config
-  (openwith-mode t)
-  :custom
-  (openwith-association nil))
+  (openwith-mode t))
 
 ;; Fleeting notes
 
@@ -554,6 +552,8 @@
   :hook
   (text-mode . writegood-mode))
 
+(use-package titlecase)
+
 ;; Abbreviations
 
 (add-hook 'text-mode-hook 'abbrev-mode)
@@ -704,9 +704,6 @@
 (use-package recentf
   :config
   (recentf-mode t)
-  (run-at-time nil (* 5 60)
-               (lambda () (let ((save-silently t))
-                            (recentf-save-list))))
   :custom
   (recentf-max-saved-items 50)
   :bind
@@ -718,6 +715,22 @@
   :custom
   (bookmark-save-flag 1)
   :bind
-  ("C-x r D" . bookmark-delete))
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
+  ("C-x r d" . bookmark-delete))
+
+;; Image viewer
+
+(use-package emacs
+  :bind
+  ((:map image-mode-map
+         ("k" . image-kill-buffer)
+         ("<right>" . image-next-file)
+         ("<left>"  . image-previous-file))
+   (:map dired-mode-map
+         ("C-<return>" . image-dired-dired-display-external))))
+
+(use-package image-dired
+  :bind
+  (("C-c w I" . image-dired))
+  (:map image-dired-thumbnail-mode-map
+        ("C-<right>" . image-dired-display-next)
+        ("C-<left>" . image-dired-display-previous)))
