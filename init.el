@@ -238,7 +238,7 @@
   (org-startup-with-inline-images t)
   (org-image-actual-width '(450))
   (org-fold-catch-invisible-edits 'error)
-  (org-startup-with-latex-preview t)
+  (org-startup-with-latex-preview nil)
   (org-pretty-entities t)
   (org-use-sub-superscripts "{}")
   (org-id-link-to-org-use-id t))
@@ -481,12 +481,13 @@
   (;; Statistics
    ("C-c w x c" . denote-explore-count-notes)
    ("C-c w x C" . denote-explore-count-keywords)
-   ("C-c w x b" . denote-explore-keywords-barchart)
-   ("C-c w x x" . denote-explore-extensions-barchart)
+   ("C-c w x b" . denote-explore-barchart-keywords)
+   ("C-c w x e" . denote-explore-barchart-filetypes)
    ;; Random walks
    ("C-c w x r" . denote-explore-random-note)
    ("C-c w x l" . denote-explore-random-link)
    ("C-c w x k" . denote-explore-random-keyword)
+   ("C-c w x x" . denote-explore-random-regex)
    ;; Denote Janitor
    ("C-c w x d" . denote-explore-identify-duplicate-notes)
    ("C-c w x z" . denote-explore-zero-keywords)
