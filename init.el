@@ -547,11 +547,12 @@
 :bind
 (("C-c w s p" . powerthesaurus-transient)))
 
-;; Writegood-Mode for buzzwords, passive writing and repeated word detection
+;; Writegood-Mode for weasel words, passive writing and repeated word detection
 
 (use-package writegood-mode
   :bind
-  (("C-c w s r" . writegood-reading-ease))
+  (("C-c w s r" . writegood-reading-ease)
+   ("C-c w s l" . writegood-grade-level))
   :hook
   (text-mode . writegood-mode))
 
@@ -688,11 +689,12 @@
 
 ;; Hide hidden files
 
-(use-package dired-hide-dotfiles
-  :hook
-  (dired-mode . dired-hide-dotfiles-mode)
-  :bind
-  (:map dired-mode-map ("." . dired-hide-dotfiles-mode)))
+(use-package dired
+  :ensure nil
+  :hook (dired-mode . dired-omit-mode)
+  :bind (:map dired-mode-map
+              ( "."     . dired-omit-mode))
+  :custom (dired-omit-files "^\\.[a-zA-Z0-9]+"))
 
 ;; Backup files
 
