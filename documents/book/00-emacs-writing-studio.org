@@ -32,7 +32,7 @@
 <li>You must attribute the work in the manner specified by the author (but not in any way that suggests that they endorse you or your use of the work).</li>
 <li>If you alter, transform, or build upon this work, you may distributecthe resulting work only under the same or similar license to this one.</li>
 </ul>
-<p>Written in Emacs <a href="https://orgmode.org/">Org Mode</a>.</p>
+<p style="text-align:center">Written in Emacs <a href="https://orgmode.org/">Org mode</a> with the <a href="https://github.com/pprevos/emacs-writing-studio">Emacs Writing Studio</a> configuration.</p>
 </div>
 #+end_export
 

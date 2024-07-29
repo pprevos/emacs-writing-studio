@@ -36,3 +36,4 @@ Mastodon and Emacs users Harold Kirsch, Thomas Montfort, Ben Finney volunteered 
 - Emacs from Scratch Series
 - Emacs Elements
 
+* Who is this book for?

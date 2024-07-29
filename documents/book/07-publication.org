@@ -489,6 +489,8 @@ Org mode converts images and tables to LaTeX floats. You can add specific attrib
 Various parameters are available to determine how your table or image looks in the final output.
 
 ** Mathematics
+The Org-Fragtog package by Benjamin Levy provides convenient functionality to toggle between the plain text LaTeX fragments and the image preview. When the cursor is inside a formula, Emacs shows the plain text, and when outside a formula, it shows the graphical version, preventing the need for manual switching between the two.
+
 
 ** Document classes
 The default document class for Org mode export is the article class. This class has wide margins which looks strange at first. In actuality, it is not the margins that are too large, but the paper size. The optimum length for a line of published text is between 60 and 75 characters. LaTeX is design to produce documents to best practice in typography. But you are not stuck with the LaTeX defaults and Org mode provides three mechanisms to configure the LaTeX output:

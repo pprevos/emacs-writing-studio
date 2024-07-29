@@ -394,3 +394,19 @@ EMMS has many more advanced features that allow you to control your sound collec
 The Emacs Multimedia System has a plethora of additional options to fine-tune your listening experience. Read the EMMS manual with the info browser (=C-h R emms ENTER=) for detailed information about the various options.
 
 Now that you know how to inspire yourself with Emacs, it is time to solidify your thought by writing them into an electronic notebook. The next chapter explains how to use {{{ews}}} as your personal knowledge management system.
+
+** Opening files with other software
+Emacs is a Swiss Army chainsaw for plain text but cannot do everything. Sometimes, you like to open a file in other software, such as an image editor or video player. You can open files with external software by pressing =&=, after which Dired will ask for the appropriate program name. You need to type the name of the executable file of the software you like to use, e.g. =gimp=.
+
+That process is a bit cumbersome, so Markus Trisk's OpenWith package can associate file types with external software. This package's advantage is that you can open files with other software using Emacs as the interface, i.e., the ~find-file~ command.
+
+You need to customise the ~openwith-associations~ variable. Insert a new entry with the =[INS]= button and add the following information:
+
+- Files: The file extensions, for example "mp4"
+- Program: The name of the program, e.g. "mpv"
+- Parameters: Should always be "(file)"
+
+You can add multiple associations in separate entries. When you're done, hit the =[Apply and Save]= button.
+
+Using this package is slightly complicated because EWS also uses the Consult package to preview files when searching. The file types configured for OpenWith thus need to be excluded from previews to prevent external software from constantly popping up when finding files. You do this by customising the  ~consult-preview-excluded-files~ variable and adding the file extensions you like to exclude from previews.
+

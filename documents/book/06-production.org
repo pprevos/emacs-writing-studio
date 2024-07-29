@@ -149,22 +149,26 @@ When you save the file you are working on, and the current abbreviations table i
 The Emacs manual provides extensive documentation about using and configuring abbreviations, including some advanced functionality (=C-h r g abbrev RET=).
 
 ** Placeholder text
-/Lorem Ipsum/ is a pseudo-Latin placeholder text used in web design, typography, and printing to demonstrate how a page will look in the final product. The originates in a work by the Roman statesman and philosopher Cicero's treatise /De Finibus Bonorum et Malorum/ (The Extremes of Good and Evil), from 45 BCE. The first two words (/lorem ipsum/) are a truncation of /dolorem ipsum/ ("pain itself"). 
+/Lorem Ipsum/ is a pseudo-Latin placeholder text used in web design, typography, and printing to demonstrate how a page will look in the final product. The text originates in Roman statesman and philosopher Cicero's treatise /De Finibus Bonorum et Malorum/ (The Extremes of Good and Evil), from 45 BCE. The first two words (/lorem ipsum/) are a truncation of /dolorem ipsum/ ("pain itself"). 
 
-Its primary purpose is to focus the viewer's attention on the layout, typography, and visual elements rather than the content itself. This package helps you to design a layout without being distracted by the meaning of the text. The next chapter discusses document typography and layout in more detail.
+#+begin_example
+Pellentesque dapibus suscipit ligula. Donec posuere augue in quam. Etiam vel tortor sodales tellus ultricies commodo. Suspendisse potenti. Aenean in sem ac leo mollis blandit. Donec neque quam, dignissim in, mollis nec, sagittis eu, wisi.
+#+end_example
 
-EWS includes a package to generate /Lorem Ipsum/ sentences and paragraphs, which you can access with the =C-c w i= prefix key. To insert multiple elements, use a numeric prefix, for example =M-6 C-c w i s= inserts six random sentences.
+The primary purpose of this text is to focus the viewer's attention on the layout, typography, and visual elements rather than the content itself. This package to design a layout without being distracted by the meaning of a text. The next chapter discusses document typography and layout in more detail.
+
+EWS includes a package to generate /Lorem Ipsum/ paragraphs, which you can access with =C-c w s i= keys. To insert multiple elements, use a numeric prefix, for example =M-6 C-c w s= inserts six random paragraphs.
 
 ** EDITED Converting text casing
 Emacs has built-in functions to convert words and regions to lower and upper case (section [[#sec:mistakes]]). When writing prose, we sometimes require book titles, chapters, and other headings.
 
-The Titlecase package by Case Duckworth provides title-casing for English prose. The ~titlecase-dwim~ function converts the selected region or the current line. You can set the casing convention by customising the ~titlecase-style~ variable to your preferred method. The customisation menu provides a drop-down box with available options.
+The Titlecase package by Case Duckworth provides title-casing for English prose. The ~titlecase-dwim~ function (=C-c w s t=) converts the selected region or the current line / paragraph. You can set the casing convention by customising the ~titlecase-style~ variable to your preferred method. The customisation menu provides a drop-down box with available options to set the style of the title-casing, which is set to the conventions of the APA style guide.
 
-EWS includes a convenience function (~ews-org-headings-titlecase~) that cycles through all headings in the current Org buffer and capitalises them. When using this function with the universal argument (=C-u=), the headings become sentence case, which only capitalises the first word.
+EWS includes a convenience function (~ews-org-headings-titlecase~) that cycles through all headings in the current Org buffer and capitalises them. Use =-c w s c= to access his function. With the universal argument (=C-u=), the headings become sentence case, which only capitalises the first word.
 
-By default this function converts all headings to the desired case. When you configure the ~ews-org-heading-level-capitalise~ variable you can either choose to convert only headings to a certain level by adding a number or keep the default of converting all headings. So when, for example, you set this variable to one, only the top level headings are capitalised while lower level headings don't change.
+By default this function converts all headings to the desired case. When you configure the ~ews-org-heading-level-capitalise~ variable you can either choose to convert only headings up to a certain level by adding a number or retain the default of converting all headings. So when, for example, you set this variable to one, only the top level headings are capitalised while lower level headings don't change.
 
-Unfortunately, due to the whimsies of written English, it is impossible to capitalise titles perfectly. So, never trust a computer and proofread your titles before publishing.
+Unfortunately, due to the whimsies of written English, it is impossible to capitalise titles perfectly using an algorithm. So, never trust a computer and proofread your titles before publishing.
 
 ** EDITED A clean writing interface
 Writing creative prose takes total concentration, and distractions are the author's natural enemy. While your computer is the most essential writing tool, it can also be distracting. Most writing software is littered with icons and options to change the document’s design. Distraction-free writing tools remove these diversions from the screen, making the computer more like a mechanical typewriter that lets the author focus on content over form.
@@ -184,19 +188,21 @@ Activate the thesaurus with =C-c w s p= (~powerthesaurus-transient~), which will
 
 The core skill in writing is choosing the correct words. Equally important is knowing which words not to use. WriteGood mode by Benjamin Beckwith reviews your text for three fundamental problems: weasel words, passive voice and duplicates. Writegood mode highlights issues in your text with coloured squiggly lines. Hovering the mouse over a marked word provides context on the identified transgression.
 
-Weasel words are often used by politicians and marketers to disguise what they say. A tax becomes a levy, we no longer live, we have a lifestyle and sacking people becomes downsizing. They are weasel words because they suck the meaning out of language, just like a weasel sucks eggs [cite:@watson_2004]. You can find the defined list of weasel words with =C-h v writegood-weasel=. You can remove some or add your own versions (or create a list relevant to your native language) by customising this variable. Either hit on the =DEL= button to remove a word or =INS= to add a new one. The latest list becomes active when Emacs restarts.
+Weasel words are often used by politicians and marketers to disguise what they say. A tax becomes a levy, we no longer live, we have a lifestyle and sacking people becomes downsizing. They are weasel words because they suck the meaning out of language, just like a weasel sucks eggs [cite:@watson_2004]. You can find the defined list of weasel words with =C-h v writegood-weasel-words=. Customise this variable to remove some or add your own versions, or create a list relevant to your native language. Either hit on the =DEL= button to remove a word or =INS= to add a new one. The latest list becomes active when Emacs restarts.
 
 Another area for improvement in writing that authors should avoid is passive voice. Passive voice is like telling a story backwards. Instead of saying, "The dog chased the cat," which shows who is doing what, you say, "The cat was chased by the dog." Passive sentences tend to obscure the subject performing the action, making sentences often more verbose. This can lead to ambiguity or a dilution of accountability, particularly in technical and formal writing, where clarity and precision are paramount. Moreover, active voice generally makes the prose more dynamic and engaging, improving readability by emphasising the actor and their actions, which aligns well with the principles of clear communication. Passive voice has its place in writing but should be avoided when possible (pun intended).
 
 Writegood mode detects passive voice and marks it as such. It achieves this by detecting "to be" forms followed by a word ending in "ed". The software also uses a list of irregular verbs, which you can view and modify by customising the ~writegood-passive-voice-irregulars~ variable.
 
-Duplicate words are a common artefact of copying and pasting text. Our minds are not particularly good at detecting duplicate words, as the brain often skips words and fills in missing parts. In the example in figure [[fig:paris]], the duplicated word "the" is easily missed because it is short and highly predictable [cite:@rayner_2011]. Writegood mode underlines duplicate words words.
+Duplicate words are a common artefact of copying and pasting text. Our minds are not particularly good at detecting duplicate words, as the brain often skips words and fills in missing parts. In the example in figure [[fig:paris]], the duplicated word "the" is easily missed because it is short and highly predictable [cite:@rayner_2011]. Writegood mode underlines duplicated words words.
 
-The WriteGood package can also calculate the Flesch reading ease score to assess how easy or difficult an English text is to understand. The score ranges from 0 to approximately 120. You can perform this test with the ~writegood-reasing-ease~ function (=C-c w s r=). For the mathematically inclined, this formula calculates the readability index as follows:
+The WriteGood package can also calculate the Flesch reading ease score to assess how easy or difficult an English text is to understand. The score ranges from 0 to approximately 120. You can perform this test with the ~writegood-reading-ease~ function (=C-c w s r=). For the mathematically inclined, this formula calculates the readability index as follows:
 
 $$206.835 - 1.015 \left( \frac{\text{words}}{\text{sentences}} \right)-84.6\left( \frac{\text{syllables}}{\text{words}} \right)$$
 
-This test confirms what we intuitively know. Texts with long sentences (words per sentence) and long words (syllables per word) are more challenging to read. The lower the readability score, the easier a text is to understand. For reference, the readability index or /Reader's Digest/ is about 65, /Time Magazine/ scores about 52. The /Harvard Law Review/ has a general readability score in the low 30s [cite:@lipovetsky_2023]. This chapter's Flesch-Kincaid reading ease score is about 70. These types of tests are an approximate science so don't take it as gospel. Counting words and sentences depends on some assumptions on what constitutes a word or a sentence (see section [[#sec:count]]).
+This test confirms what we intuitively know. Texts with long sentences (words per sentence) and long words (syllables per word) are more challenging to read. The lower the readability score, the easier a text is to understand. For reference, the readability index or /Reader's Digest/ is about 65, /Time Magazine/ scores about 52. The /Harvard Law Review/ has a general readability score in the low 30s [cite:@lipovetsky_2023]. The ~writegood-grade-level~ command (=C-c w s l=) converts the reading ease score to a grade level score. This test indicates the years of school needed to read the selected text.
+
+This chapter's Flesch-Kincaid reading ease score is about 70 and a grade level of 7.5. These types of tests are an approximate science so don't take it as gospel. Counting words and sentences depends on assumptions on what constitutes a word or a sentence (see section [[#sec:count]]).
 
 * EDITED Manage the writing project
 A writing project is about more than just smashing as many words as possible into a document. Some functionality is available in Org mode to manage your project by splitting it over several files, managing word counts, and track the overall progress of your manuscript.
@@ -262,6 +268,9 @@ Each heading in Org mode can have a status token, such as =TODO=, =DRAFT= or =ED
 If you would like to add the status of your heading to the summary table discussed in the previous section, then add =%20TODO(Status)= or something similar to the column definition in the front matter.
 
 * EDITED Control versions and collaborate
+:PROPERTIES:
+:CUSTOM_ID: sec:vcs
+:END:
 It's not uncommon to revise the flow or structure of your text during the writing process. To ensure you retain valuable information, it's important to understand how Emacs manages different versions of a buffer or a file. Writing may seem like a solitary activity, but more often than not, you collaborate with other authors and editors. In such scenarios, managing the version control also plays a pivotal role in maintaining the collaborative spirit.
 
 While Emacs may not boast the flashy cloud collaboration systems found in office software, it offers various methods to control your files' versions. At the lowest level, we have the version in the current buffer and the one saved to disk. The undo system meticulously tracks all changes within the current buffer at a more granular level. Another method involves using the built-in backup system, which saves older versions of files, preserving your manuscript's evolution. For more advanced needs, Emacs also interfaces with version control software that allows you to formally register files, which is useful when collaborating with other authors or an editor.

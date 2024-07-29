@@ -413,7 +413,7 @@ Writing without automated spell checking would be very hard even for the most ex
 ** Ricing Org Mode
 This part of the configuration sets a bunch of variables to improve the design of Org mode buffers. Org mode has a lot of other variables you can configure to change its interface. You can easily add other variables or remove some to make Org mode look the way you prefer. For example, to enable alphabetical lists and numerals, you need to customise the ~org-list-allow-alphabetical~ variable to =t=. This adds =a.=, =A.=, =a)= and =A)= as additional options to number a list.
 
-If you have no need for mathematical notation and LaTeX, then you should disable the ~org-startup-with-latex-preview~ variable to prevent error messages and delays in displaying buffers.
+If you have use mathematical notation and LaTeX, then you should enable the ~org-startup-with-latex-preview~ variable.
 
 #+begin_src elisp :exports none
   ;;; Ricing Org mode
@@ -427,7 +427,7 @@ If you have no need for mathematical notation and LaTeX, then you should disable
     (org-startup-with-inline-images t)
     (org-image-actual-width '(450))
     (org-fold-catch-invisible-edits 'error)
-    (org-startup-with-latex-preview t)
+    (org-startup-with-latex-preview nil)
     (org-pretty-entities t)
     (org-use-sub-superscripts "{}")
     (org-id-link-to-org-use-id t))
@@ -677,13 +677,13 @@ Vanilla Emacs opens hyperlinks to the World Wide Web with your operating system'
 #+end_src
 
 ** Opening files with external software
-
+The OpenWith package by Markus Trisk
 #+begin_src elisp
   (use-package openwith
     :config
     (openwith-mode t)
     :custom
-    (openwith-association nil))
+    (openwith-associations nil))
 #+end_src
 
 * Ideation
@@ -801,12 +801,13 @@ For the search functionality to work you need to install the Grep or RipGrep pro
     (;; Statistics
      ("C-c w x c" . denote-explore-count-notes)
      ("C-c w x C" . denote-explore-count-keywords)
-     ("C-c w x b" . denote-explore-keywords-barchart)
-     ("C-c w x x" . denote-explore-extensions-barchart)
+     ("C-c w x b" . denote-explore-barchart-keywords)
+     ("C-c w x e" . denote-explore-barchart-filetypes)
      ;; Random walks
      ("C-c w x r" . denote-explore-random-note)
      ("C-c w x l" . denote-explore-random-link)
      ("C-c w x k" . denote-explore-random-keyword)
+     ("C-c w x x" . denote-explore-random-regex)
      ;; Denote Janitor
      ("C-c w x d" . denote-explore-identify-duplicate-notes)
      ("C-c w x z" . denote-explore-zero-keywords)
@@ -896,22 +897,31 @@ The English version of the Synosaurus package depends on the Wordnet software to
   (("C-c w s p" . powerthesaurus-transient)))
 #+end_src
 
-The [[https://github.com/bnbeckwith/writegood-mode][writegood package]] helps to detect buzzwords, passive writing and repeated words. This package also contains functions to estimate the complexity of a text.
+The [[https://github.com/bnbeckwith/writegood-mode][writegood package]] helps to detect weasel words, passive writing and repeated words. This package also contains functions to estimate the complexity of a text using the Flesch-Kincaid test.
 
 #+begin_src elisp :exports none
-  ;; Writegood-Mode for buzzwords, passive writing and repeated word detection
+  ;; Writegood-Mode for weasel words, passive writing and repeated word detection
 #+end_src
 
 #+begin_src elisp
   (use-package writegood-mode
     :bind
-    (("C-c w s r" . writegood-reading-ease))
+    (("C-c w s r" . writegood-reading-ease)
+     ("C-c w s l" . writegood-grade-level))
     :hook
     (text-mode . writegood-mode))
 #+end_src
 
+The TitleCase package strives for the most accurate title-casing
+of sentences, lines, and regions of text in English prose. This package 
+
 #+begin_src elisp
-  (use-package titlecase)
+  (use-package titlecase
+    :custom
+    (titlecase-style 'apa)
+    :bind
+    (("C-c w s t" . titlecase-dwim)
+     ("C-c w s c" . ews-org-headings-titlecase)))
 #+end_src
 
 ** Abbreviations
@@ -936,11 +946,10 @@ The Lorem Ipsum generator can be useful when designing the layout of a document.
     :custom
     (lorem-ipsum-list-bullet "- ") ;; Org mode bullets
     :init
-    (setq lorem-ipsum-sentence-separator (if sentence-end-double-space "  " " "))
+    (setq lorem-ipsum-sentence-separator
+          (if sentence-end-double-space "  " " "))
     :bind
-    (("C-c w i s" . lorem-ipsum-insert-sentences)
-     ("C-c w i p" . lorem-ipsum-insert-paragraphs)
-     ("C-c w i l" . lorem-ipsum-insert-list)))
+    (("C-c w s i" . lorem-ipsum-insert-paragraphs)))
 #+end_src
 
 ** Version control
@@ -1082,7 +1091,6 @@ The timestamp for exporting files is set to the European date format of day mont
 #+end_src
 
 * Administration
-
 ** Getting Things Done
 #+begin_src elisp :exports none
   ;;; ADMINISTRATION
@@ -1099,14 +1107,17 @@ The timestamp for exporting files is set to the European date format of day mont
 #+end_src
 
 ** Manage Files
-The dired package is a convenient and powerful tool to keep your drives organised and access your information. Developers have published an extensive collection of extensions to dired to add functionality, which you can find in the package manager.
+The Dired package is a convenient and powerful tool to keep your drives organised and to access your information. Dired lists files and directories in alphabetical order. I prefer a different view, which shows directories on top and files below them. The ~dired-listing-switches~ variable determines how files are displayed in a Dired buffer.
 
-Dired lists files and directories in alphabetical order. I prefer a different view, which shows directories on top and files below them. The parameters determine the order of the entries in the folder.
+The ~dired-dwim-target~ variable instructs to guess a default target directory. This means that if there is a Dired buffer displayed in some window, use that directory, instead of this Dired buffer's current directory.
+
+The ~delete-by-moving-to-trash~ variable moves deleted files to the wastebasket instead of vanishing them into thin air.
+
+The last line enables opening new directories in the same buffer as the current one (using the =a= key), preventing littering your session with Dired buffers.
 
 #+begin_src elisp :exports none
   ;; FILE MANAGEMENT
 #+end_src
-
 #+begin_src elisp
   (use-package dired
     :ensure
@@ -1121,17 +1132,19 @@ Dired lists files and directories in alphabetical order. I prefer a different vi
     :init
     (put 'dired-find-alternate-file 'disabled nil))
 #+end_src
-  
+
+The default setting for Dired is to show hidden files, even thought they are hidden for a reason. This configuration uses ~dired-omit-mode~ to remove these hidden files from view. You can toggle this behaviour with the full stop key.
+
 #+begin_src elisp :exports none
   ;; Hide hidden files
 #+end_src
-  
 #+begin_src elisp
-  (use-package dired-hide-dotfiles
-    :hook
-    (dired-mode . dired-hide-dotfiles-mode)
-    :bind
-    (:map dired-mode-map ("." . dired-hide-dotfiles-mode)))
+  (use-package dired
+    :ensure nil
+    :hook (dired-mode . dired-omit-mode)
+    :bind (:map dired-mode-map
+                ( "."     . dired-omit-mode))
+    :custom (dired-omit-files "^\\.[a-zA-Z0-9]+"))
 #+end_src
 
 This next bit of configuration defines how Emacs manages automated backups. The default setting is that the system stores these files in the folder where the original files lives, cluttering folders with copies of your stuff. The setting below modifies the =backup-directory-alist= variable so that Emacs saves all backups (indicted by ="."=) in the =bak= subdirectory your init folder. Alternatively, you could instruct Emacs not to save backups at all with ~(setq-default make-backup-files nil)~. I prefer keeping backups as they have saved my bacon a few times in the past.
@@ -1141,7 +1154,6 @@ This configuration also eliminates lock files, which are only useful when workin
 #+begin_src elisp :exports none
   ;; Backup files
 #+end_src
-  
 #+begin_src elisp
   (setq-default backup-directory-alist
                 `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
@@ -1150,12 +1162,11 @@ This configuration also eliminates lock files, which are only useful when workin
                 create-lockfiles nil)
 #+end_src
 
-The function to save the recent files runs every five minutes, instead of only when Emacs exists. The function to save the list of recent files needs some modifictaion to prevent messages popping up in the buffer every so often.
+Emacs keeps a list of recent files using the =recentf= package. This package maintains a list of recently opened files and makes it easy to visit them.  The recent files list is automatically saved across Emacs sessions. By default, the recent files mode stores the last twenty opened files, which you can change by adjusting the ~recentf-max-saved-items~ variable, which in EWS is fifty.
 
 #+begin_src elisp :exports none
   ;; Recent files
 #+end_src
-
 #+begin_src elisp
   (use-package recentf
     :config
@@ -1165,17 +1176,44 @@ The function to save the recent files runs every five minutes, instead of only w
     :bind
     (("C-c w r" . recentf-open)))
 #+end_src
-  
+
+This last file package enables setting bookmarks to your favourite locations. The ~bookmark-save-flag~ is set to one so that the bookmarks file is saved every time you add a new one. The default value only saves it when you exit Emacs, which mean you could loose bookmarks in the unlikely event of an Emacs or system crash.
+
 #+begin_src elisp :exports none
   ;; Bookmarks
 #+end_src
-  
 #+begin_src elisp
   (use-package bookmark
     :custom
     (bookmark-save-flag 1)
     :bind
-    ("C-x r D" . bookmark-delete))
+    ("C-x r d" . bookmark-delete))
+#+end_src
+
+** Viewing Images
+#+begin_src elisp
+  ;; Image viewer
+#+end_src  
+#+begin_src elisp
+  (use-package emacs
+    :bind
+    ((:map image-mode-map
+           ("k" . image-kill-buffer)
+           ("<right>" . image-next-file)
+           ("<left>"  . image-previous-file))
+     (:map dired-mode-map
+           ("C-<return>" . image-dired-dired-display-external))))
+#+end_src
+
+The built-in Image-Dired package can generate thumbnails from within a Dired buffer and let you work on images from there.
+
+#+begin_src elisp
+  (use-package image-dired
+    :bind
+    (("C-c w I" . image-dired))
+    (:map image-dired-thumbnail-mode-map
+          ("C-<right>" . image-dired-display-next)
+          ("C-<left>" . image-dired-display-previous)))
 #+end_src
 
 * Enhancing Emacs Wring Studio

@@ -2,23 +2,25 @@
 #+bibliography: ../library/emacs-writing-studio.bib
 #+startup:      content
 #+macro:        ews /Emacs Writing Studio/
-#+TODO: TODO(t) NEXT(n) WAIT(w) | DONE(d) CANCELLED(c)
+#+TODO:         TODO(t) NEXT(n) WAIT(w) | DONE(d) CANCELLED(c)
 :NOTES:
 - [-] [[https://blog.dornea.nu/2023/09/21/emacs-and-the-cybernetic-productivity/][Emacs and the Cybernetic Productivity - blog.dornea.nu]]
 - [X] [[https://orgmode.org/manual/Moving-subtrees.html][Moving subtrees (The Org Manual)]]
 - [-] [[https://git.sr.ht/~swflint/third-time][~swflint/third-time - Third Time support for Emacs - sourcehut git]]
-- [ ] [[https://www.youtube.com/watch?v=NkhgIB64zgc][Emacs: Diary and Calendar - YouTube]]
+- [-] [[https://www.youtube.com/watch?v=NkhgIB64zgc][Emacs: Diary and Calendar - YouTube]]
 - [-] [[https://karl-voit.at/2020/08/14/project-mgt-draft/][A Draft Workflow for Advanced Project Management Using Org Mode and Org Edna]]
-- [-] Pommodoro
+- [-] Pomodoro
 - [X] Clear your head
 - [X] Myth of multitasking
 - [-] Time poverty
-- [ ] [[https://datamanagement.hms.harvard.edu/collect/file-naming-conventions][File Naming Conventions | Data Management]]
+- [X] [[https://datamanagement.hms.harvard.edu/collect/file-naming-conventions][File Naming Conventions | Data Management]]
 :END:
 
 The core activity of an author is to research, write, edit and publish their work. But there is more to do. Writing also involves administrative tasks such as keeping deadlines, managing projects and keeping your filing system in order.
 
-This chapter explains how to use Org mode to manage projects and action lists, loosely implementing the Getting Things Done method. The following two sections show how to manage files with the directory editor and manage images with the directory editor. In this chapter you will learn how to:
+This chapter explains how to use Org mode to manage projects and action lists, loosely implementing the Getting Things Done (GTD) method. GTD is just one of many methods to manage a busy life. The beauty of Emacs is that you have the freedom to implement whatever method you prefer, so be creative and use Org to suit your needs.
+
+The following two sections show how to manage files with the directory editor and manage images with the directory editor. In this chapter, you will learn how to:
 
 - Create and manage a list of actions
 - Schedule actions to create an agenda
@@ -28,11 +30,11 @@ This chapter explains how to use Org mode to manage projects and action lists, l
 * Getting Things Done
 In our time-poor world, everybody wants to cram more stuff into their day. Judging by the abundant literature, you can become so productive that "getting things done" [cite:@allen_2005_gett] only takes a "four-hour work week" [cite:@ferriss_2011_hour]. We achieve these almost magical powers by learning from the "habits of highly effective people" [cite:@covey_1990_seven] who seem to "eat frogs" for breakfast [cite:@tracy_2016_eat].
 
-Methods to boost personal productivity are plentiful on the internet, and books with well-intentioned advice are readily available in every bookshop. The market is also brimming with software options to implement these systems, from established software giants like Microsoft's OneNote to agile mobile apps like Todoist. This abundance of solutions ensures that you are well-informed and have a wide array of tools to choose from.
+Methods to boost personal productivity are plentiful on the internet, and books with well-intentioned advice are readily available in every bookshop. The market is also brimming with software options to implement these systems, from established software giants like Microsoft's OneNote to agile mobile apps like Todoist. This abundance of solutions ensures that you are well-informed and have many tools.
 
-All these methods boil down to three basic phases: set a goal, define the actions to achieve that goal, and undertake these actions. These principles might sound simplistic, but they are the basic truth. The plethora of published methods merely discusses different ways to manage these three steps effectively and efficiently.
+All these methods boil down to three primary phases: setting a goal, defining the actions to achieve that goal, and undertaking these actions. These principles might sound simplistic, but they are the fundamental truth. Many published methods discuss different ways to manage these three steps effectively and efficiently.
 
-The Org package not only enables you to write and publish prose, it can also assists in managing actions and projects. Like any other Emacs package, it offers virtually unlimited freedom to implement your preferred productivity method. This freedom empowers you to take control of your tasks and projects and implement the method that best suits your personal circumstances.
+The Org package not only enables you to write and publish prose, but it can also assist in managing actions and projects. Like any other Emacs package, it offers unlimited freedom to implement your preferred productivity method. This freedom empowers you to take control of your tasks and projects and implement the method that best suits your circumstances.
 
 This section shows how to use Org to manage your projects and tasks, loosely based on David Allen's /Getting Things Done/ (GTD) method. David Allen describes iterative five steps to becoming more productive [cite:@allen_2005_gett]:
 
@@ -67,7 +69,7 @@ Don't worry about when you'll need to do it or in what order it needs to be done
 ** /Clarify/: Describe what it means
 Did you notice that most things on the list above require more work than completing a single action? In GTD-speak, these are projects. A project has a defined outcome and takes more than one action to complete. Other items on your list might be goals. A goal, such as learning a new language, is less defined as a project and is more aspirational than a project. Your list will contain tasks, projects, goals and vague ideas.
 
-Your next task is to clarify what you captured. Firstly, you order the list in an appropriate hierarchy using the =ALT= and arrow keys. =M-up= and =M-down= will move a heading up or down, while =M-right= and =M-left= promotes or demotes your entry. With these four keystrokes, you can organise your list to create some order in the chaos that comes from your mind. So, in our example, the garden becomes a project with two tasks. You can add notes or link images and other documents below any heading to provide some context to the task.
+Your next task is to clarify what you captured. Firstly, you order the list in an appropriate hierarchy using the =ALT= and arrow keys. =M-up= and =M-down= will move a heading up or down, while =M-right= and =M-left= promotes or demotes your entry. With these four keystrokes, you can organise your list to create some order in the chaos that comes from your mind. So, in our example, the garden becomes a project with two tasks. You can add notes or link images and other documents below any heading to provide context to the task.
 
 #+begin_example
 ,,* Gardening
@@ -101,7 +103,7 @@ Org can associate each headline with a workflow status, indicated at the start o
 ,** TODO Mow the lawn
 #+end_example
 
-By default, there are only two states, =TODO= or =DONE=. However, more than these two is required to enhance your focus because there is no way to distinguish the importance of tasks. Some tasks depend on completing other ones or could be done in the future. You can set different keywords for each Org file in the front matter. The line below defines a workflow with five separate phases.
+By default, there are only two states, =TODO= or =DONE=. However, more than these two is required to enhance your focus because there is no way to distinguish the importance of tasks. Some tasks depend on completing others or could be done in the future. You can set different keywords for each Org file in the front matter. The line below defines a workflow with five separate phases.
 
 #+begin_example
 ,#+TODO: TODO(t) NEXT(n) WAIT(w) | DONE(d) CANCELLED(c)
@@ -122,7 +124,7 @@ Timestamps use the ISO 8601 format: year, month, day. This format avoids any con
   SCHEDULED: <2021-05-08 Sat>
 #+end_src
 
-Tasks can also have a recurring schedule or deadline. For example, your weekly review. When you add =+7d= at the end of the date, Org recalculates the date every time you complete the task and resets the status to =TODO=. You can also use the letters =w=, =m=, and = y= to schedule a job weekly, monthly, or yearly.
+Tasks can also have a recurring schedule or deadline. For example, your weekly review. When you add =+7d= at the end of the date, Org recalculates the date every time you complete the task and resets the status to =TODO=. You can also use the letters =w=, =m=, and = y= to schedule a weekly, monthly, or yearly job.
 
 In the example below, the seven days are recalculated every time you complete the task. So, whenever you complete this review, the new date will become 7 July, seven days after the scheduled date.
 
@@ -145,7 +147,7 @@ Adding =.+= before the recurrence frequency moves the new scheduled date to seve
 SCHEDULED: <2024-06-30 Sun .+7d>
 #+end_example
 
-Only add a scheduled date if this is the time that you plan to take action. Try to avoid overloading your agenda with self-imposed scheduled tasks. You are better off setting a task as the next action and determining when to do it in your regular reviews. A deadline is only helpful if there is an external expectation that you need to complete something by a specific date, such as getting travel insurance before your flight leaves.
+Only add a scheduled date if this is the time that you plan to take action. Try to avoid overloading your agenda with self-imposed scheduled tasks. You are better off setting a task as the next action and determining when to do it in your regular reviews. A deadline is only helpful if there is an external expectation that you must complete something by a specific date, such as getting travel insurance before your flight leaves.
 
 Not meeting a deadline can have consequences, so it might be helpful to be warned beforehand when one is due. The example below sets a deadline for Australia's upcoming total solar eclipse. I want to attend this event, so the =-12m= cookie ensures that this deadline is added to my diary a year before it occurs so I can organise my trip to the central desert. More about the diary in section [[#sec:reflect]].
 
@@ -154,7 +156,7 @@ Not meeting a deadline can have consequences, so it might be helpful to be warne
 SCHEDULED: <2028-07-22 Sat -12m>
 #+end_example
 
-The key to a successful implementation of any productivity method is not to become your own abusive parent. Unless there are external deadlines, everything on my action list is optional. Putting the correct rubbish bin at the curb is not optional because I rely on the truck to pick it up. However, writing a new chapter for this book is optional because there is no external deadline. Use the capabilities of managing your life with Org-mode wisely, and don't become a slave to the list and lose self-esteem because you can't keep up with your expectations.
+The key to a successful implementation of any productivity method is not to become your own abusive parent. Unless there are external deadlines, everything on my action list is optional. Putting the correct rubbish bin at the curb is not optional because I rely on the truck to pick it up. However, writing a new chapter for this book is optional because there is no external deadline. Use the capabilities of managing your life with Org-mode wisely. Don't become a slave to the list and lose self-esteem because you can't keep up with your expectations.
 
 ** /Organise/: Place it where it belongs
 :PROPERTIES:
@@ -162,7 +164,7 @@ The key to a successful implementation of any productivity method is not to beco
 :END:
 The previous two sections discussed establishing the starting point for an action list. You will need to review your system regularly to keep your focus on the relevant actions. Most people review their digital landscape weekly to progress projects.
 
-The diagram in figure [[#fig:gtd]] shows a simple and common workflow you can use to manage your digital life. Anything that rises to your attention goes to the inbox as a fleeting note or new action. Your inbox is not only the Org capture file but can also be your email inbox, a physical inbox or whatever else. As you review each item you ask yourself whether it can be done quickly, if so then just do it. If it is an action that takes a bit more time, then add it to your todo list (next, schedule or delegate), as described in the previous section.
+The diagram in figure [[#fig:gtd]] shows a typical workflow to manage your digital life. Anything that rises to your attention goes to the inbox as a fleeting note or new action. Your inbox is not only the Org capture file but also your email inbox, a physical inbox or whatever else. Reviewing each item, you ask yourself whether it can be done quickly; if so, just do it. If it is an action that takes a bit more time, then add it to your to-do list (next, schedule or delegate), as described in the previous section.
 
 Anything that does not require taking action or completed actions can be archived in your Denote system, as discussed in chapter [[#chap:ideation]], or it can go straight to the digital trash bin. 
 
@@ -205,13 +207,13 @@ Anything that does not require taking action or completed actions can be archive
 :PROPERTIES:
 :CUSTOM_ID: sec:reflect
 :END:
-The key to any productivity workflow is to regularly review your list of actions, priorities, and goals and actually do them. The central tool in Org for looking at your list of registered actions is the agenda.
+The key to any productivity workflow is to regularly review your actions, priorities, and goals and actually do them. The agenda is the central tool in Org for looking at your list of registered actions.
 
 The agenda is a time-based summary of the actions in your todo file(s). You first need to add the relevant files to the agenda list. Add the file linked to the current buffer to the agenda with ~org-agenda-file-to-front~ (=C-c [=). You can add multiple todo files to your agenda list, for example, the inbox, a todo file for your personal life, and one for your work. You remove a file from the agenda list with ~org-remove-file~ (=C-c ]=). Once your agenda files are on the list, you can jump to them quickly with =C-'= (~org-cycle-agenda-files~). This command cycles through the registered agenda files to provide quick access.
 
 The agenda function in Org is highly versatile and configurable. When you evaluate the ~org-agenda~ function with =C-c a=, Org provides a menu with various entry points to your action lists.
 
-The agenda for the current week shows all actions scheduled in the current week that have a deadline for this period. This list also includes any overdue actions and deadlines within the warning period. You can navigate the agenda with the arrow keys, and =TAB= or =RET= will take you to an action so you can edit it. The =v= button lets you generate a diary for the current day, week, fortnight, month, or year.
+The agenda for the current week shows all actions scheduled for this period, which have a deadline. This list also includes any overdue actions and deadlines within the warning period. You can navigate the agenda with the arrow keys, and =TAB= or =RET= will take you to an action so you can edit it. The =v= button lets you generate a diary for the current day, week, fortnight, month, or year.
 
 The menu also gives access to a list of all todo items. You can filter this list by status to show, for example, only view the next items. Type the number displayed on top of the window and type =r=.
 
@@ -224,6 +226,11 @@ Ticking a box or marking an action as done produces a satisfying dopamine hit. A
 
 The ~org-archive-subtree~ command (=C-c C-x C-s=) moves the content of the cursor subtree to another file. The default filename for the archive is the current file, appended with =_archive=. You can customise the name of the archive with the ~org-archive-location~ variable, which has detailed documentation. The archive command moves the whole subtree and adds properties such as the date it was archived and the original filename and heading.
 
+** Learning more
+The Org manual (=C-h R org=) provides further information about this major mode's project management capabilities, such as setting priorities and time clocking, which are not discussed in this book.
+
+Bavarian Org guru Rainer König has developed a comprehensive series of YouTube videos that explain using Org mode for managing actions and projects in great detail. Ranier has also published a comprehensive course on Udemy, which provides more detail than the freely available videos [cite:@koenig_2020_org].
+
 * Manage files
 :NOTES:
 - [ ] [[https://emacs.stackexchange.com/questions/2433/shrink-zoom-scale-images-in-image-mode][Shrink/Zoom/Scale images in image-mode - Emacs Stack Exchange]]
@@ -234,34 +241,55 @@ The ~org-archive-subtree~ command (=C-c C-x C-s=) moves the content of the curso
 :PROPERTIES:
 :CUSTOM_ID: sec:dired
 :END:
-Working with Emacs means that you will need to access, create files and manage files on your drives. Emacs comes shipped with =dired= (pronounced /dir-ed/, from directory editor), a potent file manager. This section explains the basic principles of using Dired and shows how to manage files with Emacs to organise your hard drive. This section also introduces the =image-dired= package which helps you to explore you collections of images and photographs.
+Working with Emacs means you will need to access, create, and manage files on your drives. Emacs comes shipped with Dired (pronounced /dir-ed/, from directory editor), a potent file manager. Dired has an illustrious history. The first version of dired was a stand-alone program written circa 1974, so its origins lie even further back in time than Emacs.
+
+This section explains the basic principles of using Dired and shows how to manage files to organise your hard drive. It also introduces the Image-Dired package, which helps you explore collections of images and photographs.
 
 ** Opening directories and files
-Dired has an illustrious history. The first version of dired was a stand-alone program written circa 1974, so its origins lie even further back in time than Emacs. The software comes packaged with Emacs and it provides a front end to various GNU core utilities to manage files.
+You activate the file manager with the ~dired~ function or the =C-x d= shortcut. After selecting the relevant directory in the minibuffer, Emacs creates a buffer with the content of the specified directory. Another helpful function is ~dired-jump~ (=C-x C-j=), which opens Dired and jumps the cursor directly to the file linked to the current buffer.
 
-You activate the file manager with the ~dired~ function or the =C-x d= shortcut. After selecting the relevant directory in the minibuffer, Emacs creates a buffer with the content of the selected directory. Another useful function is ~dired-jump~ (=C-x C-j=) which opens Dired and jumps to the file linked to the current buffer.
+The top line shows the current directory's path and the available disk space. Below that line, you find a list of all files and folders. EWS places all subdirectories at the top, followed by an alphabetically ordered list of files. 
 
-The top line shows the path of the current directory and the available file space. Below that line is a list of all files and folders. EWS is configured to place all subdirectories on top followed by an alphabetically ordered list of files. 
-
-The first column in the Dired buffer shows the file type and permissions. The next two columns display the size of the file and the last time it was saved. The last column shows the name of  the file, as in the example below. The appendix provides some more technical information on how to interpret and configure this buffer. To remove the technical information use the left parenthesis key =(=.
+The first column in the Dired buffer shows the file type and permissions. The following two columns display the size of the file and the last time it was saved. The final column shows the name of the file. The example below shows this book's first lines of the Dired buffer. To remove the technical information and only show directory and file names, use the left parenthesis key =(=.
 
 #+begin_example
--rw-r--r-- 1 2.8K 2024-07-19 21:30 08-administration.org
+  /home/peter/documents/projects/ews/documents/book:
+  drwxrwxrwx 6 4.0K 2024-07-21 14:05 .
+  drwxrwxrwx 7 4.0K 2024-07-19 08:23 ..
+  drwxrwxrwx 2 4.0K 2024-07-17 06:33 images
+  -rw-r--r-- 1 5.3K 2024-07-20 19:51 00-emacs-writing-studio.org
+  -rw-r--r-- 1 3.7K 2024-07-20 08:51 00-i-foreword.org
+  -rw-r--r-- 1 2.5K 2024-05-04 16:47 00-ii-preface.org
+  -rw-r--r-- 1  24K 2024-07-20 20:04 01-why-emacs.org
 #+end_example
 
-You can navigate the content with the arrow keys and press =j= to jump to a specific file by entering part of its name in the minibuffer and selecting the one you like to visit. Open a file or a subdirectory with the Enter key. To open a file or directory in another window, press =o=. Using =C-o= open the file in another window, but the cursor stays in the Dired window. The =q= button closes the dired window but does not kill (remove) it.
+You can navigate the content with the arrow keys or press =j= to jump to a specific file by entering part of its name in the minibuffer and selecting the one you like to visit. You open a file or a subdirectory with the Enter key. To open a file or directory in another window, press =o=. Using =C-o= open the file in another window, but the cursor stays in the Dired window. The =q= button closes the Dired window but does not kill (remove) it.
 
-Note that every time you open a new directory in Dired, Emacs opens a new Dired buffer. After a while, you litter your Emacs session with unused Dired buffers. Pressing the =a= key instead of Enter opens a directory in the same buffer. This functionality is disabled by default because the Emacs developers strangely believe that new users find it confusing. /Emacs Writing Studio/ configures this behaviour by default.
+Note that every time you open a directory, Emacs opens a new Dired buffer. After a while, you litter your Emacs session with unused Dired buffers. Pressing the =a= key instead of Enter opens a directory in the same buffer.
 
-** Copying and moving directories and files
-To copy a file, press the =C= button. Dired will ask for a new name and location in the minibuffer. To move a file, you press =R= because moving a file is the same as renaming it with a new directory.
+The default setting for Emacs shows hidden files, even though they are hidden for a reason. EWS provides some convenience by removing hidden files from view. Use the full stop (=.=) to toggle this behaviour and either view or conceal the hidden files.
 
-There is no need to close the buffer before you rename an open file. Emacs will link the open buffer to the new filename. 
+** Modifying directories and files
+To copy a file, press the =C= button. Dired will ask for a new directory and name in the minibuffer. To move a file, you press =R= because moving a file is the same as renaming it with a new directory.
 
-If you have two open dired buffers in your frame, EWS copies and moves from the folder in the active window to the other dired buffer.
+You do not need to close a buffer before renaming an open file. Emacs will link the open buffer to the new filename. 
+
+It is sometimes helpful to copy the name of a file to the kill ring with the =w= key so you can use it to rename the file. So, to rename a file, copy the name with =w=, rename the file with =R=, paste the existing name with =C-y= and edit the name to your new version.
+
+If you have two open Dired buffers in your frame, EWS copies and moves from the folder in the active window to the other Dired buffer.
+
+Because a Dired buffer is just another plain text buffer, you can edit the names of files directly with ~dired-toggle-read-only~, bound to =C-x C-q=. This function lets you directly edit the names of files in the buffer, which is more convenient in many cases. To lock in the new file names, type =C-c C-c=.
+
+Select and deselect files for deletion with the =d= and =u= buttons. After you select the files you would like to delete, press =x= to execute the deletion. Press capital =D= if you want to remove a single file. Emacs will also ask you to close the appropriate buffer when you delete or trash a currently open file.
+
+You can select multiple files to work on simultaneously by marking them. The =m= button marks a file, and the =u= removes the mark. The capital =U= removes all marks in the buffer. The =t= key reverses your markings, which is helpful when you want to select everything but one or two files.
+
+This method requires you to manually select each file. You can also use regular expressions to select files. Press =% m= to open the regular expression selection prompt. For example, =^2023.*_journal*= selects all Denote files that start with the =2023= and have the =journal= file tag.  Now press =t= to invert the selection and =k= to remove the selected files from view. This sequence is a valuable method for finding related files.
+
+After you select multiple files in this manner, you can use all file commands to act on the chosen targets, for example, moving all 2023 files with the =_journal= tag to another folder.
 
 ** Dired keyboard shortcuts
-If your head is buzzing with all the different key bindings, the table lists the functionality described in this chapter. The keybindings in Table [[#tab:dired]] are only a small snapshot of the functions of the directory editor in Emacs. You can press the =h= key while in a Dired buffer to view all functionality and related keybindings.
+If your head buzzes with all the key bindings, the table lists the functionality described in this chapter. The keybindings in Table [[#tab:dired]] are only a snapshot of the functions of the directory editor in Emacs. You can press the =h= key while in a Dired buffer to view all functionality and related keybindings.
 
 #+caption: Dired key bindings.
 #+name: tab:dired
@@ -284,23 +312,34 @@ If your head is buzzing with all the different key bindings, the table lists the
 | =enter= | ~dired-find-file~              | Open file                                |
 
 **  File-naming conventions
+:PROPERTIES:
+:ID:       bdaf7f78-6376-4403-b6e2-d4b340c6e433
+:END:
 :NOTES:
 - [X] https://xkcd.com/1459/
-- [ ] https://datamanagement.hms.harvard.edu/plan-design/file-naming-conventions
+- [X] https://datamanagement.hms.harvard.edu/plan-design/file-naming-conventions
 :END:
-Back in the days when offices managed paper archives, they followed strict rules on how to archive documents. Misplacing a piece of paper in an archives stretching meters of shelves meant that you would probably never find that document again. When in the 1980s office workers started to use computers, all such rigour and process was thrown out to the window. The unlimited freedom the computer provides resulted in chaos.
+Back in the days when offices managed paper archives, they followed strict rules on how to archive documents. Misplacing a piece of paper in archives stretching meters of shelves meant you would never find that document again. When 1980s office workers started using computers, all such rigour and process was thrown out the window. The computer's unlimited freedom resulted in chaos as there were no instructions on storing files. A typical directory might look something like this:
 
-# Change these
 #+begin_example
-Test data 2016.xlsx
-Meeting notes Jan 17.doc
-Notes Eric.txt
-Final FINAL last version.docx
+First draft EWS August 2024.org
+EWS notes Jan 17 2023.org
+Action list.org
+Final FINAL last version paperback.pdf
 #+end_example
 
-The Denote file naming convention is good for any document where the data of creation matters.
+Such a naming convention is acceptable for the person who developed it, but that memory will fade. Handing over such a folder to someone else will cause lots of grief. Any good project needs a file naming convention.
 
-Denote includes a minor mode that formats compliant filenames in the directory editor so it is easy to recognise the individual items of the note's metadata. The filenames not only provide metadata for the note itself, they are also a heuristic to make it easy to find notes based on date, signatures, title or keyword (Figure [[fig:denote-dired]]).
+Some rules of thumb for an excellent file-naming convention are:
+- Add metadata to your filename, such as a chapter number, experiment identifier or date.
+- Separate metadata elements with allowed punctuation.
+- Start filenames with the element you want to sort your folder.
+
+Some file naming conventions include version identifiers, such as draft, edited, and final. However, this practice is unnecessary when using a version control system (section [[#sec:vcs]]).
+
+The Denote file naming convention is a perfect example of a best-practice naming convention, described in chapter [[#chap:ideation]]. The order of the elements of a Denote filename defaults to identifier (date/time), signature, title and keywords. The order of these elements is customisable with the ~denote-file-name-components-order~ variable.
+
+Denote includes a minor mode that formats compliant filenames in the directory editor. Hence, it is easy to recognise the individual items of the note's metadata. The filenames not only provide metadata for the note itself, but they are also a heuristic to make it easy to find notes based on date, signatures, title or keyword (Figure [[fig:denote-dired]]).
 
 #+caption: Extract of Denote files in Dired.
 #+attr_html: :alt Extract of Denote files in Dired :title Extract of Denote files in Dired :width 80%
@@ -308,126 +347,55 @@ Denote includes a minor mode that formats compliant filenames in the directory e
 #+attr_latex: :width \textwidth
 [[file:images/denote-dired.jpg]]
 
+** Viewing and manipulating images
+Writing in plain text is excellent, but as the well-worn cliché suggests, "an image is worth a thousand words". You have already seen that Org can embed images and export these to the desired format. Emacs also has some built-in functionality to help you view and manage a collection of images.
 
-** Recent files and bookmarks
-Whenever you return to Emacs you might want to open a file you were working on recently. The recent files minor mode (~recentf-mode~) provides a transient list of the files you most recently opened. 
+Image mode is bundled with Emacs, but you might need external software for additional functionality. Emacs can display images without external software but cannot manipulate them. The ImageMagick software suite provides functionality for editing and manipulating images.
 
-This minor mode saves a list of the files with associated open buffers when you exit Emacs to your configuration folder. The ~recentf-edit-list~ function opens this list so you can modify it manually should you need to. By default, the recent files mode stores the last twenty opened files, which you can change by modifying the ~recentf-max-saved-items~ variable, which in EWS is set to fifty.
+Image mode can display standard image formats out of the box. You can open an image file directly with ~find-file~ (=C-x C-f=) or through Dired. You can also open a linked image from within an Org file with =C-c C-o= (~org-open-at-point~) while the cursor is on the image.
 
-Recent files are transient as they are continuously updated as you open new files. For a more permanent list of files you like to open, use [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Bookmarks.html][bookmarks]].
+Emacs automatically scales the image to snugly fit inside the window. A range of keyboard shortcuts are available to view images. The =n= and =p= keys (next and previous) or the left and right arrow keys move through the pictures of the current directory, creating a slideshow. Image-mode also provides commands to change the display size of images, some of which are:
 
-You can store a file as a bookmark with =C-x r m= (~bookmark-set~). The bookmark will also store the location of the cursor, so you can maintain multiple bookmarks for a file. The default name for the bookmark is the name of the file. You can also enter a bespoke name in the minibuffer before hitting =ENTER=.
-
-To view a list of all bookmarks in the minibuffer and select the one you like to open, use =C-x r b= (~bookmark-jump~). 
-
-Bookmarks are saved in the =bookmarks= file in your configuration folder every time a new bookmark is created. The ~bookmark-save-flag~ is set to one so that the bookmarks file is saved every time you add a new one. The default value only saves it when you exit Emacs, which mean you could loose bookmarks in the unlikely event of an Emacs or system crash.
-
-If you like to remove  bookmark no longer required then use the ~bookmark-delete~ function, which has no default keybinding but is bound to =C-x r D= in the /Emacs Writing Studio/ configuration.
-
-** Opening files with other software
-
-Emacs is a Swiss-Army chainsaw, but it cannot do everything. Sometimes you might like to open a file in other software, such as your image editor or video player. You can open files with external software by pressing =&= after which dired will ask for the appropriate software. You need to type the name of the executable file of the software you like to use, e.g. =gimp=.
-
-It is sometimes useful to copy the name of a file to the kill ring with the =w= key, so you can use it to rename the file. So to rename a file, copy the name with =w=, rename the file with =R= and paste the existing name with =C-y= and edit the name to your new version.
-
-You can select and deselect files for deletion (killed) with the =d= and =u= buttons. After you selected the files you like to delete, press =x= to execute the deletion. Press capital =D= if you like to remove a single file. When you delete or trash a currently open file, Emacs will also ask you to close the appropriate buffer. By default, Emacs permanently removes files. The /Emacs Writing Studio/ is configured so that files are moved to the recycle bin.
-
-You can select multiple files to work on at the same time by marking them. The =m= button marks a file, and the =u= removes the mark. The capital =U= removes all marks in the buffer. The =t= key reverses your markings, which is helpful when you want to select everything but one or two files.
-
-This method requires you to manually select each file. You can also use regular expressions to select files. Press =% m= to open the regular expression selection prompt. For example, =^2023.*_journal*= selects all Denote files that start with the =2023= and that have the =journal= file tag.  Now press =t= to invert the selection and =k= to remove the selected files from view. This sequence is a useful method to find related files.
-
-After you selected multiple files in this manner, you can use all file commands to act on the selected targets, for example moving all 2023 files with the =_journal= tag to another folder.
-
-* Viewing and manipulating images
-Writing in plain text is great but as the well-worn cliche suggests, an image is worth a thousand words. You have already seen that Org mode can embed images and export these to the desired format. Emacs also has some built-in functionality to help you manage your collection of images.
-
-Image-mode and the Image-Dired packages are bundled with Emacs, but you might need some additional software. Emacs can display images without external software, but it cannot manipulate them. The ImageMagick software suite provides functionality for editing and manipulating images.
-
-Image mode can display  popular image formats out-of-the-box. You can open an image file directly with ~find-file~ (=C-x C-f=) or through the directory editor. You can also open a linked image from within an Org file with =C-c C-o= (~org-open-at-point~) with the cursor on the image.
-
-Emacs automatically scales the image to snugly fit inside the window. A range of keyboard shortcuts are available to view images. The =n= and =p= keys (next and previous) or the left and right arrows flick though the images in the current directory creating a slideshow. Image mode also provides several commands to change the display size of images:
-
-- =s o=: Show image at original size. When it doesn't fit in the window, scroll through the image with the arrow keys.
+- =s o=: Show the image in its original size. When it doesn't fit in the window, scroll through the image with the arrow keys.
 - =s w=: Fit the current image to the height and width of the window.  
 - =i +=: Increase the image size by 20%
 - =i -=: Decrease the image size by 20%.
 
-Furthermore, image mode can manipulate images, with the assistance of ImageMagick:
+Furthermore, image mode can manipulate images with the assistance of ImageMagick:
 
 - =i r=: Rotate the image by 90 degrees clockwise.
 - =i h=: Flip the image horizontally.
 - =i v=: Flip the image vertically.
 - =i c=: Crop the image.
-- =i x=: Cut a rectangle from the image and replace with black.
+- =i x=: Censor a rectangle from the image, CIA style.
 
-The crop and cut commands display a rectangular frame superimposed on the image. Use the mouse to move and resize the frame. Type =m= to move the frame instead of resizing it and type =s= to convert the frame to a square. When you are satisfied with the result, use =RET= to crop or cut the image. You can exit the crop and cutting menu with =q= without changing the source file. Please note that these commands are only available when /ImageMagick/ is installed.
+The crop and censor commands display a rectangular frame superimposed on the image. Use the mouse to move and resize the frame. Type =m= to move the frame instead of resizing it, and type =s= to convert it to a square. When satisfied with the result, use =RET= to crop or censor the image. You can exit the crop and cutting menu with =q= without changing the source file. Please note that these commands are only available when /ImageMagick/ is installed.
 
-If you like to retain the result of the transformation, press =i o= to save the image under a new name. When you are done with watching images, use =q= to quit the image buffer, or =k= to kill the image buffer altogether.
+When you're done watching images, use =q= to quit the image buffer or =k= to kill it altogether.
 
-Viewing images individually is great, but wouldn't it be nice if you cold see thumbnails before delving into your collection? The Image-Dired package provides a thumbnail buffer to view and maintain images from within a Dired buffer using thumbnails. Issue the ~image-dired~ command and select the directory you like to use. Emacs splits the screen and presents up to 1000 thumbnails to explore your collection. Emacs stores the thumbnails in the configuration directory for future reference.
+** The Image-Dired package
+Viewing images individually is helpful, but wouldn't it be nice to see thumbnails? The Image-Dired package provides a thumbnail buffer to view and maintain pictures from within a Dired buffer using thumbnails. Issue the ~image-dired~ command and select the directory you like to use (=C-c w I=). Emacs splits the screen and presents up to 1,000 thumbnails to explore your collection. Emacs stores the thumbnails in the configuration directory for future reference and faster loading.
 
 #+caption: Viewing some travel photos in Emacs with image-dired.
 #+attr_html: :alt Viewing images with image-dired :title Viewing images with image-dired
 #+attr_html: :width 80%
 [[file:images/image-dired-screenshot.jpg]]
 
-Alternatively, when you are inside a Dired buffer that contains images, mark the images you like to view and generate the thumbnails with =C-t d= (~image-dired-display-thumbs~). If you don't mark any files, the program uses the image under the cursor.
+The active image is marked with a flashing border around the thumbnail, and its filename is shown at the top of the thumbnail window.
 
-** The image-dired package
-Yet another method of previewing your images is by marking the ones you need and generate inline thumbnails inside the Dired buffer with =C-t C-t= (~image-dired-dired-toggle-marked-thumbs~). The same shortcut also removes the thumbnails.
+You can navigate the thumbnails with the arrow keys. The =<= and =>= keys take you to the start or end of the collection. You can remove a thumbnail, but not the file itself, from the preview buffer with =C-d=. 
 
-The active image is marked with a flashing border around the thumbnail and its filename is displayed on the top of the thumbnail window.
+To view an image in another window hit =RET= on the selected thumbnail. You cycle through the marked images in your collection with the =space= and =backspace= (or left and right arrow) buttons.
 
-You can navigate the thumbnails with the arrow keys. The =<= and =>= keys take you to the start or end of the collection. You can remove a thumbnail from the collection with =C-d=. If you have selected more images than thumbnails that can fit on page, then image-dired tracks your movement, so as your cursor moves up or down, the thumbnails refresh.
+But why manually flick through your album if you can let Emacs do this? The =S= key starts a slideshow with each image shown for five seconds. You can manually configure the delay with the ~image-dired-slideshow-delay~ variable or drive the slideshow.
 
-To view an image, hit =RET= when the thumbnail is marked. You cycle through the marked images in your collection with the =space= and =backspace= buttons, or =C-<left>= /  =C-<right>=.
+The main image display is in image mode, so all the actions described in the previous section apply. As usual, =q= quits the image or thumbnail window and =k= kills it altogether.
 
-But why manually flick through your album if you can let Emacs do this for you? The =S= key starts a slideshow with each image shown five seconds by default. You can configure the delay with the ~image-dired-slideshow-delay~ variable, or drive the slideshow manually with the =space= and =backspace= keys, or =C-<left>= /  =C-<right>=.
+Pressing =C-enter= opens the file in an external viewer or editor such as GIMP. You can tell Emacs which external viewer to use by customising the =image-dired-external-viewer= variable to the name of your favourite image editor. You open the external editor from within an Image-Dired viewer with =C-enter=. Confusingly, when you are in a standard Dired buffer, this function is bound to =C-t x=. /Emacs Writing Studio/ uses =C-enter= in Dired and Image-Dired to open an image in your favourite external editor.
 
-The main image display is in image mode, so all the actions described in the previous section apply.
+When inside a Dired buffer containing images, you can show the thumbnails by marking them with =m= and generate thumbnails with =C-t C-t= (~image-dired-display-thumbs~). If you don't mark any files, the program displays a thumbnail of the image under the cursor. The same shortcut also removes the thumbnails.
 
-As usual, =q= quits the image or thumbnail window.
+** Learning more
+The Dired package, including Image-Dired, is fully described in the Emacs manual. Type =C-h r g dired`=. The Emacs manual also contains a chapter about viewing images.
 
-The image-dired software can also create a plain text database of images with searchable tags and thumbnail descriptions. 
-
-You tag images directly from a dired buffer. The =C-t t= keystrokes lets you tag the selected files. You can retrieve the tags in a future session using =C-t f= and view the image thumbnails with =C-t d=, as described above. You can tag images from within a thumbnail buffer with the =t t= shortcut. You can also add a comment to the image by pressing =c= in the thumbnail viewer.
-
-The file name, tags and comments show in the mini buffer as you move through the image thumbnails: =directory: filename (tags): comment=.
-
-Emacs stores the metadata in the =image-dired= directory in your configuration folder in the =.image-dired_db= file. This is a plain text file that lists each file name and the tags an comment.
-
-Retrieving tagged files only selects images with tags in the directory of the current dired buffer. It does not work across multiple folders. 
-
-This tagging system is nice, but it creates an integrity vulnerability in that it separates tags and files. When you accidentally remove the database, all metadata is lost. You will also loose access to the metadata when you rename an image.
-
-An alternative method to tag files is to use the Denote file naming convention, which encodes metadata into the name of the file.
-#+begin_export html
-&nbsp;
-#+end_export
-
-Denote is a package to produce and maintain plain text notes, but it can also be used to maintain a collection of binary (non-text) files. When using the [[{{< ref "/productivity/taking-notes-with-emacs-denote.org" >}}][Denote file naming convention]] for your images, you can mark parts of you collection using regular expressions. The Denote file naming convention encodes four bits of metadata about a file into the filename. Only the timestamp is compulsory and serves as a unique identifier:
-
-- Timestamp in ISO 8601 format
-- An alphanumeric signature (starting with double equality sign (~==~)
-- The title in [[https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/][kebab-case]] (starting with double dash ~==~)
-- Keywords in [[https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/][snake_case]] (starting with double underscore =__=)
-
-For example, one photo in my collection is: =19930825T132000--forbidden-city-throne-palace-of-heavenly-purity__china.jpg=. So this photo was taken on 25 August 1993, the title describes the topic of the photograph and 
-
-I can now go into Dired and mark files with regular expressions, searching for each of these fields. For example, using =%m _china= marks photos taken in China, or =%m -city= all images with the word "city" in their title. Using the Dired convention for naming files is not only great for notes, it also helps you manage your photo collection.
-
-The ~denote-rename-file~ function (=C-c w R=) lets you construct a Denote-compliant file name for existing images or other binary files. This function uses the last modified date as the identifier by default. But when you are sorting old collections you might want to add a date that is different to the last modified one. Adding the universal argument (=C-u=) will also ask you to provide a date and time, i.e. (=C-u C-c w R=).
-
-Emacs is a powerful piece of software but it is mostly limited to editing text. To meaningfully work with images, you will need another package. Image-dired lets you open images in external viewers or editors by setting one variable.
-
-Pressing =C-enter= opens the file in an external viewer or editor. You can tell Emacs which external viewer to user by configuring the =image-dired-external-viewer= variable. I linked it to the GIMP (GNU Image Manipulation Program). The content of this variable obviously depends on your system and preferred viewer.
-
-When you are in an image-dired buffer, you open the external viewer with =C-enter=. Confusingly, when you are in a normal dired buffer, this function is bound to =C-t x=. /Emacs Writing Studio/ remaps the keys so that you can use =C-enter= in dired and in image-dired to open an image in your favourite external editor.
-
-* Learning more
-Getting Things Done is just one of many methods to manage your busy life. This section shows how to implement the principles of David Allan's GTD method with Org. The beauty of Emacs is that you have the freedom to implement whatever method you prefer, so be creative and use Org to suit your needs.
-
-The Org manual (=C-h R org=) provides further information about the capabilities of this major mode not discussed in this book, such as setting priorities and time clocking.
-
-Bavarian Org guru Rainer König has developed a comprehensive series of YouTube videos that explain using Org mode for managing actions and projects in great detail. Ranier has also published a comprehensive course on Udemy, which provides more detail than the freely available videos [cite:@koenig_2020_org].
-
+While Emacs is perfectly capable of presenting your images and doing some minor edits, you should consider the GNU Image Manipulation Program (GIMP) as a free software solution for your digital photos.

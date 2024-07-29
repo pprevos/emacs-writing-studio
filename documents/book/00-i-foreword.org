@@ -27,4 +27,14 @@ The key to learning your way around Emacs is to be patient and methodical. Try o
 
 Remember that you are just getting started and you will be here long-term. Good luck!
 
+#+begin_export html
+&nbsp;
+<p style="text-align:right">Protesilaos "Prot" Stavrou</p>
+#+end_export
+#+begin_export latex
+\vspace{1em}
+\begin{flushright}
 Protesilaos "Prot" Stavrou
+\end{flushright}
+#+end_export
+

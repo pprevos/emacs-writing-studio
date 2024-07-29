@@ -20,15 +20,15 @@ The EWS configuration is an opinionated set of choices that might not suit every
 * Installing Emacs writing studio
 You don't have to learn to program in Elisp to use Emacs. You can start with the /Emacs Writing Studio/ configuration to get you going. But first you need to install EWS and some additional software. The remainder of the book does not explain any methods to configure Emacs but explains how to use the EWS functionality to research, write and publish manuscripts.
 
-To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository (=github.com/pprevos/emacs-writing-studio=) and save them in the configuration folder. The =init.e= file contains the EWS configuration and the =ews.el= file contains a collection of bespoke functions.
+To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository (=github.com/pprevos/emacs-writing-studio=) and save them in the configuration folder. The =init.el= file contains the EWS configuration and the =ews.el= file contains a collection of bespoke functions.
 
-The location of the configuration folder depends on your operating system. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=. Copy the files from the EWS repository to this directory. EWS activates after you evaluate the ~restart-emacs~ function or the next time you start the program.
+The location of the configuration folder depends on your operating system. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=. Copy the files from the EWS repository to this directory. EWS activates after you evaluate the ~restart-emacs~ function or the next time you start the program. If you already have a configuration, then you can try EWS with =emacs --init-directory <ews-path>=.
 
-Emacs can also integrate with other free software packages to extend its functionality. Some of the features provided by EWS require you to install this additional software. You don't need to know to use these programs as Emacs will control them for you. Each chapter in this book outlines which software is necessary for which purpose.
+Emacs can also integrate with other free software packages to extend its functionality. Some of the features provided by EWS require you to install this additional software. You don't need to know how to use these programs as Emacs will control them for you. Each chapter in this book outlines which software is necessary for which purpose.
 
 The ~ews-missing-executables~ function checks if external software is available on your system. Emacs writes a message in the minibuffer if any of the recommended tools is missing. You can jump to the =*Messages*= buffer with =C-h e= to review the output. Emacs will function normally when any of the listed software is missing, but some features will be unavailable. If you are a Linux or Chromebook user, these packages will be available through your system's package manager. Windows users can use the Chocolatey package manager (=chocolatey.org=) or MSYS2 (=msys2.org=) to get this software. Apple users can install Linux tools using the Homebrew package manager (=brew.sh=). 
 
-This book was written and published with the configuration it describes, so it is fully tested in real-life conditions. The GitHub repository for EWS also contains the =documents= folder which contains the Org mode source files for this book. You can download these files as an example of a book researched, written and published with Emacs.
+This book was written and published with the configuration it describes, so it is fully tested in real-life conditions. The GitHub repository for EWS also contains the =documents= folder which contains the Org source files for this book. You can download these files as an example of a book researched, written and published with Emacs.
 
 * Minimalist interface
 Emacs is a place of rest and contemplation away from the cacophony of contemporary software filled with buttons and functionality you don't need. The EWS configuration removes the toolbar, menu bar and scroll bars. While drop-down menus are a valuable tool to discover functionality, there is no need to constantly keep them on the screen. You can access the menu with =F10= (~menu-bar-open~) and select menu options with the arrow keys and =RET= to choose an item. You exit the menu with =C-g= (~keyboard-quit~). But after using Emacs for a while, you'll quickly build muscle memory and revert to keyboard shortcuts. Note that the menu items show the relevant keyboard shortcuts when available. If you insist of keep using the graphical menu, icons and scroll bars, then customise the following variables. In EWS the ~customize-variable~ function is bound to =C-c w v=:
@@ -46,11 +46,11 @@ Two basic classes of themes exist for text processors: light and dark. Light bac
 
 The EWS configuration installs and activates the most recent version of Prot's Modus themes. The Modus themes have two primary versions: the =modus-operandi= theme is the primary light theme, while the =modus-vivendi= theme is its dark counterpart. The primary Modus themes maximise contrast between background and foreground following the /Web Content Accessibility Guidelines/ (WCAG). The Modus themes comply with the triple-A standard of the WCAG, which specifies a minimum contrast ratio between background and foreground of 7 to 1. This high contrast ratio is legible for people with moderately low vision. Each of the primary themes has three modified versions: two versions for red-green and blue-yellow colour blindness (deuteranopia and tritanopia) and a more colourful variety (tinted).
 
-/Emacs Writing Studio/ uses the tinted versions as default. These versions have a slightly lower contrast ratio and are suitable for people with normal vision. The Modus themes do not prescribe keyboard shortcuts, so EWS defines some. The =C-c w t t= shortcut toggles between the light and dark side (insert Star Wars pun here). Using =C-c w t s= provides a selection menu of all Modus themes. /Emacs Writing Studio/ uses =C-c w= as its default prefix key for its specific functionality, where the =w= is a mnemonic for writing and =t= for theme.
+/Emacs Writing Studio/ uses the tinted versions as default. These versions have a slightly lower contrast ratio and are suitable for people with normal vision. The Modus themes do not prescribe keyboard shortcuts, so EWS defines some. The =C-c w t t= shortcut toggles between the light and dark side (insert Star Wars pun here). /Emacs Writing Studio/ uses =C-c w= as its default prefix key for its specific functionality, where the =w= is a mnemonic for writing and =t= for theme.
 
 The Modus Themes package includes an extensive manual that explains in detail how to customise the look and feel of its collection of themes. This manual is available through Info Mode with =C-h R modus=. The Appendix provides some more information on how to customise the theme for your personal settings.
 
-Emacs users have developed a ragtag collection of themes. To pick your favourite, you can browse the Emacs Themes Gallery (=emacsthemes.com=). If the theme is available in the ELPA or MELPA package repositories, you can install it as explained in the Appendix.
+Emacs users have developed a ragtag collection of themes. To pick your favourite, you can browse the Emacs Themes Gallery (=emacsthemes.com=). If the theme is available in the ELPA or MELPA package repositories, you can install it by issuing the ~package-install~ command. Type 'theme' to filter the list and pick your favourite. Once you installed a new theme, you can use =C-c w t s= (~consult-theme~). This command provides a selection menu of all installed themes. To change the default you will have to modify the init file, as explained in the appendix.
 
 ** Setting fonts
 The default font in Emacs is a fixed-pitch (mono-spaced) font designed for writing code. In a fixed-pitch font, all characters have the same width. An =i= or an =w= will use the same amount of space, just like mechanical typewriters. This type of letter is ideal when writing code or tables because it helps to align the text.
@@ -60,7 +60,7 @@ The default font in Emacs is a fixed-pitch (mono-spaced) font designed for writi
 
 A variable-pitch font is easier on the eye when writing prose. Not all characters have the same width in a variable-pitch font, as is common in natural writing. Ideally, we want the best of both worlds and configure Emacs to use the most suitable font for each situation. Emacs can define a different font for certain parts of the text, for individual buffers, or for a major mode. The EWS configuration uses variable pitch mode for the ideal mix between font types.
 
-The /Emacs Writing Studio/ configuration does not specify any particular fonts and uses your system's defaults. You can configure your favourite fonts, provided they are available on your computer. You need to define three font variables:
+The /Emacs Writing Studio/ configuration does not specify any particular fonts and uses your system's defaults. You can configure your favourite fonts, provided they are available on your computer. You need to customise three font variables:
 
 - =default=: The default settings (a fixed-pitch font).
 - =fixed-pitch=: The font used for computer code.
@@ -86,7 +86,7 @@ Completion systems are like predictive text on a mobile phone. You start typing 
 
 The minibuffer is the place to find files, evaluate functions, and enter other information. The minibuffer completion system aims to make it easier to find what you need by providing a search mechanism that provides a list of possible options. The standard minibuffer Emacs completion system focuses on entering functions, filenames, buffer names and any other selection process in the minibuffer.
 
-The minibuffer completion system is highly configurable, and several packages extend the vanilla functionality. The EWS configuration uses a stack of connected packages developed by Daniel Mender to provide a seamless experience.
+The minibuffer completion system is highly configurable, and several packages extend the vanilla functionality. The EWS configuration uses a set of connected packages developed by Daniel Mender to provide a seamless experience.
 
 The Vertico package uses incremental search, meaning the list of candidates is shortened to match your entry as soon as you type one or more characters. For example, when opening a file with =C-x C-f=, you can start typing any part of the filename to locate the file you seek. Use =C-backspace= keys to move to a higher directory.
 
@@ -109,21 +109,28 @@ Many keyboard shortcuts have multiple parts, such as =C-x C-f=. The which-key pa
 
 If the shortcuts are too large to fit in the popup window, you can move to the next page with =C-h n= and the previous page with =C-h p=. Just typing =C-h= inside the Which-Key popup displays additional options at the bottom of the screen to navigate the list of key bindings.
 
-EWS introduces a series of keyboard shortcuts that all start with the =C-c w= prefix key (where =w= is a mnemonic for 'writing').
-
 #+caption: Which-Key popup window for C-c-w (Emacs Writing Studio).
 #+attr_html: :alt Which-Key popup window for Emacs Writing Studio :title Which-Key popup window for Emacs Writing Studio :width 100%
-[[file:images/which-key-popup-screen.jpg]]
+[[file:images/which-key-popup-screen.png]]
+
+* Recent files and bookmarks
+Whenever you return to a new Emacs session, you might want to open a file you were working on recently. The recent files minor mode (~recentf-mode~) list the files you most recently opened. To access this list, use =C-c w r= and search for your target on the list.
+
+This minor mode saves a list of the files with associated open buffers when you exit Emacs and go to your configuration folder. The ~recentf-edit-list~ function opens this list, so you can modify it manually should you need to. The recent files mode stores the last fifty opened files.
+
+Recent files are transient and continuously updated as you open new files. For a more permanent list of files you like to open, use bookmarks. You can store a file as a bookmark with =C-x r m= (~bookmark-set~). The bookmark will also store the cursor's location, so you can maintain multiple bookmarks for a single directory or file. The default name for the bookmark is the filename. You can also enter a bespoke name in the minibuffer before hitting Enter. To view a list of all available bookmarks in the minibuffer and select the one you like to open, use =C-x r b= (~bookmark-jump~). 
+
+Bookmarks are saved in the =bookmarks= file in your configuration folder when a new bookmark is created, or one is removed. If you want to remove a bookmark that is no longer required, use the ~bookmark-delete~ function. This function has no default keybinding but is bound to =C-x r d= in the /Emacs Writing Studio/ configuration.
 
 * Introducing Org mode
 :PROPERTIES:
 :CUSTOM_ID: sec:org-mode
 :END:
-The previous chapter explained how to write a plain text file. Now, we add a new layer of complexity by introducing Org mode, a powerful major mode that comes with Emacs by default. This software was initially developed in 2003 by Carsten Dominik, professor of astronomy at the University of Amsterdam. Since then, countless other developers have continued to advance Org mode. Many people use Emacs because of Org mode is a perfect environment for writing. 
+The previous chapter explained how to write a plain text file. Now, we add a new layer of complexity by introducing Org mode, a powerful major mode that comes with Emacs by default. This software was initially developed in 2003 by Carsten Dominik, professor of astronomy at the University of Amsterdam. Since then, countless other developers have continued to advance Org. Many people use Emacs because of Org is a perfect environment for writing. 
 
-You can use Org mode to publish websites, articles and books, keep a diary, write research notes, manage your actions, and more. And on top of all that, it is intuitive to use. This section shows you the basics of writing prose in Org mode. The remainder of the book explains the more specialised functionality of this extensive package.
+You can use Org mode to publish websites, articles and books, keep a diary, write research notes, manage your actions, and more. And on top of all that, it is intuitive to use. This section shows you the basics of writing prose in Org. The remainder of the book explains the more specialised functionality of this extensive package.
 
-Start by creating a file with a =.org= extension and start writing, for example, =C-x C-f test.org=. Emacs automatically enables Org mode for any file with the =.org= extension. Org mode is derived from text mode, so everything explained in [[#sec:text-mode]] also applies to this section. 
+Start by creating a file with a =.org= extension and start writing, for example, =C-x C-f test.org=. Emacs automatically enables Org for any file with the =.org= extension. Org is derived from text mode, so everything explained in [[#sec:text-mode]] also applies to this section. 
 
 Each Org document starts with a header that contains metadata and settings relevant to the buffer. The Org mode metadata and settings start with =#+= followed by a keyword and a colon, and the metadata, for example, =#+TITLE: Romeo and Juliet=. The document header can also contain metadata such as a subtitle or a date and other bits of information. Emacs packages can use this information when publishing the text and other functionality. If Shakespeare had used Org mode, the front matter could be:
 
@@ -133,7 +140,7 @@ Each Org document starts with a header that contains metadata and settings relev
   #+DATE:    [1597-05-08 Thu]
 #+end_example
 
-This section only provides a short introduction to using Org mode to write prose. Subsequent chapters explain more specialised functionality in Org mode, such as managing projects and exporting. The extensive Org mode manual is available in the info system with =C-h R org=.
+This section only provides a short introduction to using Org mode to write prose. Subsequent chapters explain more specialised functionality in Org, such as managing projects and exporting. The extensive Org manual is available in the info system with =C-h R org=.
 
 ** Document structure
 :PROPERTIES:
@@ -147,11 +154,11 @@ One of the unofficial rules of writing is to define the structure before writing
   *** Heading 3
 #+end_example
 
-When you press =M-RET=, the following line becomes a new heading. With =C-RET=, the new line is added after the text in the current section. You can also promote a standard paragraph to a heading using =C-c *= (~org-toggle-heading~). Org mode also makes it easy to move and promote or demote existing headings and associated subheadings and text (which in Org mode is a subtree). Just use the =ALT= and arrow keys to move a subtree around the document. You can also use these keys to move paragraphs.
+When you press =M-RET=, the following line becomes a new heading. With =C-RET=, the new line is added after the text in the current section. You can also promote a standard paragraph to a heading using =C-c *= (~org-toggle-heading~). Org also makes it easy to move and promote or demote existing headings and associated subheadings and text (which in Org is a subtree). Just use the =ALT= and arrow keys to move a subtree around the document. You can also use these keys to move paragraphs.
 
 A subtree cannot move past a superior level using the =ALT= and up/down arrow keys. A faster method to move a subtree to another section of the document is to refile =C-c C-w= (~org-refile~). This command asks for a headline to refile the selected heading an associated text to and moves it accordingly.
 
-When the cursor is on a heading the =TAB= key collapses the text. Repeatedly pressing =TAB= shows the subheadings and then again the full text. To collapse the whole document, add the Shift key. Pressing =S-TAB= collapses the whole buffer, showing only the level one headings. Pressing =S-TAB= once again will show headings, and repeating it for a second time reveals all text. You can keep cycling through these modes with the =S-TAB= key (figure [[#fig:org-cycle]] and table [[#tab:org-structure]]). You can recognise folded headings by the ellipses (\dots) at the end of the line. The Org-Modern package (section [[#sec:rice]]) changes the asterisks to triangles. When the triangle points to the right, the heading is collapsed and when it points down, the heading is open.
+When the cursor is on a heading the =TAB= key collapses the text. Repeatedly pressing =TAB= shows the subheadings and then again the full text. To collapse the whole document, add the Shift key. Pressing =S-TAB= collapses the whole buffer, showing only the level one headings. Pressing =S-TAB= once again will show headings, and repeating it for a second time reveals all text. You can keep cycling through these modes with the =S-TAB= key (figure [[fig:org-cycle]] and table [[tab:org-structure]]). You can recognise folded headings by the ellipses (\dots) at the end of the line. The Org-Modern package (section [[#sec:rice]]) changes the asterisks to triangles. When the triangle points to the right, the heading is collapsed and when it points down, the heading is open.
 
 #+begin_src dot :file images/org-cycle.png
   digraph {
@@ -190,12 +197,12 @@ Org mode also provides a set of commands to make it easier to jump between headi
 | =C-c C-b=              | ~org-backward-heading-same-level~ | Move previous at the same level |
 
 ** Text formatting
-Writing all words in the same style can be boring and some text needs some emphasis. To change how Org Mode displays text, you surround it with special characters: =/italic/=, =*bold*=, =_underline_=, =+strikethrough+= and ==verbatim==. In Vanilla Emacs, these markers remain visible but disappear when exporting the document to its published format.
+Writing all words in the same style can be boring and some text needs emphasis. To change how Org displays text, you surround it with special characters: =/italic/=, =*bold*=, =_underline_=, =+strikethrough+= and ==verbatim==. In Vanilla Emacs, these markers remain visible but disappear when exporting the document to its published format.
 
 The EWS configuration hides these markers. The only problem with hiding emphasis markers that way is that rich text becomes hard to edit because it is unclear whether your cursor is on the marker or the first or last character. EWS therefore uses the Org-Appear package by Alice Hacker. This tool displays the rich text markers while the cursor is on a word but hides them otherwise, resulting in a less cluttered screen.
 
 ** Lists
-Writing lots of prose in long paragraphs can make content hard to understand, so non-fiction authors use lists to create clarity in writing. Writing lists in Org mode could not be easier.
+Writing lots of prose in long paragraphs can make content hard to understand, so non-fiction authors use lists to create clarity in writing. Writing lists in Org could not be easier.
 
 Start a line with a dash and complete the entry with =M-RET= to create the next entry. Using the Alt and left or right arrow keys changes the depth of the item. The Alt key with the up and down arrows moves the line up or down in the hierarchy. You can change the list prefix with the =SHIFT= and left/right arrow keys. The default options are:  =-=, =+=, =1.= or =1)=. You can convert a paragraph to a list with =C-c -= (~org-toggle-item~). Repeatedly using this command changes the bullet type, just like shift and the arrow keys.
 
@@ -222,11 +229,11 @@ Numbered lists start at one by default but you can add a cookie to start the lis
 :END:
 A text, just like a person, cannot exist in solitude. A as people we have family and friends and so do texts. You might need links to connect related files or reference text from which your writing borrows ideas. Relationships between electronic texts are established with hyperlinks. Org mode recognises a large suite of link types, such as websites, Document Object Identifiers (DOI) and internal files.
 
-Links in Org mode appear between square brackets =[]= and start with an identifier, followed by the link itself. For example, websites start with the usual =https:= and files start with =file:= and DOI numbers, you guessed it, start with =doi:=. Org mode recognises these automatically as you type them, for example adding =doi:10.1201k/9781003326977= creates a clickable link in an Org buffer.
+Links in Org appear between square brackets =[]= and start with an identifier, followed by the link itself. For example, websites start with the usual =https:= and files start with =file:= and DOI numbers, you guessed it, start with =doi:=. Org recognises these automatically as you type them, for example adding =doi:10.1201k/9781003326977= creates a clickable link in an Org buffer.
 
-When the link location contains spaces you need to surround it with a double square brackets for it to become active: =[[file:"file name"]]=. Links can also contain a description using the following syntax: =[[type:link][description]]=. When a link has a description, Org mode hides the syntax and formats it like hyperlink on a website. You can switch this behaviour on and off with ~org-toggle-link-display~.
+When the link location contains spaces you need to surround it with a double square brackets for it to become active: =[[file:"file name"]]=. Links can also contain a description using the following syntax: =[[type:link][description]]=. When a link has a description, Org hides the syntax and formats it like hyperlink on a website. You can switch this behaviour on and off with ~org-toggle-link-display~.
 
-You follow a link in Org mode with a mouse click or by pressing =C-c C-o= (~org-open-at-point~) with your cursor on the link text. If you use this shortcut anywhere in the text that is not a link, Org mode presents a list of links in the current section.
+You follow a link in Org with a mouse click or by pressing =C-c C-o= (~org-open-at-point~) with your cursor on the link text. If you use this shortcut anywhere in the text that is not a link, Org presents a list of links in the current section.
 
 You don't have to type the square brackets and create and edit links with =C-c C-l= (~org-insert-link~). This function first asks you to select the link type and then for the full link address. The last step asks for an optional description. To remove a link and only keep the description as plain text, use this command and erase the link address, keeping or modifying the description.
 
@@ -247,14 +254,14 @@ You can skip the =file:= part by adding the universal argument with the =C-u C-c
 Links to files can be absolute or relative to the directory the document you are linking from is in. Like tables, you can add a caption and a reference name to an image. The example below shows what an image looks like in Org mode, including a caption line.
 
 #+begin_example
-,#+CAPTION: This is the image caption.
+,#+CAPTION:  This is the image caption.
 ,#+ATTR_ORG: :width 600
 [[file:path/to-image]]
 #+end_example
 
-After adding the link, you can preview the image with the ~org-redisplay-inline-images~ function or =C-c C-x C-M-v=. To toggle previewing pictures in the whole document, use =C-c C-x C-v= (~org-toggle-inline-images~). The EWS configuration enables default image previews in all Org mode buffers.  When adding a new image you need to enable the preview with the redisplay command (=C-c C-x C-M-v=).
+After adding the link, you can preview the image with the ~org-redisplay-inline-images~ function or =C-c C-x C-M-v=. To toggle previewing pictures in the whole document, use =C-c C-x C-v= (~org-toggle-inline-images~). The EWS configuration enables default image previews in all Org buffers.  When adding a new image you need to enable the preview with the redisplay command (=C-c C-x C-M-v=).
 
-Images in an Org mode buffer are always aligned to the left or right edge of the page, depending on the writing direction fo your language. Images are 300 pixels wide in an Org buffer. You can configure the preview size to your preference by adding a line above the image, for example: =#+ATTR_ORG: :width 600= (Org mode attributes). This line only changes the size of the image in the Org mode buffer but not in the final exported format. Chapter [[#chap:publication]] explains how to set the image size, alignment, captions and cross-references for the final exported version.
+Images in an Org mode buffer are always aligned to the left or right edge of the page, depending on the writing direction fo your language. Images are 300 pixels wide in an Org buffer by default. You can configure the preview size to your preference by adding a line above the image, for example: =#+ATTR_ORG: :width 600= (Org mode attributes). This line only changes the size of the image in the Org buffer but not in the final exported format. Chapter [[#chap:publication]] explains how to set the image size, alignment, captions and cross-references for the final exported version.
 
 My writing projects contain a separate folder with image files to keep them separate from the text. Please note that changing the name of an image file or removing from the project results in a dead link. Emacs also has some facilities to manage image libraries through the Image-Dired package, discussed in Chapter [[#chap:admin]].
 
@@ -265,9 +272,10 @@ My writing projects contain a separate folder with image files to keep them sepa
 :NOTES:
 - [X] https://orgmode.org/worg/org-tutorials/tables.html
 :END:
-A table is common mechanism in technical publications to structure information in lieu of prose. Creating tables in Org mode uses an intuitive method to add, remove and move columns and rows. To create a table, start a line with a pipe (=|=) symbol, enter the content, and continue until you have defined all columns and end the line with a final pipe. You don't have to worry about aligning the text because the =TAB= automatically adds spaces to adjust the column sizes and add another row and places the cursor in the first cell.
+A table is common mechanism in technical publications to structure information in lieu of prose. Creating tables in Org mode uses an intuitive method to add, remove and move columns and rows. To create a table, start a line with a pipe (=|=) symbol, enter the content, and continue until you have defined all columns and end the line with a final pipe. You don't have to worry about aligning the text because the =TAB= automatically adds spaces to adjust the column sizes and add another row and places the cursor in the first cell. A table can als have a caption in the same way as for images with the =#+CAPTION:= keyword.
 
 #+begin_example
+#+CAPTION: tab:example
 | Column 1 | Column 2 |
 |          |          |
 #+end_example
@@ -280,31 +288,29 @@ When you start a row with =|-= and hit =TAB=, you create a horizontal line acros
 |          |          |
 #+end_example
 
-A table can als have a caption in the same way as for images with the =#+CAPTION:= keyword.
-
 Navigate forward through cells with the =TAB= or arrow up/down keys. Using =S-TAB= moves the cursor back one cell. To rearrange the structure of a table combine the =ALT= and the arrow keys. So =M-<up>= moves a row up and =M-<left>= moves a column to the left. Combining =ALT= and Shift with the arrow keys adds and removes columns and rows adjacent to the cursor. There is no need to sort your table manually. If you need to sort the table alphabetically or numerically, then use the ~org-sort~ function (which also sorts lists). This function provides a choice menu in the minibuffer to confirm your sort order. Lastly, if you find that your rows should become columns and vice versa, then the ~org-table-transpose-table-at-point~ does that job for you.
 
-You can cut and paste rectangular regions from within Org table by selection a region. Because a region will contain whole lines, using the normal copy or paste functions leads to unintended consequences. If you add the =C-c C-x= prefix before your copy or paste command, then the selected area only include the rectangular area of cells and columns. This that means the selected columns and rows are marked by the start and end of the selected region.
+You can cut and paste rectangular regions from within an Org table by selection a region. Because a region will contain whole lines, using the normal copy or paste functions leads to unintended consequences. If you add the =C-c C-x= prefix before your copy or paste command, then the selected area only include the rectangular area of cells and columns. This that means the selected columns and rows are marked by the start and end of the selected region.
 
 Org has some features to simplify creating  tables. Org can also create an empty table or convert a region of text to a table with =C-c |= (~org-table-create-or-convert-from-region~. When no region is selected, Org asks for the dimensions of the table. Entering =3x4= results in a table with three columns and four rows (including a header), or whatever size you seek. When you select a region when issuing this command, the region converts to a table and any commas in the text become columns. This feature is useful when copying a table from another non-Org document, such as a website. If you have a table stored in a CSV (Comma-Separated) file then you can import it with the ~org-import-table~ function. 
 
-The width of columns defaults to the length of the larges cell plus two spaces. Columns with mainly numbers are automatically aligned to the right and other columns to the left. You can override this behaviour by adding a special row that indicates its alignment and width between angle brackets (=<>=). The example below shows the top five counties by area in km^{2}. The width of the first column is constrained to the first 13 characters and centred. Use the =C-c TAB= shortcut to toggle between shrinking and expanded columns. Possible alignment cookies are =<l>=, =<c>= and =<r>=, which can be combined with a column width as in the example below. Using =C-c TAB= without a width cookie will minimise the column to only one character.
+The width of columns defaults to the length of the widest cell plus two spaces. Columns with mainly numbers are automatically aligned to the right and other columns to the left. You can override this behaviour by adding a special row that indicates its alignment and width between angle brackets (=<>=). The example below shows the top five counties by area in km^{2}. The width of the first column is constrained to the first 13 characters and centred. Use the =C-c TAB= shortcut to toggle between shrinking and expanded columns. Possible alignment cookies are =<l>=, =<c>= and =<r>=, which can be combined with a column width as in the example below. Using =C-c TAB= without a width cookie will minimise the column to only one character.
 
 #+begin_example
 ,#+caption: Top five countries by size.
-|    Country   …|     Area |
-|---------------+----------|
-|     <c13>    …|          |
-|    Russia    …| 17098242 |
-|    Canada    …|  9984670 |
-|     China    …|  9640011 |
-| United States…|  9629031 |
-|    Brazil    …|  8514877 |
+|    Country   ...|     Area |
+|-----------------+----------|
+|     <c13>    ...|          |
+|    Russia    ...| 17098242 |
+|    Canada    ...|  9984670 |
+|     China    ...|  9640011 |
+| United States...|  9629031 |
+|    Brazil    ...|  8514877 |
 #+end_example
 
 Org tables can also be used as a spreadsheet by adding formulas in cells, which is outside the scope of this book. The Org manual contains detailed information on how to add formulas, including complex mathematical calculations (=C-h R org RET g spread=).
 
-Org mode can only handle simple tables without spanning information over multiple columns or rows. To create more complex tables, Org mode integrates with the builtin /Table/ package by Takaaki Ota. These tables have a slightly different syntax to Org mode, as illustrated in the overview of German articles below. To edit such a table in Org mode use ~org-edit-special~ (=C-c '=). To convert a standard Org mode table to the more complex format use ~org-table-create-with-table.el~, bound to =C-c ~=. To learn more about the syntax for this package, read the manual with =C-h P table=.
+Org mode can only handle simple tables without spanning information over multiple columns or rows. To create more complex tables, Org integrates with the builtin /Table/ package by Takaaki Ota. These tables have a slightly different syntax to Org, as illustrated in the overview of German articles below. To edit such a table in Org use ~org-edit-special~ (=C-c '=). To convert a standard Org mode table to the more complex format use ~org-table-create-with-table.el~, bound to =C-c ~=. To learn more about the syntax for this package, read the manual with =C-h P table=.
 
 #+begin_example
 +------------+-----------+----------+----------+-------------+
@@ -327,9 +333,11 @@ A text is often more than a collection letters, numbers and punctuation. Two met
 
 The standard Emacs method is to insert special characters directly into your text. The ~insert-char~ function (=C-x 8 RET=) provides a menu with hundreds of options. If you need any of the available arrow types, then search for desired arrow with the arrow kets and select the one you need. The glyphs that you select needs of course be available within the font that you use. This approach also lets you insert emojis, the twenty-first century version of hieroglyphs, into the document. The =C-x 8 e= prefix key provides a menu with functions to select and insert emojis.
 
-Org mode also provides a method to insert special characters using a coding system inspired by LaTeX. When, for example, you type \pi, Org mode will display this as π when pretty entities are enabled. EWS enables them by default. You can toggle this behaviour with the =C-c C-x \= keys (~org-toggle-pretty-entities~). 
+Org mode also provides a method to insert special characters using a coding system inspired by LaTeX. When, for example, you type =\pi=, Org displays this as \pi when pretty entities are enabled. EWS enables them by default. You can toggle this behaviour with the =C-c C-x \= keys (~org-toggle-pretty-entities~). 
 
-To write super- and subscripts, use the caret and underscore notation, such as =x^{2}= or =x_{2}=, which display as x², x₂. By default, Org mode does not require curly braces for sub- and superscripts. But this can cause confusion if you like to write something using 'snake_case'. The EWS configuration limits applying sub- and superscripts to characters between curly braces. Greek letters are also possible (=\alpha= to =\omega=) and many other symbols. To see a list of all these entities and how they translate to LaTeX or HTML, issue the ~org-entities-help~ command. Use the Org entity to insert the special charter [[tab:entities]]. Most of the Org mode entities are the same as their LaTeX versions.
+To write super- and subscripts, use the caret and underscore notation, such as =x^{2}= or =x_{2}=, which display as x², x₂. By default, Org does not require curly braces for sub- and superscripts. But this can cause confusion if you like to write something using '=snake_case='. The EWS configuration limits applying sub- and superscripts to characters between curly braces.
+
+Greek letters are also possible (=\alpha= to =\omega=) and many other symbols. To see a list of all these entities and how they translate to LaTeX or HTML, issue the ~org-entities-help~ command. Use the Org entity to insert the special charter [[tab:entities]]. Most of the Org mode entities are the same as their LaTeX versions.
 
 #+caption: Examples of Org mode entities.
 #+name: tab:entities
@@ -359,8 +367,6 @@ When pretty entities are enabled, then some LaTeX symbols are converted to mathe
 
 Org mode can preview LaTeX fragments as images if the =dvipng= program is available. To preview the fragment under the cursor, press =C-c C-x C-l= (~org-latex-preview~). This process converts LaTeX formulas to an SVG file stored in a subdirectory named =ltximg=. 
 
-The Org-Fragtog package by Benjamin Levy provides convenient functionality to toggle between the plain text LaTeX fragments and the image preview. When the cursor is inside a formula, Emacs shows the plain text, and when outside a formula, it shows the graphical version, preventing the need for manual switching between the two.
-
 ** Ricing Org mode
 :PROPERTIES:
 :CUSTOM_ID: sec:rice
@@ -380,7 +386,7 @@ There are basically two ways to correct your writing. Either just keep the juice
 
 The ~ispell~ function (=C-c w s s=) walks through all suspected spelling mistakes in the current buffer or in a selected region. This function displays the proposed corrections at the top of the window. You can select the preferred correction by entering the relevant number. The minibuffer provides a menu to manage the error. Ignore the typo with the space bar, accept it for this session with =a=, insert in your personal dictionary with =i= and other options which =C-h= reveals.
 
-Flyspell also has a handy command to jump between suspected spelling errors. The ~flyspell-goto-next-error~ function (=C-,=) places the cursor at the, next word that need a review. Add thing the universal argument (=C-u C-,)= jumps to the previous possible error. To correct the suspect word use ~ispell-word~ (=M-$=) and the options in the menu described earlier.
+Flyspell also has a handy command to jump between suspected spelling errors. The ~flyspell-goto-next-error~ function (=C-,=) places the cursor at the, next word that need a review. Adding the universal argument (=C-u C-,)= jumps to the previous possible error. To correct the suspect word use ~ispell-word~ (=M-$=) and the options in the menu described earlier.
 
 Checking single words requires you to move the cursors to that word and than move back to the coal front of your writing flow. Flyspell provides a more convenient way to correct words on the fly with ~flyspell-auto-correct-previous-word~ (=C-;=). This command replaces the first detected spelling error before the cursor visible on the screen with the most likely alternative. Repeatedly pressing =C-;= cycles through the available options until you return to the original version. The echo area shows the list of possible corrections. Typing any other key breaks the chain. All changes are also stored in the undo system, so you can still go back to an earlier option if you accidentally go to far. 
 
@@ -462,13 +468,13 @@ Ideas don't pop into minds out of thin air. Our thoughts, plans, and inspiration
 ** Ideation
 Ingesting all these new ideas is only worthwhile if you keep a record of your new-found inspirations. Hence, maintaining notes is essential to facilitate the ideation process. Emacs is an ideal tool for storing notes in plain text. Several packages are available to manage your digital brain. This step in the EWS workflow revolves around the Denote package by Protesilaos (Prot) Stavrou.
 
-You don't need to follow any specific note taking methods such as /Zettelklasten/ or /Bullet Journal/. My personal collection of notes is a primordial soup of ideas, categorised using organically grown tags and opportunistically linked. Besides digital musings, you can add anything worth keeping to Denote, including binary files such as PDFs or photographs. Chapter [[#chap:ideation]] discusses how to use Org mode and the Denote package to develop a personal knowledge management system.
+You don't need to follow any specific note taking methods such as /Zettelklasten/ or /Bullet Journal/. My personal collection of notes is a primordial soup of ideas, categorised using organically grown tags and opportunistically linking files. Besides digital musings, you can add anything worth keeping to Denote, including binary files such as PDFs or photographs. Chapter [[#chap:ideation]] discusses how to use Org and the Denote package to develop a personal knowledge management system.
 
 ** Production
-Once you have gathered your thoughts, it is time to start writing. Org mode is ideal for writing articles and books or developing websites. Emacs developers have also published many additional utilities to assist with the writing process, such as completion, grammar checking, a dictionary, thesaurus, and other indispensable tools. During production you also might want to collaborate with other authors, which requires some control over different versions. Chapter [[#chap:production]] describes how to use Org mode to write articles, websites and books and manage large projects.
+Once you have gathered your thoughts, it is time to start writing. Org is ideal for writing articles and books or developing websites. Emacs developers have also published many additional utilities to assist with the writing process, such as completion, grammar checking, a dictionary, thesaurus, and other indispensable tools. During production you also might want to collaborate with other authors, which requires some control over different versions. Chapter [[#chap:production]] describes how to use Org to write articles, websites and books and manage large projects.
 
 ** Publication
-The glorious moment has arrived when you can publish the fruits of your labour. Emacs Org mode has powerful capabilities to export the text to various formats, most importantly word processor documents for sharing, PDF files for physical books, ePub for ebooks and HTML for websites. Org mode exports files to print-ready PDF files through the LaTeX document preparation system, which is popular with technical authors and publishers, but can be used for any type of physical book. Chapter [[#chap:publication]] discusses how to use Org mode to convert your plain text document to an electronic or physical publication to share with the world.
+The glorious moment has arrived when you can publish the fruits of your labour. Emacs Org has powerful capabilities to export the text to various formats, most importantly word processor documents for sharing, PDF files for physical books, ePub for ebooks and HTML for websites. Org exports files to print-ready PDF files through the LaTeX document preparation system, which is popular with technical authors and publishers, but can be used for any type of physical book. Chapter [[#chap:publication]] discusses how to use Org to convert your plain text document to an electronic or physical publication to share with the world.
 
 ** Administration
-Working through a writing project is a fantastic journey of creative expression, but there is also some overhead in managing your projects. Emacs interfaces with other GNU software to help you manage your files using the powerful directory editor (Dired). You can also use Emacs to manage your photographs and images with the built-in Image-Dired package. Lastly, working on a big project means tracking many tasks. Org mode has a fully functional task management system to help you keep track of your projects. You can implement your personal workflow or use a Getting Things Done (GTD) approach. Chapter [[#chap:admin]] discusses how to manage your files and your projects to keep you own track in your writing projects.
+Working through a writing project is a fantastic journey of creative expression, but there is also some overhead in managing your projects. Emacs interfaces with other GNU software to help you manage your files using the powerful directory editor (Dired). You can also use Emacs to manage your photographs and images with the built-in Image-Dired package. Lastly, working on a big project means tracking many tasks. Org has a fully functional task management system to help you keep track of your projects. You can implement your personal workflow or use a Getting Things Done (GTD) approach. Chapter [[#chap:admin]] discusses how to manage your files and your projects to keep you own track in your writing projects.
