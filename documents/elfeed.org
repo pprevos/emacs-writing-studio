@@ -1,11 +1,12 @@
-#+title: Elfeed configuration
+#+title: Elfeed Configuration
   
-* Feeds                                                              :elfeed:
-** Emacs                                                             :emacs:
+* Feeds                                    :elfeed:
+** Emacs                                   :emacs:
 Emacs-related information.
 *** https://lucidmanager.org/tags/emacs/index.xml
 *** http://www.reddit.com/r/emacs/.rss
-*** https://www.youtube.com/feeds/videos.xml?channel_id=UCEqYjPJdmEcUVfHmQwJVM9A
+*** https://www.youtube.com/feeds/videos.xml?channel_id=UC0uTPqBCFIpZxlz_Lv1tk_g
 
-** News                                                               :news:
+** News                                    :news:
 *** [[https://www.abc.net.au/news/feed/2942460/rss.xml][ABC Australia]]
+
