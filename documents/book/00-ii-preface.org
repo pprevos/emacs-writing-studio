@@ -1,39 +1,38 @@
 #+title: Preface
-#+tags: URGENT(u)
 :NOTES:
-- [ ] Personal experience with productivity and Emacs
-- [ ] Who is this book for?
-- [ ] "Emacs is [[https://www.youtube.com/watch?v=XRpHIa-2XCE][Willy Wonka's chocolate factory]] for writing text"
+- [X] Personal experience with productivity and Emacs
+- [X] Who is this book for?
+- [X] "Emacs is [[https://www.youtube.com/watch?v=XRpHIa-2XCE][Willy Wonka's chocolate factory]] for writing text"
 :END:
 
-In the good old days all a writer needed was a typewriter, a pack of smokes and a glass of whisky, if we can believe the old movies. Writing on a typewriter is a very physical process. 
+My writing journey started in the early 1990s with paper diaries to record my random thoughts and as a travel diary. Paper notebooks are great, and I still use them today as the primary place to gather thoughts. The only disadvantage of paper notebooks is finding old information and linking bits and pieces together takes a lot of work. Besides my notebooks, I also amassed a paper archive, a library and a collection of photographs. Being a computing enthusiast, I have ever since searched for the ultimate digital tool to combine all these pieces of information into the ultimate personal knowledge management system.
 
-Computers have replaced mechanical typewriters. I was very excited when I wrote my first document on a computer. There was no more need for correction fluid 
+Over the years, I have tried a multitude of computer applications to achieve this ideal state. I wanted something that stores information in an enduring format that does not rely on a brand of software. Ideally, it had to be searchable and a single application to undertake different tasks. 
 
-I used to hop from application to application—jumping from the action list to my schedule, onward to the word processor, spreadsheet, PDF reader, and so on. I had to manage a complex web of software tools to work on a single project. Wouldn't it be nice if there was one program that could help you with almost all your tasks?
+I used to hop from application to application, jump from the action list to my schedule, and move on to the word processor, spreadsheet, PDF reader, etc. I managed a complex web of software tools to deliver a single project. Wouldn't it be nice if there was one program that could help you with all your tasks?
 
+My online research always pointed towards Emacs. I tried to use it in the early 2000s but quickly gave up due to the steep learning curve. About ten years ago, I tried again, and this time, I was helped by a steady flow of websites and instructional videos to get me started. Over the following years, I studied Emacs and configured it to write and publish articles and books.
 
-This book is not a manual on how to use Emacs but a guided tour through Emacs to teach you how it can help you being an author. When you install Emacs it comes fully equipped with extensive documentation. This book includes regular references to the built-in manuals to provide more detailed information.
+Emacs is to me like being in Willy Wonka's Chocolate Factory where almost everything is possible. I crafted EWS to meet my specific needs for writing this book and other projects, which I am are also useful for other authors.
 
-This book has been completely researched and written with Emacs. In essence this book is about how to write this book with the plain text Org mode format. 
+My commitment to crafting the Emacs Writing Studio (EWS) configuration was driven by a desire to share the benefits of my journey with others. EWS is not just a tool, but a culmination of years of learning and experimentation. My ain was to write the book that I would have loved to read when I first cam in contact with Emacs.
 
-- Emacs manuals are references, so hard to imagine how you can use it
-  
-The /Emacs Writing Studio/  configuration file and the source Org mode files for this book are available in the GitHub repository on https://github.com/pprevos/emacs-writing-studio.
+This book, which is both a guide to EWS and a product of its capabilities, has been rigorously tested and refined to ensure it meets the needs of large writing projects.  
 
 * Acknowledgements
-A full list of acknowledgements for an free software project such as Emacs would consist of a huge list of names. Emacs can only exist because of the hundreds if not thousands of volunteers who develop and maintain the code of the core system and the many packages.
+The development and maintenance of a complex system like Emacs is a testament to the power of community. I am deeply grateful to the countless volunteers who have contributed to its core system's code and the abundance of packages. Their collective effort is what makes Emacs a thriving ecosystem.
 
-My inspiration for writing this book came from the excellent work of people like Protesilaos (Prot) Stavrou, *** Wilson from System Crafters, *** and many other people who helped me flatten the learning curve of my Emacs journey.
+My motivation for writing this book came from the inspiring work of people like Protesilaos (Prot) Stavrou, David Wilson from /System Crafters/ and many others who helped me flatten the learning curve of my Emacs journey through their blogs and YouTube videos.
+ 
+Mastodon and Emacs users Harold Kirsch, Thomas Montfort, Ben Finney, Antonio Simón (Quijote Libre), Bob Irving, and Erin Stearns have reviewed early versions of the book. Their feedback has helped to make this book both easier to read and more comprehensive, which is a fine balance to achieve.
 
-Arjan Zuidhof
-
-* Test readers
-Mastodon and Emacs users Harold Kirsch, Thomas Montfort, Ben Finney volunteered to review the book. Their feedback has helped to make this book both more easy to read and comprehensive, which is a fine balance to achieve.
-
-* YouTube channels
-- LigerLearn
-- Emacs from Scratch Series
-- Emacs Elements
-
-* Who is this book for?
+#+begin_export html
+&nbsp;
+<p style="text-align:right">Peter Prevos</p>
+#+end_export
+#+begin_export latex
+\vspace{1em}
+\begin{flushright}
+Peter Prevos
+\end{flushright}
+#+end_export

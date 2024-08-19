@@ -7,7 +7,7 @@ This book provides an overview of Emacs' capabilities for writers. It does it in
 
 Consider {{{ews}}} a companion on a long journey. It helps you get started with Emacs and will be there for you as a valuable reference when you need to do something a little bit more advanced but forgot how to proceed.
 
-What you get at the outset is a curated experience. This is exactly what you need to get on with the task of writing: it minimises distractions. Though do not think of it as a constraint: you are still using Emacs---a powerful tool that can be reprogrammed or extended to do more with text and related patterns of interaction. The {{{ews}}} setup consists of sensible defaults. You will not be locked in to a bespoke system. This is the standard Emacs experience and you are free to modify it to your liking.
+What you get at the outset is a curated experience. This is exactly what you need to get on with the task of writing: it minimises distractions. Though do not think of it as a constraint: you are still using Emacs --- a powerful tool that can be reprogrammed or extended to do more with text and related patterns of interaction. The {{{ews}}} setup consists of sensible defaults. You will not be locked in to a bespoke system. This is the standard Emacs experience and you are free to modify it to your liking.
 
 You can always find more resources to address whatever issue you may have. Beside the official manual of Emacs, you will discover a rich corpus of knowledge produced by the community. There are blog posts, drawings, and video demonstrations. They will all apply to what you have here.
 
