@@ -1,0 +1,70 @@
+# Front Matter ePub
+#+begin_export html
+<!-- Front Mater ebook -->
+<div id="frontmatter" class="outline-2">
+<p>&nbsp;</p>
+<h3 style="text-align:center">Third Hemisphere Publishing</h3>
+<div class="figure" style="text-align: center;">
+<img src="logo-bw.png" width="100" alt="Emacs Writing Studio" title="Emacs Writing Studio"/>	
+</div>
+<h3 style="text-align:center">&#169; Peter Prevos (2024)</h3>
+<p style="text-align: center;">ISBN 978-0-9875669-8-0 (e-book)</p>
+<p>&nbsp;</p>
+<p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Australia License. You are free to share to copy, distribute and transmit the work under the following conditions:</p>
+<ul>
+<li>You must attribute the work in the manner specified by the author (but not in any way that suggests that they endorse you or your use of the work).</li>
+<li>If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.</li>
+</ul>
+<p style="text-align:center">This book is written in Emacs <a href="https://orgmode.org/">Org mode</a> with the <a href="https://github.com/pprevos/emacs-writing-studio">Emacs Writing Studio</a> configuration.</p>
+</div>
+#+end_export
+
+# Front Matter PDF
+#+begin_export latex
+\frontmatter
+\title{\textbf{\Huge{}Emacs Writing Studio}\vspace{2cm}\\
+\textbf{A Practical Guide to Plain Text Writing and Publishing}\vspace{4cm}}
+\author{Peter Prevos\vspace{3cm}}
+\date{}
+\maketitle
+\begin{center}
+\setlength{\unitlength}{1mm}
+\includegraphics[height=18mm]{images/logo-bw.png}
+\begin{picture}(20, 18)
+\put(3,4){\shortstack[l]{Third\\Hemisphere\\Publishing}}
+\end{picture}
+\par\end{center}
+\thispagestyle{empty}
+\pagebreak{}
+\thispagestyle{empty}
+\noindent
+\noindent\makebox[\textwidth][c]{%
+\begin{minipage}[t]{0.8\columnwidth}
+\begin{center}
+\ccLogo{}{\footnotesize{} Peter Prevos (2024)}
+\par\end{center}{\footnotesize \par}
+\begin{center}
+{\footnotesize{}Kangaroo Flat, Australia}\\
+\par\end{center}{\footnotesize \par}
+\begin{center}
+{\footnotesize{}This work is licensed under a Creative Commons }\emph{\footnotesize{}Attribution-Share Alike}{\footnotesize{} 3.0 Australia License. You are free to share\textemdash to copy, distribute and transmit the work under the following conditions: }
+\par\end{center}{\footnotesize \par}
+\begin{center}
+\ccAttribution{\footnotesize{} }\emph{\footnotesize{}Attribution}{\footnotesize{}:
+You must attribute the work in the manner specified by the author (but not in any way that suggests that they endorse you or your use of the work).}
+\par\end{center}{\footnotesize \par}
+\begin{center}
+\ccShareAlike{\footnotesize{} }\emph{\footnotesize{}Share Alike}{\footnotesize{}:
+If you alter, transform, or build upon this work, you may distributecthe resulting work only under the same or similar license to this one.}
+\par\end{center}{\footnotesize \par}
+\begin{center}
+{\footnotesize{}Written in Emacs \href{https://orgmode.org/}{Org Mode}. \\ Typeset in \LaTeX.}\\
+{\footnotesize{}Cover design by Angie at }\emph{\footnotesize{}pro\_ebookcovers}{\footnotesize{}.}\\
+\vspace{2em}
+{\footnotesize{}\href{https://peterprevos.com}{peterprevos.com}}
+\par\end{center}{\footnotesize \par}
+\end{minipage}}
+\newpage{}
+\setcounter{page}{5}
+\tableofcontents
+#+end_export

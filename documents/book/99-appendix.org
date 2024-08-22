@@ -228,6 +228,9 @@ Read the Modus Themes package manual for details with =C-h R modus=.
 
 The next section hooks the Variable Pitch mode to any buffer in text mode. This means that written prose is displayed in variable pitch, while metadata, code and other items are in fixed pitch. A hook is a construction in Emacs that associates modes with each other. In this case, variable pitch text is enabled for all text mode buffers.
 
+#+begin_src elisp :exports none
+  ;; Mixed-pich mode
+#+end_src
 #+begin_src elisp
   (use-package mixed-pitch
     :hook
@@ -624,7 +627,7 @@ The OpenWith package by Markus Trisk lets you open files in external software. R
 
 * Ideation
 ** Org capture
-The possibilities for capture templates are extensive and depend on your use cases. This configuration is only an example of the options. The Org documentation provides lots of detail (=C-h R org <ret> capture=).
+The possibilities for capture templates are extensive and depend on your use cases. This configuration is only an example of the options. The Org documentation provides lots of detail (=C-h R org <ret> capture=). You will also need to customise the ~org-default-notes-file~ variable.
 
 #+begin_src elisp
   ;; Fleeting notes
@@ -929,7 +932,7 @@ The timestamp for exporting files is set to the European date format of day, mon
 #+end_src
 
 ** Epub
-The ox-ePub package exports Org files to the most common e-book format. The ~ox-org~  export is required to enable exporting to Org to prevent issues with the table of consents (section [[#sec-ox-epub]]). 
+The ox-ePub package exports Org files to the most common e-book format. The ~ox-org~  export is required to enable exporting to Org to prevent issues with the table of contents (section [[#sec-ox-epub]]). 
 
 #+begin_src elisp :exports none
   ;; epub export
@@ -1116,7 +1119,7 @@ Emacs has two modes for viewing and managing images. The image viewer shows indi
 
 To enable image manipulation, you will need to install ImageMagic.
 
-Using =C-<return>= opens an image in the Dired buffer in your favourite editor. The ~image-dired-external-viewer~ variable defines the program you use to edit pictures, in my case GIMP, the GNU Image Manipulation Program.
+Using =C-<ret>= opens an image in the Dired buffer in your favourite editor. The ~image-dired-external-viewer~ variable defines the program you use to edit pictures, in my case GIMP, the GNU Image Manipulation Program.
 
 #+begin_src elisp
   ;; Image viewer

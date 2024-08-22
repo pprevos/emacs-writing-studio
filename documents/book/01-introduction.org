@@ -1,0 +1,38 @@
+#+title:        Introduction
+#+macro:        ews /Emacs Writing Studio/
+#+startup:      content
+
+Over the past five thousand years, writing has moved from clay tablets and chiselling in stone to paper, computers, and, most recently, artificial intelligence. Before the advent of electronic writing, all an author needed was a notebook, a pen, and a typewriter. Being an author in the digital age is, in many ways, more complex than in the days of clay, stone, or paper.
+
+Contemporary writers are often overwhelmed by the multitude of electronic tools, each serving a specific function. The information is scattered across various platforms and stored in incompatible formats, leading to a complex and time-consuming writing process. The relief from this complexity is one of the key benefits of Emacs.
+
+Unfortunately, the previous paragraph describes how many students, authors, researchers and other writers manage their workflows. What if you could do this differently and use the same program to create written works from ideation to publication? This book introduces Emacs, a powerful tool that can assist with everything from sparking your initial ideas to publishing your finished article, book or website. Emacs lets you ditch the software juggling act and focus on your writing.
+
+This book is for writers who want to break free from the constraints of conventional writing tools and embrace a more flexible, powerful, and customisable environment. Whether you're a novelist weaving intricate tales of fiction or a researcher crafting detailed non-fiction, {{{ews}}} (EWS) offers a comprehensive guide to transforming your writing process.
+
+*  Fiction writers
+As a fiction writer, your imagination is your most valuable asset. You need a tool that can keep up with the fluidity of your ideas, allowing you to focus on crafting rich characters, intricate plots, and vivid worlds without distraction. With Emacs, you can maintain organised notes, drafts, and character sketches within a single environment.
+
+The powerful search and replace functions, combined with customisable templates, let you easily manage consistency in character names, locations, and other critical details across your manuscript. When inspiration strikes, Emacs' minimalist interface enables you to dive straight into writing without the distraction of unnecessary graphical elements.
+
+Neal Town Stephenson, an American writer known for his speculative fiction, refers to Emacs as a thermonuclear word processor, not—not in a way that destroys your writing in a ball of fire, but in its immense power compared to conventional writing tools.
+
+* Non-fiction writers
+Non-fiction writing demands precision, organisation, and meticulous research. Whether you're working on a dissertation, a technical report, or a historical biography, Emacs provides you with the tools to effectively manage vast amounts of data. You can efficiently structure your research notes, manage bibliographies, and outline your work.
+
+Emacs allows you to seamlessly integrate these elements into your writing, ensuring that all your research is at your fingertips as you draft your work. The ability to export your manuscript to various formats, such as PDF or HTML, ensures that your work is ready for publication or sharing with peers without the hassle of format conversions.
+
+* Multitasking writers
+In today's fast-paced world, many writers manage multiple projects simultaneously. Emacs is the perfect tool for managing a diverse writing portfolio.
+
+You can effortlessly switch between different projects, be it a short story, a research paper, or even your daily journal. Emacs' powerful task management features help you keep track of deadlines and tasks and track progress across all your writing endeavours.
+
+* Distracted writers
+If you find yourself easily distracted by the features of modern writing software, Emacs offers a refreshing change. With its focus on plain text and keyboard-driven commands, Emacs provides a genuinely distraction-free environment where the only thing that matters is your words, allowing you to focus on your writing without interruptions.
+
+Writing in Emacs brings you back to the days when the typewriter stood between the writer and the written words. But Emacs also has powerful editing capabilities, so there is no need for correction fluid.
+
+* Curious writers
+Finally, this book is for those who are not just looking for a tool but for an opportunity to learn and grow as technology users. Emacs is not just software; it is a way of life. As you learn to use its powerful features, you develop new skills that enhance your writing process and overall productivity, inspiring you to explore new possibilities in your writing journey.
+
+Emacs was initially conceived for software developers, but you don't need to be a computer wiz to use it as an author. This book flattens the steep learning curve, helping you unlock the full potential of Emacs as your ultimate writing companion.
