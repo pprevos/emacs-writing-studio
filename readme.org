@@ -1,21 +1,21 @@
 #+title: Emacs Writing Studio
 #+author: Peter Prevos
 
-/Emacs Writing Studio/ (EWS) is a configuration for researchers and authors who want to use Emacs to write and publish articles, books and dissertations. EWS is also a forthcoming ebook and paperback, which is an expanded version of a [[https://lucidmanager.org/tags/emacs/][series of articles]] on my website.
+/Emacs Writing Studio/ by Peter Prevos is a [[https://books2read.com/u/4NpgQ9][comprehensive guide]] for writers seeking to streamline their workflow using Emacs. The book covers everything from organising ideas and writing distraction-free to publishing in multiple formats. It’s perfect for both beginners and experienced Emacs users, offering practical tips and a tailored configuration to enhance your writing process.
 
-This configuration follows the following principles:
-
-- Stays as close as humanly bearable to vanilla GNU Emacs
-- Leverage functionality in Emacs 29
-- Standard keyboard shortcuts
-- No configuration for writing code
-- Centred around Org mode
- 
 #+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
 #+attr_org: :width 200
 [[file:emacs-writing-studio.png]]
 
-I am currently working on an /Emacs Writing Studio/ book based on the website. The Org mode source code is available in the =documents= folder. The books is written with the EWS configuration and will be available as ebook and paperback when completed.
+The EWS configuration follows the following principles:
+ 
+- Stay as close as humanly bearable to vanilla GNU Emacs
+- Leverage functionality in Emacs 29
+- Standard keyboard shortcuts
+- No configuration for writing code (~prog-mode~)
+- Centred around Org mode
+
+If you like to support my work, then please purchase the EWS book from your [[https://books2read.com/u/4NpgQ9][favourite e-book retailer]]. The Org mode source code of the whole book is available in the =documents= folder.
 
 Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to see additional packages useful to authors.
 
