@@ -42,7 +42,7 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(keymap-global-set "C-c w v" 'customize-variable)
+(keymap-global-set "C-c w v" 'customise-variable)
 
 ;; Set package archives
 
@@ -50,7 +50,7 @@
   :config
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/"))
-  (package-initialize))
+  (package-initialise))
 
 ;; Package Management
 
@@ -69,36 +69,31 @@
 ;; - soffice (LibreOffice): View and create office documents
 ;; - zip: Unpack ePub documents
 ;; - pdftotext (poppler-utils): Convert PDF to text
-;; - djvu (DjVuLibre): View DjVu files
+;; - ddjvu (DjVuLibre): View DjVu files
 ;; - curl: Reading RSS feeds
-;; - divpng: Part of LaTeX
-;; - dot (GraphViz): Create note network diagrams
-;; - convert (ImageMagick): Convert image files 
-;; - gm (GraphicsMagick): Convert image files
+;; - convert (ImageMagick) or gm (GraphicsMagick): Convert image files 
 ;; - latex (TexLive, MacTex or MikTeX): Preview LaTex and export Org to PDF
 ;; - hunspell: Spellcheck. Also requires a hunspell dictionary
 ;; - grep: Search inside files
-;; - ripgrep: Faster alternative for grep
-;; - gs (GhostScript): View PDF files
-;; - mutool (MuPDF): View PDF files
+;; - gs (GhostScript) or mutool (MuPDF): View PDF files
 ;; - mpg321, ogg123 (vorbis-tools), mplayer, mpv, vlc: Media players
 ;; - git: Version control
 
 (ews-missing-executables
- '("soffice" "zip" "pdftotext" "ddjvu"
+ '("soffice"
+   "zip"
+   "pdftotext"
+   "ddjvu"
    "curl"
-   "dvipng"
-   "dot"
    ("convert" "gm")
    "latex"
    "hunspell"
-   ("grep" "ripgrep")
+   "grep"
    ("gs" "mutool")
    ("mpg321" "ogg123" "mplayer" "mpv" "vlc")
    "git"))
 
 ;;; LOOK AND FEEL
-;; Keyboard-centric user interface removing tool, menu and scroll bars
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -238,10 +233,10 @@
   (org-startup-with-inline-images t)
   (org-image-actual-width '(450))
   (org-fold-catch-invisible-edits 'error)
-  (org-startup-with-latex-preview nil)
   (org-pretty-entities t)
   (org-use-sub-superscripts "{}")
-  (org-id-link-to-org-use-id t))
+  (org-id-link-to-org-use-id t)
+  (org-fold-catch-invisible-edits 'show))
 
 ;; Show hidden emphasis markers
 
@@ -256,12 +251,13 @@
   :hook
   (org-mode . org-fragtog-mode)
   :custom
+  (org-startup-with-latex-preview nil)
   (org-format-latex-options
    (plist-put org-format-latex-options :scale 2)
    (plist-put org-format-latex-options :foreground 'auto)
    (plist-put org-format-latex-options :background 'auto)))
 
-;; Org modern: Most features disables for beginnng users
+;; Org modern: Most features are disabled for beginning users
 
 (use-package org-modern
   :hook
@@ -280,6 +276,8 @@
   (org-modern-radio-target nil)
   (org-modern-statistics nil)
   (org-modern-progress nil))
+
+;; Consult convenience functions
 
 (use-package consult
   :bind
@@ -302,7 +300,8 @@
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
 
 ;; Reading LibreOffice files
-;; Fixing a bug in Org Mode pre 9.7
+
+;; Fixing a bug in Org Mode pre-9.7
 ;; Org mode clobbers associations with office documents
 
 (use-package ox-odt
@@ -340,14 +339,6 @@
   :bind
   (("C-c w b o" . citar-open)))
 
-(use-package citar-embark
-:after citar embark
-:no-require
-:config (citar-embark-mode)
-:bind (("C-M-." . embark-act)
-       :map citar-embark-citation-map
-       ("c" . citar-denote-find-citation)))
-
 ;; Read RSS feeds with Elfeed
 
 (use-package elfeed
@@ -376,7 +367,7 @@
 ;; Emacs Multimedia System
 
 (use-package emms
-  :init
+  :config
   (require 'emms-setup)
   (require 'emms-mpris)
   (emms-all)
@@ -403,25 +394,24 @@
 (use-package org
   :bind
   (("C-c c" . org-capture)
-   ("C-c l" . org-store-link)))
-
-;; Capture templates
-
-(setq org-capture-templates
- '(("f" "Fleeting note"
-    item
-    (file+headline org-default-notes-file "Notes")
-    "- %?")
-   ("p" "Permanent note" plain
-    (file denote-last-path)
-    #'denote-org-capture
-    :no-save t
-    :immediate-finish nil
-    :kill-buffer t
-    :jump-to-captured t)
-   ("t" "New task" entry
-    (file+headline org-default-notes-file "Tasks")
-    "* TODO %i%?")))
+   ("C-c l" . org-store-link))
+  :custom
+  (org-goto-interface 'outline-path-completion)
+  (org-capture-templates
+   '(("f" "Fleeting note"
+      item
+      (file+headline org-default-notes-file "Notes")
+      "- %?")
+     ("p" "Permanent note" plain
+      (file denote-last-path)
+      #'denote-org-capture
+      :no-save t
+      :immediate-finish nil
+      :kill-buffer t
+      :jump-to-captured t)
+     ("t" "New task" entry
+      (file+headline org-default-notes-file "Tasks")
+      "* TODO %i%?"))))
 
 ;; Denote
 
@@ -441,9 +431,8 @@
    ("C-c w d f" . denote-find-link)
    ("C-c w d h" . denote-org-extras-link-to-heading)
    ("C-c w d i" . denote-link-or-create)
-   ("C-c w d I" . denote-org-extras-dblock-insert-links)
    ("C-c w d k" . denote-rename-file-keywords)
-   ("C-c w d l" . denote-link-find-file)
+   ("C-c w d l" . denote-insert-link)
    ("C-c w d n" . denote)
    ("C-c w d r" . denote-rename-file)
    ("C-c w d R" . denote-rename-file-using-front-matter)))
@@ -523,7 +512,7 @@
   :custom
   (undo-tree-auto-save-history nil)
   :bind
-  (("C-c w u" . undo-tree-visualize)))
+  (("C-c w u" . undo-tree-visualise)))
 
 ;; Export citations with Org Mode
 
@@ -535,7 +524,7 @@
       org-cite-follow-processor 'citar
       org-cite-activate-processor 'citar)
 
-;; Lookup words in online dictionary
+;; Lookup words in the online dictionary
 
 (use-package dictionary
   :custom
@@ -544,8 +533,8 @@
   (("C-c w s d" . dictionary-lookup-definition)))
 
 (use-package powerthesaurus
-:bind
-(("C-c w s p" . powerthesaurus-transient)))
+  :bind
+  (("C-c w s p" . powerthesaurus-transient)))
 
 ;; Writegood-Mode for weasel words, passive writing and repeated word detection
 
@@ -556,7 +545,14 @@
   :hook
   (text-mode . writegood-mode))
 
-(use-package titlecase)
+;; Titlecasing
+
+(use-package titlecase
+  :custom
+  (titlecase-style 'apa)
+  :bind
+  (("C-c w s t" . titlecase-dwim)
+   ("C-c w s c" . ews-org-headings-titlecase)))
 
 ;; Abbreviations
 
@@ -568,11 +564,10 @@
   :custom
   (lorem-ipsum-list-bullet "- ") ;; Org mode bullets
   :init
-  (setq lorem-ipsum-sentence-separator (if sentence-end-double-space "  " " "))
+  (setq lorem-ipsum-sentence-separator
+        (if sentence-end-double-space "  " " "))
   :bind
-  (("C-c w i s" . lorem-ipsum-insert-sentences)
-   ("C-c w i p" . lorem-ipsum-insert-paragraphs)
-   ("C-c w i l" . lorem-ipsum-insert-list)))
+  (("C-c w s i" . lorem-ipsum-insert-paragraphs)))
 
 ;; ediff
 
@@ -598,6 +593,13 @@
   (org-export-with-smart-quotes t)
   (org-export-date-timestamp-format "%e %B %Y"))
 
+;; epub export
+
+(use-package ox-epub
+  :demand t
+  :init
+  (require 'ox-org))
+
 ;; LaTeX PDF Export settings
 
 (use-package ox-latex
@@ -617,58 +619,50 @@
            "blg" "brf" "fls" "entoc" "ps" "spl" "bbl"
            "tex" "bcf"))))
 
-;; LaTeX templates
+;; EWS paperback configuration
 
 (with-eval-after-load 'ox-latex
   (add-to-list
    'org-latex-classes
-   '("crc"
-     "\\documentclass[krantz2]{krantz}
-        \\usepackage{lmodern}
-        \\usepackage[authoryear]{natbib}
-        \\usepackage{nicefrac}
-        \\usepackage[bf,singlelinecheck=off]{caption}
-        \\captionsetup[table]{labelsep=space}
-        \\captionsetup[figure]{labelsep=space}
-        \\usepackage{Alegreya}
-        \\usepackage[scale=.8]{sourcecodepro}
-        \\usepackage[breaklines=true]{minted}
-        \\usepackage{rotating}
-        \\usepackage[notbib, nottoc,notlot,notlof]{tocbibind}
-        \\usepackage{amsfonts, tikz, tikz-layers}
-        \\usetikzlibrary{fadings, quotes, shapes, calc, decorations.markings}
-        \\usetikzlibrary{patterns, shadows.blur}
-        \\usetikzlibrary{shapes,shapes.geometric,positioning}
-        \\usetikzlibrary{arrows, arrows.meta, backgrounds}
-        \\usepackage{imakeidx} \\makeindex[intoc]
-        \\renewcommand{\\textfraction}{0.05}
-        \\renewcommand{\\topfraction}{0.8}
-        \\renewcommand{\\bottomfraction}{0.8}
-        \\renewcommand{\\floatpagefraction}{0.75}
-        \\renewcommand{\\eqref}[1]{(Equation \\ref{#1})}
-        \\renewcommand{\\LaTeX}{LaTeX}"
+   '("ews"
+     "\\documentclass[11pt, twoside]{memoir}
+      \\setstocksize{9.25in}{7.5in}
+      \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
+      \\setlrmarginsandblock{2cm}{1cm}{*} 
+      \\setulmarginsandblock{1.5cm}{2.25cm}{*}
+      \\checkandfixthelayout
+      \\setcounter{tocdepth}{0}
+      \\OnehalfSpacing
+      \\usepackage{ebgaramond}
+      \\usepackage[htt]{hyphenat}
+      \\chapterstyle{bianchi}
+      \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
+      \\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
+      \\setsubsubsecheadstyle{\\normalfont\\centering}
+      \\usepackage[font={small, it}]{caption}
+      \\pagestyle{myheadings}
+      \\usepackage{ccicons}
+      \\usepackage[authoryear]{natbib}
+      \\bibliographystyle{apalike}
+      \\usepackage{svg}"
      ("\\chapter{%s}" . "\\chapter*{%s}")
      ("\\section{%s}" . "\\section*{%s}")
      ("\\subsection{%s}" . "\\subsection*{%s}")
-     ("\\subsubsection{%s}" . "\\paragraph*{%s}"))))
-
-(use-package ox-epub
-  :demand t)
-
-;; ADVANCED NDOCUMENTED EXPORT SETTINGS FOR EWS
-
-;; Use GraphViz for flow diagrams
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((dot . t))) ; this line activates dot
+     ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 
 ;;; ADMINISTRATION
 
-;; Bind org agenda command
+;; Bind org agenda command and custom agenda
 
 (use-package org
   :custom
-  (org-log-into-drawer t)
+  (org-agenda-custom-commands
+   '(("e" "Agenda, next actions and waiting"
+      ((agenda "" ((org-agenda-overriding-header "Next three days:")
+                   (org-agenda-span 3)
+                   (org-agenda-start-on-weekday nil)))
+       (todo "NEXT" ((org-agenda-overriding-header "Next Actions:")))
+       (todo "WAIT" ((org-agenda-overriding-header "Waiting:")))))))
   :bind
   (("C-c a" . org-agenda)))
 
@@ -725,6 +719,8 @@
 ;; Image viewer
 
 (use-package emacs
+  :custom
+  (image-dired-external-viewer "gimp")
   :bind
   ((:map image-mode-map
          ("k" . image-kill-buffer)
@@ -738,4 +734,12 @@
   (("C-c w I" . image-dired))
   (:map image-dired-thumbnail-mode-map
         ("C-<right>" . image-dired-display-next)
-        ("C-<left>" . image-dired-display-previous)))
+        ("C-<left>"  . image-dired-display-previous)))
+
+;; ADVANCED UNDOCUMENTED EXPORT SETTINGS FOR EWS
+
+;; Use GraphViz for flow diagrams
+;; requires GraphViz software
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t))) ; this line activates GraophViz dot

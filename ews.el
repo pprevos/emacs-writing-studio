@@ -88,7 +88,7 @@ Sublists indicate that one of the entries is required."
 (defvar ews-bibtex-files
   (when (file-exists-p ews-bibtex-directory)
     (directory-files ews-bibtex-directory t "^[A-Z|a-z|0-9].+.bib$"))
-  "List of BibTeX files. Use `ews-bibtex-register-files` to configure.")
+  "List of BibTeX files. Use `ews-bibtex-register` to configure.")
 
 ;;;###autoload
 (defun ews-bibtex-register ()
@@ -105,6 +105,7 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
 
 (defun ews--bibtex-combined-biblio-lookup ()
   "Combines biblio-lookup and biblio-doi-insert-bibtex."
+  (require 'biblio)
   (let* ((dbs (biblio--named-backends))
          (db-list (append dbs '(("DOI" . biblio-doi-backend))))
          (db-selected (biblio-completing-read-alist
@@ -158,8 +159,9 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
                     (string-suffix-p ".csl" file)))
               (directory-files-recursively ews-bibtex-directory "")))
 
+;;;###autoload
 (defun ews-bibtex-missing-files ()
-  "List BibTeX attachments not listed in BibTeX files."
+  "List BibTeX attachments not listed in a BibTeX file entry."
   (interactive)
   (let* ((files (ews--bibtex-extract-files))
          (attachments (ews--bibtex-extract-filenames))
@@ -169,8 +171,9 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
     (dolist (file missing)
       (message "Missing file: %s" file))))
 
+;;;###autoload
 (defun ews-bibtex-missing-attachments ()
-  "List BibTeX files without matching attachment."
+  "List BibTeX file entries without matching attachment."
   (interactive)
   (let* ((files (ews--bibtex-extract-files))
          (attachments (ews--bibtex-extract-filenames))
@@ -181,8 +184,10 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
       (message "Missing file: %s" file))))
 
 ;; Denote
+;;;###autoload
 (defun ews-denote-assign-para ()
-  "Move your note to either Project, Area, Reource or Archive (PARA)."
+  "Move your note to either Project, Area, Reource or Archive (PARA).
+Configure the PARA names with `ews-denote-para-keywords'."
   (interactive)
   (if-let* ((file (buffer-file-name))
             ((denote-filename-is-note-p file))
@@ -199,7 +204,7 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
        (denote-retrieve-filename-signature file))
     (message "Current buffer is not a Denote file.")))
 
-;; Narrow Dired to Regular Expression
+;;;###autoload
 (defun ews-dired-narrow (selection)
   "Mark files in denote-firectory using a regular expression."
   (interactive "sMark files (regexp):")
@@ -268,7 +273,7 @@ current note."
 
 ;;;###autoload
 (defun ews-org-insert-screenshot ()
-  "Take a screenshot with ImageMagick and insert as an Org mode link."
+  "Take a screenshot with the maim program and insert as an Org mode link."
   (interactive)
   (let ((filename (read-file-name "Enter filename for screenshot: " default-directory)))
     (unless (string-equal "png" (file-name-extension filename))
