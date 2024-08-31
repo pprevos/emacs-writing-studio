@@ -50,7 +50,7 @@
   :config
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/"))
-  (package-initialise))
+  (package-initialize))
 
 ;; Package Management
 
@@ -126,6 +126,8 @@
   (("C-c w t t" . modus-themes-toggle)
    ("C-c w t m" . modus-themes-select)
    ("C-c w t s" . consult-theme)))
+
+;; Mixed-pich mode
 
 (use-package mixed-pitch
   :hook
@@ -637,7 +639,7 @@
       \\usepackage[htt]{hyphenat}
       \\chapterstyle{bianchi}
       \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
-      \\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
+      \\setsubsecheadstyle{\\normalfont \\raggedright \\textbf}
       \\setsubsubsecheadstyle{\\normalfont\\centering}
       \\usepackage[font={small, it}]{caption}
       \\pagestyle{myheadings}
