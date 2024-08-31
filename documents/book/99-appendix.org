@@ -92,7 +92,7 @@ Emacs users have developed and shared thousands of packages with the rest of the
     :config
     (add-to-list 'package-archives
                  '("melpa" . "https://melpa.org/packages/"))
-    (package-initialise))
+    (package-initialize))
 #+end_src
 
 This configuration heavily relies on John Wiegley's Use-Package. This package makes installing and configuring packages with a standardised and easy-to-read method easier. Software developers call such a tool 'syntactic sugar', syntax designed to make code easier to read or write, making the language "sweeter" for humans [cite:@landin_1964].

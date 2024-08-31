@@ -15,7 +15,7 @@ My online research always pointed towards Emacs. I tried to use it in the early 
 
 Emacs is to me like being in Willy Wonka's Chocolate Factory where almost everything is possible. I crafted EWS to meet my specific needs for writing this book and other projects, which I am are also useful for other authors.
 
-My commitment to crafting the Emacs Writing Studio (EWS) configuration was driven by a desire to share the benefits of my journey with others. EWS is not just a tool, but a culmination of years of learning and experimentation. My ain was to write the book that I would have loved to read when I first cam in contact with Emacs.
+My commitment to crafting the Emacs Writing Studio (EWS) configuration was driven by a desire to share the benefits of my journey with others. EWS is not just a tool, but a culmination of years of learning and experimentation. My aim was to write the book that I would have loved to read when I first came in contact with Emacs.
 
 This book, which is both a guide to EWS and a product of its capabilities, has been rigorously tested and refined to ensure it meets the needs of large writing projects.  
 

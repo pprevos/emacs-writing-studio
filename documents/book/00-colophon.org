@@ -1,6 +1,6 @@
 # Front Matter ePub
 #+begin_export html
-<!-- Front Mater ebook -->
+<!-- Front Matter ebook -->
 <div id="frontmatter" class="outline-2">
 <p>&nbsp;</p>
 <h3 style="text-align:center">Third Hemisphere Publishing</h3>

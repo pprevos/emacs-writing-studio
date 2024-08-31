@@ -104,7 +104,7 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
   (message "Registered:\n%s" (mapconcat #'identity ews-bibtex-files "\n")))
 
 (defun ews--bibtex-combined-biblio-lookup ()
-  "Combines biblio-lookup and biblio-doi-insert-bibtex."
+  "Combines `biblio-lookup' and `biblio-doi-insert-bibtex'."
   (require 'biblio)
   (let* ((dbs (biblio--named-backends))
          (db-list (append dbs '(("DOI" . biblio-doi-backend))))
@@ -118,7 +118,7 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
 
 ;;;###autoload
 (defun ews-bibtex-biblio-lookup ()
-  "Use curent buffer or Select BibTeX file, lookup with Biblio and insert entry."
+  "Insert Biblio search results into current buffer or select BibTeX file."
   (interactive)
   (if-let ((current-mode major-mode)
 	   ews-bibtex-files
