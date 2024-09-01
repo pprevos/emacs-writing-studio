@@ -1,55 +1,63 @@
 #+title: Emacs Writing Studio
 #+author: Peter Prevos
 
-/Emacs Writing Studio/ by Peter Prevos is a [[https://books2read.com/u/4NpgQ9][comprehensive guide]] for writers seeking to streamline their workflow using Emacs. The book covers everything from organising ideas and writing distraction-free to publishing in multiple formats. It’s perfect for both beginners and experienced Emacs users, offering practical tips and a tailored configuration to enhance your writing process.
+/Emacs Writing Studio/ by Peter Prevos is a comprehensive guide for writers seeking to streamline their workflow using Emacs. The book covers everything from organising ideas and writing distraction-free to publishing in multiple formats. It’s perfect for both beginners and experienced Emacs users, offering practical tips and a tailored configuration to enhance your writing process.
 
 #+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
 #+attr_org: :width 200
 [[file:emacs-writing-studio.png]]
 
-The EWS configuration follows the following principles:
+If you like to support my work, then please purchase the EWS book from your [[https://books2read.com/b/4NpgQ9][favourite e-book retailer]] or a [[https://payhip.com/b/alhIJ][DRM-free download from PayHip]]. The Org source code of the complete book is available in the =documents= folder, so you can also 'roll your own'.
  
+Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to see additional packages useful to authors. Alternatively, join the GitHub discussion forum.
+
+* EWS Workflow
+The EWS configuration and associated website and book follow a basic workflow for authoring documents. The chapters of the book follow this basic workflow and introduce new Emacs concepts as needed.
+
+[[file:documents/book/images/emacs-workflow.png]]
+
+* Install EWS
+The EWS configuration follows the following principles:
+
 - Stay as close as humanly bearable to vanilla GNU Emacs
 - Leverage functionality in Emacs 29
 - Standard keyboard shortcuts
 - No configuration for writing code (~prog-mode~)
 - Centred around Org mode
 
-If you like to support my work, then please purchase the EWS book from your [[https://books2read.com/u/4NpgQ9][favourite e-book retailer]]. The Org mode source code of the whole book is available in the =documents= folder.
+The =init.el= file contains the configuration and the =ews.el= file defines a series of convenience functions.
 
-Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to see additional packages useful to authors.
-
-* Install EWS
-To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository and save them in the configuration folder.
-
-The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer. You can close this buffer by pressing =q=.
+To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository and save them in the configuration folder. The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer.
 
 Copy both files from the EWS repository to this directory. EWS will activate after you evaluate the ~restart-emacs~ function or the next time you start the program.
 
-If you an experienced Emacs user, then you can try the EWS configuration by cloning this repository and start Emacs with =emacs --init-directory <folder-path>=. That way you can try EWS without clobbering your existing configuration.
+Experienced Emacs users, can try the EWS configuration by cloning this repository and start Emacs with =emacs --init-directory <folder-path>=. That way you can try EWS without clobbering your existing configuration.
 
 * External Packages
 Emacs is not only a text editor but also an interface to other software. EWS depends on external software that Emacs interfaces with to do various tasks.
 
 When EWS starts, a message will appear in the =*Messages*= buffer listing the missing software. Some of the listed packages are alternatives for each other, for example (=convert= or =gm=). The core functionality of Emacs will work fine without these, but some specialised tasks require assistance from this software.
 
-- =soffice= ([[https://www.libreoffice.org/][LibreOffice]]): View and create office documents
-- =zip=: Unpack ePub documents
-- =pdftotext= ([[https://poppler.freedesktop.org/][poppler-utils]]): Convert PDF to text
-- =djvu= ([[http://djvu.org/][DjVuLibre]]): View DjVu files
-- =curl=: Reading RSS feeds
-- =dot= ([[https://graphviz.org/][GraphViz]]): Create note network diagrams
-- Convert image files
-  - =convert= ([[https://imagemagick.org/][ImageMagick]])  
-  - =gm= ([[http://www.graphicsmagick.org/][GraphicsMagick]])
-- =latex= ([[https://www.latex-project.org/get/][TexLive, MacTex or MikTeX]]): Preview LaTex and export Org to PDF
-  - =divpng=: Part of LaTeX
-- =hunspell=: Spellcheck. Also requires a hunspell dictionary
-- Search inside files
-  - =grep=
-  - =ripgrep=: Faster alternative for grep
+** Inspiration
 - View PDF files
   - =gs= ([[https://www.ghostscript.com/][GhostScript]]): View PDF files
   - =mutool= ([[https://mupdf.com/][MuPDF]]): View PDF files
-- Play music
-  - =mpg321=, =ogg123= ([[https://www.xiph.org/][vorbis-tools]]), =mplayer=, =mpv=, =vlc=
+  - =pdftotext= ([[https://poppler.freedesktop.org/][poppler-utils]]): Convert PDF to text
+- =soffice= ([[https://www.libreoffice.org/][LibreOffice]]): View and create office documents
+- =zip=: Unpack ePub documents
+- =djvu= ([[http://djvu.org/][DjVuLibre]]): View DjVu files
+- =curl=: Reading RSS feeds
+- =mpg321=, =ogg123= ([[https://www.xiph.org/][vorbis-tools]]), =mplayer=, =mpv=, =vlc=: Play music
+  
+** Ideation
+- =grep=: Search inside files
+    
+** Production
+- =dot= ([[https://graphviz.org/][GraphViz]]): Create note network diagrams (not discussed in the book, but required to produce the e-book or paperback version)
+- =hunspell=: Spellcheck. Also requires a hunspell dictionary
+- =divpng=: Part of LaTeX
+      
+** Publication
+- =convert= ([[https://imagemagick.org/][ImageMagick]]) or =gm= ([[http://www.graphicsmagick.org/][GraphicsMagick]]): Convert image files
+- =latex= ([[https://www.latex-project.org/get/][TexLive, MacTex or MikTeX]]): Preview LaTex and export Org to PDF
+- =zip=: Create ePub and office documents
