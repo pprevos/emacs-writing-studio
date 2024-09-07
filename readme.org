@@ -1,7 +1,7 @@
 #+title: Emacs Writing Studio
 #+author: Peter Prevos
 
-/Emacs Writing Studio/ by Peter Prevos is a comprehensive guide for writers seeking to streamline their workflow using Emacs. The book covers everything from organising ideas and writing distraction-free to publishing in multiple formats. It’s perfect for both beginners and experienced Emacs users, offering practical tips and a tailored configuration to enhance your writing process.
+/Emacs Writing Studio/ by Peter Prevos is an Emacs configuration and comprehensive guide for writers seeking to streamline their workflow. The book covers everything from organising ideas and writing distraction-free to publishing in multiple formats. It’s perfect for both beginners and experienced Emacs users, offering practical tips and a tailored configuration to enhance your writing process.
 
 #+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
 #+attr_org: :width 200
@@ -33,10 +33,12 @@ Copy both files from the EWS repository to this directory. EWS will activate aft
 
 Experienced Emacs users, can try the EWS configuration by cloning this repository and start Emacs with =emacs --init-directory <folder-path>=. That way you can try EWS without clobbering your existing configuration.
 
-* External Packages
-Emacs is not only a text editor but also an interface to other software. EWS depends on external software that Emacs interfaces with to do various tasks.
+The EWS configuration works independent of the operating system you use. However, the system does rely on a set of supporting applications that Emacs uses to undertake specialised tasks.
 
-When EWS starts, a message will appear in the =*Messages*= buffer listing the missing software. Some of the listed packages are alternatives for each other, for example (=convert= or =gm=). The core functionality of Emacs will work fine without these, but some specialised tasks require assistance from this software.
+* Supporting Applications
+Emacs is not only a text editor but also an interface to other software. EWS interface with software that Emacs uses for various tasks.
+
+When EWS starts, a message will appear in the =*Messages*= buffer listing the missing software. Some of the listed packages are alternatives for each other, for example (=convert= or =gm=). The core functionality of Emacs will work fine without this software, but some specialised tasks require assistance from this software.
 
 ** Inspiration
 - View PDF files
