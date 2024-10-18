@@ -34,6 +34,8 @@
 
 ;; Emacs Writing Studio Customisation
 
+(require 'titlecase)
+
 (defgroup ews ()
   "Emacs Writing Studio."
   :group 'files
@@ -71,7 +73,7 @@
 ;; Check for missing external software
 ;;;###autoload
 (defun ews-missing-executables (prog-list)
-  "Identified missing executables in PROG-LIST.
+  "Identify missing executables in PROG-LIST.
 Sublists indicate that one of the entries is required."
   (let ((missing '()))
     (dolist (exec prog-list)
@@ -82,7 +84,8 @@ Sublists indicate that one of the entries is required."
           (push exec missing))))
     (if missing
         (message "Missing executable files(s): %s"
-                 (mapconcat 'identity missing ", ")))))
+                 (mapconcat 'identity missing ", "))
+      (message "No missing executable files."))))
 
 ;;; BIBLIOGRAPHY
 (defvar ews-bibtex-files
@@ -317,3 +320,21 @@ Customise `titlecase-style' for styling."
               (new-heading (titlecase--string heading-lower style)))
 	 (when (<= level (or ews-org-heading-level-capitalise 999))
 	   (org-edit-headline new-heading)))))))
+
+(defun ews-denote-link-description-title-case (file)
+  "Return link description for FILE.
+
+If the region is active, use it as the description. The title is formatted with
+the `titlecase' package.
+
+This function is useful as the value of `denote-link-description-function'."
+  (let* ((file-type (denote-filetype-heuristics file))
+         (title (denote-retrieve-title-or-filename file file-type))
+	 (clean-title (if (string-match-p " " title)
+			  title
+			(replace-regexp-in-string "\\([a-zA-Z0-9]\\)-\\([a-zA-Z0-9]\\)" "\\1 \\2" title)))
+         (region-text (denote--get-active-region-content)))
+    (cond
+     (region-text region-text)
+     (title (format "%s" (titlecase--string clean-title titlecase-style)))
+     (t ""))))
