@@ -4,7 +4,8 @@
 
 ;; Author: Peter Prevos <peter@prevos.net>
 ;; Maintainer: Peter Prevos <peter@prevos.net>
-
+;; URL: https://github.com/pprevos/emacs-writing-studio/
+;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or modify
@@ -71,8 +72,7 @@
 ;; - pdftotext (poppler-utils): Convert PDF to text
 ;; - ddjvu (DjVuLibre): View DjVu files
 ;; - curl: Reading RSS feeds
-;; - convert (ImageMagick) or gm (GraphicsMagick): Convert image files 
-;; - latex (TexLive, MacTex or MikTeX): Preview LaTex and export Org to PDF
+;; - convert (ImageMagick) or gm (GraphicsMagick): Convert image files  ;; - latex (TexLive, MacTex or MikTeX): Preview LaTex and export Org to PDF
 ;; - hunspell: Spellcheck. Also requires a hunspell dictionary
 ;; - grep: Search inside files
 ;; - gs (GhostScript) or mutool (MuPDF): View PDF files
@@ -131,7 +131,7 @@
 
 (use-package mixed-pitch
   :hook
-  (text-mode . mixed-pitch-mode))
+  (org-mode . mixed-pitch-mode))
 
 ;; Window management
 ;; Split windows sensibly
@@ -421,6 +421,7 @@
   :defer t
   :custom
   (denote-sort-keywords t)
+  (denote-link-description-function #'ews-denote-link-description-title-case)
   :hook
   (dired-mode . denote-dired-mode)
   :custom-face
@@ -430,7 +431,7 @@
   :bind
   (("C-c w d b" . denote-find-backlink)
    ("C-c w d d" . denote-date)
-   ("C-c w d f" . denote-find-link)
+   ("C-c w d l" . denote-find-link)
    ("C-c w d h" . denote-org-extras-link-to-heading)
    ("C-c w d i" . denote-link-or-create)
    ("C-c w d k" . denote-rename-file-keywords)
@@ -443,7 +444,7 @@
 
 (use-package consult-notes
   :bind
-  (("C-c w f"   . consult-notes)
+  (("C-c w d f" . consult-notes)
    ("C-c w d g" . consult-notes-search-in-all-notes))
   :init
   (consult-notes-denote-mode))
@@ -627,7 +628,7 @@
   (add-to-list
    'org-latex-classes
    '("ews"
-     "\\documentclass[11pt, twoside]{memoir}
+     "\\documentclass[11pt, twoside, hidelinks]{memoir}
       \\setstocksize{9.25in}{7.5in}
       \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
       \\setlrmarginsandblock{2cm}{1cm}{*} 
@@ -641,6 +642,8 @@
       \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
       \\setsubsecheadstyle{\\normalfont \\raggedright \\textbf}
       \\setsubsubsecheadstyle{\\normalfont\\centering}
+      \\renewcommand\\texttt[1]{{\\normalfont\\fontfamily{cmvtt}
+        \\selectfont #1}}
       \\usepackage[font={small, it}]{caption}
       \\pagestyle{myheadings}
       \\usepackage{ccicons}

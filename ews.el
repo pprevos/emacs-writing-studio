@@ -34,8 +34,6 @@
 
 ;; Emacs Writing Studio Customisation
 
-(require 'titlecase)
-
 (defgroup ews ()
   "Emacs Writing Studio."
   :group 'files
