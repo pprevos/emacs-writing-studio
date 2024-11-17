@@ -452,7 +452,7 @@ The mode bar of your file will now show an indicator that it is under version co
 #+RESULTS:
 [[file:images/version-control.png]]
 
-You can produce a list of current file changes with =C-x v l= or ~vc-print-log~. This list shows the unique commit ID, the author, the change date, and a summary of the changes, with the most recent version at the top. Navigate between the various versions with =n= (next) and =p= (previous). You can view the changes between versions with the =d= key. Selecting more than one commit with the =m= and arrow keys and then =d= shows the differences between the oldest and latest versions. To quit this view, use the trusty =q== key. To view changes in the whole repository, use =C-x v L= (~vc-print-root-log~).
+You can produce a list of current file changes with =C-x v l= or ~vc-print-log~. This list shows the unique commit ID, the author, the change date, and a summary of the changes, with the most recent version at the top. Navigate between the various versions with =n= (next) and =p= (previous). You can view the changes between versions with the =d= key. Selecting more than one commit with the =m= and arrow keys and then =d= shows the differences between the oldest and latest versions. To quit this view, use the trusty =q= key. To view changes in the whole repository, use =C-x v L= (~vc-print-root-log~).
 
 There is also a command to show the development history of a selected text region. Select the part of the text you are interested in and use =C-x v h= (~vc-region-history~). This buffer works the same way as the previous two examples. The ~vc-annotate~ command (=C-x v g=) shows the relevant commit for each line in the text, coloured by the age of the contribution.
 
