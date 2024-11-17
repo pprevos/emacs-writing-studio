@@ -27,7 +27,7 @@
 
 Chapter [[#chap-vanilla]] laid the groundwork for writing plain text documents, and chapter [[#chap-ews]] introduced the basics of Org syntax. This chapter builds on these foundations and guides you through preparing a manuscript for publication using the unique features of Org mode and some additional tools to facilitate your writing process.
 
-This chapter shows how to add editorial notes, citations and cross-references. You can also use  text completion to accelerate the writing process. Writing without a dictionary or thesaurus To manage the quality of your writing you might like to use a dictionary and thesaurus to enhance the variety of prose. This chapter also explains how  to manage large writing projects and control versions and collaborate with other authors.
+This chapter shows how to add editorial notes, citations and cross-references. You can also use  text completion to accelerate the writing process. Writing without a dictionary or thesaurus to manage the quality of your writing you might like to use a dictionary and thesaurus to enhance the variety of prose. This chapter also explains how  to manage large writing projects and control versions and collaborate with other authors.
 
 The last section of this chapter introduces other text modes that might interest authors, such as Markdown for technical documentation and the specialised Fountain mode for film and theatre scripts.
 
