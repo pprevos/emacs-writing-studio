@@ -43,7 +43,7 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(keymap-global-set "C-c w v" 'customise-variable)
+(keymap-global-set "C-c w v" 'customize-variable)
 
 ;; Set package archives
 
@@ -118,8 +118,7 @@
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
   (modus-themes-mixed-fonts t)
-  (modus-themes-to-toggle
-   '(modus-operandi-tinted modus-vivendi-tinted))
+  (modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
   :init
   (load-theme 'modus-operandi-tinted :no-confirm)
   :bind
@@ -435,7 +434,6 @@
    ("C-c w d h" . denote-org-extras-link-to-heading)
    ("C-c w d i" . denote-link-or-create)
    ("C-c w d k" . denote-rename-file-keywords)
-   ("C-c w d l" . denote-insert-link)
    ("C-c w d n" . denote)
    ("C-c w d r" . denote-rename-file)
    ("C-c w d R" . denote-rename-file-using-front-matter)))

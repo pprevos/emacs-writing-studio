@@ -206,12 +206,12 @@ Configure the PARA names with `ews-denote-para-keywords'."
     (message "Current buffer is not a Denote file.")))
 
 ;;;###autoload
-(defun ews-dired-narrow (selection)
-  "Mark files in denote-firectory using a regular expression."
+(defun ews-dired-narrow (regex)
+  "Mark files in denote-firectory using REGEX."
   (interactive "sMark files (regexp):")
   (when (not (eq major-mode 'dired-mode))
     (dired denote-directory))
-  (dired-mark-files-regexp selection)
+  (dired-mark-files-regexp regex)
   (dired-toggle-marks)
   (dired-do-kill-lines))
 
@@ -308,6 +308,7 @@ current note."
 When used with universal argument converts to sentence case.
 Customise `titlecase-style' for styling."
   (interactive "P")
+  (require 'titlecase)
   (let ((style (if arg 'sentence titlecase-style)))
     (message "Converting headings to '%s' style" style)
     (org-map-entries
@@ -322,10 +323,11 @@ Customise `titlecase-style' for styling."
 (defun ews-denote-link-description-title-case (file)
   "Return link description for FILE.
 
-If the region is active, use it as the description. The title is formatted with
-the `titlecase' package.
+If the region is active, use it as the description.
+The title is formatted with the `titlecase' package.
 
 This function is useful as the value of `denote-link-description-function'."
+  (require 'titlecase)
   (let* ((file-type (denote-filetype-heuristics file))
          (title (denote-retrieve-title-or-filename file file-type))
 	 (clean-title (if (string-match-p " " title)
@@ -336,3 +338,42 @@ This function is useful as the value of `denote-link-description-function'."
      (region-text region-text)
      (title (format "%s" (titlecase--string clean-title titlecase-style)))
      (t ""))))
+
+;; Hugo integration
+
+;; Create Hugo links
+(defun ews-get-hugo-directory ()
+  "Lists the directory of the current Hugo website or nil."
+  (when (string-match "\\(.*\\)content" default-directory)
+    (match-string 1 default-directory)))
+
+(defun ews-hugo-list-content ()
+  "List the content of the Hugo website of the current buffer.
+  Return an error message when not in an apparent Hugo directory."
+  (if-let* ((hugo-dir (ews-get-hugo-directory))
+            (hugo-p (directory-files hugo-dir nil "^config\\..*"))
+            (content-dir (concat hugo-dir "content/")))
+      (let ((org-files (directory-files-recursively content-dir "\\.org\\'"))
+            (md-files (directory-files-recursively content-dir "\\.md\\'")))
+        (append org-files md-files))
+    (user-error "Not in a Hugo buffer")))
+
+(defun ews-hugo-link-complete ()
+  "Complete a Hugo weblink through the `org-insert-link' and hugo: hyperlink type."
+  (let* ((posts (ews-hugo-list-content))
+         (titles (mapcar (lambda (post)
+                           (string-remove-prefix
+                            (concat (ews-get-hugo-directory)
+                                    "content/") post)) posts))
+         (selection (completing-read "Choose page:" titles))
+         (target (concat "/"
+                         (replace-regexp-in-string
+                          "_index.*" "" selection))))
+    (when titles
+      (concat "{{</* ref \"" target "\" */>}}"))))
+
+;; New link type for Org-Hugo internal links
+(with-eval-after-load 'org
+  (org-link-set-parameters
+ "hugo"
+ :complete #'ews-hugo-link-complete))
