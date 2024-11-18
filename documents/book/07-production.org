@@ -179,7 +179,7 @@ The Titlecase package by Case Duckworth provides title-casing for English prose.
 
 EWS includes a convenience function (~ews-org-headings-titlecase~) that cycles through all headings in the current Org buffer and capitalises them. Use =C-c w s c= to access his function. With the universal argument (=C-u=), the headings become sentence case, which only capitalises the first word. By default, this function converts all headings to the desired case. When you configure the ~ews-org-heading-level-capitalise~ variable, you can either add a number to convert only headings up to a certain level or retain the default of converting all headings. So, when, for example, you set this variable to one, only the top-level headings are capitalised, while lower-level headings don't change.
 
-Unfortunately, due to the whimsies of written English, it is impossible to capitalise titles perfectly using an algorithm. So, never trust a computer and proofread your titles before publishing.
+Unfortunately, due to the whimsies of written English, it is impossible to capitalise titles perfectly using an algorithm. For example, the algorithm does not understand the difference between a word an and acronym. So, never trust a computer and proofread your titles before publishing.
 
 ** EDITED A clean writing interface
 Creative prose takes total concentration, and distractions are the author's natural enemy. While your computer is the most essential writing tool, it can be distracting. Most writing software is littered with icons and options to change the document's design. Distraction-free writing tools remove these diversions from the screen, making the computer more like a mechanical typewriter that lets the author focus on content over form.
@@ -231,11 +231,16 @@ A writing project is about more than just smashing as many words as possible int
 :PROPERTIES:
 :CUSTOM_ID: sec-include
 :END:
-Working with large files can slow down Emacs, so sometimes, splitting larger projects over multiple files is a good idea. For example, adding =#+include: "chapter-02.org"= includes a file named =chapter-02.org= inside the main document. The text is included at the location where this line appears during export.
+Working with large files can be cumbersome and can in some cases slows down Emacs, so splitting larger projects over multiple files is often a good approach. Org can spilt a writing project over multiple files with references.
 
-You can visit the child document with =C-c '= (~org-edit-special~). Org has additional options to determine which part of the child document to include. You can, for example, exclude the title line of the included file by adding =:lines "2-"= to the keyword. This parameter instructs Org mode to only include the text from line two onwards:
+When writing this book, I created a main file and a file for each chapter. The main file contains the references to each chapter. For example, adding =#+include: "chapter-02.org"= includes a file named =chapter-02.org= inside the main document. The text is included at the location where this line appears during export.
+
+You can visit the child document with =C-c '= (~org-edit-special~) when the cursor is on the inclusion line. Org has additional options to determine which part of the child document to include. You can, for example, exclude the title line of the included file by adding =:lines "2-"= to the keyword. This parameter instructs Org mode to only include the text from line two onwards:
 
 #+begin_example
+,* Chapter One
+,#+include: "chapter-01.org" :lines "2-
+
 ,* Chapter Two
 ,#+include: "chapter-02.org" :lines "2-
 #+end_example
@@ -250,9 +255,7 @@ When you include a document this way, the heading level will be one below the su
 
 This method allows you to work on a book or dissertation and store each chapter in a separate file, as is the case with this book. When you export the main file to the final publication, all included files are exported as one.
 
-There are two issues you need to be mindful off when using multiple files in a project. You can add cross references to other files, but these links will not be functional until you export the project to a single file or website. Secondly, when you rely on a local bibliography, you need to ensure that it is referenced in all individual files, as properties are not inherited by referenced files.
-
-This book was written with separate files for each chapter and a main file that references each of these chapters.
+There are two issues you need to be mindful off when using multiple files in a project. You can add links to cross references in other files, but these links will not be functional until you export the project to a single file or website. Secondly, when you rely on a local bibliography, you need to ensure that it is referenced in all individual files that use it, as properties are not inherited by referenced files.
 
 ** EDITED Counting words
 :PROPERTIES:
@@ -525,15 +528,15 @@ Unfortunately, various markdown flavours exist, most of which provide additional
 
 The Denote package can create notes in Markdown in two varieties. Unlike Org, Markdown has no provisions for storing metadata about the document. Denote provides two methods to achieve this: TOML (Tom's Obvious Minimal Language) or YAML (YAML Ain't Markup Language). You can set the ~denote-file-type~ variable to either =markdown-toml= or =markdown-yaml= to start creating Markdown notes. The syntax of either front matter type is intuitive. Read the Denote manual for more details and try the different varieties yourself. By the way, Denote also has the option to create notes in plain text. To enable this option, set the ~denote-file-type~ variable to =text=.
 
-** EDITED Screenwriting with Fountain
-Who wouldn't want to write a screenplay for the next Hollywood or Bollywood blockbuster? Writing movie or theatre scripts follows some strict principles and formatting rules. The standard font for screenplays has a fixed pitch, giving the document an old-school typewriter feel. The example in Figure [[fig-fountain]] shows an excerpt of the screenplay of the 2003 fantasy drama /Big Fish/ directed by Tim Burton, based on the 1998 novel /Big Fish: A Novel of Mythic Proportions/ by Daniel Wallace.
-
-But you can unleash your creativity with Fountain, a plain text format to write screenplays in any text processor. The Fountain file format is quite special as it contains almost no markup. Given the strict conventions in screenplays, Fountain can logically determine how to format the document.
-
 #+caption: Example of a movie script written in Fountain mode.
 #+name: fig-fountain
 #+attr_latex: :width 0.6\textwidth
 #+attr_html: :width 600
 [[file:images/fountain-mode.png]]
+
+** EDITED Screenwriting with Fountain
+Who wouldn't want to write a screenplay for the next Hollywood or Bollywood blockbuster? Writing movie or theatre scripts follows some strict principles and formatting rules. The standard font for screenplays has a fixed pitch, giving the document an old-school typewriter feel. The example in Figure [[fig-fountain]] shows an excerpt of the screenplay of the 2003 fantasy drama /Big Fish/ directed by Tim Burton, based on the 1998 novel /Big Fish: A Novel of Mythic Proportions/ by Daniel Wallace.
+
+But you can unleash your creativity with Fountain, a plain text format to write screenplays in any text processor. The Fountain file format is quite special as it contains almost no markup. Given the strict conventions in screenplays, Fountain can logically determine how to format the document.
 
 Fountain Mode implements this text format in Emacs and is enabled in /Emacs Writing Studio/. To become the next Shakespeare or Stanley Kubrick, read the extensive manual with =C-h R fountain=.

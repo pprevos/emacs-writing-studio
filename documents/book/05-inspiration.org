@@ -169,7 +169,13 @@ Each entry starts with an =@=-sign and the publication type (book, article or ot
 
 You can store one or more bibliography files in a folder to refer to them from anywhere in Emacs. In EWS, the ~ews-bibtex-directory~ variable defines this folder. You need to customise this variable  to the desired location, which by default is =~/library=. The tilde at the start indicates the path to your home directory. After you customise this variable, run the ~ews-bibtex-register~ function to register the bibliography files in this directory.
 
-Your BibTeX attachments have to reside in this directory so that the system knows where to find them. Attachments can live in subdirectories. Any file paths for BibTeX entries start at this location. For example, when the BibTeX entry states: =file={topology/article.pdf}=, the attachment is stored at: =~/library/topology/article.pdf=. You can have more than one attachment per entry, separated by a semi-colon. BibTeX attachments have no formal file naming convention, so you can use your favourite method. Section [[#sec-filenames]] provides some guidance on how to construct a file naming convention.
+Your BibTeX attachments have to reside in this directory so that the system knows where to find them. Attachments can live in subdirectories. Any file paths for BibTeX entries start at this location. For example, when the BibTeX entry states: =file={topology/article.pdf}=, the attachment is stored at:
+
+#+begin_example
+~/library/topology/article.pdf
+#+end_example
+
+You can have more than one attachment per entry, separated by a semi-colon. BibTeX attachments have no formal file naming convention, so you can use your favourite method. Section [[#sec-filenames]] provides some guidance on how to construct a file naming convention.
 
 You don’t need to install external software to get started. Just create an empty file in your bibliography directory with a =.bib= extension, and Emacs enables BibTeX mode when you open the file.
 

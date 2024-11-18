@@ -130,7 +130,7 @@ The final step in becoming an Emacs ninja is helping other people on their journ
 
 This book started as a website where I shared my use of Emacs as an author. As the website gained popularity, I converted it to the book you are now reading.
 
-The EWS project is my way of giving back to the Emacs community and also helping me better understand how the software works. Some cynics suggest that those who can't teach. However, teaching any subject is the best way to systematise your knowledge and become better at it.
+The EWS project is my way of giving back to the Emacs community and also helping me better understand how the software works. Some cynics suggest that "those who can't do, teach". However, teaching any subject is the best way to systematise your knowledge and become better at it.
 
 So, your task as an Emacs Ninja is to help other people less advanced in their journey. Tell other authors about the freedom that Emacs gives you as a researcher, author, educator, or whatever else you do. 
 

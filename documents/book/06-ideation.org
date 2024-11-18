@@ -265,14 +265,14 @@ Let's say that you are working on a project to write a paper about the /Daimonio
 Use the ~org-dynamic-block-insert-dblock~ function =(C-c C-x x=) to see a selection list of available dynamic blocks and select =denote-links=. Next, provide a regular expression that matches the notes you want to list (in this case, it's =_daimonion=). A regular expression is an advanced search term, much like using a wildcard in a filename, but with much greater power. Denote inserts a block in your note that lists all notes matching this search criterion. 
 
 #+begin_example
- #+BEGIN: denote-links :regexp "_daimonion" :sort-by-component nil :reverse-sort nil :id-only nil
+ #+BEGIN: denote-links :regexp "_daimonion"
  - Plato: Apology
  - Socrates and Plato
  - Plato: Crito
  #+END:
 #+end_example
 
-This approach could collate your journal notes for a particular month. Using the regular expression =^202309.*_journal= lists all journal entries for September 2023. This regular expression lists filenames that start with =202309= and include the =_journal= keyword. The tilde (=^=) denotes that you are searching at the start of the filename. The =.*= in the middle of the regular expression indicates that any character (=.=) can appear multiple times (=*=). Regular expressions are a powerful tool for searching, but a detailed discussion is outside the remit of this book.
+This approach could collate your journal notes for a particular month with the magic of regular expressions. Using the regular expression =^202309.*_journal= lists all journal entries for September 2023. This regular expression lists filenames that start with =202309= and include the =_journal= keyword. The tilde (=^=) denotes that you are searching at the start of the filename. The =.*= in the middle of the regular expression indicates that any character (=.=) can appear multiple times (=*=). Regular expressions are a powerful tool for searching, but a detailed discussion is outside the remit of this book.
 
 As your notes collection changes, the dynamic block needs updating. The ~org-dblock-update~ command (=C-c C-x C-u=) recreates the list of links based on the latest information. Adding the universal argument updates all dynamic blocks in the current buffer (=C-u C-c C-x C-u=).
 
@@ -324,7 +324,7 @@ If, for example, you like to filter notes tagged as 'economics', type =C-x C-f=,
 
 The Consult-Notes package by Colin McLear merges the capabilities of Denote and Daniel Mendler's Consult package to help you find notes without remembering which directory they live in. This package also provides facilities to search through the content of your notes.
 
-To find a note by any part of its filename, use the ~consult-notes~ function bound to =C-c w f=. The Consult package provides live previews of the files that match the search. To search within a subdirectory of the Denote directory, start the query with a slash, for example, =/attachments=. To search for keywords, start the search term with a hashtag (=#keyword=). When no note that matches your search term is found, the package creates a new note.
+To find a note by any part of its filename, use the ~consult-notes~ function bound to =C-c w d f=. The Consult package provides live previews of the files that match the search. To search within a subdirectory of the Denote directory, start the query with a slash, for example, =/attachments=. To search for keywords, start the search term with a hashtag (=#keyword=). When no note that matches your search term is found, the package creates a new note.
 
 The OpenWith package (section [[#sec-openwith]]) interferes with the preview functions in the Consult package. The system will preview file types configured in OpenWith in external software, which disturbs the workflow. You also need to customise the ~consult-preview-excluded-files~ variable to exclude any file types mentioned in ~openwith-associations~ variable. You only have to register the file extension and add a =$= symbol, which is the regular expression symbol for end of the string. So adding "=pdf$=" instructs Consult not to preview files with a PDF extension.
 

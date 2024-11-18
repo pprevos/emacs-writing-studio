@@ -11,7 +11,13 @@ This appendix presents and explains the {{{ews}}} (EWS) configuration. The confi
 - Centred around Org mode
 - No configuration for writing code
 
-This configuration is a starting point for your Emacs journey. Feel free to modify any part of the EWS initialisation file and study its effects. You can find the latest version of this configuration on Github: =github.com/pprevos/emacs-writing-studio=. EWS is not a package with managed version control, so it is up to you to manage this configuration.
+This configuration is a starting point for your Emacs journey. Feel free to modify any part of the EWS initialisation file and study its effects. You can find the latest version of this configuration on GitHub:
+
+#+begin_example
+github.com/pprevos/emacs-writing-studio
+#+end_example
+
+EWS is not a package with managed version control, so it is up to you to manage this configuration.
   
 #+begin_src elisp :exports none
   ;;; init.el --- Emacs Writing Studio init -*- lexical-binding: t; -*-
@@ -20,7 +26,8 @@ This configuration is a starting point for your Emacs journey. Feel free to modi
 
   ;; Author: Peter Prevos <peter@prevos.net>
   ;; Maintainer: Peter Prevos <peter@prevos.net>
-
+  ;; URL: https://github.com/pprevos/emacs-writing-studio/
+  ;;
   ;; This file is NOT part of GNU Emacs.
   ;;
   ;; This program is free software; you can redistribute it and/or modify
@@ -78,7 +85,7 @@ Any changes made by the Emacs customisation system in EWS are stored in =custom.
 Access the ~ customise-variable ~ function with the =C-c w v= shortcut. Keyboard shortcuts defined in EWS all use the =C-c w= prefix.
 
 #+begin_src elisp
-  (keymap-global-set "C-c w v" 'customise-variable)
+  (keymap-global-set "C-c w v" 'customize-variable)
 #+end_src
 
 ** Emacs packages
@@ -136,8 +143,7 @@ This function checks whether all these packages are available on your system. Fo
   ;; - pdftotext (poppler-utils): Convert PDF to text
   ;; - ddjvu (DjVuLibre): View DjVu files
   ;; - curl: Reading RSS feeds
-  ;; - convert (ImageMagick) or gm (GraphicsMagick): Convert image files 
-  ;; - latex (TexLive, MacTex or MikTeX): Preview LaTex and export Org to PDF
+  ;; - convert (ImageMagick) or gm (GraphicsMagick): Convert image files  ;; - latex (TexLive, MacTex or MikTeX): Preview LaTex and export Org to PDF
   ;; - hunspell: Spellcheck. Also requires a hunspell dictionary
   ;; - grep: Search inside files
   ;; - gs (GhostScript) or mutool (MuPDF): View PDF files
@@ -216,8 +222,7 @@ Read the Modus Themes package manual for details with =C-h R modus=.
     (modus-themes-italic-constructs t)
     (modus-themes-bold-constructs t)
     (modus-themes-mixed-fonts t)
-    (modus-themes-to-toggle
-     '(modus-operandi-tinted modus-vivendi-tinted))
+    (modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
     :init
     (load-theme 'modus-operandi-tinted :no-confirm)
     :bind
@@ -226,7 +231,7 @@ Read the Modus Themes package manual for details with =C-h R modus=.
      ("C-c w t s" . consult-theme)))
 #+end_src
 
-The next section hooks the Variable Pitch mode to any buffer in text mode. This means that written prose is displayed in variable pitch, while metadata, code and other items are in fixed pitch. A hook is a construction in Emacs that associates modes with each other. In this case, variable pitch text is enabled for all text mode buffers.
+The next section hooks the Variable Pitch mode to any Org buffer. This means that written prose is displayed in variable pitch, while metadata, code and other items are in fixed pitch. A hook is a construction in Emacs that associates modes with each other. In this case, variable pitch text is enabled for all text mode buffers.
 
 #+begin_src elisp :exports none
   ;; Mixed-pich mode
@@ -234,7 +239,7 @@ The next section hooks the Variable Pitch mode to any buffer in text mode. This 
 #+begin_src elisp
   (use-package mixed-pitch
     :hook
-    (text-mode . mixed-pitch-mode))
+    (org-mode . mixed-pitch-mode))
 #+end_src
 
 This last code snippet in the look-and-feel section changes how Emacs automatically split windows to favour vertical splits over horizontal ones to improve readability. This section also installs the Balanced Windows package, which manages window sizes automatically. For example, when opening three windows and you close one, the remaining windows each get half the screen.
@@ -659,6 +664,8 @@ The possibilities for capture templates are extensive and depend on your use cas
 ** Denote
 Denote is a flexible note-taking and file management package. Refer to [[#sec-denote]] or the extensive Denote manual with =C-h R denote=. At a minimum, you need to configure the ~denote-directory~ variable to indicate the location of your notes.
 
+The EWS package includes a convenience function to improve how Denote displays links to attachments, linked to the ~denote-link-description-function~.
+
 #+begin_src elisp :exports none
   ;; Denote
 #+end_src
@@ -667,6 +674,7 @@ Denote is a flexible note-taking and file management package. Refer to [[#sec-de
     :defer t
     :custom
     (denote-sort-keywords t)
+    (denote-link-description-function #'ews-denote-link-description-title-case)
     :hook
     (dired-mode . denote-dired-mode)
     :custom-face
@@ -676,11 +684,10 @@ Denote is a flexible note-taking and file management package. Refer to [[#sec-de
     :bind
     (("C-c w d b" . denote-find-backlink)
      ("C-c w d d" . denote-date)
-     ("C-c w d f" . denote-find-link)
+     ("C-c w d l" . denote-find-link)
      ("C-c w d h" . denote-org-extras-link-to-heading)
      ("C-c w d i" . denote-link-or-create)
      ("C-c w d k" . denote-rename-file-keywords)
-     ("C-c w d l" . denote-insert-link)
      ("C-c w d n" . denote)
      ("C-c w d r" . denote-rename-file)
      ("C-c w d R" . denote-rename-file-using-front-matter)))
@@ -694,7 +701,7 @@ Consult Notes is a convenience package for finding notes by metadata or searchin
 #+begin_src elisp
   (use-package consult-notes
     :bind
-    (("C-c w f"   . consult-notes)
+    (("C-c w d f" . consult-notes)
      ("C-c w d g" . consult-notes-search-in-all-notes))
     :init
     (consult-notes-denote-mode))
@@ -971,6 +978,10 @@ This configuration part defines the export process from Org to TeX to PDF. This 
 
 The next part defines the EWS document class, which is used to produce the paperback version of this book.
 
+The first part of the code defines the name used in the Org file, in this case =#+latex_class: ews=. The next par is the preamble in LaTeX code. Note that backslashes need to be escaped by using two of them. Org also adds standard packages, read the documentation for ~org-latex-classes~ for details on how to modify the standard inclusions.
+
+The last section defines how the heading levels in the Org file are translated to LaTeX commands. This code defines the first three Org heading levels.
+
 #+begin_src elisp :exports none
   ;; EWS paperback configuration
 #+end_src
@@ -979,7 +990,7 @@ The next part defines the EWS document class, which is used to produce the paper
     (add-to-list
      'org-latex-classes
      '("ews"
-       "\\documentclass[11pt, twoside]{memoir}
+       "\\documentclass[11pt, twoside, hidelinks]{memoir}
         \\setstocksize{9.25in}{7.5in}
         \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
         \\setlrmarginsandblock{2cm}{1cm}{*} 
@@ -993,6 +1004,8 @@ The next part defines the EWS document class, which is used to produce the paper
         \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
         \\setsubsecheadstyle{\\normalfont \\raggedright \\textbf}
         \\setsubsubsecheadstyle{\\normalfont\\centering}
+        \\renewcommand\\texttt[1]{{\\normalfont\\fontfamily{cmvtt}
+          \\selectfont #1}}
         \\usepackage[font={small, it}]{caption}
         \\pagestyle{myheadings}
         \\usepackage{ccicons}
@@ -1069,6 +1082,12 @@ The default setting for Dired is to show hidden files, even though they are hidd
     :bind (:map dired-mode-map
                 ( "."     . dired-omit-mode))
     :custom (dired-omit-files "^\\.[a-zA-Z0-9]+"))
+#+end_src
+
+The ~dired-narrow~ package provides some convenience functions to filter a Dired buffer by a search criterion or a regular expression. 
+
+#+begin_src R
+  (use-package dired-narrow)
 #+end_src
 
 This next bit of configuration defines how Emacs manages automated backups. The default setting is that the system stores these files in the folder where the original files live, cluttering folders with copies of your stuff. The setting below modifies the =backup-directory-alist= variable so that Emacs saves all backups (indicated by ="."=) in the =bak= subdirectory of your init folder. Alternatively, you could instruct Emacs not to save backups with ~(setq-default make-backup-files nil)~. I prefer keeping backups as they have saved my bacon a few times.

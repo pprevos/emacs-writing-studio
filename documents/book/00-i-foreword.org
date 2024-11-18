@@ -31,6 +31,7 @@ Remember that you are just getting started and you will be here long-term. Good 
 &nbsp;
 <p style="text-align:right">Protesilaos "Prot" Stavrou</p>
 #+end_export
+
 #+begin_export latex
 \vspace{1em}
 \begin{flushright}

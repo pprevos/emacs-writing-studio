@@ -24,7 +24,9 @@ The development and maintenance of a complex system like Emacs is a testament to
 
 My motivation for writing this book came from the inspiring work of people like Protesilaos (Prot) Stavrou, David Wilson from /System Crafters/ and many others who helped me flatten the learning curve of my Emacs journey through their blogs and YouTube videos.
  
-Mastodon and Emacs users Harold Kirsch, Thomas Montfort, Ben Finney, Antonio Simón (Quijote Libre), Bob Irving, and Erin Stearns have reviewed early versions of the book. Their feedback has helped to make this book both easier to read and more comprehensive, which is a fine balance to achieve.
+Mastodon and Emacs users Harold Kirsch, Thomas Montfort, Ben Finney, Antonio Simón (Quijote Libre), Bob Irving,  Frédéric Vachon, and Erin Stearns have reviewed early versions of the book. Their feedback has helped to make this book both easier to read and more comprehensive, which is a fine balance to achieve.
+
+Thanks to Stefan Kangas and Fredrik Salomonsson for picking up some typos in the text.
 
 #+begin_export html
 &nbsp;

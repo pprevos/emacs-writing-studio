@@ -305,9 +305,7 @@ You can select multiple files to work on simultaneously by marking them. The =m=
 
 This method requires you to manually select each file. You can also use regular expressions to select files. Press =% m= to open the regular expression selection prompt. For example, =^2023.*_journal*= selects all Denote files that start with the =2023= and have the =journal= file tag.  Now press =t= to invert the selection and =k= to remove the selected files from view. This sequence is a valuable method for finding related files.
 
-After you select multiple files in this manner, you can use all file commands to act on the chosen targets, for example, moving all 2023 files with the =_journal= tag to another folder.
-
-The ~ews-dired-narrow~ function asks for a regular expression and then jumps to a filtered Denote buffer, cutting out a few steps in this process.
+The ~dired-narrow-regexp~ function from the eponymous package by Matúš Goljer provides a more convenient method to narrow a list a files. This function asks for a regular expression and only shows those files that match it. Pressing =g= clears the filter.
 
 Another highly useful feature in Dired is the ability to search and replace regular expressions across a set of marked files. The first step is to mark the files you like to search in, either individually with =m= or by searching for a regular expression with =%m=, as described above. Use =Q= to start a ~query-replace-regexp~ session on the marked files. You can now search for a regular expression and replace this with a new string. The buffer now splits in three parts. Use the question mark to view all options.
 
