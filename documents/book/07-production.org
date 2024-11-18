@@ -27,7 +27,7 @@
 
 Chapter [[#chap-vanilla]] laid the groundwork for writing plain text documents, and chapter [[#chap-ews]] introduced the basics of Org syntax. This chapter builds on these foundations and guides you through preparing a manuscript for publication using the unique features of Org mode and some additional tools to facilitate your writing process.
 
-This chapter shows how to add editorial notes, citations and cross-references. You can also use  text completion to accelerate the writing process. Writing without a dictionary or thesaurus To manage the quality of your writing you might like to use a dictionary and thesaurus to enhance the variety of prose. This chapter also explains how  to manage large writing projects and control versions and collaborate with other authors.
+This chapter shows how to add editorial notes, citations and cross-references. You can also use  text completion to accelerate the writing process. Writing without a dictionary or thesaurus to manage the quality of your writing you might like to use a dictionary and thesaurus to enhance the variety of prose. This chapter also explains how  to manage large writing projects and control versions and collaborate with other authors.
 
 The last section of this chapter introduces other text modes that might interest authors, such as Markdown for technical documentation and the specialised Fountain mode for film and theatre scripts.
 
@@ -452,7 +452,7 @@ The mode bar of your file will now show an indicator that it is under version co
 #+RESULTS:
 [[file:images/version-control.png]]
 
-You can produce a list of current file changes with =C-x v l= or ~vc-print-log~. This list shows the unique commit ID, the author, the change date, and a summary of the changes, with the most recent version at the top. Navigate between the various versions with =n= (next) and =p= (previous). You can view the changes between versions with the =d= key. Selecting more than one commit with the =m= and arrow keys and then =d= shows the differences between the oldest and latest versions. To quit this view, use the trusty =q== key. To view changes in the whole repository, use =C-x v L= (~vc-print-root-log~).
+You can produce a list of current file changes with =C-x v l= or ~vc-print-log~. This list shows the unique commit ID, the author, the change date, and a summary of the changes, with the most recent version at the top. Navigate between the various versions with =n= (next) and =p= (previous). You can view the changes between versions with the =d= key. Selecting more than one commit with the =m= and arrow keys and then =d= shows the differences between the oldest and latest versions. To quit this view, use the trusty =q= key. To view changes in the whole repository, use =C-x v L= (~vc-print-root-log~).
 
 There is also a command to show the development history of a selected text region. Select the part of the text you are interested in and use =C-x v h= (~vc-region-history~). This buffer works the same way as the previous two examples. The ~vc-annotate~ command (=C-x v g=) shows the relevant commit for each line in the text, coloured by the age of the contribution.
 

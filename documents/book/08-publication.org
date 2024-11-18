@@ -312,7 +312,7 @@ Controlling typography and layout for office documents requires an OpenDocument 
 
 Creating a style file template is straightforward. Create an empty Org document, add =#+options: H:4 num:t author:nil= and export to ODT with =C-c C-e o o=. The options keyword creates four numbered heading levels. You can obviously modify these settings to suite your preference. Open the exported document with LibreOffice and edit the styles (=F11=).  
 
-Org mode uses some particular styles that start with "Org", so ensure you configure these. When the document is styled to your liking, save it as an OTT file and attach it to your manuscript. The next time you export the Org document, the output will be in the style defined in the template. Org extracts the =styles.xml= file embedded in your template file and copies it t the exported file.
+Org mode uses some particular styles that start with "Org", so ensure you configure these. When the document is styled to your liking, save it as an OTT file and attach it to your manuscript. The next time you export the Org document, the output will be in the style defined in the template. Org extracts the =styles.xml= file embedded in your template file and copies it to the exported file.
 
 When your styles contain images, for example a background image for a page, you need to also specify this in the styles file keyword as in the example below. The =styles.xml= has to be specified and the =background.png= file is the one nominated as a background image in the template document. Note that LibreOffice renames files so you need to open the template with Emacs and press =C-C C-c= to see the structure of the file and copy the image file name. This setup is ideal for writing corporate documents.
 
