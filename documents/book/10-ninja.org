@@ -26,7 +26,7 @@ The flexible nature of Emacs means that there is always more than one way to ach
 
 If, after reading this book, you would like to know more or find out about different perspectives, I recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual [cite: @cameron_2005; @petersen_2022;].
 
-Reading about Emacs is an excellent method for learning new things. Still, sometimes, you like to see somebody use the system itself. YouTube is a great place to find informative channels that discuss using Emacs, such as the highly recommended videos by Prot Stavrou and David Williamson from the System Crafters channel.
+Reading about Emacs is an excellent method for learning new things. Still, sometimes, you like to see somebody use the system itself. YouTube is a great place to find informative channels that discuss using Emacs, such as the highly recommended videos by Prot Stavrou and David Wilson from the System Crafters channel.
 
 * Modify the configuration
 Emacs Writing Studio uses a no-code solution by providing a thoroughly tested configuration and using the customisation front-end to configure Emacs. There will come a time when you would like to change some of the defaults directly inside the init file, which means you need to learn some Emacs Lisp.
