@@ -31,7 +31,7 @@
 ;;
 ;;; Code:
 
-;; Emacs 29? EWS leverages functionality from the latest Emacs version.
+;; Emacs 29 avaibale?
 
 (when (< emacs-major-version 29)
   (error "Emacs Writing Studio requires Emacs version 29 or later"))
@@ -40,8 +40,7 @@
 
 (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-(when (file-exists-p custom-file)
-  (load custom-file))
+(load custom-file :no-error-if-file-is-missing)
 
 (keymap-global-set "C-c w v" 'customize-variable)
 
@@ -101,7 +100,7 @@
 
 ;; Short answers only please
 
-(setq use-short-answers t)
+(setq-default use-short-answers t)
 
 ;; Spacious padding
 
@@ -111,7 +110,7 @@
   :init
   (spacious-padding-mode 1))
 
-;; Modus Themes
+;; Modus and EF Themes
 
 (use-package modus-themes
   :custom
@@ -119,12 +118,12 @@
   (modus-themes-bold-constructs t)
   (modus-themes-mixed-fonts t)
   (modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
-  :init
-  (load-theme 'modus-operandi-tinted :no-confirm)
   :bind
   (("C-c w t t" . modus-themes-toggle)
    ("C-c w t m" . modus-themes-select)
    ("C-c w t s" . consult-theme)))
+
+(use-package ef-themes)
 
 ;; Mixed-pich mode
 
@@ -277,13 +276,6 @@
   (org-modern-radio-target nil)
   (org-modern-statistics nil)
   (org-modern-progress nil))
-
-;; Consult convenience functions
-
-(use-package consult
-  :bind
-  (("C-c w h" . consult-org-heading)
-   ("C-c w g" . consult-grep)))
 
 ;; INSPIRATION
 
@@ -438,6 +430,13 @@
    ("C-c w d r" . denote-rename-file)
    ("C-c w d R" . denote-rename-file-using-front-matter)))
 
+;; Consult convenience functions
+
+(use-package consult
+  :bind
+  (("C-c w h" . consult-org-heading)
+   ("C-c w g" . consult-grep)))
+
 ;; Consult-Notes for easy access to notes
 
 (use-package consult-notes
@@ -549,8 +548,6 @@
 ;; Titlecasing
 
 (use-package titlecase
-  :custom
-  (titlecase-style 'apa)
   :bind
   (("C-c w s t" . titlecase-dwim)
    ("C-c w s c" . ews-org-headings-titlecase)))
@@ -579,9 +576,17 @@
   (ediff-split-window-function 'split-window-horizontally)
   (ediff-window-setup-function 'ediff-setup-windows-plain))
 
+;; Enable Other text modes
+
+;; Fontain mode for writing scrits
+
 (use-package fountain-mode)
 
+;; Markdown mode
+
 (use-package markdown-mode)
+
+;; PUBLICATION
 
 ;; Generic Org Export Settings
 
@@ -589,7 +594,6 @@
   :custom
   (org-export-with-drawers nil)
   (org-export-with-todo-keywords nil)
-  (org-export-with-broken-links t)
   (org-export-with-toc nil)
   (org-export-with-smart-quotes t)
   (org-export-date-timestamp-format "%e %B %Y"))
@@ -684,7 +688,7 @@
   :init
   (put 'dired-find-alternate-file 'disabled nil))
 
-;; Hide hidden files
+;; Hide or display hidden files
 
 (use-package dired
   :ensure nil
