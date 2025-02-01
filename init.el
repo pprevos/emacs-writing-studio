@@ -31,7 +31,7 @@
 ;;
 ;;; Code:
 
-;; Emacs 29 avaibale?
+;; Emacs 29?
 
 (when (< emacs-major-version 29)
   (error "Emacs Writing Studio requires Emacs version 29 or later"))
