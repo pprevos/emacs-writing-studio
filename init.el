@@ -107,7 +107,6 @@
 (use-package spacious-padding
   :custom
   (line-spacing 3)
-  :init
   (spacious-padding-mode 1))
 
 ;; Modus and EF Themes
@@ -183,6 +182,9 @@
   (which-key-max-description-length 40)
   (which-key-lighter nil)
   (which-key-sort-order 'which-key-description-order))
+
+(when (display-graphic-p)
+  (context-menu-mode))
 
 ;; Improved help buffers
 
