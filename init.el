@@ -183,6 +183,8 @@
   (which-key-lighter nil)
   (which-key-sort-order 'which-key-description-order))
 
+;; Contextual menu with right mouse button
+
 (when (display-graphic-p)
   (context-menu-mode))
 
@@ -442,6 +444,8 @@
 ;; Consult-Notes for easy access to notes
 
 (use-package consult-notes
+  :custom
+  (consult-notes-denote-display-keywords-indicator "_")
   :bind
   (("C-c w d f" . consult-notes)
    ("C-c w d g" . consult-notes-search-in-all-notes))
