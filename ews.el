@@ -61,12 +61,17 @@
   :group 'ews
   :type 'string)
 
+(defcustom ews-root "~/.spacemacs.d/emacs-writing-studio/"
+  "Completed action that triggers resetting checkboxes for recurring tasks."
+  :group 'ews
+  :type 'string)
+
 (defcustom ews-org-heading-level-capitalise nil
   "Minimum level of Org headings to be capitalised.
 'nil implies all levels are capitalised."
   :group 'ews
   :type  '(choice (const :tag "All headings" nil)
-		  (integer :tag "Highest level" 1)))
+                  (integer :tag "Highest level" 1)))
 
 ;; Check for missing external software
 ;;;###autoload
@@ -98,10 +103,10 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
   (interactive)
   (when (file-exists-p ews-bibtex-directory)
     (let ((bib-files (directory-files ews-bibtex-directory t
-				      "^[A-Z|a-z|0-9].+.bib$")))
+                                      "^[A-Z|a-z|0-9].+.bib$")))
       (setq ews-bibtex-files bib-files
-  	    org-cite-global-bibliography bib-files
-	    citar-bibliography bib-files)))
+            org-cite-global-bibliography bib-files
+            citar-bibliography bib-files)))
   (message "Registered:\n%s" (mapconcat #'identity ews-bibtex-files "\n")))
 
 (defun ews--bibtex-combined-biblio-lookup ()
@@ -122,17 +127,17 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
   "Insert Biblio search results into current buffer or select BibTeX file."
   (interactive)
   (if-let ((current-mode major-mode)
-	   ews-bibtex-files
-	   (bibfiles (length ews-bibtex-files))
-	   (bibfile (cond ((eq bibfiles 1) (car ews-bibtex-files))
-			  ((equal major-mode 'bibtex-mode)
-			   (buffer-file-name))
-			  (t (completing-read
-			      "Select BibTeX file:" ews-bibtex-files)))))
+           ews-bibtex-files
+           (bibfiles (length ews-bibtex-files))
+           (bibfile (cond ((eq bibfiles 1) (car ews-bibtex-files))
+                          ((equal major-mode 'bibtex-mode)
+                           (buffer-file-name))
+                          (t (completing-read
+                              "Select BibTeX file:" ews-bibtex-files)))))
       (progn (find-file bibfile)
-	     (goto-char (point-max))
-	     (ews--bibtex-combined-biblio-lookup)
-	     (save-buffer))
+             (goto-char (point-max))
+             (ews--bibtex-combined-biblio-lookup)
+             (save-buffer))
     (message "No BibTeX file(s) defined.")))
 
 ;; Search for missing BibTeX attachments and filenames
@@ -314,11 +319,11 @@ Customise `titlecase-style' for styling."
     (org-map-entries
      (lambda ()
        (let* ((heading (substring-no-properties (org-get-heading t t t t)))
-	      (level (org-current-level))
-	      (heading-lower (downcase heading))
+              (level (org-current-level))
+              (heading-lower (downcase heading))
               (new-heading (titlecase--string heading-lower style)))
-	 (when (<= level (or ews-org-heading-level-capitalise 999))
-	   (org-edit-headline new-heading)))))))
+         (when (<= level (or ews-org-heading-level-capitalise 999))
+           (org-edit-headline new-heading)))))))
 
 (defun ews-denote-link-description-title-case (file)
   "Return link description for FILE.
@@ -330,9 +335,9 @@ This function is useful as the value of `denote-link-description-function'."
   (require 'titlecase)
   (let* ((file-type (denote-filetype-heuristics file))
          (title (denote-retrieve-title-or-filename file file-type))
-	 (clean-title (if (string-match-p " " title)
-			  title
-			(replace-regexp-in-string "\\([a-zA-Z0-9]\\)-\\([a-zA-Z0-9]\\)" "\\1 \\2" title)))
+         (clean-title (if (string-match-p " " title)
+                          title
+                        (replace-regexp-in-string "\\([a-zA-Z0-9]\\)-\\([a-zA-Z0-9]\\)" "\\1 \\2" title)))
          (region-text (denote--get-active-region-content)))
     (cond
      (region-text region-text)
@@ -375,5 +380,5 @@ This function is useful as the value of `denote-link-description-function'."
 ;; New link type for Org-Hugo internal links
 (with-eval-after-load 'org
   (org-link-set-parameters
- "hugo"
- :complete #'ews-hugo-link-complete))
+   "hugo"
+   :complete #'ews-hugo-link-complete))

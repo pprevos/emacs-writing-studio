@@ -62,7 +62,7 @@
 
 ;; Load EWS functions
 
-(load-file (concat (file-name-as-directory user-emacs-directory) "ews.el"))
+(load-file (concat ews-root "ews.el"))
 
 ;; Check for missing external software
 ;;
@@ -635,7 +635,7 @@
      "\\documentclass[11pt, twoside, hidelinks]{memoir}
       \\setstocksize{9.25in}{7.5in}
       \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
-      \\setlrmarginsandblock{2cm}{1cm}{*} 
+      \\setlrmarginsandblock{2cm}{1cm}{*}
       \\setulmarginsandblock{1.5cm}{2.25cm}{*}
       \\checkandfixthelayout
       \\setcounter{tocdepth}{0}
