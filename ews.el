@@ -1,11 +1,11 @@
 ;;; ews.el --- Convenience functions for authors  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 Peter Prevos
+;; Copyright (C) 2025 Peter Prevos
 
 ;; Author: Peter Prevos <peter@prevos.net>
 ;; Maintainer: Peter Prevos <peter@prevos.net>
 ;; Created: 1 January 2024
-;; Version: 1.2
+;; Version: 1.0
 ;; Keywords: convenience
 ;; Homepage: https://lucidmanager.org/tags/emacs/
 ;; URL: https://github.com/pprevos/emacs-writing-studio
@@ -34,6 +34,11 @@
 
 ;; Emacs Writing Studio Customisation
 
+(require 'org)
+(require 'denote)
+(require 'citar)
+(require 'biblio)
+
 (defgroup ews ()
   "Emacs Writing Studio."
   :group 'files
@@ -56,14 +61,9 @@
   :group 'ews
   :type 'list)
 
-(defcustom ews-org-completed-action "DONE"
-  "Completed action that triggers resetting checkboxes for recurring tasks."
-  :group 'ews
-  :type 'string)
-
 (defcustom ews-org-heading-level-capitalise nil
-  "Minimum level of Org headings to be capitalised.
-'nil implies all levels are capitalised."
+  "Minimum level of Org headings to be capitalised
+Nil implies all levels are capitalised."
   :group 'ews
   :type  '(choice (const :tag "All headings" nil)
 		  (integer :tag "Highest level" 1)))
@@ -89,12 +89,12 @@ Sublists indicate that one of the entries is required."
 (defvar ews-bibtex-files
   (when (file-exists-p ews-bibtex-directory)
     (directory-files ews-bibtex-directory t "^[A-Z|a-z|0-9].+.bib$"))
-  "List of BibTeX files. Use `ews-bibtex-register` to configure.")
+  "List of BibTeX files. Use `ews-bibtex-register' to configure.")
 
 ;;;###autoload
 (defun ews-bibtex-register ()
-  "Register the contents of the `ews-bibtex-directory` with `ews-bibtex-files`.
-Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
+  "Register the contents of the `ews-bibtex-directory' with `ews-bibtex-files`.
+Use when adding or removing a BibTeX file from or to `ews-bibtex-directory'."
   (interactive)
   (when (file-exists-p ews-bibtex-directory)
     (let ((bib-files (directory-files ews-bibtex-directory t
@@ -136,7 +136,7 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
     (message "No BibTeX file(s) defined.")))
 
 ;; Search for missing BibTeX attachments and filenames
-(defun ews--bibtex-extract-filenames ()
+(defun ews--bibtex-extract-attachments ()
   "Extract attachment file names from BibTeX files in `ews-bibtex-directory'."
   (ews-bibtex-register)
   (let ((attachments '()))
@@ -154,35 +154,36 @@ Use when adding or removing a BibTeX file from or to `ews-bibtex-directory`."
     attachments))
 
 (defun ews--bibtex-extract-files ()
-  "List files recursively in `ews-bibtex-directory'.  Excludes `.bib` and `.csl`."
+  "List files recursively in `ews-bibtex-directory', excluding `.bib' and `.csl'."
   (seq-remove (lambda (file)
                 (or (string-suffix-p ".bib" file)
                     (string-suffix-p ".csl" file)))
-              (directory-files-recursively ews-bibtex-directory "")))
+              (mapcar 'expand-file-name
+                      (directory-files-recursively ews-bibtex-directory ""))))
 
 ;;;###autoload
 (defun ews-bibtex-missing-files ()
   "List BibTeX attachments not listed in a BibTeX file entry."
   (interactive)
   (let* ((files (ews--bibtex-extract-files))
-         (attachments (ews--bibtex-extract-filenames))
+         (attachments (ews--bibtex-extract-attachments))
          (missing (cl-remove-if
                    (lambda (f) (member f attachments)) files)))
     (message "%s files not registered in bibliography" (length missing))
     (dolist (file missing)
-      (message "Missing file: %s" file))))
+      (message file))))
 
 ;;;###autoload
 (defun ews-bibtex-missing-attachments ()
-  "List BibTeX file entries without matching attachment."
+  "List BibTeX file entries with missing attachment(s)."
   (interactive)
   (let* ((files (ews--bibtex-extract-files))
-         (attachments (ews--bibtex-extract-filenames))
+         (attachments (ews--bibtex-extract-attachments))
          (missing (cl-remove-if
                    (lambda (f) (member f files)) attachments)))
     (message "%s BibTeX files without matching attachment." (length missing))
     (dolist (file missing)
-      (message "Missing file: %s" file))))
+      (message file))))
 
 ;; Denote
 ;;;###autoload
@@ -204,16 +205,6 @@ Configure the PARA names with `ews-denote-para-keywords'."
        new-keywords
        (denote-retrieve-filename-signature file))
     (message "Current buffer is not a Denote file.")))
-
-;;;###autoload
-(defun ews-dired-narrow (regex)
-  "Mark files in denote-firectory using REGEX."
-  (interactive "sMark files (regexp):")
-  (when (not (eq major-mode 'dired-mode))
-    (dired denote-directory))
-  (dired-mark-files-regexp regex)
-  (dired-toggle-marks)
-  (dired-do-kill-lines))
 
 ;; Distraction-free writing
 (defvar ews-olivetti-point nil
@@ -284,28 +275,10 @@ current note."
     (insert (format "[[file:%s]]" filename))
     (org-redisplay-inline-images)))
 
-;;; Org mode todo enhancements
-(defun ews--org-recurring-action-p ()
-  "Returns non-nil when the action under point is recurring."
-  (let ((timestamp (or (org-entry-get nil "SCHEDULED" t)
-                       (org-entry-get nil "DEADLINE" t))))
-    (if timestamp (string-match-p "\\+" timestamp))))
-
-;;;###autoload
-(defun ews-org-reset-checkboxes-when-done ()
-  "Reset all checkboxes in the subtree when status changes."
-  (when (and (ews--org-recurring-action-p)
-             (equal ews-org-completed-action
-                    (substring-no-properties (org-get-todo-state))))
-    (org-reset-checkbox-state-subtree)))
-
-(add-hook #'org-after-todo-state-change-hook
-          #'ews-org-reset-checkboxes-when-done)
-
 ;;;###autoload
 (defun ews-org-headings-titlecase (&optional arg)
   "Cycle through all headings in an Org buffer and convert them to title case.
-When used with universal argument converts to sentence case.
+When used with universal argument (ARG) converts to sentence case.
 Customise `titlecase-style' for styling."
   (interactive "P")
   (require 'titlecase)
@@ -326,7 +299,8 @@ Customise `titlecase-style' for styling."
 If the region is active, use it as the description.
 The title is formatted with the `titlecase' package.
 
-This function is useful as the value of `denote-link-description-function'."
+This function is useful as the value of `denote-link-description-function' to
+generate links in titlecase for attachments."
   (require 'titlecase)
   (let* ((file-type (denote-filetype-heuristics file))
          (title (denote-retrieve-title-or-filename file file-type))
@@ -339,41 +313,3 @@ This function is useful as the value of `denote-link-description-function'."
      (title (format "%s" (titlecase--string clean-title titlecase-style)))
      (t ""))))
 
-;; Hugo integration
-
-;; Create Hugo links
-(defun ews-get-hugo-directory ()
-  "Lists the directory of the current Hugo website or nil."
-  (when (string-match "\\(.*\\)content" default-directory)
-    (match-string 1 default-directory)))
-
-(defun ews-hugo-list-content ()
-  "List the content of the Hugo website of the current buffer.
-  Return an error message when not in an apparent Hugo directory."
-  (if-let* ((hugo-dir (ews-get-hugo-directory))
-            (hugo-p (directory-files hugo-dir nil "^config\\..*"))
-            (content-dir (concat hugo-dir "content/")))
-      (let ((org-files (directory-files-recursively content-dir "\\.org\\'"))
-            (md-files (directory-files-recursively content-dir "\\.md\\'")))
-        (append org-files md-files))
-    (user-error "Not in a Hugo buffer")))
-
-(defun ews-hugo-link-complete ()
-  "Complete a Hugo weblink through the `org-insert-link' and hugo: hyperlink type."
-  (let* ((posts (ews-hugo-list-content))
-         (titles (mapcar (lambda (post)
-                           (string-remove-prefix
-                            (concat (ews-get-hugo-directory)
-                                    "content/") post)) posts))
-         (selection (completing-read "Choose page:" titles))
-         (target (concat "/"
-                         (replace-regexp-in-string
-                          "_index.*" "" selection))))
-    (when titles
-      (concat "{{</* ref \"" target "\" */>}}"))))
-
-;; New link type for Org-Hugo internal links
-(with-eval-after-load 'org
-  (org-link-set-parameters
- "hugo"
- :complete #'ews-hugo-link-complete))
