@@ -344,7 +344,7 @@ Emacs has two levels of help. Firstly, there are the manuals for Emacs itself an
 #+end_src
 
 ** Configure text modes
-Emacs is principally designed for developing computer code, so it needs some modifications to enable writing text for humans. The config first ensures that Emacs does not try to install Text-Mode as a package, because it is buult-in.
+Emacs is principally designed for developing computer code, so it needs some modifications to enable writing text for humans. The config first ensures that Emacs does not try to install Text-Mode as a package, because it is built-in.
 
 Secondly, we hook Visual Line Mode to Text Mode. Visual Line mode wraps long lines to the nearest word to fit in the current window, as is common in word processing software.
 
