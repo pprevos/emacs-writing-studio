@@ -102,6 +102,11 @@
 
 (setq-default use-short-answers t)
 
+;; Scratch buffer settings
+
+(setq initial-major-mode 'org
+      initial-scratch-message "#+title: Scratch Buffer\n\n"
+
 ;; Spacious padding
 
 (use-package spacious-padding
