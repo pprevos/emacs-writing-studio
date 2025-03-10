@@ -1,46 +1,49 @@
 ;;; init.el --- Emacs Writing Studio init -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 Peter Prevos
+  ;; Copyright (C) 2024-2025 Peter Prevos
 
-;; Author: Peter Prevos <peter@prevos.net>
-;; Maintainer: Peter Prevos <peter@prevos.net>
-;; URL: https://github.com/pprevos/emacs-writing-studio/
+  ;; Author: Peter Prevos <peter@prevos.net>
+  ;; Maintainer: Peter Prevos <peter@prevos.net>
+  ;; URL: https://github.com/pprevos/emacs-writing-studio/
+  ;;
+  ;; This file is NOT part of GNU Emacs.
+  ;;
+  ;; This program is free software; you can redistribute it and/or modify
+  ;; it under the terms of the GNU General Public License as published by
+  ;; the Free Software Foundation, either version 3 of the License, or
+  ;; (at your option) any later version.
+  ;;
+  ;; This program is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ;; GNU General Public License for more details.
+  ;;
+  ;; You should have received a copy of the GNU General Public License
+  ;; along with this program. If not, see <https://www.gnu.org/licenses/>.
+  ;;
+;; Emacs Writing Studio init file: https://lucidmanager.org/tags/emacs
 ;;
-;; This file is NOT part of GNU Emacs.
+;; This init file is tangled from: documents/ews-book/99-appendix.org
 ;;
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program. If not, see <https://www.gnu.org/licenses/>.
-;;
-;;; Commentary:
-;;
-;; Emacs Writing Studio init file
-;; https://lucidmanager.org/tags/emacs
-;;
-;; This init file is tangled from the Org mode source:
-;; documents/ews-book/99-appendix.org
+;; This file is a starter kit for developing a configuration and is not a package
+;; that is regularly updated.
 ;;
 ;;; Code:
 
-;; Emacs 29?
+;; Emacs 29 or higher?
 
 (when (< emacs-major-version 29)
-  (error "Emacs Writing Studio requires Emacs version 29 or later"))
+  (error "Emacs Writing Studio requires version 29 or later"))
 
 ;; Custom settings in a separate file and load the custom settings
 
-(setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq-default custom-file (expand-file-name
+			     "custom.el"
+			     user-emacs-directory))
 
 (load custom-file :no-error-if-file-is-missing)
+
+;; Bind key for customising variables
 
 (keymap-global-set "C-c w v" 'customize-variable)
 
@@ -62,34 +65,24 @@
 
 ;; Load EWS functions
 
-(load-file (concat (file-name-as-directory user-emacs-directory) "ews.el"))
+(load-file (concat (file-name-as-directory user-emacs-directory)
+		   "ews.el"))
 
 ;; Check for missing external software
-;;
-;; - soffice (LibreOffice): View and create office documents
-;; - zip: Unpack ePub documents
-;; - pdftotext (poppler-utils): Convert PDF to text
-;; - ddjvu (DjVuLibre): View DjVu files
-;; - curl: Reading RSS feeds
-;; - convert (ImageMagick) or gm (GraphicsMagick): Convert image files  ;; - latex (TexLive, MacTex or MikTeX): Preview LaTex and export Org to PDF
-;; - hunspell: Spellcheck. Also requires a hunspell dictionary
-;; - grep: Search inside files
-;; - gs (GhostScript) or mutool (MuPDF): View PDF files
-;; - mpg321, ogg123 (vorbis-tools), mplayer, mpv, vlc: Media players
-;; - git: Version control
 
 (ews-missing-executables
- '("soffice"
-   "zip"
+ '(("gs" "mutool")
    "pdftotext"
+   "soffice"
+   "zip"
    "ddjvu"
    "curl"
+   ("mpg321" "ogg123" "mplayer" "mpv" "vlc") 
+   ("grep" "ripgrep")
    ("convert" "gm")
+   "dvipng"
    "latex"
    "hunspell"
-   "grep"
-   ("gs" "mutool")
-   ("mpg321" "ogg123" "mplayer" "mpv" "vlc")
    "git"))
 
 ;;; LOOK AND FEEL
@@ -121,7 +114,8 @@
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
   (modus-themes-mixed-fonts t)
-  (modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
+  (modus-themes-to-toggle '(modus-operandi-tinted
+			    modus-vivendi-tinted))
   :bind
   (("C-c w t t" . modus-themes-toggle)
    ("C-c w t m" . modus-themes-select)
@@ -346,7 +340,8 @@
   (elfeed-org)
   :custom
   (rmh-elfeed-org-files
-   (list (concat (file-name-as-directory (getenv "HOME")) "elfeed.org"))))
+   (list (concat (file-name-as-directory (getenv "HOME"))
+		 "elfeed.org"))))
 
 ;; Easy insertion of weblinks
 
@@ -485,7 +480,7 @@
    ;; Visualise denote
    ("C-c w x n" . denote-explore-network)
    ("C-c w x v" . denote-explore-network-regenerate)
-   ("C-c w x D" . denote-explore-degree-barchart)))
+   ("C-c w x D" . denote-explore-barchart-degree)))
 
 ;; Set some Org mode shortcuts
 
@@ -632,25 +627,30 @@
      "\\documentclass[11pt, twoside, hidelinks]{memoir}
       \\setstocksize{9.25in}{7.5in}
       \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
-      \\setlrmarginsandblock{2cm}{1cm}{*} 
-      \\setulmarginsandblock{1.5cm}{2.25cm}{*}
+      \\setlrmarginsandblock{1.5in}{1in}{*} 
+      \\setulmarginsandblock{1in}{1.5in}{*}
       \\checkandfixthelayout
+      \\layout
       \\setcounter{tocdepth}{0}
-      \\OnehalfSpacing
-      \\usepackage{ebgaramond}
-      \\usepackage[htt]{hyphenat}
+      \\setsecnumdepth{subsection}
+      \\renewcommand{\\baselinestretch}{1.2}
+      \\setheadfoot{0.5in}{0.75in}
+      \\setlength{\\footskip}{0.8in}
       \\chapterstyle{bianchi}
+      \\renewcommand{\\beforechapskip}{-30pt}
       \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
-      \\setsubsecheadstyle{\\normalfont \\raggedright \\textbf}
+      \\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
       \\setsubsubsecheadstyle{\\normalfont\\centering}
-      \\renewcommand\\texttt[1]{{\\normalfont\\fontfamily{cmvtt}
-        \\selectfont #1}}
-      \\usepackage[font={small, it}]{caption}
       \\pagestyle{myheadings}
+      \\usepackage[font={small, it}]{caption}
       \\usepackage{ccicons}
+      \\usepackage{ebgaramond}
       \\usepackage[authoryear]{natbib}
       \\bibliographystyle{apalike}
-      \\usepackage{svg}"
+      \\usepackage{svg}
+      \\hyphenation{mini-buffer}
+      \\renewcommand{\\LaTeX}{LaTeX}
+      \\renewcommand{\\TeX}{TeX}"
      ("\\chapter{%s}" . "\\chapter*{%s}")
      ("\\section{%s}" . "\\section*{%s}")
      ("\\subsection{%s}" . "\\subsection*{%s}")
