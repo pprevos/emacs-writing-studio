@@ -301,18 +301,6 @@
   :init
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
 
-;; Reading LibreOffice files
-
-;; Fixing a bug in Org Mode pre-9.7
-;; Org mode clobbers associations with office documents
-
-(use-package ox-odt
-  :ensure nil
-  :config
-  (add-to-list 'auto-mode-alist
-               '("\\.\\(?:OD[CFIGPST]\\|od[cfigpst]\\)\\'"
-                 . doc-view-mode-maybe)))
-
 ;; Managing Bibliographies
 
 (use-package bibtex
