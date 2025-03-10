@@ -34,11 +34,6 @@
 
 ;; Emacs Writing Studio Customisation
 
-(require 'org)
-(require 'denote)
-(require 'citar)
-(require 'biblio)
-
 (defgroup ews ()
   "Emacs Writing Studio."
   :group 'files
