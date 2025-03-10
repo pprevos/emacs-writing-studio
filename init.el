@@ -105,7 +105,7 @@
 ;; Scratch buffer settings
 
 (setq initial-major-mode 'org
-      initial-scratch-message "#+title: Scratch Buffer\n\n"
+      initial-scratch-message "#+title: Scratch Buffer\n\n")
 
 ;; Spacious padding
 
