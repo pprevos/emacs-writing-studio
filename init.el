@@ -1,26 +1,26 @@
 ;;; init.el --- Emacs Writing Studio init -*- lexical-binding: t; -*-
 
-  ;; Copyright (C) 2024-2025 Peter Prevos
+;; Copyright (C) 2024-2025 Peter Prevos
 
-  ;; Author: Peter Prevos <peter@prevos.net>
-  ;; Maintainer: Peter Prevos <peter@prevos.net>
-  ;; URL: https://github.com/pprevos/emacs-writing-studio/
-  ;;
-  ;; This file is NOT part of GNU Emacs.
-  ;;
-  ;; This program is free software; you can redistribute it and/or modify
-  ;; it under the terms of the GNU General Public License as published by
-  ;; the Free Software Foundation, either version 3 of the License, or
-  ;; (at your option) any later version.
-  ;;
-  ;; This program is distributed in the hope that it will be useful,
-  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ;; GNU General Public License for more details.
-  ;;
-  ;; You should have received a copy of the GNU General Public License
-  ;; along with this program. If not, see <https://www.gnu.org/licenses/>.
-  ;;
+;; Author: Peter Prevos <peter@prevos.net>
+;; Maintainer: Peter Prevos <peter@prevos.net>
+;; URL: https://github.com/pprevos/emacs-writing-studio/
+;;
+;; This file is NOT part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program. If not, see <https://www.gnu.org/licenses/>.
+;;
 ;; Emacs Writing Studio init file: https://lucidmanager.org/tags/emacs
 ;;
 ;; This init file is tangled from: documents/ews-book/99-appendix.org
@@ -97,8 +97,8 @@
 
 ;; Scratch buffer settings
 
-(setq initial-major-mode 'org
-      initial-scratch-message "#+title: Scratch Buffer\n\n")
+(setq initial-major-mode 'org-mode
+      initial-scratch-message "#+title: Scratch Buffer\n#+subtitle: Scratch Buffer\nThe text in this buffer is not saved when exiting Emacs.\n\n")
 
 ;; Spacious padding
 
@@ -427,7 +427,9 @@
 (use-package consult
   :bind
   (("C-c w h" . consult-org-heading)
-   ("C-c w g" . consult-grep)))
+   ("C-c w g" . consult-grep))
+  :config
+  (add-to-list 'consult-preview-allowed-hooks 'visual-line-mode))
 
 ;; Consult-Notes for easy access to notes
 
@@ -534,8 +536,7 @@
 
 (use-package writegood-mode
   :bind
-  (("C-c w s r" . writegood-reading-ease)
-   ("C-c w s l" . writegood-grade-level))
+  (("C-c w s r" . writegood-reading-ease))
   :hook
   (text-mode . writegood-mode))
 
