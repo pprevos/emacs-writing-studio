@@ -1,17 +1,17 @@
 #+title: Emacs Writing Studio
 #+author: Peter Prevos
 
-/Emacs Writing Studio/ by Peter Prevos is a configuration and comprehensive manual for writers seeking to streamline their workflow. The manual discuses everything from organising ideas and distraction-free writing, to publishing in multiple formats. It’s useful to both beginners and experienced Emacs users, offering practical tips and a tailored configuration to enhance your writing process.
+/Emacs Writing Studio/ by Peter Prevos is a configuration and comprehensive manual for writers seeking an integrated research, writing and publication tool. The EWS book discusses everything from researching and organising ideas and writing without distractions to publishing in multiple formats. EWS is useful to beginners and experienced Emacs users, offering practical tips and a tailored configuration to enhance your writing process.
 
 #+attr_html: :alt Emacs Writing Studio logo :title Emacs Writing Studio logo :width 400
 #+attr_org: :width 200
 [[file:emacs-writing-studio.png]]
 
-If you like to support my work, then please purchase the EWS book from your [[https://books2read.com/b/4NpgQ9][favourite e-book retailer]] or a [[https://payhip.com/b/alhIJ][DRM-free download from PayHip]]. The Org mode source code of the book is freely available in the =documents= folder, so you can also 'roll your own' with the Org export functionality and associated external software (see below).
+If you like to support my work, then please purchase the EWS book from your [[https://books2read.com/b/4NpgQ9][favourite e-book retailer]] or a DRM-free download from [[https://payhip.com/b/alhIJ][PayHip]] or [[https://leanpub.com/emacswritingstudio][LeanPub]]. The Org mode source code of the book is freely available in the =documents= folder, so you can also 'roll your own' with the Org export functionality and associated external software (see below).
 
-The [[https://lucidmanager.org/tags/emacs][EWS website]] explains the configuration. There is also a [[https://www.youtube.com/watch?v=VGGYS09tlKA&list=PLGx4TR_jvOQDIT878vGDe1ElUlij3UEKI&pp=gAQB][YouTube playlist]] to demonstrate how to use Emacs Writing Studio.
+The [[https://lucidmanager.org/tags/emacs][EWS website]] explains the configuration. There is also a [[https://www.youtube.com/watch?v=VGGYS09tlKA&list=PLGx4TR_jvOQDIT878vGDe1ElUlij3UEKI&pp=gAQB][YouTube playlist]] to demonstrate how to use /Emacs Writing Studio/.
 
-This repository is not actively maintained. For beginning Emacs users, the configuration acts as a starting point to develop a configuration. More advanced users can copy ideas. The code will only be updated when there are bugs due to future changes in packages or Emacs itself.
+This repository is not a maintained Emacs package. For beginning Emacs users, it acts as a starting point to develop a configuration. More advanced users can copy ideas. The code will only be updated when there are bugs due to future changes in packages or Emacs itself.
 
 The EWS configuration follows the following principles:
 
@@ -21,19 +21,26 @@ The EWS configuration follows the following principles:
 - No configuration for writing code (~prog-mode~)
 - Centred around Org mode
  
-Feel free to raise an issue if you have any suggestions on how to enhance the configuration or like to include additional packages useful to authors.
+Feel free to raise an issue if you have any suggestions on how to enhance the configuration, like to include additional packages useful to authors or fix some typos in the text.
 
 * EWS Workflow
 The EWS configuration, associated website and book follow a basic workflow for authoring documents, visualised below.
 
 [[file:documents/book/images/emacs-workflow.png]]
 
+- /Inspiration/ relates to reading, listening to and watching media such as e-books or lectures. Emacs can maintain and consume your bibliography or media collection.
+- /Ideation/ is the phase where we reflect on the ideas of others and develop our own. Emacs acts as a note-taling system in this phase.
+- /Production/ is the actual writing phase. EWS focuses on the capabilities of the Org mode package for writing projects.
+- /Publication/ is the last phase in which Org mode files are converted to the final product in ePub, PDF or office format.
+
+Another part of being a researcher and writer is /Administration/, which is not a phase in the process as such, but nevertheless essential. Administration in the EWS context relates to managing files and projects.
+
 * Install EWS
 The =init.el= file contains the basic configuration and =ews.el= defines a series of convenience functions.
 
 To install the EWS configuration, download the =init.el= and =ews.el= files from this GitHub repository and save them in the configuration folder. The location of the configuration folder depends on your operating system and Emacs version. Type =C-h v user-emacs-directory= to identify its location in the popup help buffer.
 
-EWS will activate and install the required packages after you evaluate the ~restart-emacs~ function or the next time you start the program.
+EWS activates and installs the required packages after you evaluate the ~restart-emacs~ function or the next time you start the program.
 
 Experienced Emacs users, can try EWS configuration, without clobbering your existing configuration:
 
@@ -73,4 +80,9 @@ Some of the listed packages are alternatives for each other, so you only need to
 - ~latex~ ([[https://www.latex-project.org/get/][TexLive, MacTex or MikTeX]]): Preview LaTeX and export Org to PDF
 - ~zip~: Create ePub and office documents
 
-To export the Emacs Writing Studio book Org files you will also must install [[https://graphviz.org/][Graphviz]] to generate various diagrams. 
+To export the /Emacs Writing Studio/ book Org files you will also must install [[https://graphviz.org/][Graphviz]] to generate various diagrams. 
+
+* Compiling the EWS book
+This repository contains the Org mode source files for the /Emacs Writing Studio/ book.
+
+To compile the book as a PDF, ePub or other format you need the EWS configuration and the required supporting applications listed above. You will also need the [[https://graphviz.org/][Graphviz]] software, which draws some of the diagrams used in the book. Run the Org export function from the =00-emacs-writing-studio.org= file to generate the book.
