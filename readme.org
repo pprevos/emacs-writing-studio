@@ -23,6 +23,10 @@ The EWS configuration follows the following principles:
  
 Feel free to raise an issue if you have any suggestions on how to enhance the configuration, like to include additional packages useful to authors or fix some typos in the text.
 
+#+begin_export html
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5IJVDCpE3vA?si=rCu4Pon9PyrwLMix" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+#+end_export
+
 * EWS Workflow
 The EWS configuration, associated website and book follow a basic workflow for authoring documents, visualised below.
 
