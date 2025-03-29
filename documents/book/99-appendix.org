@@ -14,7 +14,7 @@ This appendix presents and explains the {{{ews}}} (EWS) configuration. The confi
 This configuration is a starting point for your Emacs journey. Feel free to modify any part of the EWS initialisation file and study its effects. You can find the latest version of this configuration on GitHub:
 
 #+begin_example
-github.com/pprevos/emacs-writing-studio
+https:://github.com/pprevos/emacs-writing-studio
 #+end_example
 
 This repository is not actively maintained. For beginning Emacs users, the configuration acts as a starting point to develop a configuration. More advanced users can copy ideas. The code will only be updated when there are bugs due to future changes in packages or Emacs itself.
@@ -22,7 +22,7 @@ This repository is not actively maintained. For beginning Emacs users, the confi
 #+begin_src elisp :exports none
   ;;; init.el --- Emacs Writing Studio init -*- lexical-binding: t; -*-
 
-  ;; Copyright (C) 2024 Peter Prevos
+  ;; Copyright (C) 2024-2025 Peter Prevos
 
   ;; Author: Peter Prevos <peter@prevos.net>
   ;; Maintainer: Peter Prevos <peter@prevos.net>
@@ -43,13 +43,12 @@ This repository is not actively maintained. For beginning Emacs users, the confi
   ;; You should have received a copy of the GNU General Public License
   ;; along with this program. If not, see <https://www.gnu.org/licenses/>.
   ;;
-  ;;; Commentary:
+  ;; Emacs Writing Studio init file: https://lucidmanager.org/tags/emacs
   ;;
-  ;; Emacs Writing Studio init file
-  ;; https://lucidmanager.org/tags/emacs
+  ;; This init file is tangled from: documents/ews-book/99-appendix.org
   ;;
-  ;; This init file is tangled from the Org mode source:
-  ;; documents/ews-book/99-appendix.org
+  ;; This file is a starter kit for developing a configuration and is not a package
+  ;; that is regularly updated.
   ;;
   ;;; Code:
 #+end_src
@@ -61,11 +60,11 @@ The first part of the configuration sets the basic principles of the EWS configu
 The first part of the configuration checks if the latest version of Emacs is running. EWS leverages some of the newest functionality, so you must install this version. Note that the expression or higher ~(< emacs-major-version 29)~ is in Polish notation. In Lisp, the operator is placed before the operands, unlike the more common infix notation, which places the operator between the operands, e.g. ~emacs-major-version < 29~. 
 
 #+begin_src elisp :exports none
-  ;; Emacs 29 avaibale?
+  ;; Emacs 29 or higher?
 #+end_src
 #+begin_src elisp
   (when (< emacs-major-version 29)
-    (error "Emacs Writing Studio requires Emacs version 29 or later"))
+    (error "Emacs Writing Studio requires version 29 or later"))
 #+end_src
 
 Any changes made by the Emacs customisation system in EWS are stored in =custom.el= instead of directly to the init file. This approach prevents the customisation system from modifying the initialisation file. The =custom.el= file is loaded when found. If variables are set in both the custom and the init files, the =init.el= file takes preference.
@@ -74,13 +73,18 @@ Any changes made by the Emacs customisation system in EWS are stored in =custom.
   ;; Custom settings in a separate file and load the custom settings
 #+end_src  
 #+begin_src elisp
-  (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (setq-default custom-file (expand-file-name
+  			     "custom.el"
+  			     user-emacs-directory))
 
   (load custom-file :no-error-if-file-is-missing)
 #+end_src
 
-Keyboard shortcuts defined in EWS all use the =C-c w= prefix. Access the ~customise-variable~ function with the =C-c w v= shortcut.
+Access the ~customise-variable~ function with the =C-c w v= shortcut.
 
+#+begin_src elisp :exports none
+  ;; Bind key for customising variables
+#+end_src
 #+begin_src elisp
   (keymap-global-set "C-c w v" 'customize-variable)
 #+end_src
@@ -116,14 +120,15 @@ The Use-Package system consists of a set of statements between parenthesis, whic
 
 To read the finer details of the Use-Package macro, read the manual with =C-h R use-package=.
 
-** Emacs Writing Studio functionality
+** Emacs Writing Studio convenience functions
 EWS also provides a range of bespoke convenience functions for various aspects of the writing process. Ensure you download this file from the EWS repository.
 
 #+begin_src elisp :exports none
   ;; Load EWS functions
 #+end_src
 #+begin_src elisp
-  (load-file (concat (file-name-as-directory user-emacs-directory) "ews.el"))
+  (load-file (concat (file-name-as-directory user-emacs-directory)
+  		   "ews.el"))
 #+end_src
 
 The ~ews-missing-executables~ function checks if external software is available on your system. Emacs writes a message in the minibuffer if any of the recommended tools are missing. You can jump to the Messages buffer with =C-h e= to review the output. Emacs will function normally when this software is unavailable, but some features might not work.
@@ -134,33 +139,22 @@ This function checks whether all these packages are available on your system. Fo
 
 #+begin_src elisp :exports none
   ;; Check for missing external software
-  ;;
-  ;; - soffice (LibreOffice): View and create office documents
-  ;; - zip: Unpack ePub documents
-  ;; - pdftotext (poppler-utils): Convert PDF to text
-  ;; - ddjvu (DjVuLibre): View DjVu files
-  ;; - curl: Reading RSS feeds
-  ;; - convert (ImageMagick) or gm (GraphicsMagick): Convert image files  ;; - latex (TexLive, MacTex or MikTeX): Preview LaTex and export Org to PDF
-  ;; - hunspell: Spellcheck. Also requires a hunspell dictionary
-  ;; - grep: Search inside files
-  ;; - gs (GhostScript) or mutool (MuPDF): View PDF files
-  ;; - mpg321, ogg123 (vorbis-tools), mplayer, mpv, vlc: Media players
-  ;; - git: Version control
 #+end_src
 #+begin_src elisp
-  (ews-missing-executables
-   '("soffice"
-     "zip"
-     "pdftotext"
-     "ddjvu"
-     "curl"
-     ("convert" "gm")
-     "latex"
-     "hunspell"
-     "grep"
-     ("gs" "mutool")
-     ("mpg321" "ogg123" "mplayer" "mpv" "vlc")
-     "git"))
+    (ews-missing-executables
+     '(("gs" "mutool")
+       "pdftotext"
+       "soffice"
+       "zip"
+       "ddjvu"
+       "curl"
+       ("mpg321" "ogg123" "mplayer" "mpv" "vlc") 
+       ("grep" "ripgrep")
+       ("convert" "gm")
+       "dvipng"
+       "latex"
+       "hunspell"
+       "git"))
 #+end_src
 
 ** Look and feel
@@ -186,6 +180,16 @@ In Emacs Lisp, =t= means TRUE and =nil= is equivalent to FALSE. Emacs documentat
   (setq-default use-short-answers t)
 #+end_src
 
+The Scratch Buffer is by default set to Emacs Lisp mode. This is not so useful for authors, so we change this to Org mode and add a new default message.
+
+#+begin_src elisp :exports none
+  ;; Scratch buffer settings
+#+end_src
+#+begin_src elisp
+  (setq initial-major-mode 'org-mode
+        initial-scratch-message "#+title: Emacs Writing Studio\n#+subtitle: Scratch Buffer\nThe text in this buffer is not saved when exiting Emacs!\n\n")
+#+end_src
+
 The next two sections of code further improve the Emacs interface with two packages by Emacs guru Protesilaos Stavrou.
 
 The spacious padding package creates space around windows, preventing crammed text on your screen. The =:init= section contains code Emacs evaluates when loading the package. In this case, it enables the Spacious Padding mode. The =:custom= section also sets the line spacing to a more generous value. You can read the manual for this mode with =C-h R spacious=.
@@ -199,7 +203,6 @@ This configuration also modifies the ~line-spacing~ variable to create some spac
   (use-package spacious-padding
     :custom
     (line-spacing 3)
-    :init
     (spacious-padding-mode 1))
 #+end_src
 
@@ -211,11 +214,7 @@ The =:custom= section of the macro sets some variables to define fonts. This sec
 
 The following section binds some keys to commands to toggle between dark and light or select any available modus themes. All EWS custom keybindings start with =C-c w= as the prefix key and =C-c w t= as the prefix key for the theme-related functions. You can obviously change these to suit your preferences. Read the Modus Themes package manual for details with =C-h R modus=.
 
-The ~consult-theme~ command invoke the consult package to help you select between installed themes.
-
-As a bonus, this code also installs Port's Ef-Themes package, which is a wonderful collection of light and dark themes.
-
-To set a default theme, run the ~customize-themes~ command and select your preferred version. Click the button to store your chosen default in the =custom.el= file
+The ~consult-theme~ command invoke the consult package to help you select between installed themes. To set a default theme, run the ~customize-themes~ command and select your preferred version. Click the button to store your chosen default in the =custom.el= file. As a bonus, this code also installs Port's Ef-Themes package, which is a wonderful collection of light and dark themes.
 
 #+begin_src elisp :exports none
   ;; Modus and EF Themes
@@ -226,7 +225,8 @@ To set a default theme, run the ~customize-themes~ command and select your prefe
     (modus-themes-italic-constructs t)
     (modus-themes-bold-constructs t)
     (modus-themes-mixed-fonts t)
-    (modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
+    (modus-themes-to-toggle '(modus-operandi-tinted
+  			    modus-vivendi-tinted))
     :bind
     (("C-c w t t" . modus-themes-toggle)
      ("C-c w t m" . modus-themes-select)
@@ -326,6 +326,17 @@ Due to the naming conventions in Emacs, most functions start with the package na
     (which-key-sort-order 'which-key-description-order))
 #+end_src
 
+** Mouse use
+This code snippet enables a contextual popup menu when clicking the right mouse button.
+
+#+begin_src elisp :exports none
+  ;; Contextual menu with right mouse button
+#+end_src
+#+begin_src elisp
+  (when (display-graphic-p)
+    (context-menu-mode))
+#+end_src
+
 ** Improved help functionality
 Emacs is advertised as a "self-documenting text editor". While this is not entirely correct (if only computer code could document itself), every aspect of Emacs is documented within the source code.
 
@@ -344,7 +355,7 @@ Emacs has two levels of help. Firstly, there are the manuals for Emacs itself an
 #+end_src
 
 ** Configure text modes
-Emacs is principally designed for developing computer code, so it needs some modifications to enable writing text for humans. The config first ensures that Emacs does not try to install Text-Mode as a package, because it is buult-in.
+Emacs is principally designed for developing computer code, so it needs some modifications to enable writing text for humans. The config first ensures that Emacs does not try to install Text-Mode as a package, because it is built-in.
 
 Secondly, we hook Visual Line Mode to Text Mode. Visual Line mode wraps long lines to the nearest word to fit in the current window, as is common in word processing software.
 
@@ -370,7 +381,7 @@ By default, Emacs does not replace text when you select a section and start typi
 ** Spellchecking
 Writing without automated spell-checking would be quite annoying, even for the most experienced authors. The Flyspell package interfaces with the Hunspell software and the relevant dictionary to check spelling on the fly.
 
-You must change the standard dictionary to your local variety with the ~ews-hunspell-dictionaries~  variable. EWS uses this particular variable because the dictionaries are set in two places to enable multilingual spelling. You can set multiple dictionaries for the same buffer. In my configuration I use ="en_AU,nl_NL"= so I can write in either the Australian variant of English of Dutch without having to change dictionaries. Section [[#sec-spelling]] explains how to use this package.
+You must change the standard dictionary to your local variety by customising  the ~ews-hunspell-dictionaries~  variable. EWS uses this particular variable because the dictionaries are set in two places to enable multilingual spelling. You can set multiple dictionaries for the same buffer. In my configuration I use ="en_AU,nl_NL"= so I can write in either the Australian variant of English or Dutch without having to change dictionaries. Section [[#sec-spelling]] explains how to use this package.
 
 #+begin_src elisp :exports none
   ;; Check spelling with flyspell and hunspell
@@ -503,27 +514,10 @@ The Nov package by Vasilij Schneidermann provides valuable functionality for vie
 
 Emacs can read documents produced by standard office software. To achieve this, it converts these files to PDF with LibreOffice and presents them as such.
 
-A confirmed bug in Org mode (version 9.6.15) overrides the associations between LibreOffice and Doc View mode. The code below is a workaround for reinstating the desired behaviour and associating the various file extensions with Doc View. This bug fix is optional if you use Org 9.7 and beyond.
-
-#+begin_src elisp :exports none
-  ;; Reading LibreOffice files
-  
-  ;; Fixing a bug in Org Mode pre-9.7
-  ;; Org mode clobbers associations with office documents
-#+end_src
-#+begin_src elisp
-  (use-package ox-odt
-    :ensure nil
-    :config
-    (add-to-list 'auto-mode-alist
-                 '("\\.\\(?:OD[CFIGPST]\\|od[cfigpst]\\)\\'"
-                   . doc-view-mode-maybe)))
-#+end_src
-
 ** Bibliographies
 These lines of code add two field types to BibTeX entries: keywords to help you order your literature and a link to a file so you can read any attachments in Emacs.
 
-The ~ews-register-bibtex~ function assigns all =.bib= files in the ~ews-bibliography-directory~ variable to the list of global BibTeX files. You need to set this variable to the location where you store your bibliography. Section [[#sec-bib]] explains creating and managing a bibliography. We use a special variable to ensure other variables have the same value.
+The ~ews-register-bibtex~ function assigns all files with the =.bib= extension in the directory stored in the ~ews-bibliography-directory~ variable to the list of global BibTeX files. You need to set this variable to the location where you store your bibliography. Section [[#sec-bib]] explains creating and managing a bibliography. We use a special variable to ensure other variables have the same value.
 
 #+begin_src elisp :exports none
   ;; Managing Bibliographies
@@ -590,7 +584,8 @@ The Elfeed package helps with reading RSS files, and the Elfeed-Org package lets
     (elfeed-org)
     :custom
     (rmh-elfeed-org-files
-     (list (concat (file-name-as-directory (getenv "HOME")) "elfeed.org"))))
+     (list (concat (file-name-as-directory (getenv "HOME"))
+  		 "elfeed.org"))))
 #+end_src
 
 The Org-Webtools package makes it easy to insert hyperlinks by converting the content of the kill ring to an Org hyperlink.
@@ -631,7 +626,9 @@ The EMMS (Emacs MultiMedia System) package provides an interface to various mult
 
 ** Opening files with external software
 The OpenWith package by Markus Trisk lets you open files in external software. Refer to sections [[#sec-openwith]] and [[#sec-find-notes]] for further details.
-
+#+begin_src elisp :exports none
+  ;; Open files with external applications
+#+end_src
 #+begin_src elisp
   (use-package openwith
     :config
@@ -642,9 +639,9 @@ The OpenWith package by Markus Trisk lets you open files in external software. R
 
 * Ideation
 ** Org capture
-The possibilities for capture templates are extensive and depend on your use cases. This configuration is only an example of the options. The Org documentation provides lots of detail (=C-h R org <ret> capture=). You will also need to customise the ~org-default-notes-file~ variable.
+The possibilities for capture templates are extensive and depend on your use cases. This configuration is only an example of the options. The Org documentation provides lots of detail (=C-h R org <ret> capture=). The default Org settings save your fleeting notes to a hidden file (=~/.notes.org=). Customise the ~org-default-notes-file~ variable.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Fleeting notes
 #+end_src
 #+begin_src elisp
@@ -703,11 +700,9 @@ The EWS package includes a convenience function to improve how Denote displays l
      ("C-c w d R" . denote-rename-file-using-front-matter)))
 #+end_src
 
-The Consult package provides some convenience functionality to make life easier.
+The Consult package provides some convenience functionality to make life in Emacs easier in many ways. The ~consult-grep~ function lets you search through files in the current directory. The search functionality requires access to the Grep software. The ~consult-org-heading~ command provides a table of contents of the Org mode file to quickly move around a large file. 
 
-The ~consult-org-heading~ command provides a table of contents of the Org mode file to quickly move around a large file. The ~consult-grep~ function lets you search through files in the current directory. The search functionality requires access to the Grep software. 
-
-Consult has a lot more functionality that replaces some base Emacs commands with more convenient version. Most of these have not been enabled to ensure we stay as close as possible to vanilla Emacs. The Consult online documentation provides detailed descriptions of these enhanced commands.
+Consult has a lot more functionality that replaces some base Emacs commands with more convenient version. Most of these have not been enabled to ensure we stay as close as possible to vanilla Emacs. The Consult documentation provides detailed descriptions of these enhanced commands.
 
 #+begin_src elisp :exports none
   ;; Consult convenience functions
@@ -716,7 +711,9 @@ Consult has a lot more functionality that replaces some base Emacs commands with
   (use-package consult
     :bind
     (("C-c w h" . consult-org-heading)
-     ("C-c w g" . consult-grep)))
+     ("C-c w g" . consult-grep))
+    :config
+    (add-to-list 'consult-preview-allowed-hooks 'visual-line-mode))
 #+end_src
 
 Consult Notes is a convenience package that builds on Consult. It provides access to Denote files and also lets you search through your notes.
@@ -726,6 +723,8 @@ Consult Notes is a convenience package that builds on Consult. It provides acces
 #+end_src
 #+begin_src elisp
   (use-package consult-notes
+    :custom
+    (consult-notes-denote-display-keywords-indicator "_")
     :bind
     (("C-c w d f" . consult-notes)
      ("C-c w d g" . consult-notes-search-in-all-notes))
@@ -782,7 +781,7 @@ The Denote-Explore package provides convenience functions to manage your collect
      ;; Visualise denote
      ("C-c w x n" . denote-explore-network)
      ("C-c w x v" . denote-explore-network-regenerate)
-     ("C-c w x D" . denote-explore-degree-barchart)))
+     ("C-c w x D" . denote-explore-barchart-degree)))
 #+end_src
 
 * Production
@@ -848,7 +847,7 @@ This configuration sets the global bibliography equal to the ~ews-bibtex-files~ 
 Emacs can hook into the dictionary server at =dict.org= and the Powerthesaurus package integrates with =powerthesaurus.org=. Refer to section [[#sec-qa]] for details.
 
 #+begin_src elisp :exports none
-  ;; Lookup words in the online dictionary
+  ;; Lookup words in online dictionaries
 #+end_src
 #+begin_src elisp
   (use-package dictionary
@@ -856,8 +855,7 @@ Emacs can hook into the dictionary server at =dict.org= and the Powerthesaurus p
     (dictionary-server "dict.org")
     :bind
     (("C-c w s d" . dictionary-lookup-definition)))
-#+end_src
-#+begin_src elisp
+
   (use-package powerthesaurus
     :bind
     (("C-c w s p" . powerthesaurus-transient)))
@@ -871,8 +869,7 @@ The Writegood package helps to detect weasel words, passive writing, and repeate
 #+begin_src elisp
   (use-package writegood-mode
     :bind
-    (("C-c w s r" . writegood-reading-ease)
-     ("C-c w s l" . writegood-grade-level))
+    (("C-c w s r" . writegood-reading-ease))
     :hook
     (text-mode . writegood-mode))
 #+end_src
@@ -954,11 +951,7 @@ Org is fantastic, but it is not the only text mode useful for authors. EWS insta
 
 * Publication
 ** Basic settings
-This snippet sets some basic export settings for org mode. You can either set  these as variable to apply them to all files by default, or insert them as keywords in your front matter. 
-
-Read the Export Settings section in to Org manual for a detailed description of the possible configurations.
-
-The timestamp for exporting files is set to the European date format of day, month, and year. If you publish for American audiences, perhaps you like to modify the ~org-export-date-timestamp-format~ to ="%B %e %Y"=. These letters stand for the full name of the month, the day number without leading zero, and the year in four digits. See the documentation of the ~format-time-string~ function for details on how to format dates in other methods.
+This snippet sets some basic export settings for org mode. You can either set  these as variable to apply them to all files by default, or insert them as keywords in your front matter.  The timestamp for exporting files is set to the European date format of day, month, and year. If you publish for American audiences, perhaps you like to modify the ~org-export-date-timestamp-format~ to ="%B %e %Y"=. These letters stand for the full name of the month, the day number without leading zero, and the year in four digits. See the documentation of the ~format-time-string~ function for details on how to format dates in other methods. Read the Export Settings section in to Org manual for a detailed description of the possible configurations.
 
 #+begin_src elisp :exports none
   ;; PUBLICATION
@@ -988,7 +981,7 @@ The ox-ePub package exports Org files to the most common e-book format. The ~ox-
     (require 'ox-org))
 #+end_src
 
-** Latex
+** LaTeX
 This configuration part defines the export process from Org to TeX to PDF. This setup also removes any temporary files created in the process. You will obviously need a working version of LaTeX with all relevant packages  installed on your computer.
 
 #+begin_src elisp :exports none
@@ -1013,11 +1006,7 @@ This configuration part defines the export process from Org to TeX to PDF. This 
              "tex" "bcf"))))
 #+end_src
 
-The next part defines the EWS document class, which is used to produce the paperback version of this book.
-
-The first part of the code defines the name used in the Org file, in this case =#+latex_class: ews=. The next par is the preamble in LaTeX code. Note that backslashes need to be escaped by using two of them. Org also adds standard packages, read the documentation for ~org-latex-classes~ for details on how to modify the standard inclusions.
-
-The last section defines how the heading levels in the Org file are translated to LaTeX commands. This code defines the first three Org heading levels.
+The next section defines the EWS document class, which is used to produce the paperback version of this book. The first part of the code defines the name used in the Org file, in this case =#+latex_class: ews=. The next par is the preamble in LaTeX code. Note that backslashes need to be escaped by using two of them. Org also adds standard packages, read the documentation for ~org-latex-classes~ for details on how to modify the standard inclusions. The last section defines how the heading levels in the Org file are translated to LaTeX commands. This code defines the first three Org heading levels.
 
 #+begin_src elisp :exports none
   ;; EWS paperback configuration
@@ -1030,25 +1019,30 @@ The last section defines how the heading levels in the Org file are translated t
        "\\documentclass[11pt, twoside, hidelinks]{memoir}
         \\setstocksize{9.25in}{7.5in}
         \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
-        \\setlrmarginsandblock{2cm}{1cm}{*} 
-        \\setulmarginsandblock{1.5cm}{2.25cm}{*}
+        \\setlrmarginsandblock{1.5in}{1in}{*} 
+        \\setulmarginsandblock{1in}{1.5in}{*}
         \\checkandfixthelayout
+        \\layout
         \\setcounter{tocdepth}{0}
-        \\OnehalfSpacing
-        \\usepackage{ebgaramond}
-        \\usepackage[htt]{hyphenat}
+        \\setsecnumdepth{subsection}
+        \\renewcommand{\\baselinestretch}{1.2}
+        \\setheadfoot{0.5in}{0.75in}
+        \\setlength{\\footskip}{0.8in}
         \\chapterstyle{bianchi}
+        \\renewcommand{\\beforechapskip}{-30pt}
         \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
-        \\setsubsecheadstyle{\\normalfont \\raggedright \\textbf}
+        \\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
         \\setsubsubsecheadstyle{\\normalfont\\centering}
-        \\renewcommand\\texttt[1]{{\\normalfont\\fontfamily{cmvtt}
-          \\selectfont #1}}
-        \\usepackage[font={small, it}]{caption}
         \\pagestyle{myheadings}
+        \\usepackage[font={small, it}]{caption}
         \\usepackage{ccicons}
+        \\usepackage{ebgaramond}
         \\usepackage[authoryear]{natbib}
         \\bibliographystyle{apalike}
-        \\usepackage{svg}"
+        \\usepackage{svg}
+        \\hyphenation{mini-buffer}
+        \\renewcommand{\\LaTeX}{LaTeX}
+        \\renewcommand{\\TeX}{TeX}"
        ("\\chapter{%s}" . "\\chapter*{%s}")
        ("\\section{%s}" . "\\section*{%s}")
        ("\\subsection{%s}" . "\\subsection*{%s}")
@@ -1081,13 +1075,13 @@ The ~org-agenda-custom-commands~ variable provides a highly flexible system for 
 #+end_src
 
 ** Manage files
-The Dired package is a convenient and powerful tool for organising your drives and accessing your information. Dired lists files and directories in alphabetical order. I prefer a different view, which shows directories on top and files below them. The ~dired-listing-switches~ variable determines how files are displayed in a Dired buffer.
+The Dired package is a convenient and powerful tool for organising your drives and accessing your information. Dired lists files and directories in alphabetical order. I prefer a different view, which shows directories on top and files below them. The variable called  ~dired-listing-switches~ determines how files are displayed in a Dired buffer.
 
-The ~dired-dwim-target~ variable instructs to guess a default target directory. This means that if a Dired buffer is displayed in some window, use that directory instead of this Dired buffer's current directory.
+The ~dired-dwim-target~ variable instructs Emacs to guess a default target directory. This means that if a Dired buffer is displayed in another window, it uses that directory instead of this Dired buffer's current directory. This setting makes it easier to copy or move files between directories.
 
-The ~delete-by-moving-to-trash~ variable moves deleted files to the wastebasket instead of vanishing them into thin air.
+The ~delete-by-moving-to-trash~ variable moves deleted files to the wastebasket instead of vanishing them into thin air, so you are less likely to loose valuable work.
 
-The last line enables opening new directories in the same buffer as the current one (using the =a= key), preventing littering your session with Dired buffers. The first time you use this, Emacs asks you to confirm whether you would like to use this option.
+The last line in this part of the configuration enables opening new directories in the same buffer as the current one (using the =a= key), preventing littering your session with Dired buffers. The first time you use this, Emacs asks you to confirm whether you would like to use this option.
 
 #+begin_src elisp :exports none
   ;; FILE MANAGEMENT
@@ -1129,7 +1123,7 @@ The ~dired-narrow~ package provides some convenience functions to filter a Dired
 
 This next bit of configuration defines how Emacs manages automated backups. The default setting is that the system stores these files in the folder where the original files live, cluttering folders with copies of your stuff.
 
-The setting below modifies the =backup-directory-alist= variable so that Emacs saves all backups (indicated by ="."=) in the =bak= subdirectory of your init folder. Alternatively, you could instruct Emacs not to save backups with ~(setq-default make-backup-files nil)~. I prefer keeping backups as they have saved my bacon a few times.
+The setting below modifies the =backup-directory-alist= variable so that Emacs saves all backups (indicated by ="."=) in the =bak= subdirectory of your init folder. Alternatively, you could instruct Emacs not to save backups by setting ~make-backup-files~ to =nil=. I prefer keeping backups as they have saved my bacon a few times.
 
 This configuration also eliminates lock files, which are only useful when working in shared folders. Lock files prevent other users from opening a file when another user is already editing it, but create a lot of clutter when writing by yourself. Change this variable to =t= if you collaborate with others or maintain fles on multiple systems through a file-sharing service such as Nextcloud.
 
@@ -1216,4 +1210,3 @@ The built-in Image-Dired package can generate thumbnails from within a Dired buf
    'org-babel-load-languages
    '((dot . t))) ; this line activates GraophViz dot
 #+end_src
-
