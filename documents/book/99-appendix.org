@@ -60,7 +60,7 @@ The first part of the configuration sets the basic principles of the EWS configu
 The first part of the configuration checks if the latest version of Emacs is running. EWS leverages some of the newest functionality, so you must install this version. Note that the expression or higher ~(< emacs-major-version 29)~ is in Polish notation. In Lisp, the operator is placed before the operands, unlike the more common infix notation, which places the operator between the operands, e.g. ~emacs-major-version < 29~. 
 
 #+begin_src elisp :exports none
-  ;; Emacs 29 or higher?
+  ;; Emacs 29 available?
 #+end_src
 #+begin_src elisp
   (when (< emacs-major-version 29)
@@ -238,7 +238,7 @@ The ~consult-theme~ command invoke the consult package to help you select betwee
 The next section hooks the Variable Pitch mode to any Org buffer. This means that written prose is displayed in variable pitch, while metadata, code and other items are in fixed pitch. A hook is a construction in Emacs that associates modes with each other. In this case, variable pitch text is enabled for all text mode buffers.
 
 #+begin_src elisp :exports none
-  ;; Mixed-pich mode
+  ;; Mixed-pitch mode
 #+end_src
 #+begin_src elisp
   (use-package mixed-pitch
@@ -937,7 +937,7 @@ Org is fantastic, but it is not the only text mode useful for authors. EWS insta
 #+begin_src elisp :exports none
   ;; Enable Other text modes
   
-  ;; Fontain mode for writing scrits
+  ;; Fountain mode for writing scripts
 #+end_src
 #+begin_src elisp
   (use-package fountain-mode)
