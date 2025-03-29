@@ -30,7 +30,7 @@
 ;;
 ;;; Code:
 
-;; Emacs 29 or higher?
+;; Emacs 29 available?
 
 (when (< emacs-major-version 29)
   (error "Emacs Writing Studio requires version 29 or later"))
@@ -98,7 +98,7 @@
 ;; Scratch buffer settings
 
 (setq initial-major-mode 'org-mode
-      initial-scratch-message "#+title: Scratch Buffer\n#+subtitle: Scratch Buffer\nThe text in this buffer is not saved when exiting Emacs.\n\n")
+      initial-scratch-message "#+title: Emacs Writing Studio\n#+subtitle: Scratch Buffer\nThe text in this buffer is not saved when exiting Emacs!\n\n")
 
 ;; Spacious padding
 
@@ -123,7 +123,7 @@
 
 (use-package ef-themes)
 
-;; Mixed-pich mode
+;; Mixed-pitch mode
 
 (use-package mixed-pitch
   :hook
@@ -368,6 +368,8 @@
    ("<XF86AudioNext>" . emms-next)
    ("<XF86AudioPlay>" . emms-pause)))
 
+;; Open files with external applications
+
 (use-package openwith
   :config
   (openwith-mode t)
@@ -520,7 +522,7 @@
       org-cite-follow-processor 'citar
       org-cite-activate-processor 'citar)
 
-;; Lookup words in the online dictionary
+;; Lookup words in online dictionaries
 
 (use-package dictionary
   :custom
@@ -573,7 +575,7 @@
 
 ;; Enable Other text modes
 
-;; Fontain mode for writing scrits
+;; Fountain mode for writing scripts
 
 (use-package fountain-mode)
 

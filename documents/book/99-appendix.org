@@ -844,7 +844,7 @@ This configuration sets the global bibliography equal to the ~ews-bibtex-files~ 
 #+end_src
 
 ** Quality assurance
-Emacs can hook into the dictionary server at =dict.org= and the Powerthesaurus package integrates with =powerthesaurus.org=. Refer to section [[#sec-qa]] for details.
+Emacs can hook into the dictionary server at =dict.org= and the Power Thesaurus package integrates with =powerthesaurus.org=. Refer to section [[#sec-qa]] for details.
 
 #+begin_src elisp :exports none
   ;; Lookup words in online dictionaries
