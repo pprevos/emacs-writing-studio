@@ -9,7 +9,7 @@
 - [-] [[https://www.youtube.com/watch?v=-mifMOjRBr8][Emacs Repeat Commands (Advanced Topic) - YouTube]]
 :END:
 
-Now that you have reached the end of this book, you know enough to research, write and publish a book, dissertation, or whatever else you want to share with the world. Working your way through the {{{ews}}} (EWS) chapters, you have mastered the steepest part of the Emacs learning curve. However, after using Emacs for a while, you will undoubtedly want to fine-tune it to fit your needs. There are five stages towards becoming an Emacs ninja, the first of which you are taking right now:
+Now that you have reached the end of this book, you know everything needed to research, write and publish a book, dissertation, or whatever else you want to share with the world with Emacs. Working your way through the {{{ews}}} (EWS) chapters, you have mastered the steepest part of the learning curve. However, after using Emacs for a while, you will undoubtedly want to fine-tune it to fit your needs. There are five stages towards becoming an Emacs ninja, the first of which you are taking right now:
 
 1. Understand the basics
 2. Modify the configuration
@@ -20,16 +20,16 @@ Now that you have reached the end of this book, you know enough to research, wri
 This final chapter puts you on a path to mastering Emacs by providing suggestions for deepening your knowledge.
 
 * Understand the basics
-EWS covers most aspects of using Emacs as far as they relate to writing prose. However, this book is not a comprehensive manual of Emacs but an opinionated description of achieving a series of tasks. The text in this book is opinionated because it describes only one method to complete each objective.
+EWS covers most aspects of using Emacs as far as they relate to writing prose. However, this book is not a comprehensive manual of Emacs but an opinionated description of achieving a series of tasks. The text in this book is opinionated because it describes only one method to complete each objective. 
 
-The flexible nature of Emacs means that there is always more than one way to achieve the same outcome. This freedom is both a strength and a weakness, as it can create unnecessary debates and confusion.
+The flexible nature of Emacs means that there is always more than one way to achieve the same outcome. This freedom is both a strength and a weakness, as it can create unnecessary debates and confusion over how to do something instead of just doing it. Donald Knuth, computer genius and original developer of LaTeX once wrote that "premature optimisation is the root of all evil". And EWS reflects this principle by providing something that works.
 
-If, after reading this book, you would like to know more or find out about different perspectives, I recommend you read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual [cite: @cameron_2005; @petersen_2022;].
+If, after reading this book, you would like to know more or find out about different ways fo doing things, then read other books such as /Learning GNU Emacs/ by Debra Cameron, /Mastering Emacs/ by Mickey Petersen or the built-in Emacs manual [cite: @cameron_2005; @petersen_2022;@stallman_2023_gnu;].
 
-Reading about Emacs is an excellent method for learning new things. Still, sometimes, you like to see somebody use the system itself. YouTube is a great place to find informative channels that discuss using Emacs, such as the highly recommended videos by Prot Stavrou and David Wilson from the System Crafters channel.
+Reading about Emacs is an excellent method for learning new things but sometimes you like to see somebody use the system. YouTube is a great place to find informative channels that discuss Emacs, such as the highly recommended videos by Prot Stavrou and David Wilson's /System Crafters/ channel. I have also published a series of videos demonstrating the capabilities of EWS.
 
 * Modify the configuration
-Emacs Writing Studio uses a no-code solution by providing a thoroughly tested configuration and using the customisation front-end to configure Emacs. There will come a time when you would like to change some of the defaults directly inside the init file, which means you need to learn some Emacs Lisp.
+Emacs Writing Studio provides a no-code solution by providing a thoroughly tested configuration and using the customisation front-end to configure Emacs. There will come a time when you would like to change some of the defaults directly inside the init file ,or add additional packages, which means you need to learn some Emacs Lisp.
 
 So why would you want to configure Emacs by writing code instead of the modern graphical features provided by other programs? Commercial software provides graphical menus to define how it operates. For example, in figure [[fig-graphical-config]], you might tick a box, select an item in a list, or enter a value in a text box to configure the program according to your wishes.
 
@@ -78,6 +78,21 @@ The secret to good keyboard shortcuts is to encode semantic information, so almo
 
 Some people dislike the Emacs keyboard defaults because they require frequent use of the modifier keys. They suggest that repetitive use of these keys causes strain injury, the dreaded’ Emacs pinky’. Several packages, such as Evil Mode and God Mode, exist within the Emacs ecosystem that change the default keybindings to a different model. 
 
+** Additional or alternative packages
+EWS includes many packages that enhance Emacs. There are, however, alternatives and enhancements that did not make it into EWS. One of the objectives of this configuration was to stay 'as close as humanly bearable' to the vanilla Emacs experience so new users can learn how to use Emacs rather than learning a specific configuration. This section mentions some packages additional or alternative packages in case you like to try something different.
+
+EWS enhances the minibuffer completing mechanism with Vertico and associated packages. Some popular alternatives to this ecosystem are the Helm or Ivy completion frameworks. Both packages provide a diverse completion environment.
+
+Embark is another package that can enhance your Emacs experience. Embark provides functionality akin to the right-click contextual menu in graphical software using a keyboard shortcut.
+
+The built-in PDF viewer can be a bit slow and it is not a fully-featured viewer. The PDF-Tools package by Vedang Manerikar provides enhanced functionality, but it requires compiling source code to fully integrate it with Emacs.
+
+The eBib package by Joost Kremers is a management tool for BibTeX files that add to the functionality of Citar. This package does not use the completion menu but a more traditional application interface that is great to create or edit bibliography files.
+
+John Kitchin's Org-Ref package is part of his Scimax Emacs starterkit for scientists and engineers. This package includes some advanced tools to manage bibliographies and cross references in Org files and is worth checking out.
+
+These are only a very quick snapshot of some of the alternative packages you could be using. The ~list-packages~ command provides a useful interface to the list of all available packages. You can explore this interface to find interesting software or update your existing system.
+
 ** Is Emacs a productivity sink?
 Configuring Emacs can be a daunting task that can take a lot of time and become a productivity sink because of how easily it can be done. The freedom you enjoy in Emacs means that everybody has personal preferences. Emacs developers cannot cater to every personal preference, so they provide a skeleton system you must develop to suit your workflow. Emacs Lisp is like a box of Lego that you use to create toys. Working on your Emacs configuration is a lot of fun but actually playing with them is even better.
 
@@ -87,18 +102,16 @@ It can be tempting to constantly fine-tune your configuration, but this can beco
 2. /Sophisticated procrastination/: Fake productivity, e.g. Emacs hacking, switching productivity tools, taking notes for volume instead of quality.
 3. /Productive procrastination/: Daydreaming.
 
-Tinkering with your Emacs configuration is not as bad as nihilistic procrastination but can become a form of fake productivity. The productivity gains from fine-tuning your Emacs to cut out a few keystrokes from your workflow can take more time than you will save with your new workflow over the rest of your lifetime. The act of writing is about much more than the number of words you can type into your buffer. Writing is as much a contemplative act as it is about keyboard efficiency.
-
-The EWS configuration will help you reduce the time it takes to configure Emacs to suit your preferred workflow.
+Tinkering with your Emacs configuration is not as bad as nihilistic procrastination but can become fake productivity. The productivity gains from fine-tuning your Emacs to cut out a few keystrokes from your workflow can take more time than you will save with your new workflow over the rest of your lifetime. The act of writing is about much more than the number of words you can type into your buffer. Writing is as much a contemplative act as it is about keyboard efficiency.
 
 * Create functions
-If a computer is, in the words of Steve Jobs, a "bicycle for the mind", then Emacs is the Hot Rod of the mind, providing ultimate computing freedom. Writing functions and commands converts your plain /Emacs Writing Studio/ into your personal Hot Rod of computing 
+If a computer is, in the words of Steve Jobs, a "bicycle for the mind", then Emacs is the Hot Rod of the mind, providing ultimate computing freedom.
 
 The third step in total computing freedom is writing bespoke functions to undertake tasks specific to your workflow. Most Emacs code exists because a user wants to achieve something that neither Emacs nor any existing package can do. The Emacs way is for you to develop your solution to the problem.
 
 The code that runs Emacs is, for the most significant part, written as a collection of Elisp functions. The simplistic definition of a function is that it converts an input into an output. For example, every time you hit a letter on the keyboard in Emacs, the ~self-insert~ function turns the critical press into a character in the open buffer.
 
-The code below shows the architecture of a simple Emacs function. When you run this function, Emacs will show a greeting in the echo area, extracting your name from the system.
+The code below shows the architecture of a simple Emacs function. When you run this command, Emacs will show a greeting in the echo area, extracting your name from the system.
 
 #+begin_src elisp :eval no
   (defun ews-greet-user ()
@@ -109,14 +122,14 @@ The code below shows the architecture of a simple Emacs function. When you run t
 
 Now, let's break down how this function works:
 
-- The function starts with the ~defun~ macro to define a new function. In this case, the name of the function is ~ews-greet-user~. The function name starts with ~ews~ following informal naming conventions. The parenthesis at the end is empty, which means that this function has no input.
-- The second line describes what the function does, which shows why Emacs is self-documenting. Each function in the system has a documentation string, which you can read with =C-h v=.
-- The ~(interactive)~ part turns the function into a command. This means that you can call it using =M-x ews-greet-user= or bind it to a key sequence.
-- The last line places the message in the echo area with the ~message~ function. In this case, the =%s= is replaced by the content of the ~user-full-name~ variable.
+- The function starts with the ~defun~ macro to define a new function. In this case, the name of the function is ~ews-greet-user~. The function name starts with ~ews~ following informal naming conventions to start function names with a group or package name. The parentheses at the end are empty, which means that this function has no input.
+- The second line describes what the function does. Each function in the system has a documentation string, which you can read with =C-h f=. For interactive functions, the first line of these help files is also shown in the completion menu in the minibuffer when using =M-x=.
+- The ~(interactive)~ line converts the function into a command. This means that you can call it using =M-x ews-greet-user=, or bind it to a key sequence.
+- The last line displays the message in the echo area with the ~message~ function. In this case, the =%s= is replaced by the content of the ~user-full-name~ variable.
 
-You can write this function in the scratch buffer to try it out. Then, you need to activate it by placing the cursor after the last closing parenthesis and using =C-x C-e= (~eval-last-sexp~). This action registers the function in memory so you can call it with =M-x=.
+You can write this function in the scratch buffer to try it out. Then, you need to activate it by placing the cursor after the last closing parenthesis and using =C-x C-e= (~eval-last-sexp~). This action registers the function in memory after which you can call it with =M-x=.
 
-You could add this function to your init file to make it available every Emacs session. However, I doubt its usefulness in this example.
+You could add this function to your init file to make it available every Emacs session. However, I doubt its usefulness of this example.
 
 How you use functions is only limited by your imagination. EWS comes with a set of bespoke functions in the =ews.el= file that enhances some of the basic functionality. To see a list of all available EWS commands use =M-x ^ews=. This sequence shows all commands in the minibuffer completion menu that start with (=^=) 'ews'.
 

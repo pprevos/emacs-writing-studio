@@ -35,6 +35,7 @@
 % Logo and Publisher Information
 \vspace{5cm}
 \begin{center}
+    \hspace{-1.2cm}
     \includegraphics[height=18mm]{images/logo-bw.png}
     \setlength{\unitlength}{1mm}
     \begin{picture}(0, 18)
@@ -48,9 +49,9 @@
 \newpage
 \thispagestyle{empty}
 \noindent\makebox[\textwidth][c]{%
-\begin{minipage}[t]{0.8\textwidth}
+\begin{minipage}[t]{1\textwidth}
     \begin{center}
-        \ccLogo{} \small Peter Prevos (2024)\\
+        \ccLogo{} \small Peter Prevos (2025)\\
         \vspace{1em}
         Kangaroo Flat, Australia\\
         {\small \href{https://peterprevos.com}{peterprevos.com}}
@@ -63,7 +64,8 @@
     \vspace{1.5em}
 
     \begin{center}
-        {\small This work is licensed under a Creative Commons }\emph{\small Attribution-Share Alike}{\small 3.0 Australia License. You are free to share—to copy, distribute, and transmit the work under the following conditions:}\\
+        {\small This work is licensed under a Creative Commons }\emph{\small Attribution-Share Alike 3.0 Australia}
+        {\small license. You are free to share—to copy, distribute, and transmit the work under the following conditions:}\\
         \vspace{0.5em}
         \ccAttribution{} \emph{\small Attribution}{\small : You must attribute the work in the manner specified by the author (but not in any way that suggests that they endorse you or your use of the work).}\\
         \vspace{0.5em}
@@ -75,7 +77,7 @@
     \begin{center}
         {\small Written in Emacs \href{https://orgmode.org/}{Org Mode}. Typeset in \LaTeX.}\\
         \\
-        {\small Cover design by Angie at }\emph{\small pro\_ebookcovers}{\small .}\\\\
+        {\small Cover design by ***}{\small .}\\\\
     \end{center}
 \end{minipage}}
 

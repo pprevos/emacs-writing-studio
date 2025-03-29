@@ -1,9 +1,8 @@
 #+title:        Emacs Writing Studio
 #+subtitle:     A Practical Guide to Plain Text Writing and Publishing
 #+author:       Peter Prevos
-#+date:                   {{{time(%Y-%m-%e)}}}
 #+publisher:    Third Hemisphere Publishing
-#+license:      This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Australia License.
+#+license:      Creative Commons Attribution-Share Alike 3.0 Australia License
 #+description:  Emacs Writing Studio by Peter Prevos is a comprehensive guide for writers seeking to streamline their workflow using Emacs. The book covers everything from organising ideas and writing distraction-free to publishing in multiple formats. It’s perfect for both beginners and experienced Emacs users, offering practical tips and a tailored configuration to enhance your writing process.
 #+keywords:     Emacs, writing, productivity
 #+subject:      Emacs, writing, productivity
@@ -14,9 +13,11 @@
 #+cite_export:  csl ../apa6.csl
 #+latex_class:  ews
 #+startup:      num content
-#+options:      html-postamble:nil tex:dvipng toc:nil
+#+options:      html-postamble:nil tex:dvipng toc:nil date:nil
 #+macro:        ews /Emacs Writing Studio/
 #+include:      "00-colophon.org"
+#+LATEX_HEADER: \usepackage{fancyvrb}
+#+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\footnotesize}
 
 * Foreword
 :PROPERTIES:
@@ -97,6 +98,5 @@
 
 * Appendix
 #+include: "99-appendix.org" :lines "2-"
-
 * References
 #+print_bibliography:

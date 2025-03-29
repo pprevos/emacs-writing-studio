@@ -8,19 +8,17 @@
 - [X] [[denote:20230716T025508][Plain Text - Dylan Beattie]]
 :END:
 
-The official tagline of Emacs is that it is an "extensible self-documenting text editor". These words barely do justice to Emacs because they focus on its original purpose as a software development tool. Emacs is a multi-purpose computing environment that can help you manage your information, track projects, write and publish articles, books, websites and any other text-based activity. Emacs is not a productivity hack; it is a productivity hacking system. Emacs is the Swiss army chainsaw of productivity tools.
+The official tagline of Emacs is that it is an "extensible self-documenting text editor". These somewhat opaque words barely do justice to Emacs because they focus on its original purpose as a software development tool. Emacs is a multi-purpose computing environment that can help you manage your information, track projects, write and publish articles, books, websites and any other text-based activity. Emacs is not a productivity hack; it is a productivity hacking system. Emacs is the Swiss army chainsaw of productivity tools.
 
-Richard Stallman released the first version of Emacs over forty years ago [cite:@stallman_1981a]. Software that old might seem obsolete, but a vibrant community of developers continually improves the system. Emacs being extensible means that users configure it to their personal needs. An Emacs configuration instructs the system to behave they way you want it to, such as keyboard shortcuts and additional functionality. Emacs is also extensible through the thousands of freely available packages. An Emacs package is a plugin that adds new capabilities to the system or it enhances existing ones, like an app on your phone.
+Development of Emacs (editor macros) systems started in the 1970s. Software that old might seem obsolete, but a vibrant community of developers continually improves the system. Emacs being extensible means that users configure it to their personal needs. An Emacs configuration instructs the system to behave they way you want it to, such as keyboard shortcuts and additional functionality. Emacs is also extensible through the thousands of freely available packages. An Emacs package is a plugin that adds new capabilities to the system or it enhances existing ones, like an app on your phone.
 
-Many versions of Emacs have existed over the decades. The currently most widely used version is GNU Emacs, first released by Richard Stallman in 1984 [cite:@johnson_2022]. GNU Emacs (further referred to as Emacs) is free software released by the Free Software Foundation. The foundation loosely defines free software as:
+Many versions of Emacs have existed over the decades. The currently most widely used version is GNU Emacs, first released by Richard Stallman in 1984 [cite:@stallman_1981a;@johnson_2022]. GNU Emacs (further referred to as Emacs) is free software released by the Free Software Foundation. Free software is sometimes called 'libre software' to emphasise the freedom aspect over the its monetary value. The foundation loosely defines free software as:
 
 #+begin_quote
 “Free software” means software that respects users' freedom and community. Roughly, it means that the users have the freedom to run, copy, distribute, study, change and improve the software. Thus, "free software" is a matter of liberty, not price. To understand the concept, you should think of "free" as in "free speech", not as in "free beer".
 #+end_quote
 
-Free software is sometimes called 'libre software' to emphasise the freedom aspect over the its monetary value.
-
-Emacs is a text editor, but this does not make sense to authors. From an author's perspective, Emacs is a text /processor/ because editing is only one step in the writing process. A text editor is a tool for software developers to write code, and a text processor is a tool for authors to write prose. EWS is a bespoke configuration that transforms Emacs into a tool for authors, converting a software editor to a text processor.
+Emacs is a officially text editor, but this does not make sense to authors. From an author's perspective, Emacs is a text /processor/ because editing is only one step in the writing process. A text editor is a tool for software developers to write code, and a text processor is a tool for authors to write prose. EWS is a bespoke configuration that transforms Emacs into a tool for authors, converting a software editor to a text processor.
 
 * Why use Emacs?
 When working on a writing project authors need a collection of tools to ge the job done. They jot down notes in a research tool, meticulously build bibliographies in a database. Then they write in a familiar word processor. To stay on top of their deadlines, they juggle a productivity tool for managing projects. Finally, after hours of focused work, the researcher might unwind with a quick game of Tetris to take a well-deserved break from the application circus.
@@ -59,7 +57,7 @@ Plain text most commonly has a =.txt= extension and does not have any formatting
 
 Plain text can be read across all computer systems, so you never have to worry about locking your writing into a proprietary format or being stuck using a particular software package. Anything you write in Emacs can be read with NotePad, TextEdit or any other such software. The only difference is that other programs don't have the versatility of Emacs. Plain text is not a niche application. This format has basically remained unchanged for decades and is unlikely to fade away in the future.
 
-Text modes can display ‘graphics’. When I went to primary school in the 1970s, our teacher showed us some computer art. The artwork consisted of printed characters that resemble an image, such as this kitten (source: [[https://www.asciiart.eu/][asciiart.eu]]). However, there is no need to resort to these ancient techniques as Emacs can also display images.
+Text modes can also display ‘graphics’. When I went to primary school in the 1970s, our teacher proudly showed us some computer art. The artwork consisted of printed alphanumeric characters that resembled an image, such as this kitten (source: [[https://www.asciiart.eu/][asciiart.eu]]). Some people still create ASCII art, as it is called to adorn computer code. However, there is no need to resort to these ancient techniques as Emacs can also display images in standard formats such as =PNG= and =JPG=.
 
 #+begin_example
  /\_/\
@@ -76,7 +74,7 @@ The graphical approach distracts the mind from the content and lures the user in
 
 Plain text uses the /What You See is What You Mean/ (WYSIWYM) approach. Instead of focusing on the design of the document, a WYSIWYM editor preserves the intended meaning of each element. Sections, paragraphs, illustrations, and other document elements are labelled as such using various conventions [cite:@khalili_2015]. In plain text, the content and semantics are directly visible and changeable by the user. 
 
-Regular plain text files are the most rudimentary format and don’t contain any semantics. Other plain text formats like HTML, LaTeX, Markdown and Org include instruction sets to define the final result (the markup). Table [[tab-plaint-text]] shows how to denote /italic text/ in four popular plain text formats.
+Regular plain text files are the most rudimentary format and don’t contain any semantics. Other plain text formats like HTML, LaTeX (pronounced /la-tech/, derived from the Greek word τέχνη), Markdown and Org include instruction sets to define the final result (the markup). Table [[tab-plaint-text]] shows how to denote /italic text/ in four popular plain text formats.
 
 #+caption: Italic text in common plain text formats.
 #+name: tab-plaint-text
@@ -106,10 +104,12 @@ In summary, the benefits of writing in plain text over using graphical software 
 4. Ability to export to any format.
 
 * The learning curve
+:PROPERTIES:
+:ID:       556b2840-6c64-43ae-a190-27ed5b59a314
+:END:
 :NOTES:
 - [-] Learning curve graphic
 :END:
-
 Emacs has a steep learning curve because of its universe of possible configurations. To make Emacs work for you, you must learn the basic principles and some of the associated add-on packages. Emacs is more complex than other plain text processors, but it also is much more powerful than any other tool. But with this great power comes great responsibility, so you have to learn some new skills to use it as your main writing tool.
 
 The purpose of EWS is to flatten the learning curve is not to get overwhelmed by the multitudinous possibilities and master only those bits of functionality that you need for the task at hand. Even without any configuration Emacs can do a lot.
@@ -201,36 +201,54 @@ edit -> ebook  [lhead=cluster4 ltail=cluster3]
 #+caption: Emacs Writing Studio workflow.
 #+name: fig-workflow
 #+attr_html: :width 800 :alt Emacs Writing Studio workflow :title Emacs Writing Studio workflow
-#+attr_latex: :width 0.8\textwidth
+#+attr_latex: :width 1\textwidth
 #+attr_html:  :title Emacs Writing Studio workflow :alt Emacs Writing Studio workflow :width 80%
 #+RESULTS:
 [[file:images/emacs-workflow.png]]
 
-The basic principle of this workflow is that authors collect information from literature, the web, movies, and other sources (/inspiration/), which they process in a note-taking system. These notes are the central repository of information and inspiration and can link to a bibliography (/ideation/). These ideas and notes form the foundation of the writing process (/production/). When completing the manuscript, the author publishes it in its final format (/publication/). However, there is a fifth step. At the end of a long day of writing and editing, we must also do some /Administration/ to keep our systems in good shape.
+The basic principle of this workflow is that authors collect information from literature, the web, movies, and other sources (/inspiration/), which they process in a note-taking system. These notes are the central repository of information and inspiration and can link to a bibliography (/ideation/). These ideas and notes form the foundation of the writing process (/production/). The author finally publishes the manuscript in its final format (/publication/).
+
+These are the four productive phases of a typical writing project, but there is also some overhead to incur. At the end of a long day of writing and editing, authors must also do some /Administration/ to manage projects. 
 
 ** Inspiration
-Ideas don't pop into minds out of thin air. Our thoughts, plans, and inspirations derive from our lived experiences and what we read, hear, or watch. Emacs has extensive facilities to read any plain text format imaginable and display PDF files, e-books and images. Listening to a podcast or watching a video is impossible within Emacs, but it can provide an interface to integrate with multimedia applications. You can also maintain a bibliography to organise and access your collection of electronic literature. Emacs can also browse the internet in plain text. Chapter [[#chap-inspiration]] discusses how to read e-books, surf the internet, and consume multimedia files with Emacs.
+Ideas don't pop into minds out of thin air. Our thoughts, plans, and inspirations derive from our lived experiences and what we read, hear, or watch.
+
+Emacs has extensive facilities to read any plain text format imaginable and display PDF files, e-books and images. However, as a text editor it has no facilities to directly work with these formats, so Emacs acts as an interface to other free software. Listening to a podcast or watching a video is impossible within Emacs, but it can provide an interface to integrate with multimedia applications.
+
+You can also maintain a bibliography to organise and access your collection of electronic literature. Emacs can also browse the internet in plain text.
+
+Chapter [[#chap-inspiration]] discusses how to read e-books, surf the internet, and consume multimedia files with Emacs.
 
 ** Ideation
 Ingesting all these new ideas is only worthwhile if you keep a record of your new-found inspirations. Hence, maintaining notes is essential to facilitate the ideation process. A note can be a fleeting idea or a permanent thought worth archiving.
 
 Emacs is an ideal tool for storing notes in plain text. Several packages are available to manage your digital brain. This step in the EWS workflow revolves around the Denote package by Protesilaos (Prot) Stavrou.
 
-You don't need to follow any specific note taking methods such as /Zettelklasten/ or /Bullet Journal/. My personal collection of notes is a primordial soup of ideas, categorised using organically grown tags and opportunistically linking files. Besides digital musings, you can add anything worth keeping to Denote, including binary files such as PDFs or photographs. Chapter [[#chap-ideation]] discusses how to use Org and the Denote package to develop a personal knowledge management system.
+You don't need to follow any specific note taking methods such as /Zettelklasten/ or /Bullet Journal/. My personal collection of notes is a primordial soup of ideas, categorised using organically grown tags and opportunistically linking files. Besides digital musings, you can add anything worth keeping to Denote, including binary files such as PDFs or photographs.
+
+Chapter [[#chap-ideation]] discusses how to use Org and the Denote package to develop a personal knowledge management system.
 
 ** Production
-Once you have gathered your thoughts, it is time to start writing. Org is ideal for writing articles and books or developing websites. Emacs developers have also published many additional utilities to assist with the writing process, such as completion, grammar checking, a dictionary, thesaurus, and other indispensable tools. During production you also might want to collaborate with other authors, which requires some control over different versions. Chapter [[#chap-production]] describes how to use Org to write articles, websites and books and manage large projects.
+Once you have gathered your thoughts, it is time to start writing. Org is ideal for writing articles and books or developing websites. Emacs developers have also published many additional utilities to assist with the writing process, such as completion, grammar checking, a dictionary, thesaurus, and other indispensable tools. During production you also might want to collaborate with other authors, which requires some control over different versions.
+
+Chapter [[#chap-production]] describes how to use Org to write articles, websites and books and manage large projects.
 
 ** Publication
-The glorious moment has arrived when you can publish the fruits of your labour. Org has powerful capabilities to export the text to various formats, most importantly word processor documents for sharing, PDF files for physical books, ePub for e-books, HTML for websites and ODT for corporate documents. Org exports files to print-ready PDF files through the LaTeX document preparation system, which is popular with technical authors and publishers, but can be used for any type of physical book. Chapter [[#chap-publication]] discusses how to use Org to convert your plain text document to an electronic or physical publication to share with the world.
+The glorious moment has arrived when you can publish the fruits of your labour. Org has powerful capabilities to export the text to various formats, most importantly word processor documents for sharing, PDF files for physical books, ePub for e-books, HTML for websites and ODT for corporate documents. Org exports files to print-ready PDF files through the LaTeX document preparation system, which is popular with technical authors and publishers, but can be used for any type of physical book.
+
+Chapter [[#chap-publication]] discusses how to use Org to convert your plain text document to an electronic or physical publication to share with the world.
 
 ** Administration
-Working through a writing project is a fantastic journey of creative expression, but there is also some overhead in managing your projects. Emacs interfaces with other GNU software to help you manage your files using the powerful directory editor (Dired). You can also use Emacs to manage your photographs and images with the built-in Image-Dired package. Lastly, working on a big project means tracking many tasks. Org has a fully functional task management system to help you keep track of your projects. You can implement your personal workflow or use a Getting Things Done (GTD) approach. Chapter [[#chap-admin]] discusses how to manage your files and your projects to keep you own track in your writing projects.
+Working through a writing project is a fantastic journey of creative expression, but there is also some overhead in managing your projects. Emacs interfaces with other GNU software to help you manage your files using the powerful directory editor (Dired). You can also use Emacs to manage your photographs and images with the built-in Image-Dired package.
+
+Lastly, working on a big project means tracking a multitude of tasks. Org has a fully functional task management system to help you keep track of your projects. You can implement your personal workflow or use a Getting Things Done (GTD) approach.
+
+Chapter [[#chap-admin]] discusses how to manage your files and your projects to keep you own track in your writing projects.
    
 * How to read this book
 This book is not a technical Emacs manual but a guided tour for authors. It describes typical use cases for researching, writing and publishing and how to implement these using Emacs. Each chapter contains references to the comprehensive built-in help system for the intrepid reader to explore the content in more detail. The knowledge in this book is enough to get you started on your writing project, and Emacs itself contains all the documentation you need to become a keyboard ninja.
 
-The next chapter explains the principles of using an unconfigured vanilla GNU Emacs system to get you started on the learning curve. However, no Emacs user uses the software in its unconfigured state. The EWS configuration changes how Emacs looks and feels and adds enhancements to help you find the information you need. EWS also uses a series of Emacs packages (plugins) to help authors, such as the Citar for accessing bibliographies and Denote for taking notes. Chapter [[#chap-ews]] explains the principles of the EWS configuration.
+The next chapter explains the principles of using an unconfigured GNU Emacs system to get you started on the learning curve. However, no Emacs user uses the software in its unconfigured state. The EWS configuration changes how Emacs looks and feels and adds enhancements to help you find the information you need. EWS also uses a series of Emacs packages (plugins) to help authors, such as the Citar for accessing bibliographies and Denote for taking notes. Chapter [[#chap-ews]] explains the principles of the EWS configuration.
 
 Chapters five to eight describe a typical workflow for a writing project: from research to writing and to publication. These chapters show you how to read articles, books and websites (chapter [[#chap-inspiration]]) and convert Emacs into a personal knowledge management system (chapter [[#chap-ideation]]). These chapters also explain how to prepare manuscripts for publication (chapter [[#chap-production]]) and export them to various formats (chapter [[#chap-publication]]).
 

@@ -1,6 +1,7 @@
 #+title:        Introduction
 #+macro:        ews /Emacs Writing Studio/
 #+startup:      content
+#+bibliography: ../emacs-writing-studio.bib
 
 Over the past five thousand years, writing has moved from clay tablets and chiselling in stone to paper, computers, and, most recently, artificial intelligence. Before the advent of electronic writing, all an author needed was a notebook, a pen, and a typewriter. Being an author in the digital age is, in many ways, more complex than in the days of clay, stone, or paper.
 
@@ -15,15 +16,15 @@ As a fiction writer, your imagination is your most valuable asset. You need a to
 
 The powerful search and replace functions, combined with customisable templates, let you easily manage consistency in character names, locations, and other critical details across your manuscript. When inspiration strikes, Emacs' minimalist interface enables you to dive straight into writing without the distraction of unnecessary graphical elements.
 
-Neal Town Stephenson, an American writer known for his speculative fiction, refers to Emacs as a thermonuclear word processor, not—not in a way that destroys your writing in a ball of fire, but in its immense power compared to conventional writing tools.
+Neal Town Stephenson, an American writer of speculative fiction, refers to Emacs as a "thermonuclear word processor" [cite:@stephenson_1999_comm], not—not in a way that destroys your writing in a ball of fire, but in its immense power compared to conventional writing tools.
 
 * Non-fiction writers
-Non-fiction writing demands precision, organisation, and meticulous research. Whether you're working on a dissertation, a technical report, or a historical biography, Emacs provides you with the tools to effectively manage vast amounts of data. You can efficiently structure your research notes, manage bibliographies, and outline your work.
+Non-fiction writing demands precision, organisation, and meticulous research. Whether you're working on a dissertation, a technical report, or a historical biography, Emacs provides you with the tools to effectively manage massive amounts of information. You can efficiently structure your research notes, manage bibliographies, and outline your work.
 
-Emacs allows you to seamlessly integrate these elements into your writing, ensuring that all your research is at your fingertips as you draft your work. The ability to export your manuscript to various formats, such as PDF or HTML, ensures that your work is ready for publication or sharing with peers without the hassle of format conversions.
+Emacs allows you to seamlessly integrate these elements into one application, ensuring that all your research is at your fingertips as you draft your work. The ability to export your manuscript to a range of formats, such as PDF or HTML, ensures that your work is ready for publication or sharing with peers without the hassle of format conversions.
 
 * Multitasking writers
-In today's fast-paced world, many writers manage multiple projects simultaneously. Emacs is the perfect tool for managing a diverse writing portfolio.
+In today's fast-paced world, many writers manage multiple projects. Emacs is the perfect tool for managing a diverse writing portfolio.
 
 You can effortlessly switch between different projects, be it a short story, a research paper, or even your daily journal. Emacs' powerful task management features help you keep track of deadlines and tasks and track progress across all your writing endeavours.
 
