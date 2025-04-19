@@ -747,8 +747,8 @@
 
 ;; ADVANCED UNDOCUMENTED EXPORT SETTINGS FOR EWS
 
-;; Use GraphViz for flow diagrams
+;; GraphViz for flow diagrams
 ;; requires GraphViz software
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((dot . t))) ; this line activates GraophViz dot
+ '((dot . t)))

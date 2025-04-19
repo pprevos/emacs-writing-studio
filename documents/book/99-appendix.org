@@ -1200,13 +1200,17 @@ The built-in Image-Dired package can generate thumbnails from within a Dired buf
           ("C-<left>"  . image-dired-display-previous)))
 #+end_src
 
-* Advanced export settings for EWS                                  :noexport:
+* Advanced export settings for EWS book                            :noexport:
+This part of the configuration provides functionality to export Graphviz diagrams. Graphviz is a visualisation tool for representing structural information as diagrams. Creating diagrams with Graphviz is outside the scope of EWS.
+
+This part of the configuration code is only required to generate the EWS book from the source code. 
+
 #+begin_src elisp
   ;; ADVANCED UNDOCUMENTED EXPORT SETTINGS FOR EWS
 
-  ;; Use GraphViz for flow diagrams
+  ;; GraphViz for flow diagrams
   ;; requires GraphViz software
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((dot . t))) ; this line activates GraophViz dot
+   '((dot . t)))
 #+end_src
