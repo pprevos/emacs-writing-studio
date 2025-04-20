@@ -686,18 +686,24 @@ The EWS package includes a convenience function to improve how Denote displays l
     (dired-mode . denote-dired-mode)
     :custom-face
     (denote-faces-link ((t (:slant italic))))
-    :init
-    (require 'denote-org-extras)
     :bind
     (("C-c w d b" . denote-find-backlink)
      ("C-c w d d" . denote-date)
      ("C-c w d l" . denote-find-link)
-     ("C-c w d h" . denote-org-extras-link-to-heading)
      ("C-c w d i" . denote-link-or-create)
      ("C-c w d k" . denote-rename-file-keywords)
      ("C-c w d n" . denote)
      ("C-c w d r" . denote-rename-file)
      ("C-c w d R" . denote-rename-file-using-front-matter)))
+#+end_src
+
+The Denote-Org package by Prot enhances functionality when working with Org files. The two bound commands provide the ability to link to a heading inside an Org note or convert a heading to a new node. This package also adds Denote-specific functionalities to Org mode's dynamic blocks, available through the ~org-dynamic-block-insert-dblock~ command (=C-c C-x x=).
+
+#+begin_src elisp
+    (use-package denote-org
+      :bind
+      (("C-c w d h" . denote-org-link-to-heading)
+       ("C-c w d s" . denote-org-extract-subtree)))
 #+end_src
 
 The Consult package provides some convenience functionality to make life in Emacs easier in many ways. The ~consult-grep~ function lets you search through files in the current directory. The search functionality requires access to the Grep software. The ~consult-org-heading~ command provides a table of contents of the Org mode file to quickly move around a large file. 
