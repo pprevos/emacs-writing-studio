@@ -706,6 +706,30 @@ The Denote-Org package by Prot enhances functionality when working with Org file
        ("C-c w d s" . denote-org-extract-subtree)))
 #+end_src
 
+** Bibliographic Notes
+The Citar-Denote package lets you create a many-to-many relationship between your Denote notes and items in your bibliography (section [[#sec-citar-denote]]).
+
+#+begin_src elisp :exports none
+  ;; Citar-Denote to manage literature notes
+#+end_src
+#+begin_src elisp
+  (use-package citar-denote
+    :custom
+    (citar-open-always-create-notes t)
+    :init
+    (citar-denote-mode)
+    :bind
+    (("C-c w b c" . citar-create-note)
+     ("C-c w b n" . citar-denote-open-note)
+     ("C-c w b x" . citar-denote-nocite)
+     :map org-mode-map
+     ("C-c w b k" . citar-denote-add-citekey)
+     ("C-c w b K" . citar-denote-remove-citekey)
+     ("C-c w b d" . citar-denote-dwim)
+     ("C-c w b e" . citar-denote-open-reference-entry)))
+#+end_src
+
+** Finding and exploring notes
 The Consult package provides some convenience functionality to make life in Emacs easier in many ways. The ~consult-grep~ function lets you search through files in the current directory. The search functionality requires access to the Grep software. The ~consult-org-heading~ command provides a table of contents of the Org mode file to quickly move around a large file. 
 
 Consult has a lot more functionality that replaces some base Emacs commands with more convenient version. Most of these have not been enabled to ensure we stay as close as possible to vanilla Emacs. The Consult documentation provides detailed descriptions of these enhanced commands.
@@ -736,28 +760,6 @@ Consult Notes is a convenience package that builds on Consult. It provides acces
      ("C-c w d g" . consult-notes-search-in-all-notes))
     :init
     (consult-notes-denote-mode))
-#+end_src
-
-The Citar-Denote package lets you create a many-to-many relationship between your Denote notes and items in your bibliography (section [[#sec-citar-denote]]).
-
-#+begin_src elisp :exports none
-  ;; Citar-Denote to manage literature notes
-#+end_src
-#+begin_src elisp
-  (use-package citar-denote
-    :custom
-    (citar-open-always-create-notes t)
-    :init
-    (citar-denote-mode)
-    :bind
-    (("C-c w b c" . citar-create-note)
-     ("C-c w b n" . citar-denote-open-note)
-     ("C-c w b x" . citar-denote-nocite)
-     :map org-mode-map
-     ("C-c w b k" . citar-denote-add-citekey)
-     ("C-c w b K" . citar-denote-remove-citekey)
-     ("C-c w b d" . citar-denote-dwim)
-     ("C-c w b e" . citar-denote-open-reference-entry)))
 #+end_src
 
 The Denote-Explore package provides convenience functions to manage your collection of notes and attachments (section [[#sec-denote-explore]]).
