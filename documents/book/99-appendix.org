@@ -703,7 +703,7 @@ The Denote-Org package by Prot enhances functionality when working with Org file
     (use-package denote-org
       :bind
       (("C-c w d h" . denote-org-link-to-heading)
-       ("C-c w d s" . denote-org-extract-subtree)))
+       ("C-c w d s" . denote-org-extract-org-subtree)))
 #+end_src
 
 ** Bibliographic Notes

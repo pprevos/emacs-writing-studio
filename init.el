@@ -424,7 +424,7 @@
 (use-package denote-org
   :bind
   (("C-c w d h" . denote-org-link-to-heading)
-   ("C-c w d s" . denote-org-extract-subtree)))
+   ("C-c w d s" . denote-org-extract-org-subtree)))
 
 ;; Consult convenience functions
 
