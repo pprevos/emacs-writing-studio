@@ -180,7 +180,16 @@
   :custom
   (which-key-max-description-length 40)
   (which-key-lighter nil)
-  (which-key-sort-order 'which-key-description-order))
+  (which-key-sort-order 'which-key-description-order)
+  :init
+  (which-key-add-key-based-replacements
+    "C-c w"   "Emacs Writing Studio"
+    "C-c w b" "Bibliographic"
+    "C-c w d" "Denote"
+    "C-c w m" "Multimedia"
+    "C-c w s" "Spelling and Grammar"
+    "C-c w t" "Themes"
+    "C-c w x" "Explore"))
 
 ;; Contextual menu with right mouse button
 
@@ -235,7 +244,6 @@
   (org-hide-emphasis-markers t)
   (org-startup-with-inline-images t)
   (org-image-actual-width '(450))
-  (org-fold-catch-invisible-edits 'error)
   (org-pretty-entities t)
   (org-use-sub-superscripts "{}")
   (org-id-link-to-org-use-id t)
@@ -383,7 +391,6 @@
   (("C-c c" . org-capture)
    ("C-c l" . org-store-link))
   :custom
-  (org-goto-interface 'outline-path-completion)
   (org-capture-templates
    '(("f" "Fleeting note"
       item
@@ -407,6 +414,7 @@
   :custom
   (denote-sort-keywords t)
   (denote-link-description-function #'ews-denote-link-description-title-case)
+  (denote-rename-buffer-mode 1)
   :hook
   (dired-mode . denote-dired-mode)
   :custom-face
@@ -421,10 +429,15 @@
    ("C-c w d r" . denote-rename-file)
    ("C-c w d R" . denote-rename-file-using-front-matter)))
 
+;; Denote auxiliary packages
+
+(use-package denote-journal)
+
 (use-package denote-org
   :bind
-  (("C-c w d h" . denote-org-link-to-heading)
-   ("C-c w d s" . denote-org-extract-org-subtree)))
+  (("C-c w d h" . denote-org-link-to-heading)))
+
+(use-package denote-sequence)
 
 ;; Consult convenience functions
 
@@ -749,8 +762,9 @@
 
 ;; ADVANCED UNDOCUMENTED EXPORT SETTINGS FOR EWS
 
-;; GraphViz for flow diagrams
+;; Use GraphViz for flow diagrams
 ;; requires GraphViz software
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((dot . t)))

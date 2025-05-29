@@ -332,7 +332,7 @@ Due to the naming conventions in Emacs, most functions start with the package na
       "C-c w m" "Multimedia"
       "C-c w s" "Spelling and Grammar"
       "C-c w t" "Themes"
-      "C-c w x" "Denote-Explore"))
+      "C-c w x" "Explore"))
 #+end_src
 
 ** Mouse use
@@ -427,7 +427,6 @@ Org has a plethora of variables to change its interface. You can add other varia
     (org-hide-emphasis-markers t)
     (org-startup-with-inline-images t)
     (org-image-actual-width '(450))
-    (org-fold-catch-invisible-edits 'error)
     (org-pretty-entities t)
     (org-use-sub-superscripts "{}")
     (org-id-link-to-org-use-id t)
@@ -648,6 +647,9 @@ The OpenWith package by Markus Trisk lets you open files in external software. R
 
 * Ideation
 ** Org capture
+:PROPERTIES:
+:ID:       310be789-8ec2-445e-b15a-c1f7fbf9b5f5
+:END:
 The possibilities for capture templates are extensive and depend on your use cases. This configuration is only an example of the options. The Org documentation provides lots of detail (=C-h R org <ret> capture=). The default Org settings save your fleeting notes to a hidden file (=~/.notes.org=). Customise the ~org-default-notes-file~ variable.
 
 #+begin_src elisp :exports none
@@ -659,7 +661,6 @@ The possibilities for capture templates are extensive and depend on your use cas
     (("C-c c" . org-capture)
      ("C-c l" . org-store-link))
     :custom
-    (org-goto-interface 'outline-path-completion)
     (org-capture-templates
      '(("f" "Fleeting note"
         item
@@ -691,6 +692,7 @@ The EWS package includes a convenience function to improve how Denote displays l
     :custom
     (denote-sort-keywords t)
     (denote-link-description-function #'ews-denote-link-description-title-case)
+    (denote-rename-buffer-mode 1)
     :hook
     (dired-mode . denote-dired-mode)
     :custom-face
@@ -706,39 +708,21 @@ The EWS package includes a convenience function to improve how Denote displays l
      ("C-c w d R" . denote-rename-file-using-front-matter)))
 #+end_src
 
-The Denote-Org package by Prot enhances functionality when working with Org files. The two bound commands provide the ability to link to a heading inside an Org note or convert a heading to a new node. This package also adds Denote-specific functionalities to Org mode's dynamic blocks, available through the ~org-dynamic-block-insert-dblock~ command (=C-c C-x x=).
-
-#+begin_src elisp
-    (use-package denote-org
-      :bind
-      (("C-c w d h" . denote-org-link-to-heading)
-       ("C-c w d s" . denote-org-extract-org-subtree)))
-#+end_src
-
-** Bibliographic Notes
-The Citar-Denote package lets you create a many-to-many relationship between your Denote notes and items in your bibliography (section [[#sec-citar-denote]]).
+The Denote developers provide an ecosystem of packages that
 
 #+begin_src elisp :exports none
-  ;; Citar-Denote to manage literature notes
+  ;; Denote auxiliary packages
 #+end_src
 #+begin_src elisp
-  (use-package citar-denote
-    :custom
-    (citar-open-always-create-notes t)
-    :init
-    (citar-denote-mode)
+  (use-package denote-journal)
+
+  (use-package denote-org
     :bind
-    (("C-c w b c" . citar-create-note)
-     ("C-c w b n" . citar-denote-open-note)
-     ("C-c w b x" . citar-denote-nocite)
-     :map org-mode-map
-     ("C-c w b k" . citar-denote-add-citekey)
-     ("C-c w b K" . citar-denote-remove-citekey)
-     ("C-c w b d" . citar-denote-dwim)
-     ("C-c w b e" . citar-denote-open-reference-entry)))
+    (("C-c w d h" . denote-org-link-to-heading)))
+
+  (use-package denote-sequence)
 #+end_src
 
-** Finding and exploring notes
 The Consult package provides some convenience functionality to make life in Emacs easier in many ways. The ~consult-grep~ function lets you search through files in the current directory. The search functionality requires access to the Grep software. The ~consult-org-heading~ command provides a table of contents of the Org mode file to quickly move around a large file. 
 
 Consult has a lot more functionality that replaces some base Emacs commands with more convenient version. Most of these have not been enabled to ensure we stay as close as possible to vanilla Emacs. The Consult documentation provides detailed descriptions of these enhanced commands.
@@ -769,6 +753,28 @@ Consult Notes is a convenience package that builds on Consult. It provides acces
      ("C-c w d g" . consult-notes-search-in-all-notes))
     :init
     (consult-notes-denote-mode))
+#+end_src
+
+The Citar-Denote package lets you create a many-to-many relationship between your Denote notes and items in your bibliography (section [[#sec-citar-denote]]).
+
+#+begin_src elisp :exports none
+  ;; Citar-Denote to manage literature notes
+#+end_src
+#+begin_src elisp
+  (use-package citar-denote
+    :custom
+    (citar-open-always-create-notes t)
+    :init
+    (citar-denote-mode)
+    :bind
+    (("C-c w b c" . citar-create-note)
+     ("C-c w b n" . citar-denote-open-note)
+     ("C-c w b x" . citar-denote-nocite)
+     :map org-mode-map
+     ("C-c w b k" . citar-denote-add-citekey)
+     ("C-c w b K" . citar-denote-remove-citekey)
+     ("C-c w b d" . citar-denote-dwim)
+     ("C-c w b e" . citar-denote-open-reference-entry)))
 #+end_src
 
 The Denote-Explore package provides convenience functions to manage your collection of notes and attachments (section [[#sec-denote-explore]]).
@@ -1225,8 +1231,9 @@ This part of the configuration code is only required to generate the EWS book fr
 #+begin_src elisp
   ;; ADVANCED UNDOCUMENTED EXPORT SETTINGS FOR EWS
 
-  ;; GraphViz for flow diagrams
+  ;; Use GraphViz for flow diagrams
   ;; requires GraphViz software
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((dot . t)))
