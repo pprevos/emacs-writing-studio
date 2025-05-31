@@ -1,0 +1,89 @@
+# Front Matter ePub
+#+begin_export html
+<!-- Front Matter ebook -->
+<div id="frontmatter" class="outline-2">
+<p>&nbsp;</p>
+<h3 style="text-align:center">Third Hemisphere Publishing</h3>
+<div class="figure" style="text-align: center;">
+<img src="logo-bw.png" width="100" alt="Emacs Writing Studio" title="Emacs Writing Studio"/>	
+</div>
+<h3 style="text-align:center">&#169; Peter Prevos (2024)</h3>
+<p style="text-align: center;">ISBN 978-0-9875669-8-0 (E-book)</p>
+<p style="text-align: center;">ISBN 978-0-9875669-9-7 (Paperback)</p>
+<p>&nbsp;</p>
+<p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Australia License. You are free to share to copy, distribute and transmit the work under the following conditions:</p>
+<ul>
+<li>You must attribute the work in the manner specified by the author (but not in any way that suggests that they endorse you or your use of the work).</li>
+<li>If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.</li>
+</ul>
+<p style="text-align:center">This book is written in Emacs <a href="https://orgmode.org/">Org mode</a> with the <a href="https://github.com/pprevos/emacs-writing-studio">Emacs Writing Studio</a> configuration.</p>
+</div>
+#+end_export
+
+# Front Matter PDF
+#+begin_export latex
+\frontmatter
+
+% Title Page
+\title{\textbf{\Huge Emacs Writing Studio}\\
+\vspace{1.5cm}
+\textbf{A Practical Guide to Plain Text Writing and Publishing}}
+\author{Peter Prevos}
+\date{}
+\maketitle
+
+% Logo and Publisher Information
+\vspace{5cm}
+\begin{center}
+    \hspace{-1.2cm}
+    \includegraphics[height=18mm]{images/logo-bw.png}
+    \setlength{\unitlength}{1mm}
+    \begin{picture}(0, 18)
+        \put(0, 4){\shortstack[l]{Third\\Hemisphere\\Publishing}}
+    \end{picture}
+\end{center}
+
+\thispagestyle{empty}
+
+% Copyright and Licensing Information
+\newpage
+\thispagestyle{empty}
+\noindent\makebox[\textwidth][c]{%
+\begin{minipage}[t]{1\textwidth}
+    \begin{center}
+        \ccLogo{} \small Peter Prevos (2025)\\
+        \vspace{1em}
+        Kangaroo Flat, Australia\\
+        {\small \href{https://peterprevos.com}{peterprevos.com}}
+
+        \vspace{2em}
+        ISBN 978-0-9875669-8-0 (E-book)\\
+        ISBN 978-0-9875669-9-7 (Paperback)
+    \end{center}
+
+    \vspace{1.5em}
+
+    \begin{center}
+        {\small This work is licensed under a Creative Commons }\emph{\small Attribution-Share Alike 3.0 Australia}
+        {\small license. You are free to share—to copy, distribute, and transmit the work under the following conditions:}\\
+        \vspace{0.5em}
+        \ccAttribution{} \emph{\small Attribution}{\small : You must attribute the work in the manner specified by the author (but not in any way that suggests that they endorse you or your use of the work).}\\
+        \vspace{0.5em}
+        \ccShareAlike{} \emph{\small Share Alike}{\small : If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.}
+    \end{center}
+
+    \vspace{2em}
+
+    \begin{center}
+        {\small Written in Emacs \href{https://orgmode.org/}{Org Mode}. Typeset in \LaTeX.}\\
+        \\
+        {\small Cover design by ***}{\small .}\\\\
+    \end{center}
+\end{minipage}}
+
+\newpage
+\setcounter{page}{5}
+\tableofcontents
+
+\mainmatter
+#+end_export

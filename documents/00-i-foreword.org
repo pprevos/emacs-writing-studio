@@ -1,0 +1,40 @@
+#+title: Foreword
+
+With Emacs Writing Studio you have what you need to get started with writing. The book and the concomitant configuration for Emacs provide a solid foundation for you to organise your ideas, capture information, and elucidate your thoughts.
+
+This book provides an overview of Emacs' capabilities for writers. It does it in a way that is approachable. You get the essentials and are then guided through the various facets of the workflow.
+
+Consider Emacs Writing Studio a companion on a long journey. It helps you get started with Emacs and will be there for you as a valuable reference when you need to do something a little bit more advanced but forgot how to proceed.
+
+What you get at the outset is a curated experience. This is exactly what you need to get on with the task of writing: it minimises distractions. Though do not think of it as a constraint: you are still using Emacs --- a powerful tool that can be reprogrammed or extended to do more with text and related patterns of interaction. The Emacs Writing Studio setup consists of sensible defaults. You will not be locked in to a bespoke system. This is the standard Emacs experience and you are free to modify it to your liking.
+
+You can always find more resources to address whatever issue you may have. Beside the official manual of Emacs, you will discover a rich corpus of knowledge produced by the community. There are blog posts, drawings, and video demonstrations. They will all apply to what you have here.
+
+No configuration can be a replacement for the work you put in. This is true for your time using Emacs but also for writing in general. Do not come with the expectation that Emacs Writing Studio will do miracles for you: it will not make you an Emacs expert overnight and it will not boost your creativity without you doing anything.
+
+This is a tool that has been tested and proven to work well. Like every tool, it must be used properly by someone who has the requisite skills or is willing to acquire them through continuous practice. As a beginner, you will not know much: the book is here to ensure that you find the information you need to keep going.
+
+The expectation you can have is that Emacs Writing Studio will deliver on its promise of giving you a set of tools for authoring your next works. It will do it in a reliable way. The rest is up to you: conduct the research and start creating.
+
+Beside the technicalities, this book will make you think about matters of method. It does it indirectly through the functions it describes. You then have to consider how each of those will fit in to your workflow.
+
+Piecing together a set of tools or procedures is part of the process of discovery that authors must go through. Through trial and error, you figure out what works for you. You may then stick with it and strongly prefer it over alternative approaches. Whether your methods are appropriate for others does not really matter: you know that one size does not fit all.
+
+Emacs is the perfect tool for those who want to be particular with their writing. It is highly configurable and will grow with you as a user to always match your current level. If you do ever get the chance to learn some Emacs Lisp, you will realise that there is so much you can do to tweak every little thing exactly how you want it to be.
+
+The key to learning your way around Emacs is to be patient and methodical. Try one thing at a time, learn how to use it, and then move on to the next one. This is why Emacs Writing Studio is helpful: it lets you experiment at your own pace while giving you something that works well out-of-the-box.
+
+Remember that you are just getting started and you will be here long-term. Good luck!
+
+#+begin_export html
+&nbsp;
+<p style="text-align:right">Protesilaos "Prot" Stavrou</p>
+#+end_export
+
+#+begin_export latex
+\vspace{1em}
+\begin{flushright}
+Protesilaos "Prot" Stavrou
+\end{flushright}
+#+end_export
+

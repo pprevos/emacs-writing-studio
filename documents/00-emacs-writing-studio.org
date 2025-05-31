@@ -1,0 +1,102 @@
+#+title:        Emacs Writing Studio
+#+subtitle:     A Practical Guide to Plain Text Writing and Publishing
+#+author:       Peter Prevos
+#+publisher:    Third Hemisphere Publishing
+#+license:      Creative Commons Attribution-Share Alike 3.0 Australia License
+#+description:  Emacs Writing Studio by Peter Prevos is a comprehensive guide for writers seeking to streamline their workflow using Emacs. The book covers everything from organising ideas and writing distraction-free to publishing in multiple formats. It’s perfect for both beginners and experienced Emacs users, offering practical tips and a tailored configuration to enhance your writing process.
+#+keywords:     Emacs, writing, productivity
+#+subject:      Emacs, writing, productivity
+#+language:     English
+#+uid:          978-0-9875669-8-0
+#+epubcover:    images/ews-cover.png
+#+bibliography: ../emacs-writing-studio.bib
+#+cite_export:  csl ../apa6.csl
+#+latex_class:  ews
+#+startup:      num content
+#+options:      html-postamble:nil tex:dvipng toc:nil date:nil
+#+macro:        ews /Emacs Writing Studio/
+#+include:      "00-colophon.org"
+#+LATEX_HEADER: \usepackage{fancyvrb}
+#+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\footnotesize}
+
+* Foreword
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+:NOTES:
+- [X] By Prot (500-1000 w)
+:END:
+#+include: "00-i-foreword.org" :lines "2-"
+
+* Preface
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+#+include: "00-ii-preface.org" :lines "2-"
+
+#+begin_export latex
+\mainmatter
+#+end_export
+
+* Introduction
+#+include: "01-introduction.org" :lines "2-"
+
+* Why Emacs?
+#+include: "02-why-emacs.org" :lines "2-"
+
+* Getting Started with Emacs
+:PROPERTIES:
+:CUSTOM_ID: chap-vanilla
+:END:
+#+include: "03-getting-started.org"  :lines "2-"
+
+* Using Emacs Writing Studio
+:PROPERTIES:
+:CUSTOM_ID: chap-ews
+:END:
+#+include: "04-using-ews.org" :lines "2-"
+
+* Inspiration: Read, Listen and Watch
+:PROPERTIES:
+:CUSTOM_ID: chap-inspiration
+:END:
+#+include: "05-inspiration.org" :lines "2-"
+
+* Ideation: Record and Manage Ideas
+:PROPERTIES:
+:CUSTOM_ID: chap-ideation
+:END:
+#+include: "06-ideation.org" :lines "2-"
+
+* Production: Prepare a Manuscript
+:PROPERTIES:
+:CUSTOM_ID: chap-production
+:END:
+#+include: "07-production.org" :lines "2-"
+
+* Publication: Share with the World
+:PROPERTIES:
+:CUSTOM_ID: chap-publication
+:END:
+#+include: "08-publication.org" :lines "2-"
+
+* Administration: Manage Your Projects
+:PROPERTIES:
+:CUSTOM_ID: chap-admin
+:END:
+#+include: "09-administration.org" :lines "2-"
+
+* Become an Emacs Ninja
+:PROPERTIES:
+:CUSTOM_ID: chap-ninja
+:END:
+#+include: "10-ninja.org" :lines "2-"
+
+#+begin_export latex
+\backmatter
+#+end_export
+
+* Appendix
+#+include: "99-appendix.org" :lines "2-"
+* References
+#+print_bibliography:
