@@ -157,6 +157,13 @@ Not meeting a deadline can have consequences, so it might be helpful to be warne
 SCHEDULED: <2028-07-22 Sat -12m>
 #+end_example
 
+More advanced schedules are available, but they require some basic Lisp code, using the ~diary-float~ command. The example below schedules a task on every first Tuesday (day 2 of the week) of every month. The first parameter can be the number of the month or =t= for all months. The second parameter (=2=) indicates the day of the week and the last parameter (=1=) is the number of the day in the month. The week starts in Emacs on Sunday (day 0) and ends on Saturday (day 6). 
+
+#+begin_example
+,* Monthly review
+SCHEDULED: <%%(diary-float t 2 1)>
+#+end_example
+
 The key to a successful implementation of any productivity method is not to become your own abusive parent. Unless there are external deadlines, everything on my action list is optional. Putting the correct rubbish bin at the curb is not optional because I rely on the truck to pick it up. However, writing a new chapter for this book is optional because there is no external deadline. Use the capabilities of managing your life with Org wisely. Don't become a slave to the list and lose self-esteem because you can't keep up with your own expectations.
 
 ** /Organise/: Place it where it belongs
