@@ -84,9 +84,9 @@ Some of the listed packages are alternatives for each other, so you only need to
 - ~latex~ ([[https://www.latex-project.org/get/][TexLive, MacTex or MikTeX]]): Preview LaTeX and export Org to PDF
 - ~zip~: Create ePub and office documents
 
-To export the /Emacs Writing Studio/ book Org files you will also must install [[https://graphviz.org/][Graphviz]] to generate various diagrams. 
-
 * Compiling the EWS book
-This repository contains the Org mode source files for the /Emacs Writing Studio/ book.
+This repository contains the Org mode source files for the /Emacs Writing Studio/ book. The source files are optimised for PDF (using LaTeX), ePub and word processor file (ODT or DOCx).
+
+To export the /Emacs Writing Studio/ book Org files you will also must install [[https://graphviz.org/][Graphviz]] to generate various diagrams. 
 
 To compile the book as a PDF, ePub or other format you need the EWS configuration and the required supporting applications listed above. You will also need the [[https://graphviz.org/][Graphviz]] software, which draws some of the diagrams used in the book. Run the Org export function from the =00-emacs-writing-studio.org= file to generate the book.
