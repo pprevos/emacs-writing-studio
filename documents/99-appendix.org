@@ -1,6 +1,6 @@
 #+title:        Appendix: The Annotated Emacs Writing Studio Configuration
-#+property:     header-args:elisp :tangle ../../init.el :results none :eval no
-#+bibliography: ../emacs-writing-studio.bib
+#+property:     header-args:elisp :tangle ../init.el :results none :eval no
+#+bibliography:  emacs-writing-studio.bib
 #+startup:      content
 
 This appendix presents and explains the {{{ews}}} (EWS) configuration. The configuration is annotated to explain the logic of the code and provides some options for enhancements or additional functionality. This configuration follows the following principles:
@@ -45,10 +45,10 @@ This repository is not actively maintained. For beginning Emacs users, the confi
   ;;
   ;; Emacs Writing Studio init file: https://lucidmanager.org/tags/emacs
   ;;
-  ;; This init file is tangled from: documents/ews-book/99-appendix.org
+  ;; This init file is tangled from: documents/99-appendix.org
   ;;
-  ;; This file is a starter kit for developing a configuration and is not a package
-  ;; that is regularly updated.
+  ;; This file provides a starter kit for developing a configuration and is
+  ;; not a package that is regularly updated.
   ;;
   ;;; Code:
 #+end_src
