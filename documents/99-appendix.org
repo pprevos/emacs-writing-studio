@@ -136,12 +136,13 @@ This function checks whether all these packages are available on your system. Fo
 #+end_src
 
 ** Look and feel
-EWS espouses a minimalist aesthetic to provide a distraction-free environment. The first three lines of code disable the toolbar, the menu bar, and the scroll bar. The menu bar can be useful for beginners, and you can still access it with the =F10= key. If you like to keep the tool, menu, and/or scroll bars, then either remove the relevant lines, change the =-1= to a =1=, or add two semicolons at the start of the relevant lines to convert them to comments.
+EWS espouses a minimalist aesthetic to provide a distraction-free environment. These four lines of code disable the splash screen, toolbar, menu bar, and the scroll bar. The menu bar can be useful for beginners, and you can still access it with the =F10= key. If you like to keep the tool, menu, and/or scroll bars, then either remove the relevant lines, change the =-1= to a =1=, or add two semicolons at the start of the relevant lines to convert them to comments.
 
 #+begin_src elisp :exports none
   ;;; LOOK AND FEEL
 #+end_src
 #+begin_src elisp
+  (setq inhibit-splash-screen t)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
@@ -165,7 +166,7 @@ The Scratch Buffer is by default set to Emacs Lisp mode. This is not so useful f
 #+end_src
 #+begin_src elisp
   (setq initial-major-mode 'org-mode
-        initial-scratch-message "#+title: Emacs Writing Studio\n#+subtitle: Scratch Buffer\nThe text in this buffer is not saved when exiting Emacs!\n\n")
+        initial-scratch-message "#+title: Emacs Writing Studio\n#+subtitle: Scratch Buffer\n\nThe text in this buffer is not saved when exiting Emacs!\n\n")
 #+end_src
 
 The next two sections of code further improve the Emacs interface with two packages by Emacs guru Protesilaos Stavrou.
