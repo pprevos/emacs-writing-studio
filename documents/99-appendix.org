@@ -67,28 +67,6 @@ The first part of the configuration checks if the latest version of Emacs is run
     (error "Emacs Writing Studio requires version 29 or later"))
 #+end_src
 
-Any changes made by the Emacs customisation system in EWS are stored in =custom.el= instead of directly to the init file. This approach prevents the customisation system from modifying the initialisation file. The =custom.el= file is loaded when found. If variables are set in both the custom and the init files, the =init.el= file takes preference.
-
-#+begin_src elisp :exports none
-  ;; Custom settings in a separate file and load the custom settings
-#+end_src  
-#+begin_src elisp
-  (setq-default custom-file (expand-file-name
-  			     "custom.el"
-  			     user-emacs-directory))
-
-  (load custom-file :no-error-if-file-is-missing)
-#+end_src
-
-Access the ~customise-variable~ function with the =C-c w v= shortcut.
-
-#+begin_src elisp :exports none
-  ;; Bind key for customising variables
-#+end_src
-#+begin_src elisp
-  (keymap-global-set "C-c w v" 'customize-variable)
-#+end_src
-
 ** Emacs packages
 Emacs users have developed and shared thousands of packages with the rest of the community. These packages are written in Emacs Lisp and extend its capabilities. This part of the configuration sets the essential elements to load and install packages from the MELPA archive (=melpa.org=).
 
@@ -1221,6 +1199,29 @@ The built-in Image-Dired package can generate thumbnails from within a Dired buf
     (:map image-dired-thumbnail-mode-map
           ("C-<right>" . image-dired-display-next)
           ("C-<left>"  . image-dired-display-previous)))
+#+end_src
+
+** Customisations
+You can access the ~customise-variable~ function with the =C-c w v= shortcut.
+
+#+begin_src elisp :exports none
+  ;; Bind key for customising variables
+#+end_src
+#+begin_src elisp
+  (keymap-global-set "C-c w v" 'customize-variable)
+#+end_src
+
+Any changes made by the Emacs customisation system in EWS are stored in =custom.el= instead of directly to the init file. This approach prevents the customisation system from modifying the initialisation file. The =custom.el= file is loaded when available. If variables are set in both the custom and the init files, the =custom.el= file takes preference.
+
+#+begin_src elisp :exports none
+  ;; Custom settings in a separate file and load the custom settings
+#+end_src  
+#+begin_src elisp
+  (setq-default custom-file (expand-file-name
+  			     "custom.el"
+  			     user-emacs-directory))
+
+  (load custom-file :no-error-if-file-is-missing)
 #+end_src
 
 * Advanced export settings for EWS book                            :noexport:
