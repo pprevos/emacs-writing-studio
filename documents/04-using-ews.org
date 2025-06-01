@@ -1,5 +1,5 @@
 #+title: Using Emacs Writing Studio
-#+bibliography: ../emacs-writing-studio.bib
+#+bibliography: emacs-writing-studio.bib
 #+startup:      content
 #+macro:        ews /Emacs Writing Studio/
 :NOTES:

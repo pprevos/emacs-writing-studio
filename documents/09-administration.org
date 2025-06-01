@@ -1,5 +1,5 @@
 #+title: Administration: Manage Your Projects
-#+bibliography: ../emacs-writing-studio.bib
+#+bibliography: emacs-writing-studio.bib
 #+startup:      content
 #+macro:        ews /Emacs Writing Studio/
 #+TODO:         TODO(t) NEXT(n) WAIT(w) | DONE(d) CANCELLED(c)

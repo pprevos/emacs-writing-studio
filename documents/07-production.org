@@ -1,5 +1,5 @@
 #+title: Production: Implement Writing Project in Org Mode
-#+bibliography: ../emacs-writing-studio.bib
+#+bibliography: emacs-writing-studio.bib
 #+columns: %40ITEM(Section) %10WORDCOUNT(Word Count) %10TARGET(Target) %10TODO(Status)
 #+todo: DRAFT | EDITED
 #+startup: contents

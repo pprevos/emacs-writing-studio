@@ -1,6 +1,6 @@
 #+title:  Publishing Articles and Books with Org Mode Export
 #+startup:      content
-#+bibliography: ../emacs-writing-studio.bib
+#+bibliography: emacs-writing-studio.bib
 #+macro:        ews /Emacs Writing Studio/
 
 Emacs Org mode is not just an ideal tool for writing without distractions; it's a powerhouse for publishing. Working with plain text allows you to focus on content instead of design. Org's export capabilities mean your work can reach a broad audience in various formats. Org can export your manuscript to PDF for a printed book, a journal article, a website, or a word processor document. Additional packages can export your manuscript to other formats, such as an e-book in ePub format.

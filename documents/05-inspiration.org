@@ -1,7 +1,7 @@
 #+title: Inspiration: Reading, Listening and Watching
 #+macro:        ews /Emacs Writing Studio/
 #+startup:      content
-#+bibliography: ../emacs-writing-studio.bib
+#+bibliography: emacs-writing-studio.bib
 #+macro:        ews /Emacs Writing Studio/
 :NOTES:
 - [X] History of ebooks

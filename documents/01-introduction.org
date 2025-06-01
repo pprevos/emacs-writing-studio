@@ -1,7 +1,7 @@
 #+title:        Introduction
 #+macro:        ews /Emacs Writing Studio/
 #+startup:      content
-#+bibliography: ../emacs-writing-studio.bib
+#+bibliography: emacs-writing-studio.bib
 
 Over the past five thousand years, writing has moved from clay tablets and chiselling in stone to paper, computers, and, most recently, artificial intelligence. Before the advent of electronic writing, all an author needed was a notebook, a pen, and a typewriter. Being an author in the digital age is, in many ways, more complex than in the days of clay, stone, or paper.
 

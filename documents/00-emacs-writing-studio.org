@@ -9,8 +9,8 @@
 #+language:     English
 #+uid:          978-0-9875669-8-0
 #+epubcover:    images/ews-cover.png
-#+bibliography: ../emacs-writing-studio.bib
-#+cite_export:  csl ../apa6.csl
+#+bibliography: emacs-writing-studio.bib
+#+cite_export:  csl apa6.csl
 #+latex_class:  ews
 #+startup:      num content
 #+options:      html-postamble:nil tex:dvipng toc:nil date:nil
