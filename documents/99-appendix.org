@@ -1113,12 +1113,6 @@ The default setting for Dired is to show hidden files, even though they are hidd
     :custom (dired-omit-files "^\\.[a-zA-Z0-9]+"))
 #+end_src
 
-The ~dired-narrow~ package provides some convenience functions to filter a Dired buffer by a search criterion or a regular expression. 
-
-#+begin_src R
-  (use-package dired-narrow)
-#+end_src
-
 This next bit of configuration defines how Emacs manages automated backups. The default setting is that the system stores these files in the folder where the original files live, cluttering folders with copies of your stuff.
 
 The setting below modifies the =backup-directory-alist= variable so that Emacs saves all backups (indicated by ="."=) in the =bak= subdirectory of your init folder. Alternatively, you could instruct Emacs not to save backups by setting ~make-backup-files~ to =nil=. I prefer keeping backups as they have saved my bacon a few times.
