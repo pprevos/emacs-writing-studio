@@ -814,19 +814,15 @@ The Olivetti package removes distractions from the screen and converts your Emac
     (("C-c w o" . ews-olivetti)))
 #+end_src
 
-Undo-Tree provides a graphical view of the various versions of the current buffer.
+Vundo provides a graphical view of the various versions of the current buffer.
 
 #+begin_src elisp :exports none
-  ;; Undo Tree
+  ;; Vundo
 #+end_src
 #+begin_src elisp
-  (use-package undo-tree
-    :config
-    (global-undo-tree-mode)
-    :custom
-    (undo-tree-auto-save-history nil)
+  (use-package vundo
     :bind
-    (("C-c w u" . undo-tree-visualise)))
+    (("C-M-/" . vundo)))
 #+end_src
 
 ** Citations

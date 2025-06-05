@@ -351,30 +351,22 @@ While Emacs may not boast the flashy cloud collaboration systems found in office
 :END:
 There are always at least two versions of a text you are working on. The last saved version and the current buffer. You can discard all changes since the buffer was last saved with the ~revert-buffer~ command, which reloads the file from the disk, erasing all edits made since the last save of the file. Use this as a nuclear option with care. Reverting a buffer only applies when you made colossal mistakes or updated the file outside your current Emacs session.
 
-** EDITED The undo tree
+** EDITED The undo system
 :PROPERTIES:
 :WORDCOUNT: 3124
 :END:
-Section [[#sec-mistakes]] discussed correcting mistakes using Emacs' powerful undo system. However, after repeatedly issuing undo and redo commands, it is easy to get lost in the previous states of the document. The Undo Tree package by Toby Cubitt helps you keep track of your changes by visualising them as a tree, creating a writing time machine.
+Section [[#sec-mistakes]] discussed correcting mistakes using Emacs' powerful undo system. However, after repeatedly issuing undo and redo commands, it is easy to get lost in the previous states of a document. The Vundo package by Yuan Fu helps you keep track of edits by visualising them as a tree, creating a writing time machine.
 
-The ~undo-tree-visualise~ (=C-c w u=) command visualises the various edits in your file as a tree. This function allows you to navigate through previous versions of your text using the arrow keys. The current buffer changes as you wander through history, where =x= marks the spot of the selected step. Use =q= to select the chosen edit and continue writing. The =C-q= keys jump out of the undo tree without making changes.
+The ~vundo~ (=C-M-/=) command visualises the various edits in your file as a horizontal tree in the minibuffer. This function allows you to navigate through previous versions using the arrow keys. The current buffer changes as you wander through history. Hit Enter to select the chosen edit and continue writing. The =C-g= keys jump out of the tree without making changes.
 
-In most cases, the tree is simply a straight line. The document has parallel versions visualised as branches when combining undo and redo commands. The undo tree for the simple example in figure [[fig-emacs-undo]], where we started with Socrates, changed to Plato and back again and added some text, would look like this:
+Most of the time the tree is simply a straight line. In some cases, the document has parallel versions visualised as branches when combining undo and redo commands. The Vundo tree for the simple example in figure [[fig-emacs-undo]], where we started with Socrates, changed to Plato and back again and added some text, would look like this:
 
 #+begin_example
-          o       "Socrates"
-          |
-          |
-          o       ""
-          | 
-         / \
-"Plato" x   o     "Socrates"
-            |
-            |
-            o     "Socrates and"
+o--o--o--o
+   `--o
 #+end_example
 
-The Undo-Tree package provides an intuitive way to manage the various states your document has gone through since you opened the file. The detailed manual for the Undo Tree package provides more detailed scenarios, which can be read by typing =C-h P= and selecting ~undo-tree~.
+The Vundo package provides an intuitive interface to manage the various document since you opened the file. The manual for the Vundo package provides some further information, which can be read by typing =C-h P= and selecting ~vundo~.
 
 ** EDITED Automated backups
 :PROPERTIES:
