@@ -16,22 +16,20 @@
 #+options:      html-postamble:nil tex:dvipng toc:nil date:nil
 #+macro:        ews /Emacs Writing Studio/
 #+include:      "00-colophon.org"
-#+LATEX_HEADER: \usepackage{fancyvrb}
-#+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\footnotesize}
+#+latex_header: \usepackage{fancyvrb}
+#+latex_header: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\footnotesize}
+#+latex_header: \newcommand{\tablefont}{\footnotesize} % Smaller font in tables
+#+latex_header: % Patch tabular/tabular* environments
+#+latex_header: \AtBeginEnvironment{tabular}{\tablefont}
+#+latex_header: \AtBeginEnvironment{tabular*}{\tablefont} 
 
 * Foreword
-:PROPERTIES:
-:UNNUMBERED: t
-:END:
 :NOTES:
 - [X] By Prot (500-1000 w)
 :END:
 #+include: "00-i-foreword.org" :lines "2-"
 
 * Preface
-:PROPERTIES:
-:UNNUMBERED: t
-:END:
 #+include: "00-ii-preface.org" :lines "2-"
 
 #+begin_export latex
