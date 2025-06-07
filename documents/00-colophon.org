@@ -24,29 +24,38 @@
 #+begin_export latex
 \frontmatter
 
-% Title Page
-\title{\textbf{\Huge Emacs Writing Studio}\\
-\vspace{1.5cm}
-\textbf{A Practical Guide to Plain Text Writing and Publishing}}
-\author{Peter Prevos}
-\date{}
-\maketitle
-
-% Logo and Publisher Information
-\vspace{5cm}
+% Half title
 \begin{center}
-    \hspace{-1.2cm}
-    \includegraphics[height=18mm]{images/logo-bw.png}
-    \setlength{\unitlength}{1mm}
-    \begin{picture}(0, 18)
-        \put(0, 4){\shortstack[l]{Third\\Hemisphere\\Publishing}}
-    \end{picture}
+  \textbf{\Huge Emacs Writing Studio}
+\end{center}
+\thispagestyle{empty}
+\newpage
+\thispagestyle{empty}
+\ % Empty page
+\newpage
+
+% Title Page
+\begin{center}
+  \textbf{\Huge Emacs Writing Studio}\\
+  \vspace{1.5cm}
+  \textbf{A Practical Guide to Plain Text Writing and Publishing}\\
+  \vspace{2em}
+  Peter Prevos\\
+  % Logo and Publisher Information
+  \vspace{9cm}
+  \hspace{-1.2cm}
+  \includegraphics[height=18mm]{images/logo-bw.png}
+  \setlength{\unitlength}{1mm}
+  \begin{picture}(0, 18)
+      \put(0, 4){\shortstack[l]{Third\\Hemisphere\\Publishing}}
+  \end{picture}
+  \\ Kangaroo Flat, Australia
 \end{center}
 
 \thispagestyle{empty}
+\newpage
 
 % Copyright and Licensing Information
-\newpage
 \thispagestyle{empty}
 \noindent\makebox[\textwidth][c]{%
 \begin{minipage}[t]{1\textwidth}
@@ -75,15 +84,11 @@
     \vspace{2em}
 
     \begin{center}
-        {\small Written in Emacs \href{https://orgmode.org/}{Org Mode}. Typeset in \LaTeX.}\\
-        \\
-        {\small Cover design by ***}{\small .}\\\\
+        {\small Written in Emacs \href{https://orgmode.org/}{Org Mode}. Typeset in \LaTeX.}
     \end{center}
 \end{minipage}}
 
 \newpage
 \setcounter{page}{5}
-\tableofcontents
-
-\mainmatter
+\tableofcontents*
 #+end_export
