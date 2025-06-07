@@ -853,10 +853,6 @@ Emacs can hook into the dictionary server at =dict.org= and the Power Thesaurus 
     (dictionary-server "dict.org")
     :bind
     (("C-c w s d" . dictionary-lookup-definition)))
-
-  (use-package powerthesaurus
-    :bind
-    (("C-c w s p" . powerthesaurus-transient)))
 #+end_src
 
 The Writegood package helps to detect weasel words, passive writing, and repeated words. It also contains functions to estimate a text's complexity using the Flesch-Kincaid test.
