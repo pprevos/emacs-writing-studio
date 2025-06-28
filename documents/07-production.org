@@ -24,11 +24,11 @@
 - [X] [[https://www.youtube.com/watch?v=pSvsAutseO0][Emacs: ediff basics - YouTube]]
 :END:
 
-Chapter [[#chap-vanilla]] laid the groundwork for writing plain text documents, and chapter [[#chap-ews]] introduced the basics of Org syntax. This chapter builds on these foundations and guides you through preparing a manuscript for publication in {{{ews}}} (EWS) using the unique features of Org mode and some additional tools to facilitate your writing process.
+Chapter [[#chap-vanilla]] laid the groundwork for writing plain text documents, establishing essential concepts that serve as a crucial foundation for effective writing. Chapter [[#chap-ews]] then introduced the basics of Org syntax, allowing you to organize and structure your text in a meaningful way. Building upon these fundamental principles, this chapter provides a comprehensive guide to preparing a manuscript specifically for publication in {{{ews}}} (EWS). It explores the unique capabilities of Org mode and integrates additional tools designed to streamline and enhance your writing process.
 
-This chapter shows how to add editorial notes, citations and cross-references. You may want to use a dictionary and thesaurus to enhance the variety of your prose, which Emacs also offers. This chapter also explains how to manage large writing projects, control versions and how to collaborate with other authors.
+Throughout this chapter, you will learn how to add editorial notes, seamlessly incorporate citations, and create cross-references that enhance the clarity and cohesiveness of your document. To further improve the richness and variety of your prose, you may want to utilize Emacs' integrated dictionary and thesaurus tools. Additionally, this chapter delves into crucial techniques for managing large writing projects, including version control strategies and collaborative writing approaches that facilitate teamwork with fellow authors.
 
-The last section of this chapter introduces other text modes that might interest authors, such as Markdown for technical documentation and the specialised Fountain mode for film and theatre scripts.
+In the final section, this chapter introduces a range of other text modes that might captivate authors. Among these are Markdown, which is particularly well-suited for creating technical documentation, and the specialized Fountain mode designed for writing film and theatre scripts. With these insights, you'll be well-equipped to explore diverse writing styles and formats, expanding your capabilities as a writer.
 
 * EDITED Adding notes, citations and references
 :PROPERTIES:
@@ -93,7 +93,7 @@ The ~org-cite-insert~ (=C-c C-x @=) command is your go-to when inserting citatio
 
 The Citar menu indicates whether an entry is cited in your current file with a =C= in the list of publications. Use the =:c= keys in Citar to view only cited entries.
 
-The Citar package provides some convenient functions for managing citations. To change the order of citations in a block, use the shift and left/right arrow keys when the cursor is on the citation (~citar-org-shift-reference-left~ / ~-right~).
+The Citar package also provides some convenient functions for managing citations. To change the order of citations in a block, use the shift and left/right arrow keys when the cursor is on the citation (~citar-org-shift-reference-left~ / ~-right~).
 
 A citation can have a prefix and a suffix, for example:
 
@@ -117,7 +117,7 @@ A bibliography can be global or local. The global bibliography is accessible fro
 :END:
 When reading a comprehensive document like this book, leveraging internal links enhances the readability of the text. This feature in Org empowers you to guide your reader to specific sections, figures, or other parts of the manuscript, making your writing easier to navigate.
 
-Referencing figures and tables is a breeze. Assign a name to the item using the =#+name:= keyword below the caption, for instance: =#+name: fig-example=. When referring to this item, enclose its name in double square brackets (=[[fig-example]]=). Org automatically creates a link to the location of the image or table, as explained in section [[#sec-links]].
+Referencing figures and tables is a breeze. Assign a name to the item using the =#+name:= keyword below the caption, for instance: =#+name: fig-example=. When referring to this item, enclose its name in double square brackets (=[[fig-example]]=). Org automatically creates a link to the location of the image or table, as explained in section [[#sec-links]]. These references can point to other documents, as long as they are part of the same project.
 
 References to sections or chapters consist of links to the name of the targeted heading. So, a link to this particular section would be =[[Captions and references]]=. This approach risks producing broken links when you change the heading name but forget to modify the links that refer to it.
 
@@ -129,7 +129,7 @@ The name of internal links can be anything you like, as long as the names are un
 :PROPERTIES:
 :WORDCOUNT: 2404
 :END:
-Emacs can help you maximise productivity and maintain quality by streamlining your writing processes with various tools, such as text completion. Writing demands undivided attention, so Emacs also provides a serene environment that is free from the distractions of graphical software. Lastly, Emacs offers facilities to integrate with grammar tools and a thesaurus to enhance the quality of your writing.
+Emacs can help you maximise productivity and maintain quality by streamlining your writing processes with various tools, such as text completion. Writing demands undivided attention, so Emacs also provides a serene environment that is free from the distractions of graphical software. Lastly, Emacs offers facilities to integrate with grammar tools, a dictionary, and a thesaurus to enhance the quality of your writing.
 
 ** EDITED Searching the content of your project
 :PROPERTIES:
@@ -210,7 +210,7 @@ Unfortunately, due to the whimsies of written English, it is impossible to capit
 :PROPERTIES:
 :WORDCOUNT: 1015
 :END:
-Creative prose takes total concentration, and distractions are the author's natural enemy. While your computer is a vital writing tool, it can also be a distraction. Most writing software is littered with icons and options to change the document's design. Distraction-free writing tools eliminate these distractions from the screen, making the computer more akin to a mechanical typewriter that allows the author to focus on content over form.
+Writing creative prose takes total concentration, and distractions are the author's natural enemy. While your computer is a vital writing tool, it can also be a distraction. Most writing software is littered with icons and options to change the document's design. These are rarely useful and mostly distractions.  Distraction-free writing tools eliminate these distractions from the screen, making the computer more akin to a mechanical typewriter that allows the author to focus on content over form.
 
 Olivetti is an Emacs minor mode that facilitates distraction-free writing. The name Olivetti derives from the famous Italian typewriter brand. This minor mode reduces the width of the text to seventy characters and centres the text in the middle of the window. The width of the text is changeable with the =olivetti-set-with= command (=C-c \=).
 
@@ -223,9 +223,9 @@ EWS enhances the use of Olivetti mode with its user-friendly function (=C-c w o=
 :END:
 While automated spellchecking is a fantastic tool to ensure your writing is syntactically correct, sometimes you must look up words in a dictionary to get more context. Emacs has a built-in dictionary search function that connects to an online source. The default for EWS is the /Collaborative International Dictionary of English/ (CIDE), derived from the 1913 Webster's Dictionary (=dict.org=). Volunteers from around the world manage the content of this dictionary, which you can access at your fingertips from within Emacs.
 
-To find the definition of the word the cursor is currently on in the dictionary, use ~dictionary-lookup-definition~ (=C-c w s d=). A dictionary screen appears, providing the relevant definitions. You can scroll through the window as with any other buffer. The dictionary buffer contains links to other defined words, which you follow with the Enter key. Using the =n= / =p= keys, jump between hyperlinks. To look up a new word, type =s= or click on the =[Search Definition]= button on top of the window. The =h= key lists the available options. in dictionary mode. 
+To find the definition of the word the cursor is currently on in the dictionary, use ~dictionary-lookup-definition~ (=C-c w s d=). A dictionary screen appears, providing the relevant definitions. You can scroll through the window as with any other buffer. The dictionary buffer contains links to other defined words, which you follow with the Enter key. Using the =n= / =p= keys, jump between hyperlinks. To look up a new word, type =s= or click on the =[Search Definition]= button on top of the window. The =h= key lists the available options in dictionary mode. 
 
-Being lost for words is a common ailment for authors, and the cure is, in most cases, a thesaurus to help you add some variety to your prose. The dictionary lookup command also includes acces to the Moby Thesaurus. While in dictionary mode, type =D= to change the search strategy and select the thesaurus.
+Being lost for words is a common ailment for authors, and the cure is, in most cases, a thesaurus to help you add some variety to your prose. The dictionary lookup command also includes access to the Moby Thesaurus. While in dictionary mode, type =D= to change the search strategy and select the thesaurus.
 
 The core skill in writing is choosing the correct words. Equally important is knowing which words not to use. WriteGood mode, by Benjamin Beckwith, reviews your text for three fundamental problems: weasel words, passive voice, and duplicates. Writegood mode highlights issues in your text with coloured squiggly lines. Hovering the mouse over a marked word provides context on the identified transgression.
 
@@ -294,7 +294,7 @@ Adding the universal argument counts the words in the whole buffer (=C-u M-==). 
 
 Counting words is not an exact science because the outcome depends on the definition of a character, a word or a sentence. When counting characters, Emacs also counts spaces and semantic constructions, such as the metadata of an Org file. Being primarily a computer code editor, Emacs counts hyphenated words or any words separated by punctuation as two words.
 
-By default, Emacs defines a sentence as a sequence of characters that end with a full stop and double spaces. This default setting generates wrong results when counting sentences, as most authors use single spaces, so EWS disables this behaviour. Adding double spaces at the end of a sentence made sense in the days of typewriters. Modern typesetting software no longer requires this archaic practice. Most style manuals, such as the /The Chicago Manual of Style/, recommend using single spacing [cite:@chicago_2017, section 2.9]. When exporting text to the final product, the typesetting software inserts appropriate spacing between sentences. Double spaces after a full stop do make sense when the output is in a monospaced font, as is common in writing software code. The only disadvantage of this method is that abbreviations such as "E. W. S." count as multiple words and sentences.
+By default, Emacs defines a sentence as a sequence of characters that end with a full stop and double spaces. This default setting generates wrong results when counting sentences, as most authors use single spaces, so EWS disables this behaviour. Adding double spaces at the end of a sentence made sense in the days of typewriters. Modern typesetting software no longer requires this archaic practice. Most style manuals, such as the /The Chicago Manual of Style/, recommend using single spacing [cite/n:@chicago_2017, section 2.9]. When exporting text to the final product, the typesetting software inserts appropriate spacing between sentences. Double spaces after a full stop do make sense when the output is in a monospaced font, as is common in writing software code. The only disadvantage of this method is that abbreviations such as "E. W. S." count as multiple words and sentences.
 
 To count the number of words in each chapter or section of your text, you would have to run ~count-words-region~  for each part of your document. EWS provides a convenience function to automate this task and display a word count for each heading. The ~ews-org-count-words~ (=C-c w c=) function cycles through all headings and adds the word count in a property drawer, which is another type of drawer that works much like the notes drawer described above. The word count for higher-level headings includes the content for their lower headings. This method also allows you to add targets for each section, enabling you to monitor progress. Use =C-c C-x p= (~org-set-property~), type =TARGET=, and enter your desired word count. You can also manually edit the drawer, of course.
 
@@ -347,7 +347,7 @@ While Emacs may not boast the flashy cloud collaboration systems found in office
 :PROPERTIES:
 :WORDCOUNT: 3212
 :END:
-There are always at least two versions of a text you are working on. The last saved version and the current buffer. You can discard all changes since the buffer was last saved with the ~revert-buffer~ command, which reloads the file from the disk, erasing all edits made since the last save of the file. Use this as a nuclear option with care. Reverting a buffer only applies when you made colossal mistakes or updated the file outside your current Emacs session.
+There are always at least two versions of a text you are working on. The last saved version and the current buffer. You can discard all changes since the bufferer was last saved with the ~revert-buffer~ command, which reloads the file from the disk, erasing all edits made since the last save of the file. Use this as a nuclear option with care. Reverting a buffer only applies when you made colossal mistakes or updated the file outside your current Emacs session.
 
 ** EDITED The undo system
 :PROPERTIES:
@@ -569,22 +569,21 @@ A [link](http://example.com).
 ![Image](Icon-pictures.png "icon")
 #+end_example
 
-Unfortunately, various markdown flavours exist, most of which provide additional functionality. The Markdown Mode package implements the original version. The EWS configuration activates Markdown by default, but a complete description of this format is outside the scope of this book. Jason Blevins authored the Markdown Mode Emacs package and has published an extensive manual [cite:@blevins_2017].
+Various markdown flavours exist, most of which provide additional functionality to the standard syntax. The Markdown Mode package by Jason R. Blevins implements the original version. The developer has also published a detailed book on how to use Markdown in Emacs [cite:@blevins_2017]. The EWS configuration activates Markdown by default, but a complete description of this format is outside the scope of this book.
 
-The Denote package can create notes in Markdown in two varieties. Unlike Org, Markdown has no provisions for storing metadata about the document. Denote provides two methods to achieve this: TOML (Tom's Obvious Minimal Language) or YAML (YAML Ain't Markup Language). You can set the ~denote-file-type~ variable to either =markdown-toml= or =markdown-yaml= to start creating Markdown notes. The syntax of either front matter type is intuitive. Read the Denote manual for more details and try the different varieties yourself. By the way, Denote also has the option to create notes in plain text. To enable this option, set the ~denote-file-type~ variable to =text=.
+Markdown is often used in technical documentation and is more commonplace than Org mode to share information.
 
-#+caption: Example of a movie script written in Fountain mode.
-#+name: fig-fountain
-#+attr_latex: :width 0.9\textwidth
-#+attr_html: :width 600
-[[file:images/fountain-mode.png]]
+The Denote package can create notes in Markdown in two varieties. Unlike Org, Markdown has no native provisions for storing metadata about the document. Denote provides two methods to achieve this: TOML (Tom's Obvious Minimal Language) or YAML (YAML Ain't Markup Language). You can set the ~denote-file-type~ variable to either =markdown-toml= or =markdown-yaml= to start creating Markdown notes.
+
+Read the Denote manual for more details and try the different varieties yourself. You can also consider using the Denote-Markdown package, which provides additional functionality for writing Markdown Denote files.
 
 ** EDITED Screenwriting with Fountain
 :PROPERTIES:
 :WORDCOUNT: 164
 :END:
-Who wouldn't want to write a screenplay for the next Hollywood or Bollywood blockbuster? Writing movie or theatre scripts follows some strict principles and formatting rules. The standard font for screenplays has a fixed pitch, giving the document an old-school typewriter feel. The example in figure [[fig-fountain]] shows an excerpt of the screenplay of the 2003 fantasy drama /Big Fish/ directed by Tim Burton, based on the 1998 novel /Big Fish: A Novel of Mythic Proportions/ by Daniel Wallace.
+Who wouldn't want to write a screenplay for the next Hollywood or Bollywood blockbuster? Writing movie or theatre scripts follows some strict principles and formatting rules. The standard font for screenplays has a fixed pitch, giving the document an old-school typewriter feel. 
 
 However, you can unleash your creativity with Fountain, a plain text format for writing screenplays in any text processor. The Fountain file format is quite special as it contains almost no markup. Given the strict conventions in screenplays, Fountain can logically determine how to format the document.
 
 Fountain Mode implements this text format in Emacs and is enabled in /Emacs Writing Studio/. To become the next Shakespeare or Stanley Kubrick, read the extensive manual with =C-h R fountain=.
+

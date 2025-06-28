@@ -9,7 +9,6 @@
 </div>
 <h3 style="text-align:center">&#169; Peter Prevos (2024)</h3>
 <p style="text-align: center;">ISBN 978-0-9875669-8-0 (E-book)</p>
-<p style="text-align: center;">ISBN 978-0-9875669-9-7 (Paperback)</p>
 <p>&nbsp;</p>
 <p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Australia License. You are free to share to copy, distribute and transmit the work under the following conditions:</p>
 <ul>
@@ -66,7 +65,6 @@
         {\small \href{https://peterprevos.com}{peterprevos.com}}
 
         \vspace{2em}
-        ISBN 978-0-9875669-8-0 (E-book)\\
         ISBN 978-0-9875669-9-7 (Paperback)
     \end{center}
 

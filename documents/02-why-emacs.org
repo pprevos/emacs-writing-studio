@@ -18,7 +18,7 @@ Many versions of Emacs have existed over the decades. The currently most widely 
 “Free software” means software that respects users' freedom and community. Roughly, it means that the users have the freedom to run, copy, distribute, study, change and improve the software. Thus, "free software" is a matter of liberty, not price. To understand the concept, you should think of "free" as in "free speech", not as in "free beer".
 #+end_quote
 
-Emacs is a officially text editor, but this does not make sense to authors. From an author's perspective, Emacs is a text /processor/ because editing is only one step in the writing process. A text editor is a tool for software developers to write code, and a text processor is a tool for authors to write prose. EWS is a bespoke configuration that transforms Emacs into a tool for authors, converting a software editor to a text processor.
+Emacs is a officially text editor, but this does not make sense to authors. From an author's perspective, Emacs is a text /processor/ because editing is only one step in the writing process. A text editor is a tool for software developers to write code, and a text processor is a tool for authors to write prose. EWS is a bespoke configuration that transforms Emacs into a tool for researchers and authors.
 
 * Why use Emacs?
 When working on a writing project, authors need a collection of tools to get the job done. They jot down notes in a research tool and meticulously build bibliographies in a database. Then, they write in a familiar word processor. To stay on top of their deadlines, they juggle a productivity tool for managing projects. Finally, after hours of focused work, the researcher might unwind with a quick game of Tetris to take a well-deserved break from the application circus.
@@ -57,7 +57,7 @@ Plain text most commonly has a =.txt= extension and does not have any formatting
 
 Plain text can be read across all computer systems, so you never have to worry about locking your writing into a proprietary format or being stuck using a particular software package. Anything you write in Emacs can be read with NotePad, TextEdit or any other such software. The only difference is that other programs don't have the versatility of Emacs. Plain text is not a niche application. This format has basically remained unchanged for decades and is unlikely to fade away in the future.
 
-Text modes can also display ‘graphics’. When at primary school in the 1970s, our teacher proudly showed us some computer art. The artwork consisted of printed alphanumeric characters that resembled an image, such as this kitten (source: [[https://www.asciiart.eu/][asciiart.eu]]). Some people still create ASCII art, as it is called to adorn computer code. However, there is no need to resort to these ancient techniques as Emacs can also display images in standard formats such as =PNG= and =JPG=.
+Text modes can also display ‘graphics’. When at primary school in the 1970s, our teacher proudly showed us some computer art. The artwork consisted of printed alphanumeric characters that resembled an image, such as this kitten (source: [[https://www.asciiart.eu/][asciiart.eu]]).
 
 #+begin_example
  /\_/\
@@ -65,6 +65,8 @@ Text modes can also display ‘graphics’. When at primary school in the 1970s,
 ==_Y_==
   `-'
 #+end_example
+
+Some people still create ASCII art, as it is called to adorn computer code. However, there is no need to resort to these ancient techniques as Emacs can also display images in standard formats such as =PNG= and =JPG=.
 
 Graphical interfaces simulate the physical world by making objects on the screen look like pieces of paper and folders on a desk. You point, click, and drag documents into folders; documents appear as they would on paper and when done, they are sent to the rubbish bin. Graphical interfaces are a magic trick that makes you believe you are doing something physical [cite:@tognazzini_1993]. This approach might be convenient, but it prevents people from understanding how computers work. In word processors, the screen looks like a printed page. While this might be aesthetically pleasing, it distracts the writer from creating content and instead motivates them to fiddle with formatting.
 
@@ -85,24 +87,25 @@ Regular plain text files are the most rudimentary format and don’t contain any
 | Markdown | =_Italic Text_=      |
 | Org mode | =/Italic Text/=      |
 
-Using plain text helps you become more productive by not worrying about the document's design until you complete the content. The main benefit of using plain text over rich text is that it provides a distraction-free writing environment. As I write this book, I don’t see what it will look like in printed form as you would using modern word processors. In Emacs, I only see text, images, and some instructions for the computer on what the final product should look like. When exporting this document to a web page or any other format, a template defines the final product's design, such as layout and typography. This approach ensures that your text can be easily exported to multiple formats.
-
-The image in figure [[fig-wysiwym]] shows writing in Emacs in action. The left side shows the Emacs screen for part of this chapter. The right side shows the result after compiling the content to PDF.
-
 #+caption: What You See is What You Mean approach to writing.
 #+name: fig-wysiwym
+#+attr_org: :width 300
 #+attr_html: :title What You See is What You Mean approach to writing.
 #+attr_latex: :width \textwidth
 #+attr_html: :width 80%
 [[file:images/wysiwym.png]]
 
+Using plain text helps you become more productive by not worrying about the document's design until you complete the content. The main benefit of using plain text over rich text is that it provides a distraction-free writing environment. As I write this book, I don’t see what it will look like in printed form as you would using modern word processors. Emacs only displays text, images, and some instructions on what the design of the final product. When exporting this document to a web page or any other format, a template defines the final product's layout and typography. This approach ensures that your text can be easily exported to multiple formats. The image in figure [[fig-wysiwym]] shows writing in Emacs in action. The left side shows the Emacs screen for part of this chapter. The right side shows the result after compiling the content to PDF.
+
+The plain text indicators for tables, captions, references and so on are converted to the appropriate format, as defined by a template. This approach lets you focus on content. Once you have define a template, all typesetting and formatting will be done by the export function. Similar results can be achieved with HTML documents (including e-books) and word processor formats. 
+
 In summary, the benefits of writing in plain text over using graphical software are:
 
-1. Independence of the software you use.
+1. Independent of the software you use.
 2. Text, metadata and markup are visible.
 3. No distractions on the screen.
 4. Ability to export to any format.
-
+   
 * The learning curve
 :PROPERTIES:
 :ID:       556b2840-6c64-43ae-a190-27ed5b59a314
@@ -234,7 +237,9 @@ Once you have gathered your thoughts, it is time to start writing. Org is ideal 
 Chapter [[#chap-production]] describes how to use Org to write articles, websites and books, and manage large projects.
 
 ** Publication
-The glorious moment has arrived when you can publish the fruits of your labour. Org has powerful capabilities to export the text to various formats, most importantly word processor documents for sharing, PDF files for physical books, ePub for e-books, HTML for websites and ODT for corporate documents. Org exports files to print-ready PDF files through the LaTeX document preparation system, which is popular among technical authors and publishers but can be used for any physical book.
+The glorious moment has arrived when you can publish the fruits of your labour. Org has powerful capabilities to export the text to various formats, most importantly word processor documents for sharing, PDF files for physical books, ePub for e-books, HTML for websites and ODT for corporate documents.
+
+Org exports files to print-ready PDF files through the LaTeX document preparation system, which is popular among technical authors and publishers but can be used for any physical book. The benefit of using Org over other LaTeX editors is that you don't need to know any LaTeX syntax to get started.
 
 Chapter [[#chap-publication]] discusses how to use Org to convert your plain text document to an electronic or physical publication to share with the world.
 

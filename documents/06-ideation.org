@@ -144,7 +144,7 @@ Using one large file for your notes is a great way to start commuting your thoug
 :END:
 Using a single file is a nice way to start your journey, but once these files grow to gargantuan sizes, they become unwieldy. Most note-taking systems, therefore, use separate files to create a network of ideas. Emacs users have developed a slew of packages to write and manage collections of notes. EWS uses the Denote package. This package does not enforce any specific methodology or workflow. It can process both written notes in three plain text formats and binary files, such as photographs, PDF files, or any other file type you would like to store in your digital archive.
 
-The Denote package categorises your files using keywords. There is also an option to add a signature, which can designate a semantic order. Notes can also link to each other to form a network of thoughts. With these three mechanisms, you can use Denote to create an organic digital garden or implement a formal system, such as the Zettelkasten, Johnny Decimal, or PARA method, or work according to your personal preferences.
+The Denote package categorises your files using keywords. There is also an option to add a signature, which can designate a semantic order. Notes can also link to each other to form a network of thoughts. With these three mechanisms, you can use Denote to create an organic digital garden or implement a formal system, such as the Zettelkasten, Johnny.Decimal, or PARA method, or work according to your personal preferences.
 
 The driving force of the Denote package is its file naming convention. This approach embeds metadata in the filename, eliminating the need for a database or any other external dependency to navigate your jungle of notes. The Denote naming convention consists of five parts (all in lowercase by default), of which only the ID and file extension are required. The file naming convention in Denote limits your freedom in naming files. However, these restrictions provide incredible power by introducing predictability and uniformity, which makes it easy to find notes. An example of a fully formatted Denote file is.
 
@@ -232,13 +232,13 @@ Open the Citar interface with =C-c w b c= (~citar-create-note~) to create a new 
 
 Once you have collected some bibliographic notes, you will want to access and modify them. You can access the attachments, links and other notes associated with the references from within via the Citar menu with =C-c w b o= (~citar-open~). Entries with a note are indicated with an =N= in the third column. From this menu, you can also create additional notes.
 
-To only show those entries with a note, start the search with =:n= or use ~citar-denote-open-note~ (=C-c w b n=) to open the Citar menu with only entries with one or more associated notes. Alternatively, the ~citar-open-note~ function lists the file names of all literature notes in the minibuffer.
+To only show those entries with a note, start the search with =:n=. Alternatively use ~citar-denote-open-note~ (=C-c w b n= ) to open the Citar menu with only entries with one or more associated notes. Furthermore, the ~citar-open-note~ function lists the file names of all literature notes in the minibuffer.
 
 The ~citar-denote-add-citekey~ function (=C-c w b k=) adds citation keys or converts an existing Denote file to a bibliographic note. When converting a regular Denote file, the function adds the =bib= keyword to the front matter and renames the file accordingly. This function opens the Citar selection menu and adds the selected citation keys to the front matter. You can remove citation references from a note with the =C-c w b K= shortcut (~citar-denote-remove-citekey~). When referencing more than one publication, select the unwanted item in the minibuffer first. When the note only has one reference, the bibliography keyword is removed, and the file is renamed, converting it to a generic permanent note.
 
 Several functions are available to manage the current buffer when inside a bibliographic note. The ~citar-denote-dwim~ function (=C-c w b d=) provides access to the Citar menu for the referenced literature in this note, from where you can open attachments, other notes, and links. When a note has more than one reference item, you need to select the relevant item first.
 
-What is the point of building a bibliography without citing or using each in a bibliographic note? The ~citar-denote-nocite~ (=C-c w b x=)  function opens the Citar menu and shows all items in your bibliography that are neither cited nor referenced. From there, you can create a new bibliographic note, follow a link or read the file. This function can act as a checklist of the literature you have not yet read or reviewed.
+What is the point of building a bibliography without citing or using each item at least once in a bibliographic note? The ~citar-denote-nocite~ (=C-c w b x=)  function opens the Citar menu and shows all items in your bibliography that are neither cited nor referenced. From there, you can create a new bibliographic note, follow a link or read the file. This function can act as a checklist of the literature you have not yet read or reviewed.
 
 To learn more about functionality in the Citar-Denote package, read the manual with =C-h R citar-denote=.
 
@@ -253,9 +253,7 @@ There are numerous use cases for extending Denote to binary files. I save my pho
 
 Denote's reliance on a filename to store metadata allows you to manage files other than the three plain text types Denote can generate (plain text, Markdown or Org). An attachment is a file with a compatible filename, except those files that Denote creates. Denote recognises any file stored in the Denote directory that follows its file naming convention.
 
-The first step in registering an attachment in Denote is to ensure it has a compliant name. You can rename a file manually after opening it with ~denote-rename-file~ (=C-c w d r=). This function uses the filename as a default title, which you can modify and add relevant keywords as needed. The last modified timestamp of the file will serve as its identifier.
-
-However, the creation date on the file system is not always the actual creation date. When working with attachments, there are three options for a valid timestamp, being the date and time when the:
+The first step in registering an attachment in Denote is to ensure it has a compliant name. You can rename a file manually after opening it with ~denote-rename-file~ (=C-c w d r=). This function uses the filename as a default title, which you can modify and add relevant keywords as needed. The last modified timestamp of the file will serve as its identifier. However, the creation date on the file system is not always the actual creation date. When working with attachments, there are three options for a valid timestamp, being the date and time when the:
 
 - A digitised document was created
 - Electronic file was born (first creation date)
@@ -265,8 +263,6 @@ The first scenario mainly relates to historical documents. Over the years, I hav
 
 The second scenario mainly occurs with photographs. The timestamp on the file system may differ from when the picture was taken, so we need to know the exact time the photo was taken. For recent images, you can extract the creation date from the file's metadata. Several tools, such as ExifTool, are available to extract metadata from photographs and PDF files.
 
-Section [[#sec-dired]] provides a more detailed description of how to manage your files, including the use of special packages and Denote for managing your photograph collection.
-
 ** EDITED Meta notes
 :PROPERTIES:
 :CUSTOM_ID: sec-meta
@@ -275,7 +271,7 @@ Once you have written many notes, you might want to add some structure to them. 
 
 We can achieve this with Org mode and the additional package Denote-Org, which leverages dynamic blocks in Org. Dynamic blocks are a versatile Org feature that can aggregate your thoughts and link to relevant notes. A dynamic block is a section of text that can be dynamically updated as your Denote collection evolves. A meta note could contain a dynamic block that shows a list of all notes within a category or an ordered list of notes that matches a signature or even includes the text of other notes.
 
-Let's say that you are working on a project to write a paper about the /Daimonion/ (inner voice) that spoke to the ancient Greek philosopher Socrates. You read the literature and create a bunch of permanent notes that use the =_daimonion= keyword. When gathering your thoughts into an integrated view, you can make a meta note that links to all your relevant notes.
+Let's say that you are working on a project to write a paper about the /Daimonion/ (inner voice) that spoke to the ancient Greek philosopher Socrates. You read the literature and create a bunch of permanent notes that use the =_daimonion= keyword. When gathering your thoughts into an integrated view, you can make a meta note.
 
 Use the ~org-dynamic-block-insert-dblock~ function =(C-c C-x x=) to see a selection list of available dynamic blocks and select =denote-links=. Next, provide a regular expression that matches the notes you want to list (in this case =_daimonion=). A regular expression is an advanced search term, much like using a wildcard in a filename. Denote inserts a block in your Org file that lists links to all notes matching this search criterion, for example:
 
@@ -308,7 +304,7 @@ The last type of Denote dynamic block enables transclusion, which includes the c
 - =file-separator=: When set to =t= adds a separator between subsequent files.
 - =add-links=: When set to =t=, add a link to each file at the start.
 
-Read the Denote-Org manual for more detailed information using =C-h R denote-org=.
+The Denote-Org manual contains detailed information (=C-h R denote-org=).
 
 ** EDITED Linking notes
 :PROPERTIES:
@@ -345,9 +341,11 @@ If, for example, you like to filter notes tagged as 'economics', type =C-x C-f=,
 
 The Consult-Notes package by Colin McLear merges the capabilities of Denote and Daniel Mendler's Consult package to help you find notes using regular expressions. This package also provides facilities to search through the content of your notes. To find a note by any part of its filename, use the ~consult-notes~ function bound to =C-c w d f=. The Consult package provides live previews of the files that match the search. To search within a subdirectory of the Denote directory, start the query with a slash, for example, =/attachments=. This package accepts regular expressions, as explained in the previous paragraph. For more advanced users, this package also allows you to define separate silos of Denote files, which can be helpful when, for example, you want to separate work files from private information.
 
-One note of caution when using Consult previews. The OpenWith package (section [[#sec-openwith]]) can interfere with the preview functions in the Consult package. The system will preview file types configured in OpenWith with external software, disturbing the workflow. When using this package, you will need to customise the ~consult-preview-excluded-files~ variable to exclude any file types mentioned in the ~openwith-associations~ variable. You only have to register the file extension and add a =$= symbol, which is the regular expression symbol for the end of the string. So adding "=mp4$=" instructs Consult not to preview video files. Click in =INS= button in the customisation menu to add multiple file types.
+One note of caution when using Consult previews. The OpenWith package (section [[#sec-openwith]]) can interfere with the preview functions in the Consult package. The system will preview file types configured in OpenWith with external software, disturbing the workflow. Using this package requires customising ~consult-preview-excluded-files~ to exclude any file types mentioned in the ~openwith-associations~ variable. You only have to register the file extension and add a =$= symbol, which is the regular expression symbol for the end of the string. So adding "=mp4$=" instructs Consult not to preview video files. Click in =INS= button in the customisation menu to add multiple file types.
 
-Searching for titles, tags, and other metadata is a powerful way to access your information due to the Denote naming convention. While this is a good start, sometimes you need to search through the content of your notes rather than just titles and metadata. The Consult package provides a valuable interface to achieve this objective. The ~consult-notes-search-in-all-notes~ function (=C-c w d g=) activates a deep search inside your notes. The package uses Grep, a utility for searching plain text files for lines that match a regular expression. Grep must be installed on your computer for this to work, which is typically the case for Linux and Apple computers.
+Searching for titles, tags, and other metadata is a powerful way to access your information due to the Denote naming convention. While this is a good start, sometimes you need to search through the content of your notes rather than just titles and metadata. The Consult package provides a valuable interface to achieve this objective.
+
+The ~consult-notes-search-in-all-notes~ function (=C-c w d g=) activates a deep search inside your notes. The package uses Grep, a utility for searching plain text files for lines that match a regular expression. Grep must be installed on your computer for this to work, which is typically the case for Linux and Apple computers.
 
 The search is incremental, just like minibuffer completion. As you type your search criterion, a list of results appears that can be narrowed. The results show the filename and the matching lines within each file. The search term starts with a hashtag; when you type another such symbol, for example, =#topology# homotopy=, the next phrase will be searched within the results that match the first regular expression. This example finds all notes that contain the word "topology" and narrows to those files that also contain the word "homotopy".
 
@@ -357,7 +355,7 @@ Denote also has a built-in search function that leverages the Grep software, whi
 :PROPERTIES:
 :WORDCOUNT: 1304
 :END:
-The Denote package is flexible and malleable, so you can implement any published note-taking methodology. This section provides suggestions on implementing some of the popular methods. EWS does not promote any note-taking systems and demonstrates how you could implement them.
+The Denote package is flexible and malleable, so you can implement any published note-taking methodology. EWS does not promote any note-taking systems and this section only provides some hints on implementing three popular methods with Emacs and Denote.
 
 Try not to get distracted by 'shiny-object syndrome' and focus on writing rather than chasing the latest ideas. The ideal method is one that you grow organically, tailored to your specific needs. The power of the Denote file naming convention and regular expressions basically provide everything you need at your fingertips. 
 
@@ -386,13 +384,13 @@ If you insist on using folders instead of keywords, Denote also allows you to do
 :PROPERTIES:
 :WORDCOUNT: 794
 :END:
-The /Johnny.Decimal/ System uses a numbering scheme to organise files, created by Johnny Noble. The basic idea is to divide your digital life into fewer than ten broad areas. You can begin with, for example, just /work/ and /personal/. These main categories are the virtual filing shelves in your digital library. Each shelf can accommodate up to ten boxes. For instance, in our example, we could have boxes for /finance/, /writing/ and /travel/ on the /personal/ shelf.
+The Johnny.Decimal System uses a numbering scheme to organise files, created by Johnny Noble. The basic idea is to divide your digital life into fewer than ten broad areas. You can begin with, for example, just /work/ and /personal/. These main categories are the virtual filing shelves in your digital library. Each shelf can accommodate up to ten boxes. For instance, in our example, we could have boxes for /finance/, /writing/ and /travel/ on the /personal/ shelf.
 
-The next step involves assigning numbers to each category. /Johnny.Decimal identifiers start with 10--19 because lower numbers are reserved for system maintenance. The 00 folder typically contains an index to help you navigate the numbering system.
+The next step involves assigning numbers to each category. Johnny.Decimal identifiers start with 10--19 because lower numbers are reserved for system maintenance. The 00 folder typically contains an index to help you navigate the numbering system.
 
 In our example, /personal/ is shelf 10--19, and the boxes are numbered from 11 to 19, for example, /finance/ (11), /writing/ (12), and /travel/ (13). There is room for seven more boxes, but wait to use that capacity until the need arises. In the original system, the numbers form the start directory names.
 
-The /Johnny.Decimal/ system is similar to the Dewey Decimal system in a library but with fewer categories. The /Johnny.Decimal/ system describes your life, while the Dewey Decimal system describes humanity's knowledge. Of course, you could also categorise your notes using the Dewey Decimal approach; the choice is yours.
+The Johnny.Decimal system is similar to the Dewey Decimal system in a library but with fewer categories. The Johnny.Decimal system describes your life, while the Dewey Decimal system describes humanity's knowledge. Of course, you could also categorise your notes using the Dewey Decimal approach; the choice is yours.
 
 You can implement Johnny.Decimal, Dewey Decimal, or any other system using ordered numbering with Denote signatures. Denote does not use signatures by default, so you will need to customise the ~denote-prompts~ variable and tick 'signature'.
 
@@ -414,7 +412,7 @@ Many people are inspired by Niklas Luhmann's Zettelkasten concept. Zettelkasten 
 
 Trying to emulate Luhmann to the letter is not a great idea. The main reason for his productivity was that he was a workaholic, so using his system does not magically make you more productive. His method is not unique. I was taught how to use index cards for research in my arts degree almost 30 years ago. I remember spending evenings rearranging index cards to structure essays at the dining table. What sets Luhmann apart is his unwavering discipline in note-taking, a trait that continues to inspire.
 
-Luhmann's method for his Zettelkasten included a signature that links cards sequentially in a branching hierarchy. /Johnny.Decimal/ and Zettelkasten differ in that in the former, numbers signify categories. In contrast, in a Zettelkasten, the numbers create a logical relationship between notes. Luhmann's original Zettelkasten has at least six levels of nested categories. This is a minuscule extract from his original work, sourced from =niklas-luhmann-archiv.de=:
+Luhmann's method for his Zettelkasten included a signature that links cards sequentially in a branching hierarchy. Johnny.Decimal and Zettelkasten differ in that in the former, numbers signify categories. In contrast, in a Zettelkasten, the numbers create a logical relationship between notes. Luhmann's original Zettelkasten has at least six levels of nested categories. This is a minuscule extract from his original work, sourced from =niklas-luhmann-archiv.de=:
 
 - 76: Causality
   - 76,2: Causality --- motivation
@@ -439,12 +437,12 @@ Within the Denote-Sequence package, the individual elements of a sequence are se
 #+caption: Sequence of Denote files.
 #+name: fig-sequence
 #+attr_org: :width 200
-#+attr_html: :width 400 :title Sequence of Denote files
-#+attr_latex: :width 0.67\textwidth
+#+attr_html: :width 200 :title Sequence of Denote files
+#+attr_latex: :width 0.2\textwidth
 #+RESULTS:
 [[file:images/denote-sequence.png]]
 
-The ~denote-sequence~ command creates a new note that is either a new parent, sibling or child of an existing note. The package automatically assigns numbers to a note based on the input choices. This package can use two types of schemes: either only numbers, such as =1=13=3=, or alternating letters and numbers, which would be =1=m=3=. You can instruct Emacs which schema to use by customising the ~denote-sequence-scheme~ variable.
+The ~denote-sequence~ command creates a new note that is either a new parent, sibling or child of an existing note. The package automatically assigns numbers to a note based on the input choices. This package can use two types of schemes: either only numbers, such as =1=13=3=, or alternating letters and numbers, which would be =1=m=3=. Customise the ~denote-sequence-scheme~ variable to select the desired behaviour..
 
 Read the Denote-Sequence manual for a more detailed description of the additional functionality that this package offers with =C-h R denote-seq=.
 
@@ -519,7 +517,7 @@ Denote stores metadata using its ingenious file naming convention. Some of this 
 :PROPERTIES:
 :WORDCOUNT: 1440
 :END:
-Committing your ideas to text requires a linear way of thinking, as you can only process one word at a time. In my paper journal, I often use diagrams, such as mind maps, rather than a narrative to convey my thoughts. Visual thinking is another way to approach your ideas, and one of the most common methods for visualising interlinked documents is through a network diagram.
+Committing your ideas to text requires a linear way of thinking, as you can only process one word at a time. We reading text from top to bottom from beginning to the end, which means thoughts need to be pre-ordered. In my paper notebook, I regularly use diagrams, such as mind maps, rather than a narrative to convey thoughts. Visual thinking is another way to approach ideas as it can reveal previously unseen connections. One of the most common methods for visualising interlinked documents is a network diagram.
 
 Linking ideas in a network is not a modern tool. Medieval monks sketched diagrams in the margins of books they read, connecting their short notes with lines. These diagrams are the source of the curly braces =}=, which initially indicated branching an idea [cite:@even-ezra_2021].
 
@@ -541,7 +539,7 @@ Viewing your thoughts as a network helps you discover hitherto unseen connection
 #+name: fig-network
 #+attr_org: :width 300
 #+attr_html: :width 400 :title Principles of a Denote file network 
-#+attr_latex: :width 0.67\textwidth
+#+attr_latex: :width 0.6\textwidth
 #+RESULTS:
 [[file:images/denote-explore-example.png]]
 
@@ -605,7 +603,7 @@ The neighbourhood of a note consists of all files linked to it at one or more st
 #+caption: Denote neighbourhood of files (depth = 2).
 #+name: fig-neighbourhood
 #+attr_html: :alt Denote neighbourhood of files :title Denote neighbourhood of files :width 250
-#+attr_latex: :width 0.5\textwidth
+#+attr_latex: :width 0.4\textwidth
 #+RESULTS:
 [[file:images/denote-explore-neighbourhood.png]]
 
@@ -679,12 +677,9 @@ Adding more connections between your notes may improve your second brain, but th
 :END:
 This chapter provides a brief introduction to the Denote package and some of its auxiliary packages. These packages offer extensive functionality to customise Emacs according to your preferences.
 
-The extensive Denote manual describes its full functionality in great detail, with numerous options to configure how it works (=C-h R denote=). Prot, the maintainer of the Denote package, has also published some extensions, some of which have been mentioned above. Additional available extensions are:
+The extensive Denote manual describes its full functionality in great detail, with numerous options to configure how it works (=C-h R denote=). Prot, the maintainer of the Denote package, has also published some extensions, some of which have been mentioned above. Each of these auxiliary packages ships with a detailed manual.
 
-- /Denote-Silo/: Extension for Denote to work with silos (separated collections of Denote files).
-- /Denote-Markdown/: Extension for Denote to do more things with Markdown files.
-
-Each of these auxiliary packages ships with a detailed manual. You can access these manuals with =C-h R denote= and selecting the relevant package.
+The /Denote-Silo/ extension makes working with silos (separated collections of Denote files) a bit more convenient. Silos can be useful when, for example, you like to keep your private and work notes separate. The /Denote-Markdown/ package extends functionality for working with Markdown files. You can access these manuals with =C-h R denote= and selecting the relevant package. 
 
 Denote, combined with other Emacs functionality, provides a bewildering multitude of options and configurations. Don't be tempted to dive straight into the weeds to define your ideal system. The best advice is to spend most of your time on writing notes rather than finetuning your system in great detail. As computer science pioneer Donald Knuth once wrote:
 

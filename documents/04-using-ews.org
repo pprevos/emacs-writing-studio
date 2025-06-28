@@ -18,9 +18,7 @@ EWS utilises a minimalist interface devoid of typical graphical software element
 The EWS configuration is an opinionated set of choices that might not suit everybody. Emacs users occasionally discuss what constitutes a sensible default configuration. No matter how interesting these debates might be, such a default does not exist. One person's sensible default is another person's computing nightmare; feel free to modify any aspect of EWS to suit your ideal workflow. The Appendix contains the complete annotated configuration and suggestions for making changes.
 
 * Installing Emacs Writing Studio
-You don't have to learn to program in Elisp to use Emacs. You can start with the EWS configuration to get you going. But first, you need to install EWS and some additional software.
-
-To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository and save them in the configuration folder:
+You don't have to learn to program in Elisp to use Emacs. You can start with the EWS configuration to get you going. But first, you need to install EWS and some additional software. To install the EWS configuration, download the =init.el= and =ews.el= files from the GitHub repository and save them in the configuration folder:
 
 #+begin_src 
 https://github.com/pprevos/emacs-writing-studio
@@ -61,6 +59,9 @@ The tinted versions have a slightly lower contrast ratio and are suitable for pe
 The Modus Themes package includes an extensive manual that explains in detail how to customise the look and feel of its collection of themes. This manual is available through Info Mode with =C-h R modus=. The Appendix provides additional information on customising the theme for your personal settings.
 
 Emacs users have developed a ragtag collection of themes. To pick your favourite, you can browse the Emacs Themes Gallery (=emacsthemes.com=). If the theme is available in any of the package repositories, the ~package-install~ command can be used to install it for you. Type 'theme' to filter the list and pick your favourite. Once you have installed a new theme, you can use =C-c w t s= (~consult-theme~). This command provides a selection menu of all installed themes, allowing you to select a new one for the current session.
+#+begin_export latex
+\newpage
+#+end_export
 
 When you start EWS for the first time, it will use the default Emacs theme. To set your preferred default light or dark theme, run the ~customize-themes~ command and select your preferred version. Follow the prompts and click the 'Save Theme Settings' button to store your chosen default in the =custom.el= file
 
@@ -78,21 +79,18 @@ The EWS configuration does not specify any particular fonts and uses the system'
 - =fixed-pitch=: The font used for computer code.
 - =variable-pitch=: The settings for prose.
 
-In Emacs lingo, a 'face' is a collection of attributes to display text. It defines the font, foreground colour, background colour, optional underlining, etc. Various face attributes are available for configuration. The main ones to use are:
-
-- =font=: The name of the font
-- =height=: The font height as an integer in units of 1/10 point.
+In Emacs lingo, a 'face' is a collection of attributes to display text. It defines the font, foreground colour, background colour, optional underlining, etc. Various face attributes are available for configuration. The main ones to use are the name of the font and the font's height in units of 1/10 point. A point is exactly 1/72 of an inch, so one point is about or 0.35mm.
 
 You can use the customisation menu by evoking ~customize-face~ and selecting =default=, =fixed-pitch=, or =variable-pitch=, then entering the font name in the /Font Family/ box. Click =[Apply and Save]= for each font. This action saves the font settings to the =custom.el= file, which Emacs evaluates at the beginning of the startup sequence. Please note that any customisation you make overrides any theme settings, so ideally, only customise the font family and size.
 
 To see which fonts are available, use ~menu-set-font~. When you use the GUI to set the default font, the change is immediate but transient. Use ~menu-bar-options-save~ to save your default font and size to the =custom.el= file. This method only modifies the default font and should be a fixed-pitch font, which in most font names is indicated by the 'mono' prefix. You can also access the functions by pressing =F10= and using the arrow keys to find the relevant functions in the options menu.
 
-Note that fonts in Emacs are not the fonts used in the final published version. The typography of the final product is defined by the relevant templates, as explained in chapter [[#chap-publication]].
+Note that fonts in Emacs are not the fonts used in the final published version. The typography of the final product is defined by the relevant templates (chapter [[#chap-publication]]).
 
 The default margin settings can make the screen look a bit overfull. Hoping you don't suffer from /horror vacui/ (fear of empty space), this configuration also installs Prot Stavrou's Spacious Padding package. This package increases the space inside windows and frames, preventing cramming a screen with symbols.
 
-* Exploring Emacs Functionality
-Working in Emacs, you have access to thousands of commands and hundreds of keyboard shortcuts. As you use the system for a while, these commands become second nature, and keystrokes are stored in muscle memory.
+* Exploring Emacs functionality
+Emacs provides access to thousands of commands and hundreds of keyboard shortcuts. As you use the system for a while, these commands become second nature, and keystrokes are stored in muscle memory.
 
 Section [[#sec-commands]] discussed the completion system in the minibuffer, which helps find commands, files, and other information. EWS installs a series of packages that extend this functionality to make it even easier to find what you need.
 
@@ -123,6 +121,9 @@ Emacs is a self-documenting computing environment, meaning that every function a
 
 ** Keyboard shortcuts
 Completion shortens the amount of text you must type. It is ideal for discovering functionality you may not have realised existed. However, as explained in the previous chapter, we typically don’t type function names but use keyboard shortcuts instead.
+#+begin_export latex
+\newpage
+#+end_export
 
 Remembering which keyboard shortcut you need takes some effort. The Which-Key package by Justin Burkett helps you remember which keyboard shortcut to use. This package displays the keybindings following the currently entered prefix keys in a popup (figure [[fig-which-key]]).
 
@@ -130,7 +131,7 @@ Many keyboard shortcuts have multiple parts, such as =C-x C-f=. Which-Key lists 
 
 If the shortcuts are too numerous to fit in the minibuffer, then you can move to the next page with =C-h n= and the previous page with =C-h p=. Typing =C-h= inside the Which-Key menu displays additional options at the bottom of the screen.
 
-#+caption: Which-Key popup window for =C-c w d=.
+#+caption: Which-Key popup window for =C-c w d= .
 #+name: fig-which-key
 #+attr_html: :alt Which-Key popup window for Emacs Writing Studio :title Which-Key popup window for Emacs Writing Studio :width 800
 #+attr_latex: :width 1\textwidth
@@ -144,7 +145,7 @@ Emacs Writing Studio utilises the Helpful package by Wilfred Hughes. This packag
 - =C-h v=: Help about variables (~helpful-variable~)
 
 * Recent files and bookmarks
-Whenever you return to a new Emacs session, you might want to open a file you were working on recently. The recent files minor mode (~recentf-mode~) list the files you most recently opened. To access this list, use =C-c w r= and search for your target on the list.
+Whenever you return to a new Emacs session, you can open a recently opened file. The recent files minor mode (~recentf-mode~) list the files you most recently opened. To access this list, use =C-c w r= and search for your target on the list.
 
 This minor mode saves a list of the files with associated open buffers when you exit Emacs and go to your configuration folder. The ~recentf-edit-list~ function opens this list, so you can modify it manually should you need to. The Recent Files mode stores the last 50 files that have been opened. Recent files are transient and continuously updated as you open new files.
 
@@ -216,7 +217,7 @@ When the cursor is on a heading, the =Tab= key collapses the text. Repeatedly pr
 | =C-c *=                | Convert paragraph to heading     |
 | =C-c -=                | Convert paragraph to a list item |
 
-Org mode also provides a set of commands to facilitate easier navigation between headings. These commands allow you to move between headings of the same level and navigate up the hierarchy. Table [[tab-org-structure]] lists some of the available commands related to the structure of Org documents. Figure [[fig-org-movement]] visualises how to move between Org headings with the =C-c C-*= keys, where =*= stands for =b=, =f=, =n=, =p= or =u=. 
+Org mode also provides a set of commands to facilitate easier navigation between headings. These commands allow you to move between headings of the same level and navigate up the hierarchy. Table [[tab-org-structure]] lists some of the available commands related to the structure of Org documents. Figure [[fig-org-movement]] visualises how to move between Org headings with the =C-c C-*= keys, where =*= stands for =b=, =f=, =n=, =p= or =u=. So =C-c C-n= moves the cursor to the next heading, irrespective of its level on the hierarchy and =C-c C-u= moves to the parent of the current heading.
 
 #+caption: Moving between headings in Org mode with =C-c C-*= keys.
 #+name: fig-org-movement
@@ -258,7 +259,7 @@ Numbered lists start at one by default, but you can add a cookie to start the li
 :END:
 A text, just like a person, cannot exist in solitude. People have family and friends, and so do texts. You might need links to connect related files or reference text from which your writing borrows ideas. Relationships between electronic texts are established with hyperlinks. Org mode recognises an extensive suite of link types, such as websites, Document Object Identifiers (DOI) and internal files.
 
-Links in Org appear between square brackets =[[ ]]= and start with an identifier, followed by the link itself. For example, websites begin with the usual =https:= and files start with =file:= and DOI numbers, you guessed it, start with =doi:=. 
+Links in Org appear between double square brackets =[[ ]]= and start with an identifier, followed by the link itself. For example, websites begin with the usual =https:= and files start with =file:= and DOI numbers, you guessed it, start with =doi:=. 
 
 When the link location contains spaces, you need to surround it with quotation marks for it to become active: =[[file:"file name"]]=. Links can also contain a description using the following syntax: =[[type:link][description]]=. When a link has a description, Org hides the syntax and formats it like a hyperlink on a website. A link to a website in Org appears as an underlined hyperlink, displaying only the description. The ~org-toggle-link-display~ command switches this behaviour on and off. So this is what the syntax of a link to Wikipedia looks like under the hood:
 
@@ -288,7 +289,7 @@ You can skip the =file:= part by adding the universal argument with the =C-u C-c
 
 After adding the link, you can preview the image with  =C-c C-x C-M-v=, which is bound to the ~org-redisplay-inline-images~ function. To toggle previewing pictures in the whole document, use =C-c C-x C-v= (~org-toggle-inline-images~). The EWS configuration enables default image previews in all Org buffers. When adding a new image, you need to enable the preview with the redisplay command (=C-c C-x C-M-v=).
 
-Images in an Org mode buffer are always aligned to the left or right edge of the page, depending on the writing direction of your language. Images are 300 pixels wide in an Org buffer by default. You can configure the preview size to your preference by adding a line above the image, for example: =#+attr_org: :width 600= (Org mode attributes). This line only changes the size of the image in the Org buffer but not in the final exported format. You can also add a caption and a reference name to an image. Chapter [[#chap-publication]] explains how to set the image size, alignment, captions and cross-references for the final exported version. The example below shows what an image looks like in Org, including a caption, reference name, and attributes. 
+Images in an Org mode buffer are always aligned to the left or right edge of the page, depending on the writing direction of your language. Images are 300 pixels wide in an Org buffer by default. You can configure the preview size to your preference by adding a line above the image, for example: =#+attr_org: :width 600=. This line only changes the size of the image in the Org buffer but not in the final exported format. You can also add a caption and a reference name to an image. Chapter [[#chap-publication]] explains how to set the image size, alignment, captions and cross-references for the final exported version. The example below shows what an image looks like in Org, including a caption, reference name, and attributes. 
 
 #+begin_example
 ,#+caption:  This is the image caption.
@@ -311,9 +312,9 @@ A table is a common mechanism in technical publications to structure information
 When you start a row with =|-= and hit =Tab=, you create a horizontal line across the table. Start filling the cells with information. If the table becomes misaligned, then the =Tab= key or =C-c C-c= will realign the spacing. You can also add a horizontal line below the cursor and move to the next row with =C-c -=. 
 
 #+begin_example
-| Country  |   Area   |
-|----------+----------|
-|          |          |
+| Country   | Area |
+|-----------+------|
+| Singapore |  735 |
 #+end_example
 
 Org can also simplify creating an empty table or converting a region of text to a table with ~org-table-create-or-convert-from-region~, which is bound to =C-c |=. When no region is selected, Org asks for the dimensions of the table. Entering =3x4= results in a table with three columns and four rows (including a header), or whatever size you seek. When you select a region when issuing this command, the region converts to a table, and any commas in the text become columns. This feature is useful when copying a table from another non-Org document, such as a website. If you have a table stored in a CSV (Comma-Separated Values) file, then you can import it with the ~org-import-table~ function. 
@@ -393,7 +394,7 @@ Ricing is a slang term among software developers, referring to heavily customisi
 
 The main difference between a plain text processor and a WYSIWYG word processor is that in Emacs, the design of the text (font, colour and so on) communicates meaning rather than design. Your Emacs theme sets the colours and fonts for your document. The purpose of this styling is to help you navigate the document. The way your document appears in the buffer is not what it will look like when exported to the final product.
 
-The active theme, along with various configurations and packages, determines the display of an Org mode buffer. Emacs defines how a buffer looks through ~font-lock-mode~. Font locking assigns faces to (or 'fontifies' in Emacs speak) various parts of your text using logical rules. Evaluating ~font-lock-mode~ toggles between the fully configured version of your Org mode file and the plain text version. Run this function on an existing Org mode view to see the difference between plain text and fontified text. To take it a step further, you can open an Org mode file and run ~text-mode~ to disable all Org mode functionality and see the file in its raw beauty. To jump back to safety, run ~org-mode~ to restore the file.
+The active theme, configurations, and packages define the look of an Org mode buffer. Emacs defines how a buffer looks through ~font-lock-mode~. Font locking assigns faces to (or 'fontifies' in Emacs speak) parts of your text using logical rules. Evaluating ~font-lock-mode~ toggles between the fully configured version of your Org mode file and the plain text version. Run this function on an existing Org mode view to see the difference between plain text and fontified text. To take it a step further, you can open an Org mode file and run ~text-mode~ to disable all Org mode functionality and see the file in its raw beauty. To jump back to safety, run ~org-mode~ to restore the file.
 
 EWS uses parts of Daniel Mendler's Org-Modern package. This package implements a modern style for your Org buffers using font locking and text properties. However, some of the styling is not implemented because, for beginning users, it is better to see the full syntax. The Appendix explains how to configure this package.
 
@@ -407,13 +408,15 @@ There are basically two ways to correct your writing. Either keep the juices flo
 
 The ~ispell~ function (=C-c w s s=) walks through all suspected spelling mistakes in the current buffer or selected region. This function displays the proposed corrections at the top of the window. You can choose the preferred correction by entering the relevant number. The minibuffer provides a menu to manage the error. Ignore the typo with the space bar; accept it for this session with =a=, insert it into your personal dictionary with =i=, and explore other options that =C-h= reveals.
 
-Flyspell also has a handy command to jump between suspected spelling errors. The ~flyspell-goto-next-error~ function (=C-,=) places the cursor at the next word that needs a review. Adding the universal argument (=C-u C-,)= jumps to the previous possible error. To correct the suspect word, use ~ispell-word~ (=M-$=) and the options in the menu described earlier.
+Flyspell also has a handy command to jump between suspected spelling errors. The ~flyspell-goto-next-error~ function (=C-,=) places the cursor at the next word that needs a review. Adding the universal argument (=C-u C-,)= jumps to the previous error. To correct the suspect word, use ~ispell-word~ (=M-$=) and the options in the menu described earlier.
 
-Checking single words requires you to move the cursor to that word and then return to the flow of your writing. Flyspell provides a more convenient way to correct words on the fly with ~flyspell-auto-correct-previous-word~ (=C-;=). This command replaces the first detected spelling error before the cursor is visible on the screen with the most likely alternative. The most likely candidate is the dictionary word that has the shortest distance to the suspected type. The distance between two words is roughly defined by the number of steps it takes to convert one into the other. Repeatedly pressing =C-;= cycles through the available options until you return to the original version. The echo area shows the list of possible corrections. Typing any other key breaks the chain. So, to fix two spelling mistakes, you first correct one, type something other than =C-;= and correct the next problematic word.
+Checking single words requires you to move the cursor to that word and then return to the flow of your writing. Flyspell provides a more convenient way to correct words on the fly with ~flyspell-auto-correct-previous-word~ (=C-;=). This command replaces the first detected spelling error before the cursor is visible on the screen with the most likely alternative.
 
-The Hunspell software has access to a vast collection of dictionaries, including variations of English, which must be installed separately. The default dictionary for EWS is Australian English (=en_AU=). If you are not Australian, then you must customise the ~ews-hunspell-dictionaries~ variable to change the default language using the formal Hunspell dictionary name, for example, =de_CH= for Swiss German or =nl_NL= for Dutch.
+The most likely candidate is the dictionary word that has the shortest distance to the suspected type. The distance between two words is roughly defined by the number of steps it takes to convert one into the other. Repeatedly pressing =C-;= cycles through the available options until you return to the original version. The echo area shows the list of possible corrections. Typing any other key breaks the chain. So, to fix two spelling mistakes, you first correct one, type something other than =C-;= and correct the next problematic word.
 
-If you write in more than one language, then add multiple dictionaries by adding them to the ~ews-hunspell-dictionaries~ variable in a comma-separated string. For example, to accept both Australian-English and Dutch words, customise this variable to ="en_AU,nl_NL"= and restart Emacs (~restart-emacs~). Any changes to dictionaries will only take effect when the chosen dictionary is available on your system. The ~ispell-hunspell-dict-paths-alist~ variable contains the list of installed dictionaries.
+The Hunspell software has access to a collection of dictionaries, including variations of English, which must be installed separately. The default dictionary for EWS is Australian English (=en_AU=). If you are not Australian, then you must customise the ~ews-hunspell-dictionaries~ variable to change the default language using the formal Hunspell dictionary name, for example, =de_CH= for Swiss German or =nl_NL= for Dutch.
+
+If you write in more than one language, then add multiple dictionaries by adding them to the ~ews-hunspell-dictionaries~ variable in a comma-separated string. For example, to accept both Australian-English and Dutch words, customise this variable to ="en_AU,nl_NL"= and restart Emacs (~restart-emacs~). Any changes to dictionaries will only take effect when the chosen dictionary is available on your system. The ~ispell-hunspell-dict-paths-alist~ variable lists the installed dictionaries.
 
 * Learning more
 These are the basics of the functionality that EWS adds to the vanilla Emacs system. The remainder of this book follows the EWS workflow by describing a linear writing process from inspiration to publication, as explained in section [[#sec-workflow]].

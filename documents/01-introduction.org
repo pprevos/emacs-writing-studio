@@ -3,7 +3,7 @@
 #+startup:      content
 #+bibliography: emacs-writing-studio.bib
 
-Over the past five thousand years, writing has moved from clay tablets and chiselling in stone to paper, computers, and, most recently, artificial intelligence. Before the advent of electronic writing, all an author needed was a notebook, a pen, and a typewriter. Being an author in the digital age is, in many ways, more complex than in the days of clay, stone, or paper.
+Over thousands of years, writing has moved from clay tablets and chiselling in stone to paper, computers, and, most recently, artificial intelligence. Before the advent of electronic writing, all an author needed was a notebook, a pen, and a typewriter. Being an author in the digital age is, in many ways, more complex than in the days of clay, stone, or paper.
 
 Contemporary writers are often overwhelmed by the multitude of electronic tools, each serving a specific function. The information is scattered across various platforms and stored in incompatible formats, leading to a complex and time-consuming writing process. The relief from this complexity is one of the key benefits of Emacs.
 
@@ -16,7 +16,7 @@ As a fiction writer, your imagination is your most valuable asset. You need a to
 
 The powerful search and replace functions, combined with customisable templates, let you easily manage consistency in character names, locations, and other critical details across your manuscript. When inspiration strikes, Emacs' minimalist interface enables you to dive straight into writing without the distraction of unnecessary graphical elements.
 
-Neal Town Stephenson, an American writer of speculative fiction, refers to Emacs as a "thermonuclear word processor" [cite:@stephenson_1999_comm], not—not in a way that destroys your writing in a ball of fire, but in its immense power compared to conventional writing tools.
+Neal Stephenson, an American writer of speculative fiction, refers to Emacs as a "thermonuclear word processor" [cite:@stephenson_1999_comm], not in a way that destroys your writing in a ball of fire, but in its immense power compared to conventional writing tools.
 
 * Non-fiction writers
 Non-fiction writing demands precision, organisation, and meticulous research. Whether you're working on a dissertation, a technical report, or a historical biography, Emacs provides you with the tools to effectively manage massive amounts of information. You can efficiently structure your research notes, manage bibliographies, and outline your work.

@@ -165,8 +165,11 @@ The Scratch Buffer is by default set to Emacs Lisp mode. This is not so useful f
   ;; Scratch buffer settings
 #+end_src
 #+begin_src elisp
-  (setq initial-major-mode 'org-mode
-        initial-scratch-message "#+title: Emacs Writing Studio\n#+subtitle: Scratch Buffer\n\nThe text in this buffer is not saved when exiting Emacs!\n\n")
+    (setq initial-major-mode 'org-mode
+          initial-scratch-message (concat "#+title: Emacs Writing Studio\n"
+  					"#+subtitle: Scratch Buffer\n\n"
+  					"The text in this buffer is not saved"
+  					"when exiting Emacs!\n\n"))
 #+end_src
 
 The next two sections of code further improve the Emacs interface with two packages by Emacs guru Protesilaos Stavrou.
@@ -687,7 +690,7 @@ The EWS package includes a convenience function to improve how Denote displays l
      ("C-c w d R" . denote-rename-file-using-front-matter)))
 #+end_src
 
-The Denote developers provide an ecosystem of packages that
+The Denote developers provide an ecosystem of packages that enhance functionality, two of which are enabled in EWS.
 
 #+begin_src elisp :exports none
   ;; Denote auxiliary packages
@@ -842,7 +845,7 @@ This configuration sets the global bibliography equal to the ~ews-bibtex-files~ 
 #+end_src
 
 ** Quality assurance
-Emacs can hook into the dictionary server at =dict.org= and the Power Thesaurus package integrates with =powerthesaurus.org=. Refer to section [[#sec-qa]] for details.
+Emacs can hook into the dictionary server at =dict.org=, for definitions and a thesaurus. Refer to section [[#sec-qa]] for details.
 
 #+begin_src elisp :exports none
   ;; Lookup words in online dictionaries
@@ -930,16 +933,12 @@ Org is fantastic, but it is not the only text mode useful for authors. EWS insta
 
 #+begin_src elisp :exports none
   ;; Enable Other text modes
-  
+
   ;; Fountain mode for writing scripts
-#+end_src
-#+begin_src elisp
-  (use-package fountain-mode)
-#+end_src
-#+begin_src elisp :exports none
   ;; Markdown mode
 #+end_src
 #+begin_src elisp
+  (use-package fountain-mode)
   (use-package markdown-mode)
 #+end_src
 
@@ -963,7 +962,7 @@ This snippet sets some basic export settings for org mode. You can either set  t
 #+end_src
 
 ** Epub
-The ox-ePub package exports Org files to the most common e-book format. The ~ox-org~  export is required to enable exporting to Org to prevent issues with the table of contents (section [[#sec-ox-epub]]). 
+The ox-ePub package exports Org files to the most common e-book format. The ~ox-org~  code negates some issues with the table of contents (section [[#sec-ox-epub]]). 
 
 #+begin_src elisp :exports none
   ;; epub export
@@ -1006,41 +1005,37 @@ The next section defines the EWS document class, which is used to produce the pa
   ;; EWS paperback configuration
 #+end_src
 #+begin_src elisp
-  (with-eval-after-load 'ox-latex
-    (add-to-list
-     'org-latex-classes
-     '("ews"
-       "\\documentclass[11pt, twoside, hidelinks]{memoir}
-        \\setstocksize{9.25in}{7.5in}
-        \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
-        \\setlrmarginsandblock{1.5in}{1in}{*} 
-        \\setulmarginsandblock{1in}{1.5in}{*}
-        \\checkandfixthelayout
-        \\layout
-        \\setcounter{tocdepth}{0}
-        \\setsecnumdepth{subsection}
-        \\renewcommand{\\baselinestretch}{1.2}
-        \\setheadfoot{0.5in}{0.75in}
-        \\setlength{\\footskip}{0.8in}
-        \\chapterstyle{bianchi}
-        \\renewcommand{\\beforechapskip}{-30pt}
-        \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
-        \\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
-        \\setsubsubsecheadstyle{\\normalfont\\centering}
-        \\pagestyle{myheadings}
-        \\usepackage[font={small, it}]{caption}
-        \\usepackage{ccicons}
-        \\usepackage{ebgaramond}
-        \\usepackage[authoryear]{natbib}
-        \\bibliographystyle{apalike}
-        \\usepackage{svg}
-        \\hyphenation{mini-buffer}
-        \\renewcommand{\\LaTeX}{LaTeX}
-        \\renewcommand{\\TeX}{TeX}"
-       ("\\chapter{%s}" . "\\chapter*{%s}")
-       ("\\section{%s}" . "\\section*{%s}")
-       ("\\subsection{%s}" . "\\subsection*{%s}")
-       ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+    (with-eval-after-load 'ox-latex
+      (add-to-list
+       'org-latex-classes
+       '("ews"
+         "\\documentclass[11pt, twoside, hidelinks]{memoir}
+            \\setstocksize{9.25in}{7.5in}
+            \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
+            \\setlrmarginsandblock{1.5in}{1in}{*} 
+            \\setulmarginsandblock{1in}{1.5in}{*}
+            \\checkandfixthelayout
+            \\layout
+            \\setcounter{tocdepth}{0}
+            \\renewcommand{\\baselinestretch}{1.25}
+            \\setheadfoot{0.5in}{0.75in}
+            \\setlength{\\footskip}{0.8in}
+            \\chapterstyle{bianchi}
+            \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
+            \\setsubsecheadstyle{\\normalfont \\raggedright \\emph}
+            \\setsubsubsecheadstyle{\\normalfont\\centering}
+            \\pagestyle{myheadings}
+            \\usepackage[font={small, it}]{caption}
+            \\usepackage{ccicons}
+            \\usepackage{ebgaramond}
+            \\usepackage[authoryear]{natbib}
+            \\bibliographystyle{apalike}
+            \\usepackage{svg}
+    \\hyphenation{mini-buffer}"
+         ("\\chapter{%s}" . "\\chapter*{%s}")
+         ("\\section{%s}" . "\\section*{%s}")
+         ("\\subsection{%s}" . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 #+end_src
 
 * Administration
@@ -1161,7 +1156,7 @@ To enable image manipulation, you will need to install ImageMagic.
 
 Using =C-<ret>= opens an image in the Dired buffer in your favourite editor. The ~image-dired-external-viewer~ variable defines the program you use to edit pictures, in my case GIMP, the GNU Image Manipulation Program.
 
-#+begin_src elisp
+#+begin_src elisp :exports none
   ;; Image viewer
 #+end_src
 #+begin_src elisp

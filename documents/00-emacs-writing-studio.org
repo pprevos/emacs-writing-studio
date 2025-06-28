@@ -21,7 +21,8 @@
 #+latex_header: \newcommand{\tablefont}{\footnotesize} % Smaller font in tables
 #+latex_header: % Patch tabular/tabular* environments
 #+latex_header: \AtBeginEnvironment{tabular}{\tablefont}
-#+latex_header: \AtBeginEnvironment{tabular*}{\tablefont} 
+#+latex_header: \AtBeginEnvironment{tabular*}{\tablefont}
+#+latex_header: \renewcommand{\LaTeX}{LaTeX}
 
 * Foreword
 :NOTES:

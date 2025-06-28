@@ -33,7 +33,7 @@ You don't need to know much about Emacs to start using it. It works more intuiti
 
 In the menu bar, select /File/ > /Visit New File/, select the directory, and type the filename with a =.org= extension, for example: =test.org=. Visiting a file is a term in Emacs that refers to reading a file into a buffer. This file will be in Org mode, a special type of plain text file. Now, start typing as you usually do in any other text software.
 
-You can also use Org syntax to add structure and metadata to the document. For example, add =#+title: Hello World= as the first line to define the document's title. To insert a heading, start a line with a single asterisk, such as =* Chapter=. Using two or more asterisks renders subheadings.
+You can also use Org syntax to add structure and metadata to the document. For example, add =#+title: Hello World= as the first line to define the title. To insert a heading, start a line with a single asterisk, such as =* Chapter=. Using two or more asterisks renders subheadings.
 
 #+begin_example
 #+title: Hello World
@@ -81,20 +81,26 @@ Pressing an alphanumeric key adds the character to the computer’s memory and d
 
 These are the only keys you ever need to write prose, but we want to do more than insert and edit text. Computer keyboards also have modifier keys, which are special keys that temporarily modify the standard action of another key when pressed together.
 
-The modifier keys on modern PC and Apple keyboards are Shift, Control, Alt/Option, and Command/Windows. Chromebook computers have the same modifier keys, but there is no equivalent to the Windows / Command key. Some smaller keyboards also have additional modifier keys, such as =Fn=, to expand the available options. Modifier keys have no effect when pressed by themselves. As the name suggests, these keys modify other keys when pressed simultaneously.
+The modifier keys on modern PC and Apple keyboards are Shift, Control, Alt / Option, and Command / Windows. Chromebook computers have the same modifier keys, but there is no equivalent to the Windows / Command key. Some smaller keyboards also have additional modifier keys, such as =Fn=, to expand the available options. Modifier keys have no effect when pressed by themselves. As the name suggests, these keys modify other keys when pressed simultaneously.
 
 Some of the Emacs terminology for these keys stems from a time when the current standard keyboard layout did not yet exist. What we now call the Alt key used to be the /Meta/ key. The Windows key on PC keyboards or Command on Apple systems maps to the former /Super/ key. Your operating system uses the Windows or Command key for assorted tasks, so Emacs does not use it by default. Older keyboards also featured the 'Hyper' key, which Emacs can still recognise but is no longer available on modern computers. Advanced computer users can assign this key to another modifier.
 
 Emacs documentation abbreviates key sequences using a convention. When you use the menu bar, as described in the previous section, some items include an abbreviated keyboard shortcut in their descriptions.
 
-For example, =C-a= stands for pressing the Control and =a= key at the same time. The dash indicates that the first key modifies the second key. In contrast, a space between keys indicates that they are typed consecutively. The space bar and other named keys are indicated between angled brackets like this =<spc>= or =<Tab>=. Without angled brackets, you type 'spc' or 'tab'.
+For example, =C-a= stands for pressing the Control and =a= key at the same time. The dash indicates that the first key modifies the second key. In contrast, a space between keys indicates that they are typed consecutively. The space bar and other named keys are indicated between angled brackets like this =<spc>= or =<Tab>=. Without angled brackets, indicates that you type the letters 'spc' or 'tab'.
 
 Each modifier key has an abbreviation, as shown in table [[tab-modifier-keys]]. You can combine modifier keys, which can lead to awkward combinations, such as =C-M-S-a= (Control, Alt and Shift =a=), requiring the nimble fingers of a sleight-of-hand artist to execute smoothly. The shift modifier is usually not indicated because =C-M-A= is the same as =C-M-S-a=. The escape key can also act as a modifier key. Pressing escape once is the same as holding the meta key: =<esc>-x= is the same as =M-x=.
 
 The most critical keyboard shortcut to know about is =C-g=, which cancels a partially typed command. Unlike the triple escape key, this command can also quit running functions.
+#+begin_export latex
+\newpage
+#+end_export
+
+All keystrokes in Emacs execute a function, which means they perform a task. The =c-g= key mentioned above executes the  ~keyboard-quit~ command. A /command/ is a function that can be invoked interactively, typically through keybindings, menu selections or with =m-x=. A /function/ performs a specific task and is called from other functions or commands but not directly by the user. All commands are functions, but not all functions are commands, and this book uses these words interchangeably.
 
 #+caption: Emacs modifier keys.
 #+name: tab-modifier-keys
+#+attr_latex: 
 | Modifier          | Example | Function                     |
 |-------------------+---------+------------------------------|
 | Shift             | =S-8=     | =*= sign on US keyboard        |
@@ -103,14 +109,15 @@ The most critical keyboard shortcut to know about is =C-g=, which cancels a part
 | Windows / Command | =s=       | Used by the operating system |
 | Hyper             | =H=       | Not mapped to regular keys   |
 
-All keystrokes in Emacs execute a function, which means they perform a task. The =c-g= key mentioned above executes the  ~keyboard-quit~ command. A /command/ is a function that can be invoked interactively, typically through keybindings, menu selections or with =m-x=. A /function/ performs a specific task and is called from other functions or commands but not directly by the user. All commands are functions, but not all functions are commands, and this book uses these words interchangeably.
-
 Most technical books display the names of functions in ~typewriter-font~ to distinguish them from standard text. Emacs functions are most commonly written with dashes instead of spaces between words, which hackers refer to as 'kebab-case'. Not all functions have a keyboard shortcut; however, when a shortcut is available, it is also displayed in typewriter text. Knowing the names of functions and their corresponding keyboard shortcuts helps to better understand how Emacs works. You also need to know the function name because keyboard shortcuts can change as they are fully configurable.
 
 But wait, there is more. Emacs also uses prefix keys. When you press these, the system will wait for further input. For example, =C-x C-f= means that you first press Control and =x= and then Control and =f=, the default sequence for finding (opening or creating) a file with the ~find-file~ command.
 
-After pressing a prefix key, Emacs displays it at the bottom of the screen (the echo area), awaiting further input. The length of key sequences is theoretically unlimited. Still, they are usually not more than three or four keys in practice. The standard prefix keys are:
+After pressing a prefix key, Emacs displays it at the bottom of the screen (the echo area), awaiting further input. When you enter the next key, it is either another prefix, or you have completed the key chord. The length of key sequences is theoretically unlimited, but are usually not more than three or four keys in practice. The standard prefix keys are:
 
+#+begin_export latex
+\newpage
+#+end_export
 - =C-x=: Used for built-in Emacs commands
 - =C-c=: Used by Emacs packages
 - =C-h=: Help functions
@@ -118,8 +125,9 @@ After pressing a prefix key, Emacs displays it at the bottom of the screen (the 
 
 If you like to know what shortcuts are available after a prefix key, then use =C-h= after the prefix. For example, =C-c C-h= opens a new buffer with a list of all available shortcuts that start with =C-c=. The names of the commands can be cryptic. Click on the function name to view its help file. In Emacs, help is always around the corner.
 
-#+caption: Cover of the 1981 version of the Emacs manual.
+#+caption:         Cover of the 1981 version of the Emacs manual.
 #+name:       fig-emacs1981
+#+attr_org:   :width 300
 #+attr_latex: :width 0.4\textwidth
 #+attr_html:  :title Cover of the 1981 version of the Emacs manual. :width 300
 [[file:images/emacs-manual-1981-cover.png]]
@@ -136,33 +144,33 @@ This detailed description of how Emacs uses the keyboard might dazzle you. The c
 :END:
 The modifier and prefix keys provide an abundance of shortcuts to issue commands to Emacs, but the number of keys is not unlimited, so some commands don't have a shortcut. When a command is without a keybinding, you can provide your own; just be careful not to create conflicts with existing shortcuts, as explained in the Appendix. This book always displays both the default or EWS keyboard shortcut and the command name.
 
-Functions without a keybinding need to be called by name. The standard way to execute commands is to use =M-x= and then type the command name and the Return / Enter key (=<Ret>=). When you type =M-x=, the bottom of the screen (the minibuffer) shows =M-x=, waiting for further instructions. The minibuffer is where you enter input and instructions. For example, type =M-x tetris <Ret>= to play Tetris. Don't get too distracted; simply press =q= a few times to exit the game and return to your work. Experimental research suggests that prolonged Tetris play can affect your dreams [cite:@stickgold_2000].
+Functions without a keybinding need to be called by name. The standard way to execute commands is to use =M-x= and then type the command name and the Return/Enter key (=<Ret>=). When you type =M-x=, the bottom of the screen (the minibuffer) shows =M-x=, waiting for further instructions. The minibuffer is where you enter input and instructions. For example, type =M-x tetris <Ret>= to play Tetris. Don't get too distracted; simply press =q= a few times to exit the game and return to your work. Experimental research suggests that prolonged Tetris play can affect your dreams [cite:@stickgold_2000].
 
-Typing the full function name every time is too much work for those who seek ultimate efficiency. The minibuffer completion system helps you find the commands you seek. When typing a partial function or file name, you can hit the =Tab= key. Emacs will display completion candidates in the minibuffer. For example, to execute the ~visual-line-mode~ function and change how Emacs wraps paragraphs, you type =M-x visu <Tab>=.
+Typing the full function name every time is too much work for those who seek ultimate efficiency. The minibuffer completion system helps you find the commands you seek. When typing a partial function or file name, you can hit the Tab key. Emacs will display completion candidates in the minibuffer. For example, to implement line-wrapping in a text file you execute the ~visual-line-mode~ function by typing =M-x visu <Tab>=.
 
-To see how this completion works, use the =Tab= key after each letter you type into the minibuffer. You will notice that Emacs narrows the completion candidates as you get closer to your desired selection until there is only one option. This principle also works with variable names and filenames. The =Tab= key is your secret weapon to help you remember and discover functions, variables, file names, buffer names and other selection candidates. You can access the menu and toolbars using the mouse, but they only contain a limited selection of the available functionality, as the screen is not large enough to accommodate all of them.
+To see how this completion works, use the Tab key after each letter you type into the minibuffer. You will notice that Emacs narrows the completion candidates as you get closer to your desired selection until there is only one option. This principle also works with variable names and filenames. The Tab key is your secret weapon to help you remember and discover functions, variables, file names, buffer names and other selection candidates. You can access the menu and toolbars using the mouse, but they only contain a limited selection of the available functionality, as the screen is not large enough to accommodate all of them.
 
 The remainder of this book only mentions the names of commands without adding the =M-x= and =<Ret>= parts. When the text suggests using a function or command called ~example-command~, you do so with =M-x example-command <Ret>=. Any available keyboard shortcuts are also indicated, in which case you can use the short way to access the function.
 
 * Major and minor modes
-Emacs is a versatile tool that accomplishes specialised tasks through editing modes that alter the basic behaviour. An editing mode can be a major or minor mode. A major mode is like opening an app within the Emacs environment, just like you open an app on your phone. The most popular major mode is Org mode, which provides a writing and publication system. Org is the major mode discussed throughout this book.
+Emacs is a versatile tool that accomplishes specialised tasks through editing modes that alter the basic behaviour. An editing mode can be a major or minor mode. A major mode is like opening an app within the Emacs environment, just like you open an app on your phone. The most popular major mode is Org, which provides a writing and publication system. Org is the major mode discussed throughout this book.
 
 A more quirky Emacs mode is Artist mode. This tool enables you to create plain text drawings using the mouse and keyboard. Go ahead and try, issue the ~artist-mode~ command, and start drawing with the mouse. You can find out more about how to use the Artist package through the built-in help system with =C-h P artist=.
 
 All major modes share the same underlying Emacs functionality, such as copying and pasting (killing and yanking) and opening files, but they add specialised tasks, for example exporting to a webpage. A major mode determines the core functionality for an open buffer. A buffer is the part of the memory that holds the text you are working on or other content. Each buffer has one major mode, and each major mode has its own distinct functionality, including specific key bindings and drop-down menus. 
 
-Minor modes provide further functionality, such as spell-checking, text completion or displaying line numbers. A minor mode is an auxiliary program that enhances the functionality of a major mode. While each buffer has only one major mode, a buffer can have many active minor modes. A minor mode can also be applied to the entire Emacs session.
+Minor modes provide further functionality, such as spell-checking, text completion or displaying line numbers. A minor mode is an auxiliary program that enhances the functionality of a major mode. While each buffer has only one major mode, a buffer can have several minor modes. 
 
-In many cases, Emacs recognises the major mode based on the file extension. All org mode files end in =.org=, so Emacs automatically enables Org mode when opening such a file. The name of the major mode is displayed in the line below the window. Minor modes must be explicitly enabled, either for a specific buffer, globally for all buffers, or hooked to a major mode.
+In many cases, Emacs recognises the major mode based on the file extension. All Org files end in =.org=, so Emacs automatically enables Org mode when opening such a file. The name of the major mode is displayed in the line below the window. Minor modes must be explicitly enabled, either for a specific buffer, globally for all buffers, or hooked to a major mode.
 
-As an exercise to understand these principles, open the =test.org= file created in the first section of this chapter using =C-x C-f=. You will note that the title and headings are marked in a different colour and that a new option is available in the menu bar. Now save this file under a new name (=test.txt=) with =C-x C-w= (~write-file~). The buffer is no longer an Org file but a plain text file. The buffer changes as the title and headings are no longer coloured. Additionally, the Org option in the menu bar is unavailable, and the line below the open buffer now displays 'text' instead of 'Org'. To go back to org mode, you can issue the ~org-mode~ command.
+As an exercise to understand these principles, open the =test.org= file created in the first section of this chapter using =C-x C-f=. You will note that the title and headings are marked in a different colour and that a new option is available in the menu bar. Now save this file under a new name (=test.txt=) with =C-x C-w= (~write-file~). The buffer is no longer an Org file but a plain text file. The buffer changes as the title and headings are no longer coloured. Additionally, the Org option in the menu bar is unavailable, and the line below the open buffer now displays 'text' instead of 'Org'. To go back to Org, you issue the ~org-mode~ command.
 
 The available keyboard shortcuts (the keymaps) and drop-down menus depend on the major and minor modes that are active at the time. Some keymaps are global and apply to the whole of Emacs. Other maps are specific to a mode. Unless a mode overrides it, some shortcuts remain the same for all modes. Packages can modify or add shortcuts, depending on the required functionality. A shortcut like =C-c C-c= is used by different modes for different actions, depending on the context in which it is used.
 
 * Opening and saving files
 Opening files in Emacs is called 'visiting a file' and uses the ~find-file~ function (=C-x C-f=). So effectively, finding, opening and visiting a file have the same effect. Emacs opens the file and displays its contents in the buffer, ready for writing and editing. When you type a name that does not yet exist, Emacs creates a new file. If you open a directory, Emacs displays the contents of that folder in the Emacs file manager (The Directory Editor or 'Dired' (see chapter [[#chap-admin]]). Alternatively, you can open a file with the toolbar icon or through the menu bar.
 
-Emacs asks you to select a file or folder in the minibuffer. Typing the complete path to the file you seek would be tedious, so Emacs assists with auto-completion, explained in section [[#sec-commands]]. Please note that a file path in Emacs is separated by forward slashes and not by backslashes, as is the case in Windows (=C:/Users/Freud/= and not =C:\Users\Freud\=).
+Emacs asks you to select a file or folder in the minibuffer. Typing the complete path to the file you seek would be tedious, so Emacs assists with auto-completion, explained in section [[#sec-commands]]. Please note that file paths in Emacs use forward slashes and not backslashes, as is the case in Windows (=C:/Users/Freud/= and not =C:\Users\Freud\=).
 
 When finding a file, Emacs starts in the folder of the currently active buffer. You can remove the text before the cursor to move to higher levels in the directory tree. You don't have to remove all subdirectories. To find a file in your home directory, ignore the current text in the minibuffer and type a tilde followed by forward slash (=~/=) and =<Tab>=. To start searching in the root folder of your drive, type two forward slashes (=//=). On a Windows computer, the best method is to type the drive letter, followed by a colon and a slash (=c:/=). When you hit the =Tab= key twice, all the available files and folders appear in the minibuffer.
 
@@ -182,19 +190,23 @@ Please create a new file (=C-x C-f=) to get some practice and start writing into
 :END:
 When opening Emacs, the software runs within a frame (figure [[fig-frame]]). This might sound confusing because a frame is often referred to as a window in most operating systems. To confuse matters further, you can divide an Emacs frame into windows. You can also open multiple frames on a desktop, for example, one on each monitor.
 
-The default Emacs screen features a menu bar at the top and a toolbar with icons immediately below it. The windows start below the toolbar. Each window contains a buffer, which includes text, a user interface or output from functions. The mode line below each window displays the name of the buffer or its associated file, as well as other metadata. Each frame has an echo area at the bottom, where Emacs displays feedback. Echo is a computer science term referring to the display of information, such as error messages and other feedback. The bottom of the page also contains the minibuffer, an expandable part of the bottom of the screen where Emacs seeks your input when, for example, selecting a buffer or a file.
+The default Emacs screen features a menu bar at the top and a toolbar with icons immediately below it. The windows start below the toolbar. Each window contains a buffer, which includes text, a user interface or output from functions. The mode line below each window displays the name of the buffer or its associated file, as well as other metadata. Each frame has an echo area at the bottom, where Emacs displays feedback. Echo is a computer science term referring to the display of information, such as error messages and other feedback. The bottom of the screen also contains the minibuffer, an expandable section where Emacs seeks your input when, for example, selecting a buffer or a file.
 
 #+caption: Emacs frame with three windows, a Dired buffer, image buffer and Org buffer.
+#+attr_org: :width 300
 #+attr_html: :alt Emacs frame with three windows :title Emacs frame with three windows :width 80%
 #+attr_latex: :width 1\textwidth
 #+name: fig-frame
 [[file:images/emacs-frame-components.png]]
 
-Like any office software, you are working on the version in memory (the buffer), and the previous version is on disk (the file). You can have multiple buffers open simultaneously, allowing you to easily switch between them. The active buffer is the one you are currently working on. The names of special buffers, such as =*Messages*=, are surrounded by asterisks. Most buffers, except those surrounded by an asterisk, are linked to a file.
+Like any writing software, you are working on the version in memory (the buffer), and the previous version is on disk (the file). You can have multiple buffers open simultaneously, allowing you to easily switch between them. The active buffer is the one you are currently working on. The names of special buffers, such as =*Messages*=, are surrounded by asterisks. These types of buffers are not linked to a file.
 
 Emacs is highly stable, and some users have hundreds of open buffers because they rarely need to restart the program. The =C-x b= shortcut (~switch-to-buffer~) selects another buffer as the active one. With the =C-x left= and =C-x right= key sequences (~previous-buffer~ and ~next-buffer~), you can move between buffers in chronological activation order.
 
 By default, a frame has one window. You can split the current window horizontally (~split-window-below~) or vertically (~split-window-right~) by pressing =C-x 2= or =C-x 3=. The =C-x 0= shortcut (~delete-window~) removes your current window, but the buffer stays in memory, and =C-x 1= removes all windows except the one the cursor is currently in (~delete-other-windows~), so the current buffer encompasses the whole frame. To move between windows, use the =C-x o= shortcut (~other-window~). This function cycles through the available windows.
+#+begin_export latex
+\newpage
+#+end_export
 
 When splitting a window vertically, the same buffer appears twice. Each window can have its own cursor position so you can easily refer to other parts of your writing without jumping around and losing focus. Activating ~follow-mode~ flows the text of the buffer so windows that hold this buffer become columns of the same document. When the cursor moves below the bottom of the left window, it appears again in the right window, so all windows share one cursor. To deactivate follow mode, rerun the same function.
 
@@ -278,7 +290,7 @@ Writing is fun, but sometimes it is more efficient to copy something you wrote p
 
 To select (mark in Emacs speak) a piece of text, you first set a mark with =C-<spc>= and then move the cursor to highlight the desired section. To select a complete paragraph, use the =M-h= key. In a plain text context, a paragraph is a line of text separated by blank lines. Repeatedly pressing =M-h= selects subsequent sections. Using =C-x h= selects all text in a buffer, and =C-g= nullifies any selection. Once the text is marked, you can act on it by deleting, copying, or moving it. In some modes, you can select with the shift and arrow keys, but this functionality is disabled in Org because these keys activate other features. 
 
-The modern handicraft analogues of copy, cut and paste were coined by Harry Tesler in 1974 [cite:@tesler_2012]. Emacs terminology is more prosaic. Copying a text is the same as saving it to the 'kill-ring' and yanking a text retrieves it from that seemingly bleak location.
+The modern craft analogues of copy, cut and paste were coined by Harry Tesler in 1974 [cite:@tesler_2012]. Emacs terminology is more prosaic. Copying a text is the same as saving it to the 'kill-ring' and yanking a text retrieves it from that seemingly bleak location.
 
 While the clipboard in most systems only retains the last entry, the kill ring provides access to your 'killing spree'. In other words, Emacs stores a history of all text you copy and cut from a buffer to the kill ring. The default length of this history is sixty entries. Once the kill ring is full, the oldest item vanishes.
 
@@ -321,7 +333,7 @@ When you mark a region and would like to change the letter type, then use =C-x C
 
 The Emacs ~undo~ command is mapped to =C-/=. If you need to undo the step, use =C-?= (~undo-redo~). Emacs behaves differently from other software concerning undoing and redoing edits, which requires some explanation. In standard word processors, previous undo texts are lost if you undo something, make some changes, but then change your mind.
 
-For example, type "Socrates", erase it with =M-d=, change it to "Plato", and then undo this edit to revert back to Socrates and add some more text. In standard word processors, you cannot return to the state where the text mentioned Plato (State B in Figure [[fig-emacs-undo]]). In Emacs, all previous states are available. You can return to any prior state with consecutive undo commands in Emacs. Subsequent undo and redo commands follow the chain in figure [[fig-emacs-undo]], never losing anything you typed. This behaviour can be confusing, but you will love it after using it for a while because you never lose any edits.
+For example, type "Socrates", erase it with =C-<backspace>=, change it to "Plato", and then undo this edit to revert back to Socrates and add some more text. In standard word processors, you cannot return to the state where the text mentioned Plato (State B in Figure [[fig-emacs-undo]]). In Emacs, all previous states are available. You can return to any prior state with consecutive undo commands in Emacs. Subsequent undo and redo commands follow the chain in figure [[fig-emacs-undo]], never losing anything you typed. This behaviour can be confusing, but you will love it after using it for a while because you never lose any edits.
 
 #+begin_src dot :file images/emacs-undo.png
   digraph {
@@ -375,11 +387,15 @@ Emacs has several line-wrapping functions, of which Visual Line Mode is the most
   - [X] Customisation
 - [-] Minibuffer completion
 :END:
-The previous sections explained how to use Emacs in its bare, unconfigured state, more commonly referred to as vanilla Emacs. The software can do anything you need to be an author without any configuration, but that is not ideal. As a malleable system, Emacs is almost infinitely configurable, so you can make it behave how you see fit. Additionally, Emacs users have shared their configurations and published thousands of packages to enhance functionality. This chapter discusses the principles of configuring Emacs.
+The previous sections explained how to use Emacs in its bare, unconfigured state, more commonly referred to as vanilla Emacs. The software can do anything you need to be an author without any configuration, but that is not ideal.
+
+As a malleable system, Emacs is almost infinitely configurable, so you can make it behave how you see fit. Additionally, Emacs users have shared their configurations and published thousands of packages to enhance functionality. This chapter discusses the principles of configuring Emacs.
 
 While using commercial software is like renting a furnished house, using Emacs is more like owning a house. However, your digital home needs some updates, including fresh paint, new carpets, and furniture, to make it feel like home.
 
-Some systems, such as Doom Emacs, Spacemacs, and SciMax, provide useful starter kits. While these configurations are helpful, they sometimes offer everything but the proverbial kitchen sink. On the other side of the spectrum, you configure your system from scratch, which can become a productivity sink, wading through the myriad of options. The EWS configuration is a minimal starter kit for authors. EWS provides building blocks that can be modified to suit your preferences. But before installing the EWS configuration, let's first introduce the principles of configuring Emacs.
+Some systems, such as Doom Emacs, Spacemacs, and SciMax, provide useful starter kits. While these configurations are helpful, they sometimes offer everything but the proverbial kitchen sink. On the other side of the spectrum, you configure your system from scratch, which can become a productivity sink, wading through the myriad of options.
+
+The EWS configuration is a minimal starter kit for authors. EWS provides building blocks that can be modified to suit your preferences. But before installing the EWS configuration, let's first introduce the principles of configuring Emacs.
 
 ** The initialisation file
 When you start Emacs, it loads the initialisation file, also known as the init file. This file contains Lisp code that loads additional packages and configurations when Emacs starts. You can run Emacs without an init file, but you will undoubtedly want to modify the defaults.
@@ -391,9 +407,7 @@ The first time you start Emacs, it will create a configuration folder where the 
 :CUSTOM_ID: sec-packages
 :END:
 The Emacs base system provides extensive functionality, but you can enhance its capability with any of the thousands of packages. Many people develop and share software in Emacs Lisp to enhance or extend the system's capabilities. Developers of these packages mainly distribute them through a public package repository, which are websites that let you easily download and install packages. The two most important ones are:
-#+begin_export latex
-\newpage
-#+end_export
+
 - ELPA: GNU Emacs Lisp Package Archive --- default archive (=elpa.gnu.org=).
 - MELPA: Milkypostman’s Emacs Lisp Package Archive (=melpa.org=).
 
@@ -410,7 +424,7 @@ Besides crafting your personal configuration in Emacs Lisp or using a starter ki
 Type =M-x customise-variable <Ret> tool-bar-mode= and a new window pops up showing the customisation options for this variable (figure [[fig- customise-variable]]). You can use your mouse to move around the configuration screen. Using =<Tab>= and =S-<Tab>= moves the cursor between screen elements.
 
 #+caption: Customisation screen for =tool-bar-mode=.
-#+attr_org: :with 100
+#+attr_org: :width 300
 #+attr_latex: :width 0.8\textwidth
 #+attr_html: :alt Emacs Customise variable :title Customise variable :width 600
 #+attr_latex: :width 0.6\textwidth
@@ -421,16 +435,16 @@ In this case, the variable is a boolean, meaning it can be either true (=t=) or 
 
 The =[Apply]= button brings this change into immediate effect, but it will be reset when Emacs is restarted. Clicking =[Apply and Save]= applies the new setting and saves it to the =init.el= file so it is activated next time you restart Emacs. The '=q=' key closes the customisation screen.
 
-Use the ~ customise-group ~ function to see an overview of all parameters that a package provides, and select the one you like to explore. Move the cursor between the available variables with the =Tab= key and use =Ret= to customise the variable of interest.
+Use the ~ customise-group ~ function to see an overview of all parameters that a package provides, and select the one you like to explore. Move the cursor between the available variables with the Tab key and use the Return/Enter key to customise the variable of interest.
 
-Throughout this book, suggestions will be provided for customising variables. Rather than writing Emacs Lisp, you can use the customisation system for a no-code method of configuring Emacs. Whenever this book suggests customising a variable, run the ~customise-variable~ command, type the name of the variable, and complete the configuration screen.
+Throughout this book, suggestions will be provided for customising variables. Rather than writing Emacs Lisp, you can use the customisation system for a no-code method of configuring Emacs. Whenever this book suggests customising a variable, you need to evaluate the ~customise-variable~ command (=C-c w v=), type the name of the variable, complete the configuration screen and click "Apply and Save".
 
 * Exiting Emacs
 Working with Emacs is so much fun you might never want to shut it down. However, all good things come to an end, so we may need to shut down (or kill) Emacs occasionally.
 
 The =C-x C-c= shortcut  (~save-buffers-kill-terminal~) kills the Emacs session, but not before checking for unsaved buffers. There are a few options to ensure you don't lose any unsaved buffers.
 
-This function displays any unsaved files in the echo area and provides options for dealing with each or all of them. You can answer =y= or =<spc>= to save the file mentioned in the echo area or =n= / =<del>= to abandon it. Keying =C-r= lets you look at the buffer in question before deciding. The safest option is to key =!= and save all buffers that have changes without any further questions. Use the trusted =C-g= chord to exit this function without exiting Emacs or losing any text. Don't stress if you can't remember all this. Using =C-h= displays a help message describing these options.
+This function displays any unsaved files in the echo area and provides options for dealing with each or all of them. The safest option is to key =!= and save all buffers that have changes without any further questions. Use the trusted =C-g= to exit this function without exiting Emacs or losing any text. Using =C-h= displays a help message describing all available options.
 
 * Next steps
 If you would like to know more about the basic principles of Emacs, the built-in tutorial is a good start, which you can find with =C-h t=. If you like to see how other people use Emacs, then you can find a lot of informative video content on the internet. 

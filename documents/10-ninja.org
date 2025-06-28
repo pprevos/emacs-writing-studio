@@ -49,7 +49,7 @@ The code below is equivalent to figure [[fig-graphical-config]]. This example de
 
 Notice how the whole expression is surrounded by parenthesis, typical of programming in Lisp. These parentheses can confuse beginning users when nesting code multiple levels deep. As you get used to the syntax, parentheses will become helpful markers to help you understand the logic of your code.
 
-While on the surface, the code-based method seems more complex than ticking and writing in boxes and picking a drop-down list, it is far more potent than a graphical interface. Once you learn how to write simple Emacs Lisp, you will realise that Emacs is, in reality, the most user-friendly system possible because of the power it gives you over your computer. Using Emacs Lisp is the epitome of user-friendliness. You decide how your computer behaves instead of some software company controlling your behaviour. But with this immense power comes great responsibility and a learning curve.
+While on the surface, the code-based method seems more complex than ticking and writing in boxes and picking a drop-down list, it is far more potent than a graphical interface. Once you learn how to write simple Emacs Lisp, you will realise that Emacs is, in reality, the most user-friendly system possible because of the power it gives you over your computer. Using Emacs Lisp is the epitome of user-friendliness. You decide how a computer behaves instead of some software company controlling your behaviour. But with this immense power comes great responsibility and a learning curve.
 
 The easiest way to learn Lisp is to change your init file by copying the patterns from the EWS configuration. The Appendix explains the configuration and provides some guidance on modifying it. Many Emacs users freely share their configurations, and you should feel free to copy any parts of their code. Emacs is free software in the freedom sense of the word, so use this power and learn from fellow users.
 
@@ -91,7 +91,7 @@ The eBib package by Joost Kremers is a management tool for BibTeX files that add
 
 John Kitchin's Org-Ref package is part of his Scimax Emacs starter kit for scientists and engineers. This package includes advanced tools for managing bibliographies and cross-references in Org files and is worth checking out.
 
-This is a brief overview of some alternative packages you could be using. The ~list-packages~ command provides a useful interface to the list of all available packages. You can explore this interface to find interesting software or update your existing system.
+This is a brief overview of some alternative packages you could be using. Emacs offers a vast universe of package to undertake a broad range of tasks. The ~list-packages~ command provides a useful interface to the list of all available packages. You can explore this interface to find interesting software or update your existing system.
 
 ** Is Emacs a productivity sink?
 Configuring Emacs can be a daunting task that can take a lot of time and become a productivity drain due to its complexity. The freedom you enjoy in Emacs means that everybody has personal preferences. Emacs developers cannot cater to every personal preference, so they provide a skeleton system you must develop to suit your workflow. Emacs Lisp is like a box of Lego that you use to create toys. Working on your Emacs configuration is a lot of fun, but actually playing with them is even better.

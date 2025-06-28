@@ -73,7 +73,7 @@ The following software is required to read the most common e-book formats:
 #+caption: Reading electronic documents in Emacs.
 #+name: fig-ebook
 #+attr_html: :alt Document conversion in Doc-View :title Document conversion in Doc-View :width 600
-#+attr_latex: :width 0.8\textwidth
+#+attr_latex: :width 0.7\textwidth
 #+attr_org: :width 300
 #+RESULTS:
 [[file:images/reading-ebooks.png]]
@@ -92,26 +92,26 @@ A PDF file follows a traditional physical layout and typography, assuming that d
 
 Emacs can display PDF files with the built-in DocView major mode with some assistance from GhostScript or MuPDF, which convert the files to images. Open a PDF file just as you would any other document. To navigate the file, use the arrow and Page Up / Page Down keys. Several other keyboard shortcuts are available to find your way through the document (table [[tab-docview]]).
 
-#+caption: Doc-View keyboard shortcuts.
-#+name: tab-docview
-| Keystroke | Function                                 | Description                |
-|-----------+------------------------------------------+----------------------------|
-| =P=         | ~doc-view-fit-page-to-window~              | Zoom to the full page      |
-| =W=         | ~doc-view-fit-width-to-window~             | Fit width to window        |
-| =H=         | ~doc-view-fit-height-to-window~            | Fit height to window       |
-| =+= / =-=     | ~doc-view-enlarge~ / ~doc-view-shrink~       | Zoom in and out            |
-| =M-g g=   | ~doc-view-goto-page~                       | Jump to page               |
-| =M-<= / =M->= | ~doc-view-first-page~ / ~doc-view-last-page~ | Jump to first or last page |
-| =k=         | ~image-kill-buffer~                        | Kill (close) the file      |
-| =?=         | ~describe-mode~                            | Help file                  |
+When the =mutool= program is available on your system, you can also use the ~imenu~ (=M-g i=) command to view a table of contents and jump to a chapter, assuming the PDF file has bookmarks.
 
-When =mutool= is available on your system, you can also use the ~imenu~ (=M-g i=) command to view a table of contents and jump to a chapter, assuming the PDF file has bookmarks.
-
-To enable searching through a PDF file, you need the =pdftotext= tool, part of the Poppler software. Fun fact: This utility is named after an episode from the /Futurama/ cartoon series.
+To enable searching through a PDF file, you need the =pdftotext= tool, part of the Poppler software package. Fun fact: The name of this utility is based on an episode from the /Futurama/ cartoon series.
 
 You can search within a document with ~doc-view-search~ (bound to =C-s=), which creates a list of all matching pages and shows how many pages contain the search query. After the search, you can jump to the next page containing a match with an additional =C-s=.
 
 DocView does not highlight the searched term, but pressing =C-t= shows the search results for this page in a tooltip (~doc-view-show-tooltip~). Poppler also allows you to view a PDF file as a plain text file with the =C-c C-t= shortcut (~doc-view-open-text~). This option makes searching and copying relevant text to your notes easier. To return to the graphical view of the text, press =C-c C-c= twice.
+
+#+caption: Doc-View keyboard shortcuts.
+#+name: tab-docview
+| Keystroke | Description                |
+|-----------+----------------------------|
+| =P=         | Zoom to the full page      |
+| =W=         | Fit width to window        |
+| =H=         | Fit height to window       |
+| =+= / =-=     | Zoom in and out            |
+| =M-g g=     | Jump to page               |
+| =M-<= / =M->= | Jump to first or last page |
+| =k=         | Kill (close) the file      |
+| =?=         | Help file                  |
 
 ** Office documents
 The DocView package can also read Microsoft Office and LibreOffice documents. To enable this functionality, you must install the LibreOffice software package, a free and open-source office productivity software suite.
@@ -152,7 +152,7 @@ The =nov= package by Vasilij Schneidermann provides functionality for viewing eP
 
 To increase or decrease the text size, use the =C-x C-+= and =C-c C--= keyboard shortcuts (~text-scale-adjust~). When enlarging the font, parts of the text may move outside the window. To reset the length of the lines, press =g= to re-render the document (~nov-render-document~).
 
-You can copy and paste text from ePub files into your bibliographic notes (chapter [[#chap-ideation]]) using the ~kill-ring-save~ command (=M-w=). You can also copy images from an ePub file. Open the file as an archive with the =a= key (~nov-reopen-as-archive~), which shows the document's internal structure. From here, you can navigate to the relevant image file, copy it with the =C= key (~archive-copy-file)~, and select the new location and name. Unfortunately, there is no functionality to preview images inside an archive file.
+You can copy and paste text from ePub files into your bibliographic notes (chapter [[#chap-ideation]]) using the ~kill-ring-save~ command (=M-w=). You can also copy images from an ePub file. Open the file as an archive with the =a= key (~nov-reopen-as-archive~), which shows the document's internal structure. From here, you can navigate to the relevant image file, copy it with the =C= key (~archive-copy-file)~, and select the new location and name. Unfortunately, there is no functionality to preview images inside an archive.
 
 * Managing your digital library
 :PROPERTIES:
@@ -180,9 +180,7 @@ BibTeX Mode is a major mode for creating and managing bibliographies. As the nam
   file       = {computing/stallman-1981-emacs.pdf}
 }
 #+end_example
-#+begin_export latex
-\newpage
-#+end_export
+
 Each entry starts with an =@=-sign and the publication type (book, article or other types), followed by a curly brace and a unique citation key. The following lines contain the relevant data about this entry. BibTeX can process various kinds of literature, including articles and conference papers, each with its own specific field types. BibTeX ignores unrecognised fields, which provides opportunities to use the format for other purposes, such as attaching files and keywords.
 
 You can store one or more bibliography files in a folder to refer to them from anywhere in Emacs. In EWS, the ~ews-bibtex-directory~ variable defines this folder. You need to customise this variable to the desired location, which is set to =~/library= by default. The tilde at the start indicates the path to your home directory. After you customise this variable, run the ~ews-bibtex-register~ function to register the bibliography files in this directory. You need to run this function every time you add or remove a BibTeX file from this folder.
@@ -247,9 +245,7 @@ The ~ews-bibtex-missing-attachments~ function lists all missing attachments in t
 BibTeX mode requires you to type all entries manually, which is inefficient and could easily lead to errors. Clément Pit-Claudel’s Biblio package lets you browse and import bibliographic references from online sources to undertake a systematic literature review. Currently, the package enables you to search CrossRef, DBLP, arXiv, doi.org, and Dissemin.
 
 Crossref interlinks millions of items from various content types, including journals, books, conference proceedings, research grants, working papers, technical reports, and datasets. Linked content encompasses materials from scientific, technical, and medical (STM) disciplines, as well as social sciences and humanities (SSH). DBLP is a computer science bibliography website featuring over seven million publications. The arXiv (pronounced "archive") is an open-access repository of pre-prints and post-prints approved for posting after moderation but not peer review. In mathematics and physics, almost all scientific papers are self-archived on the arXiv repository before publication in a peer-reviewed journal.
-#+begin_export latex
-\newpage
-#+end_export
+
 Most electronic publications have a Digital Object Identifier (DOI), a persistent identification code that links to metadata about the publication. The DOI system ensures that publications can be found, even when their addresses change. DOIs are widely used to identify academic, professional, and government information, including journal articles, research reports, datasets, and official publications.
 
 To use the Biblio package, open the relevant BibTeX file, run ~biblio-lookup~, select the appropriate database and enter a search query. Once the search results are available, a new buffer opens. Select your target with the arrow keys or search in the buffer with =C-s=. Once you have found the necessary literature, insert its BibTeX record into the buffer where you called the function with =i=. Alternatively, you can copy the BibTeX record with =c= and paste it into place later. You quit the search results with =q=. To see all possible commands in this buffer, use the =h= key.
@@ -258,7 +254,9 @@ The ~biblio-doi-insert-bibtex~ function inserts a BibTeX record based on a DOI n
 
 Unfortunately, large corporate publishers still hold the world’s academic knowledge behind closed doors. However, open access and pre-print publications are slowly becoming the norm. The Dissemin website searches for openly accessible copies of papers in an extensive collection of open repositories and websites. To use this service with Emacs, evaluate ~dissemin-lookup~ to show information about the open access status of a paper using a DOI number. You can also press =x= in the search menu for the ~biblio-lookup~ function to check for an open-access version.
 
-The Biblio package is useful, but one minor inconvenience is that you must jump to the relevant bibliography file before inserting a new entry. It also provides two separate search functions, one for DOI and another for databases. The bespoke ~ews-bliblio-lookup~ (=C-c w b b=) function lets you select the BibTeX file where you would like to store the search results before choosing one of the available sources. This function also combines searching for DOIs with the other sources, removing some steps from your workflow.
+The Biblio package is useful, but one minor inconvenience is that you must jump to the relevant bibliography file before inserting a new entry. It also provides two separate search functions, one for DOI and another for databases.
+
+The bespoke ~ews-bliblio-lookup~ (=C-c w b b=) function lets you select the BibTeX file where you would like to store the search results before choosing one of the available sources. This function also combines searching for DOIs with the other sources, removing some steps from your workflow.
 
 ** Access bibliographies
 :PROPERTIES:
@@ -282,11 +280,7 @@ You activate Citar with ~citar-open~, which in EWS is bound to =C-c w b o=. A me
 Finding literature with Citar is easy due to the power of the Vertico and Orderless packages, as described in chapter [[#chap-ews]]. After every keystroke, Citar narrows the list of options to relevant matches. Select your candidate with the arrow keys, or use the =Tab= key to select more than one entry. You can filter the Citar completion menu for entries with an attachment using =":f"= and with links with =":l"=. After hitting the Enter key, Citar provides a popup menu in the minibuffer where you can open attachments or follow any hyperlinks listed in the BibTeX entry.
 
 ** Using third-party software
-If you already have a bibliography management tool, such as Zotero, you can continue using it to achieve the same result.
-
-Zotero users can export libraries as BibTeX or BibLaTeX files. The Zotero Better BibTeX package by Emiliano Heyns can synchronise the exported file with Zotero, allowing you to use it seamlessly within Emacs.
-
-Most reference management software packages have similar functionality.
+If you already have a bibliography management tool, such as Zotero, you can continue using it to achieve the same result. Zotero users can export libraries as BibTeX or BibLaTeX files. The Zotero Better BibTeX package by Emiliano Heyns can synchronise the exported file with Zotero, allowing you to use it seamlessly within Emacs. Most reference management software packages have similar functionality.
 
 * Surf the web
 Emacs also has a built-in web browser called the Emacs Web Wowser (EWW). This package prioritises readability over functionality by displaying websites as plain text. It can display images but does not render any CSS or run JavaScript. A wowser is somebody with strong moral views regarding temperance and abstinence. The plain text approach to browsing represents an ethical stance on the World Wide Web, particularly about its security and privacy issues. The name could also refer to the reaction you might have when you first see a website rendered in plain text. Reading websites in plain text is not visually appealing, but it is a more secure way of surfing the internet because EWW does not render any JavaScript.

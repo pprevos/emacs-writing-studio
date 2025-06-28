@@ -21,8 +21,6 @@ Emacs is known for its steep learning curve. Don't let it's reputation discourag
 We’ve adopted the mindset of 'too busy to learn'. As a result, we prefer tools that give us quick results, not the ones that are worth learning.
 #+end_quote
 
-Emacs is definitely a tool that is worth learning.
-
 * Acknowledgements
 The development and maintenance of a complex system like Emacs is a testament to the power of community. I am deeply grateful to the countless volunteers who have contributed to its core system's code and the abundance of packages. Their collective effort is what makes Emacs a thriving ecosystem.
 

@@ -16,9 +16,9 @@
 - [X] [[https://datamanagement.hms.harvard.edu/collect/file-naming-conventions][File Naming Conventions | Data Management]]
 :END:
 
-The core activity of an author is to research, write, edit and publish their work. But there is more to do. Writing also involves administrative tasks, such as meeting deadlines, managing projects, and maintaining an organised filing system.
+The core activity of an author is to research, write, edit and publish their work. But there is more to do. Writing also involves administrative tasks, such as meeting deadlines, managing projects, and maintaining an organised filing system. Emacs provides extensive functionality to undertake these tasks. 
 
-This chapter explains how to use Org mode to manage projects and action lists, loosely implementing the Getting Things Done (GTD) method. GTD is just one of many methods to manage a busy life. The beauty of Emacs is that you have the freedom to implement whatever method you prefer. The following two sections show how to manage files with the directory editor and manage images with the directory editor. In this chapter, you will learn how to create and manage action lists and generate an agenda. This chapter also discusses managing your files within Emacs, including images and photo albums.
+This chapter explains how to use Org mode to manage projects and action lists, loosely implementing the Getting Things Done (GTD) method. GTD is just one of a plethora of methods to manage a busy life. The beauty of Emacs is that you have the freedom to implement whatever method you prefer. The next two sections show how to manage files with the directory editor (Dired) and manage images with the Image-Dired package.
 
 * Getting Things Done
 :PROPERTIES:
@@ -40,7 +40,7 @@ This section demonstrates how to utilise Org to manage your projects and tasks, 
 4. /Reflect/: Reflect on your progress.
 5. /Engage/: Take action.
 
-** /Capture/: Empty your mind
+** Capture: Empty your mind
 One of the reasons we are often less productive than we like is that our minds are filled with irrelevant stuff. Creative and productive thoughts are suppressed when your brain is filled with thoughts about what you should do. Another problem with keeping ideas in your head is the risk that they will eventually fade into oblivion. I am sure you all recognise the experience of having the most beautiful idea when enjoying your morning shower. Still, half an hour later, you cannot recall your gem.
 
 The first step to getting things done is surprisingly simple: empty your mind. This is not a Buddhist quest for enlightenment but a straightforward technique to help you focus. Open a new Org file and call it something like =todo.org=, or whatever you fancy. You can also use the Inbox as explained in section [[#sec-fleeting]]. 
@@ -62,7 +62,7 @@ Don't worry about when you'll need to do it or in what order it needs to be done
  * And so on, and so on ...
 #+end_example
 
-** /Clarify/: Describe what it means
+** Clarify: Describe what it means
 :PROPERTIES:
 :CUSTOM_ID: sec-clarify
 :END:
@@ -122,9 +122,7 @@ Timestamps use the ISO 8601 format: year, month, day. This format eliminates con
 ,* TODO Complete Org-Mode article
 SCHEDULED: <2021-05-08 Sat>
 #+end_example
-#+begin_export latex
-\newpage
-#+end_export
+
 Tasks can also have recurring schedules or deadlines. For example, your weekly review. When you add =+7d= at the end of the date, Org recalculates the date every time you complete the task and resets the status to =TODO=. You can also use the letters =w=, =m=, and =y= to schedule a weekly, monthly, or yearly job.
 
 In the example below, the seven days are recalculated every time you complete the task. So, whenever you complete this review, the new date will become 7 July, seven days after the original scheduled date.
@@ -166,7 +164,7 @@ SCHEDULED: <%%(diary-float t 2 1)>
 
 The key to a successful implementation of any productivity method is not to become your own abusive parent. Unless there are external deadlines, everything on my action list is optional. Putting the correct rubbish bin at the curb is not optional because I rely on the truck to pick it up. However, writing a new chapter for this book is optional because there is no external deadline. Use the capabilities of managing your life with Org wisely. Don't become enslaved to the list and lose self-esteem because you can't meet your own expectations.
 
-** /Organise/: Place it where it belongs
+** Organise: Place it where it belongs
 :PROPERTIES:
 :CUSTOM_ID: sec-organise
 :END:
@@ -206,13 +204,13 @@ Anything that does not require taking action or completed actions can be archive
 #+end_src
 #+caption: Example of a productivity workflow in Emacs.
 #+name: fig-gtd
-#+attr_html: :alt Example of a productivity workflow using Org mode :title Example of a productivity workflow using Org mode :width 600
-#+ATTR_ORG: :width 300
-#+attr_latex: :width .8\textwidth
+#+attr_html: :alt Example of a productivity workflow using Org mode :title Example of a productivity workflow using Org mode :width 400
+#+attr_org: :width 300
+#+attr_latex: :width .6\textwidth
 #+RESULTS:
 [[file:images/todo-workflow.png]]
 
-** /Reflect/: Monitor progress
+** Reflect: Monitor progress
 :PROPERTIES:
 :CUSTOM_ID: sec-reflect
 :END:
@@ -237,26 +235,16 @@ Wednesday   7 August 2024
 Thursday    8 August 2024
 Friday      9 August 2024
   TODO:       Scheduled:  TODO Rubbish bin
-
-=================================================================
-Next Actions:
-  TODO:       NEXT Denote Link Checking functions
-  TODO:       NEXT Emacs Writing Studio book
-  TODO:       NEXT Process EWS feedback
-
-=================================================================
-Waiting:
-  TODO:       WAIT EWS cover design
 #+end_example
 
 However, constructing an agenda requires some Emacs Lisp coding skills, so it is outside the scope of this book. The Appendix explains how the EWS agenda is constructed. The Org manual has extensive documentation (=C-h R org <Ret> g agenda views=).
 
-** /Engage/: Take action
-Emacs is a powerful multifunctional tool that cannot help you mow the lawn, go shopping, or complete any other tasks on your list. However, it's important to remember that no productivity system can do your tasks, no matter what the gurus promise. Yet, bringing order to your life is crucial to keep you focused on your goals.
+** Engage: Take action
+Emacs is a powerful multifunctional tool that cannot help you mow the lawn, go shopping, or complete any other tasks on your list. However, it's important to remember that no productivity system can do your tasks for you, no matter what the gurus promise. Yet, bringing order to your life is crucial to keep you focused on your goals.
 
-Ticking a box or marking an action as done produces a satisfying dopamine hit. After a period of hard work, your to-do list will be filled with information about completed actions and projects. Org has some facilities for archiving these and decluttering old information.
+Ticking a box or marking an action as done produces a satisfying dopamine hit. After a period of hard work, your to-do list will be filled with completed actions and projects. Org has some facilities for archiving these and decluttering old information.
 
-The ~org-archive-subtree~ command (=C-c C-x C-s=) moves the content of the cursor subtree to another file. The default filename for the archive is the current file, appended with =_archive=. The archive command moves the whole subtree and adds properties such as the date it was archived and the original filename and heading. You can customise the name of the archive by adding the =#+archive:= and the relevant filename as a keyword. 
+The ~org-archive-subtree~ command (=C-c C-x C-s=) moves the content of the cursor subtree to another file. The default filename for the archive is the current file, appended with =_archive=. The archive command adds properties such as the archiving date and the original filename. You can customise the name of the archive by adding the =#+archive:= and the relevant filename as a keyword. 
 
 ** Learning more
 The Org manual (=C-h R org=) provides further information about this major mode's project management capabilities, such as setting priorities and time clocking, which are not discussed in this book.
@@ -327,7 +315,9 @@ Another handy feature in Dired is the ability to search and replace regular expr
 - [X] https://xkcd.com/1459/
 - [X] https://datamanagement.hms.harvard.edu/plan-design/file-naming-conventions
 :END:
-In the past, when offices relied on paper archives, they adhered to strict rules for archiving documents. Misplacing a piece of paper in meters of shelves filled with files meant you would never find that document again. When office workers started using computers in the 1980s, all such rigour and process were abandoned. The computer's unlimited freedom resulted in chaos as there were no instructions on how to store files. A typical directory might look something like this:
+When offices relied on paper archives, they adhered to strict rules for archiving documents. Misplacing a piece of paper in meters of shelves filled with files meant you would never find that document again. When office workers started using computers in the 1980s, all such rigour and process were abandoned. The computer's unlimited freedom resulted in chaos as there were no instructions on how to store files.
+
+Office workers developed personal workflows and naming conventions for managing electronic files, leading to inconsistencies and lack of clarity. A typical directory might look something like this:
 
 #+begin_example
 -rw-r--r-- 1 5.3K 1994-07-20 19:51 First draft EWS.org
@@ -387,12 +377,12 @@ Image mode can display standard image formats out of the box. You can open an im
 
 Emacs automatically scales the image to snugly fit inside the window. A range of keyboard shortcuts are available to view photos. The =n= and =p= keys (next and previous) or the left and right arrow keys move through the pictures of the current directory, creating a slideshow. Image-mode also provides commands to change the display size of images, some of which are:
 
-- =s o=: Show the image in its original size. When it doesn't fit in the window, use the arrow keys to scroll through the image.
+- =s o=: Show the image in its original size.
 - =s w=: Fit the current image to the height and width of the window.  
 - =i +=: Increase the image size by 20%
 - =i -=: Decrease the image size by 20%.
 
-Furthermore, image mode can manipulate images with the assistance of ImageMagick:
+Furthermore, image mode can manipulate images:
 
 - =i r=: Rotate the image by 90 degrees clockwise.
 - =i h=: Flip the image horizontally.
@@ -426,4 +416,4 @@ Pressing =C-<Ret>= opens the file in an external viewer or editor, such as GIMP.
 When inside a Dired buffer containing images, you can show the thumbnails by marking them with =m= and generate thumbnails with =C-t C-t=. If you don't mark any files, the program displays a thumbnail of the image under the cursor. The same shortcut also removes the thumbnails.
 
 * Learning more
-The Dired package, including Image-Dired, is fully described in the Emacs manual. Type =C-h r g dired=. The Emacs manual also contains chapters about viewing images accessible with =C-h r g image=.
+The Dired package, including Image-Dired, is fully described in the Emacs manual. Type =C-h r g dired=. The Emacs manual also contains chapters about viewing images accessible with =C-h r g image=. The Image-Dired unfortunately has no manual.
