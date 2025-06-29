@@ -1,6 +1,6 @@
 #+title:        Appendix: The Annotated Emacs Writing Studio Configuration
 #+property:     header-args:elisp :tangle ../init.el :results none :eval no
-#+bibliography:  emacs-writing-studio.bib
+#+bibliography: emacs-writing-studio.bib
 #+startup:      content
 
 This appendix presents and explains the {{{ews}}} (EWS) configuration. The configuration is annotated to explain the logic of the code and provides some options for enhancements or additional functionality. This configuration follows the following principles:
@@ -168,7 +168,7 @@ The Scratch Buffer is by default set to Emacs Lisp mode. This is not so useful f
     (setq initial-major-mode 'org-mode
           initial-scratch-message (concat "#+title: Emacs Writing Studio\n"
   					"#+subtitle: Scratch Buffer\n\n"
-  					"The text in this buffer is not saved"
+  					"The text in this buffer is not saved "
   					"when exiting Emacs!\n\n"))
 #+end_src
 
