@@ -77,7 +77,7 @@ Some of the listed packages are alternatives for each other, so you only need to
     
 ** Production
 - ~hunspell~: Spellcheck. Also requires a hunspell dictionary
-- ~divpng~: Preview mathematical notation (part of LaTeX)
+- ~dvipng~: Preview mathematical notation (part of LaTeX)
 - ~git~: Version control
       
 ** Publication
