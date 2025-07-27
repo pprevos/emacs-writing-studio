@@ -30,11 +30,11 @@ Feel free to raise an issue if you have any suggestions on how to enhance the co
 * EWS Workflow
 The EWS configuration, associated website and book follow a basic workflow for authoring documents, visualised below.
 
-#+atttr_html: :width 600
+#+attr_html: :width 600
 [[file:documents/images/emacs-workflow.png]]
 
 - /Inspiration/ relates to reading, listening to and watching media such as e-books or lectures. Emacs can maintain and consume your bibliography or media collection.
-- /Ideation/ is the phase where we reflect on the ideas of others and develop our own. Emacs acts as a note-taling system in this phase.
+- /Ideation/ is the phase where we reflect on the ideas of others and develop our own. Emacs acts as a note-taking system in this phase.
 - /Production/ is the actual writing phase. EWS focuses on the capabilities of the Org mode package for writing projects.
 - /Publication/ is the last phase in which Org mode files are converted to the final product in ePub, PDF or office format.
 
