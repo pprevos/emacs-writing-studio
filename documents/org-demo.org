@@ -17,7 +17,7 @@ Nullam eu ante vel est convallis dignissim. Fusce suscipit, wisi nec facilisis f
 - /Italic/
 - *Bold*
 - _Underline_
-- +Strighthrough+
+- +Strikethrough+
 - =Verbatim=
 
 * Lists
