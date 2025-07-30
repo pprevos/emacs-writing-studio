@@ -40,7 +40,7 @@ Images are file links:
 
 #+caption: Emacs splash screen
 #+attr_org: :width 100
-[[file:book/images/splash-screen.png]]
+[[file:images/splash-screen.png]]
 
 * Tables
 
