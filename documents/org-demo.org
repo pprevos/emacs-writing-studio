@@ -62,9 +62,9 @@ $$\frac{1}{\pi} = \frac{\sqrt{8}}{9801}
 \frac{26390n + 1103}{396^{4n}}$$
 
 * Citations
-Read the Emacs Manual [cite:@stallman_2023_gnu].
+Read the Emacs Manual [cite:@stallman_1981a].
 
-Also [cite:seeing@blevins_2017_guid p. 121;]
+Also [cite:see @blevins_2017 p. 121].
 
 * References
 #+print_bibliography:
