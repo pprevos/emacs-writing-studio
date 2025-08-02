@@ -25,12 +25,18 @@
 #+latex_header: \renewcommand{\LaTeX}{LaTeX}
 
 * Foreword
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 :NOTES:
 - [X] By Prot (500-1000 w)
 :END:
 #+include: "00-i-foreword.org" :lines "2-"
 
 * Preface
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 #+include: "00-ii-preface.org" :lines "2-"
 
 #+begin_export latex
