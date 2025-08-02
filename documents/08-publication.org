@@ -7,7 +7,7 @@ Emacs Org mode is not just an ideal tool for writing without distractions; it's 
 
 This chapter guides you in preparing Org files for export by defining the layout and typography. The first section explains the principles of the export process and how Org interfaces with other software to create the desired output. The second section provides the generic settings that apply to all output formats, equipping you with the practical knowledge to prepare your document for publication. The remainder of this chapter explores the intricacies of the most common export formats, PDF, HTML and word processor documuments. It guides you in configuring Emacs and your manuscript to achieve the desired output.
 
-* Export Org files
+* Export Org mode files
 Preparing a document for export used to be the responsibility of a typesetter. The typesetting process determines the sizes of fonts and graphical elements, as well as their placement on the page. In traditional printing, typesetting involves arranging physical movable type to form a page. With electronic publishing, we no longer have to move physical pieces of lead but issue instructions. Typesetting in Org starts with adding appropriate metadata to the manuscript, depending on the chosen export format. 
 
 The basic principle of exporting Org files to the desired format is that Emacs converts the text and associates it with a document class, CSS style sheet, or other type of template. The template defines the typography and layout of the document. You don't need to know CSS, HTML, or LaTeX, but it will help fine-tune the output. Your text file can also link to a local or global bibliography to manage citations.
@@ -28,13 +28,13 @@ When exporting to PDF or a word processor format, the exported file is passed to
   html [label="HTML" shape="note"]
   epub [label="ePub" shape="note"]
   odt [label="ODT" shape="note"]
-  word [label="Word\nprocesssor" shape="note" width=.9]
+  word [label="DOCx" shape="note" width=.9]
 
   bibtex -> org [constraint=false]
   org -> tex [label="Org"]
   tex -> pdf [label="LaTeX"]
   org -> html [label="Org"]
-  org -> epub [label="ox-epub/zip"]
+  html -> epub [label="ox-epub/zip"]
   org -> odt [label="Org/zip"]
   odt -> pdf [label="LibreOffice"]
   odt -> word [label="LibreOffice"]
