@@ -1,4 +1,4 @@
-#+title: Production: Implement Writing Project in Org Mode
+#+title: Production: Implement Writing Projects in Org Mode
 #+bibliography: emacs-writing-studio.bib
 #+columns: %40ITEM(Section) %10WORDCOUNT(Word Count) %10TARGET(Target) %10TODO(Status)
 #+todo: DRAFT | EDITED
@@ -128,6 +128,7 @@ The name of internal links can be anything you like, as long as the names are un
 * EDITED Productivity tools
 :PROPERTIES:
 :WORDCOUNT: 2404
+:CUSTOM_ID: sec-tools
 :END:
 Emacs can help you maximise productivity and maintain quality by streamlining your writing processes with various tools, such as text completion. Writing demands undivided attention, so Emacs also provides a serene environment that is free from the distractions of graphical software. Lastly, Emacs offers facilities to integrate with grammar tools, a dictionary, and a thesaurus to enhance the quality of your writing.
 
