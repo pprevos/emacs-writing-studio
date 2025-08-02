@@ -425,7 +425,7 @@ The individual files are the 'Zettels', and your Denote directory is the 'Kasten
 
 You can implement this method using the Denote-Sequence package, which is enabled in EWS. This package uses kinship relations, as each node can be a parent, child, or sibling. In the example above, the note with sequence (signature) 76 is the parent. This note has two children (76,2 and 76,5), and these notes are each other's siblings. The note with 76,5a as signature is a child of 76,5.
 
-Within the Denote-Sequence package, the individual elements of a sequence are separated by an equals symbol. Figure [[fig:sequence]] shows the family tree for the above example using the Denote syntax.
+Within the Denote-Sequence package, the individual elements of a sequence are separated by an equals symbol. Figure [[fig-sequence]] shows the family tree for the above example using the Denote syntax.
 
 #+begin_src dot :file images/denote-sequence.png
   digraph {
