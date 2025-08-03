@@ -1,18 +1,61 @@
 #+title: Demonstration of Org mode syntax
 #+author: Peter Prevos
 #+date: <2024-08-16 Fri>
+#+description: Demonstration file for Org mode export functionality
+#+keywords: Emacs, Org mode, ODT
+#+creator: Emacs Writing Studio
 #+bibliography: emacs-writing-studio.bib
+#+latex_class: article
+#+latex_class_options: [A4paper,11pt]
+#+latex_header: \usepackage{ebgaramond}
+#+latex_header: \usepackage{tabularx}
+#+bibliography: emacs-writing-studio.bib
+# +cite_export: basic author-year author-year
+#+cite_export: csl apa6.csl
+# +cite_export: natbib kluwer
+#+options: toc:1 tex:t h:10 num:t
+#+odt_styles_file: template.ott
 
-* Heading 1
-Nullam eu ante vel est convallis dignissim. Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio. Nunc porta vulputate tellus. Nunc rutrum turpis sed pede. Sed bibendum. Aliquam posuere. Nunc aliquet, augue nec adipiscing interdum, lacus tellus malesuada massa, quis varius mi purus non odio. Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non luctus diam neque sit amet urna. Curabitur vulputate vestibulum lorem. Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros. Sed id ligula quis est convallis tempor. Curabitur lacinia pulvinar nibh. Nam a sapien.
+* Preamble
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+This file provides examples of Org mode artefacts for exporting to LaTeX / PDF, HTML / ePUB and ODT / DOCx / PDF. For further details refer to chapter 8 of /Emacs Writing Studio/ or the Org manual (=C-h R org <RET> g exporting <RET>=).
 
-** Heading 2
-Aliquam erat volutpat. Nunc eleifend leo vitae magna. In id erat non orci commodo lobortis. Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus. Sed diam. Praesent fermentum tempor tellus. Nullam tempus. Mauris ac felis vel velit tristique imperdiet. Donec at pede. Etiam vel neque nec dui dignissim bibendum. Vivamus id enim. Phasellus neque orci, porta a, aliquet quis, semper a, massa. Phasellus purus. Pellentesque tristique imperdiet tortor. Nam euismod tellus id erat.
+#+caption: Org mode export principles.
+#+name: fig-org-export
+#+attr_org: :width 800
+#+attr_latex: :width 0.8\textwidth
+#+attr_html: :width 600 :alt Org mode export principles :title Org mode export principles
+#+attr_odt: :scale 0.5 :anchor page
+[[file:images/org-mode-export-principles.png]]
 
-*** Heading 3
-Nullam eu ante vel est convallis dignissim. Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio. Nunc porta vulputate tellus. Nunc rutrum turpis sed pede. Sed bibendum. Aliquam posuere. Nunc aliquet, augue nec adipiscing interdum, lacus tellus malesuada massa, quis varius mi purus non odio. Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non luctus diam neque sit amet urna. Curabitur vulputate vestibulum lorem. Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros. Sed id ligula quis est convallis tempor. Curabitur lacinia pulvinar nibh. Nam a sapien.
+* Editorial Comments in Org mode
+:PROPERTIES:
+:CUSTOM_ID: sec-heading2
+:END:
+:NOTES:
+- [X] Do this
+- [X] That
+- [ ] Other
+- [ ] Add one more thing
+:END:
+
+Editorial comments are not exported.
+
+# TODO: Translate to English
+#+begin_quote
+Aliquam erat volutpat. Nunc eleifend leo vitae magna. In id erat non orci commodo lobortis. Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus. Sed diam. 
+#+end_quote
+
+#+begin_comment
+Anything written in this box is not exported.
+#+end_comment
 
 * Text formatting
+:PROPERTIES:
+:CUSTOM_ID: sec-textformat
+:END:
 - Normal text
 - /Italic/
 - *Bold*
@@ -21,13 +64,14 @@ Nullam eu ante vel est convallis dignissim. Fusce suscipit, wisi nec facilisis f
 - =Verbatim=
 
 * Lists
-  - Item
-    + next item
-      1. Numbered list
-      2. And another
-         1). Numbers
-         2). With parenthesis
+Section [[#sec-textformat]] lists the various text decorations available in Org mode.
 
+Unnumbered list:
+  + Item
+  + next item
+    + Indented
+
+Numbered list:
 3. [@3] First line
 4. Second line
 
@@ -35,24 +79,38 @@ Nullam eu ante vel est convallis dignissim. Fusce suscipit, wisi nec facilisis f
 - [[https://wikipedia.org/][Wikipedia]] (internet link)
 - [[file:book/01-introduction.org][Book introduction]] (file link)
 
-* Images
-Images are file links:
-
-#+caption: Emacs splash screen
-#+attr_org: :width 100
-[[file:images/splash-screen.png]]
-
 * Tables
+Table [[tab-countries]] lists the top five countries by area in km^2.
 
 #+caption: Top five countries by size.
-|    Country    | Area     |
-|---------------+----------|
-|     <c13>     | <l>      |
-|    Russia     | 17098242 |
-|    Canada     | 9984670  |
-|     China     | 9640011  |
-| United States | 9629031  |
-|    Brazil     | 8514877  |
+#+name: tab-countries
+#+attr_latex: :environment tabularx :align Xr :width 0.67\textwidth
+#+attr_html: :border 20 :rules all :frame border
+#+attr_odt: :rel-width 50
+| Country       |       Area |
+|---------------+------------|
+|               |        <r> |
+| Russia        | 17,098,242 |
+| Canada        |  9,984,670 |
+| China         |  9,640,011 |
+| United States |  9,629,031 |
+| Brazil        |  8,514,877 |
+
+** Special tables
+Tables from the ~table.el~ package for spanning columns and rows. Does not work in ODT export with complex tables.
+
+#+caption: German Article Declensions by Gender and Case.
+#+attr_latex: :float sideways
++------------+-----------+----------+----------+-------------+
+|            |             Singular            | Plural      |
+|            +-----------+----------+----------+-------------+
+|            | Masculine | Neuter   | Feminine | All genders |
++------------+-----------+----------+----------+-------------+
+| Nominative | der       | das      | die      | die         |
+| Accusative | den       | das      | die      | die         |
+| Dative     | dem       | dem      | der      | denen       |
+| Genitive   | dessen    | dessen   | deren    | deren       |
++------------+-----------+----------+----------+-------------+
 
 * Mathematics
 Requires LaTeX to display:
@@ -61,10 +119,63 @@ $$\frac{1}{\pi} = \frac{\sqrt{8}}{9801}
 \sum_{n=0}^{\infty} \frac{(4n)!}{(n!)^4} \times
 \frac{26390n + 1103}{396^{4n}}$$
 
+** Mathematics in ODT
+- =#+options: tex:dvipng=: Export to PNG file
+- =#+options: tex:t=: Export to Mathematical Markup Language (MathML).  Requires a LaTeX to MathML converter to be installed and configured:
+
+#+begin_src elisp :results none
+  (setq org-latex-to-mathml-convert-command
+      "latexmlmath %i --presentationmathml=%o")
+#+end_src
+
 * Citations
 Read the Emacs Manual [cite:@stallman_1981a].
 
 Also [cite:see @blevins_2017 p. 121].
+
+** Basic
+- Converts citations to plain text with limited options
+  
+** CSL
+- [[https://citationstyles.org/][Citation Style Language - Citation Style Language]]
+- Download CSL definitions from https://github.com/citation-style-language/styles
+
+** LaTeX
+- Export LaTeX commands
+  
+* Advanced formatting
+** LaTeX
+These will only render when exporting to LaTeX of PDF.
+
+#+latex: \hline
+
+#+begin_export latex
+\Huge Hello world! \normalsize
+#+end_export
+
+#+latex_header: \usepackage{color}
+Example of inline text: @@latex:\colorbox{yellow}{highlighted text with color package}@@
+
+** HTML / ePUB
+#+html: <hr>
+
+#+begin_export html
+<p style="font-size: 3em;">Hello world!</p>
+#+end_export
+
+Example of inline text: @@html:<span style="background-color: yellow;">highlight</span>@@
+
+** ODT
+- Special formatting requires hacking the =styles.xml= files (out of scope of EWS)
+- Use =#+OPTIONS: H:10 num:t= to create an empty template document
+- ~org-odt-preferred-output-format~ to define output format
+
+** Macros
+Macros to insert defined snippets. Define a macro for multiple export formats by concatenating inline syntax.
+
+#+macro: highlight @@latex:\colorbox{yellow}{$1}@@@@html:<span style="background-color: yellow;">$1</span>@@
+
+Example of a {{{highlight(macro)}}}
 
 * References
 #+print_bibliography:
