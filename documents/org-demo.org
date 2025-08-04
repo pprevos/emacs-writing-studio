@@ -14,7 +14,7 @@
 #+cite_export: csl apa6.csl
 # +cite_export: natbib kluwer
 #+options: toc:1 tex:t h:10 num:t
-#+odt_styles_file: template.ott
+#+odt_styles_file: ("template.odt" ("styles.xml" "Pictures/1000000000000280000000F0C6DD9D23.png"))
 
 * Preamble
 :PROPERTIES:
@@ -168,7 +168,9 @@ Example of inline text: @@html:<span style="background-color: yellow;">highlight
 ** ODT
 - Special formatting requires hacking the =styles.xml= files (out of scope of EWS)
 - Use =#+OPTIONS: H:10 num:t= to create an empty template document
-- ~org-odt-preferred-output-format~ to define output format
+- Customise ~org-odt-preferred-output-format~ to define output format (Requires Libreoffice to be available)
+- Basic config: =#+odt_styles_file: "template.odt"=
+- Add other artefacts, such as images: =#+odt_styles_file: ("template.odt" ("styles.xml" "Pictures/1000000000000280000000F0C6DD9D23.png"))=
 
 ** Macros
 Macros to insert defined snippets. Define a macro for multiple export formats by concatenating inline syntax.
