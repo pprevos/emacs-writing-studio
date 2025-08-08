@@ -5,7 +5,7 @@
 ;; Author: Peter Prevos <peter@prevos.net>
 ;; Maintainer: Peter Prevos <peter@prevos.net>
 ;; Created: 1 January 2024
-;; Version: 1.0
+;; Version: 1.0.1
 ;; Keywords: convenience
 ;; Homepage: https://lucidmanager.org/tags/emacs/
 ;; URL: https://github.com/pprevos/emacs-writing-studio
@@ -288,6 +288,7 @@ Customise `titlecase-style' for styling."
 	 (when (<= level (or ews-org-heading-level-capitalise 999))
 	   (org-edit-headline new-heading)))))))
 
+;; Fixed by Prot
 (defun ews-denote-link-description-title-case (file)
   "Return link description for FILE.
 
@@ -298,13 +299,14 @@ This function is useful as the value of `denote-link-description-function' to
 generate links in titlecase for attachments."
   (require 'titlecase)
   (let* ((file-type (denote-filetype-heuristics file))
-         (title (denote-retrieve-title-or-filename file file-type))
-	 (clean-title (if (string-match-p " " title)
-			  title
-			(replace-regexp-in-string "\\([a-zA-Z0-9]\\)-\\([a-zA-Z0-9]\\)" "\\1 \\2" title)))
-         (region-text (denote--get-active-region-content)))
+         (title (denote-retrieve-title-or-filename file file-type)))
     (cond
-     (region-text region-text)
-     (title (format "%s" (titlecase--string clean-title titlecase-style)))
-     (t ""))))
+     ((denote--get-active-region-content))
+     ((or (null title) (string-blank-p title))
+      "")
+     ((string-match-p " " title)
+      title)
+     (t
+      (let ((clean-title (replace-regexp-in-string "\\([a-zA-Z0-9]\\)-\\([a-zA-Z0-9]\\)" "\\1 \\2" title)))
+        (format "%s" (titlecase--string clean-title titlecase-style)))))))
 
