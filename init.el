@@ -113,8 +113,6 @@
    ("C-c w t m" . modus-themes-select)
    ("C-c w t s" . consult-theme)))
 
-(use-package ef-themes)
-
 ;; Mixed-pitch mode
 
 (use-package mixed-pitch
