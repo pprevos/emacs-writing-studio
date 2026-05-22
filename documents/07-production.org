@@ -119,6 +119,11 @@ When reading a comprehensive document like this book, leveraging internal links 
 
 Referencing figures and tables is a breeze. Assign a name to the item using the =#+name:= keyword below the caption, for instance: =#+name: fig-example=. When referring to this item, enclose its name in double square brackets (=[[fig-example]]=). Org automatically creates a link to the location of the image or table, as explained in section [[#sec-links]]. These references can point to other documents, as long as they are part of the same project.
 
+#+caption: Citar screenshot.
+#+name: fig-citar-screenshot
+#+attr_org: :width 600
+[[file:images/citar-menu.png]]
+
 References to sections or chapters consist of links to the name of the targeted heading. So, a link to this particular section would be =[[Captions and references]]=. This approach risks producing broken links when you change the heading name but forget to modify the links that refer to it.
 
 You can also add a property to a heading with a custom ID. Use ~org-set-property~ (=C-c C-x p=), select =CUSTOM_ID=, and enter the desired ID. Links to a custom ID require an octothorpe, also known as a hashtag or pound symbol. So, a link to this section of the book could have a custom ID of =sec-references= with links defined as =[[#sec-references]]=. Without the hashtag, Org mode will link it to a section with that same name. Confusingly, cross-references to named tables and images don't require a hashtag.
