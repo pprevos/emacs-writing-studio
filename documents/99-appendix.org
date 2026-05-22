@@ -196,7 +196,7 @@ The =:custom= section of the macro sets some variables to define fonts. This sec
 
 The following section binds some keys to commands to toggle between dark and light or select any available modus themes. All EWS custom keybindings start with =C-c w= as the prefix key and =C-c w t= as the prefix key for the theme-related functions. You can obviously change these to suit your preferences. Read the Modus Themes package manual for details with =C-h R modus=.
 
-The ~consult-theme~ command invoke the consult package to help you select between installed themes. To set a default theme, run the ~customize-themes~ command and select your preferred version. Click the button to store your chosen default in the =custom.el= file. As a bonus, this code also installs Port's Ef-Themes package, which is a wonderful collection of light and dark themes.
+The ~consult-theme~ command invoke the consult package to help you select between installed themes. To set a default theme, run the ~customize-themes~ command and select your preferred version. Click the button to store your chosen default in the =custom.el= file.
 
 #+begin_src elisp :exports none
   ;; Modus and EF Themes
@@ -213,8 +213,6 @@ The ~consult-theme~ command invoke the consult package to help you select betwee
     (("C-c w t t" . modus-themes-toggle)
      ("C-c w t m" . modus-themes-select)
      ("C-c w t s" . consult-theme)))
-
-  (use-package ef-themes)
 #+end_src
 
 The next section hooks the Variable Pitch mode to any Org buffer. This means that written prose is displayed in variable pitch, while metadata, code and other items are in fixed pitch. A hook is a construction in Emacs that associates modes with each other. In this case, variable pitch text is enabled for all text mode buffers.
