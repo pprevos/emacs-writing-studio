@@ -92,7 +92,7 @@ If you have a long list, consider including an indicator that shows your progres
 ,** Mow the lawn
 #+end_example
 
-Org lets you easily convert list items to headings and back again. The =C-c C-*= keyboard shortcut (~org-ctrl-c-star~) converts a paragraph to a heading. If the line contains a checkbox, it becomes a to-do item. Using =C-c C--= (~org-ctrl-c-minus~) converts a paragraph or a heading to a list item.
+Org lets you easily convert list items to headings and back again. The =C-c C-*= keyboard shortcut (~org-ctrl-c-star~) converts a paragraph to a heading. If the line contains a checkbox, it becomes a to-do item. Using =C-c C-c -= (~org-ctrl-c-minus~) converts a paragraph or a heading to a list item.
 
 The problem with most to-do lists is that they can quickly become overwhelming. Most actions don't need to or can't progress immediately. The basic principle of the GTD approach is to have a manageable list of actions. Within this methodology, an action is either scheduled in your calendar, marked as the next action to be done as soon as possible, or delegated. The list of following actions forms your backlog of things you need to do. This method ensures that only a subset of activities is in your consciousness and you don't get overwhelmed by your inactivity, as action lists tend to be a promise to our future selves. Let's look at the last two options: next actions and delegation.
 
