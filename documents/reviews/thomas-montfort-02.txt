@@ -1,0 +1,94 @@
+1 00-emacs-writing-studio-ch-01-05
+==================================
+
+  Sorry for the delay reading the new chapters but month of may was
+  short, many days off in France (family time !) but a lot of work too.
+
+  The progression in difficulty is pleasant.  The new concepts are
+  aborded with detailed explanations and we can use the examples from
+  the github repository.  I spoted very few keyboards mistakes and maybe
+  one error in function name.  The book is not about a method but really
+  about the concepts of collecting (evven RSS with elfeed) and managing
+  readings and ideas.  The part about emms is nice to have to show all
+  the possibilitues of emacs.  The EWS configuration is clean and ready
+  to use.  It's the book I would liked to have when I returned to emacs
+  to record all my notes, work and writing technical documents.
+
+  Thank you !
+
+
+1.0.4 Inspiration: Read, Listen and Watch
+-----------------------------------------
+
+* 1.0.4.1 Reading eBooks
+
+  + 1.0.4.1.6 Uppercase
+
+    ``Unlike PDF and DjVu formats, The content'' The : no uppercase
+    necessary [X]
+
+
+* 1.0.4.3 Surf the Web
+
+  + 1.0.4.3.2 why restart ?
+
+    ``restart Emacs.'' Why ? Juste start Elfeed. [X]
+
+
+1.0.5 Ideation: Record and Manage Ideas
+---------------------------------------
+
+* 1.0.5.2 Permanent Notes
+
+
+* 1.0.5.3 typo
+
+  ``we can also link o a heading within'' [X]
+
+
+* 1.0.5.4 The Denote Package
+
+  + 1.0.5.4.1 why restart [X]
+
+    ``You can customise this variable to suit your needs and restart
+    Emacs.''
+
+    Or M-x eval (setq denote-directory "").  Or add (setq
+    denote-directory ...) in a start file et M-x load-file ..
+
+
+  + 1.0.5.4.2 save command [X]
+
+    ``disk with C-c C-s to make it permanent.''
+
+    C-x C-s
+
+
+  + 1.0.5.4.7 shortcut
+
+    ``voke the denote-org-extras-dblock-insert-links function (C-c w d
+    D),''
+
+    In last version of EWS on github it is : C-c w d I [X]
+
+
+* 1.0.5.5 Implementing Note-Taking Systems with Denote
+
+  + 1.0.5.5.1 typo
+
+    ``Try mot to get'' [X]
+
+
+* 1.0.5.7 Visualising Denote Networks
+
+
+* 1.0.5.8 typo
+
+  ``of books hey read,'' [X]
+
+
+* 1.0.5.9 Learn More
+
+
+1.0.6 Bibliography
+------------------
